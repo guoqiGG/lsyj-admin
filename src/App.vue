@@ -1,7 +1,13 @@
 <template>
-  <div>
-    <router-link to="/">首页</router-link> |
-    <router-link to="/about">关于</router-link>
-  </div>
+  <!-- <el-config-provider :locale="i18nLocale" :button="config" :size="assemblySize"> -->
   <router-view></router-view>
+  <!-- </el-config-provider> -->
 </template>
+
+<script  setup>
+
+
+</script>
+
+<style scoped lang="scss">
+</style>
