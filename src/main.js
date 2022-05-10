@@ -13,3 +13,4 @@ app.use(router).use(store).use(ElementPlus, {
   locale: zhCn,
 })
 app.mount('#app')
+
