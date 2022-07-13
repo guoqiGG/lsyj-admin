@@ -1,77 +1,46 @@
-import axios from 'axios'
-import { ElMessage } from 'element-plus'
-import store from '@/store'
-import { getToken, removeToken } from '@/utils/auth'
-import router from '@/router'
+import axios from 'axios';
+import {
+  ElMessage
+} from 'element-plus'
+
 
 const service = axios.create({
-  baseURL: '/admin/', // url = base url + request url
-  timeout: 10000 // request timeout
-})
+  timeout: 5000
+});
 
-// request interceptor
+// Request interceptors
 service.interceptors.request.use(
-  config => {
-    // do something before request is sent
-    if (store.getters.token) {
-      config.headers['Authorization'] = 'Bearer ' + getToken()
-    }
-    config.headers['Accept'] = 'application/json'
+  (config) => {
+    // do something
+    // console.log('config',config);
 
-    return config
+    return config;
   },
-  error => {
-    // do something with request error
-    return Promise.reject(error)
+  (error) => {
+    Promise.reject(error);
   }
-)
+);
 
-// response interceptor
+// Response interceptors
 service.interceptors.response.use(
-  response => {
-    const res = response.data
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code === 1) {
+  (response) => {
+    // do something
+    // console.log('response',response);
+    // return
+    if (response.status !== 200) {
       ElMessage({
-        message: res.message || 'Error',
         type: 'error',
-        duration: 5 * 1000,
-        showClose: true
+        message: '服务器忙,请稍后再试~'
       })
-      return Promise.reject(new Error(res.message || 'Error'))
-    } else {
-      return res
+      return
     }
-  },
-  error => {
-    if (error.response && error.response.status !== 400 && error.response.status !== 401 && error.response.status !== 409) {
-      ElMessage({
-        message: error.response && error.response.data && error.response.data.message || error.message,
-        type: 'error',
-        duration: 5 * 1000,
-        showClose: true
-      })
-    }
-    if (error.response && error.response.status === 401) {
-      ElMessage({
-        message: '登录已经失效!',
-        type: 'error',
-        duration: 5 * 1000,
-        showClose: true
-      })
-      setTimeout(removeToken(), 2000)
-      setTimeout(router.push('/login'), 1000);
-    }
-    if (error.response && error.response.status === 400) {
-      ElMessage({
-        message: error.response.data.message,
-        type: 'error',
-        duration: 5 * 1000,
-        showClose: true
-      })
-    }
-    return Promise.reject(error)
-  }
-)
 
-export default service
+    return response
+  },
+  (error) => {
+    // do something
+    return Promise.reject(error);
+  }
+);
+
+export default service;

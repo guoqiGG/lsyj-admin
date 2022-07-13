@@ -9,22 +9,47 @@
           <!-- <img class="login-icon" src="../assets/images/logo.svg" alt="" /> -->
           <p class="logo-text">holle Admin</p>
         </div>
-        <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" size="large">
+        <el-form
+          ref="loginFormRef"
+          :model="loginForm"
+          :rules="loginRules"
+          size="large"
+        >
           <el-form-item prop="username">
-            <el-input :prefix-icon="User" v-model="loginForm.username" placeholder="用户名">
-
+            <el-input
+              :prefix-icon="User"
+              v-model="loginForm.username"
+              placeholder="用户名"
+            >
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input :prefix-icon="Lock" type="password" show-password v-model="loginForm.password" placeholder="密码">
-
+            <el-input
+              :prefix-icon="Lock"
+              type="password"
+              show-password
+              v-model="loginForm.password"
+              placeholder="密码"
+            >
             </el-input>
           </el-form-item>
         </el-form>
         <div class="login-btn">
-          <el-button :icon="CircleClose" round @click="resetForm(loginFormRef)" size="large">重置</el-button>
-          <el-button :icon="UserFilled" round @click="login(loginFormRef)" size="large" type="primary"
-            :loading="loading">
+          <el-button
+            :icon="CircleClose"
+            round
+            @click="resetForm(loginFormRef)"
+            size="large"
+            >重置</el-button
+          >
+          <el-button
+            :icon="UserFilled"
+            round
+            @click="login(loginFormRef)"
+            size="large"
+            type="primary"
+            :loading="loading"
+          >
             登录
           </el-button>
         </div>
@@ -34,21 +59,28 @@
 </template>
 
 <script setup name="login">
-
-import { CircleClose, UserFilled, Lock, User } from "@element-plus/icons-vue";
-import { reactive, ref } from 'vue';
-import { useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
-const loginFormRef = ref();
-const loading = ref(false);
-const router = useRouter();
+import axios from 'axios'
+import { getNewsList, getGoodsList } from '../../api/login/index.js'
+import {
+  CircleClose,
+  UserFilled,
+  Lock,
+  User,
+  Iphone,
+} from '@element-plus/icons-vue'
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+const loginFormRef = ref()
+const loading = ref(false)
+const router = useRouter()
 const loginForm = reactive({
   username: '',
-  password: ''
+  password: '',
 })
 const loginRules = reactive({
-  username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-  password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
 })
 
 const login = (formEl) => {
@@ -56,9 +88,11 @@ const login = (formEl) => {
   formEl.validate((valid) => {
     if (valid) {
       loading.value = true
-      // alert('submit!')
-      ElMessage.success('登录成功')
-      router.push({ name: "Home" });
+      // console.log(getMenu)
+      getNewsList(loginForm.value).then((res) => {
+        console.log(res)
+        // menus.mensList = res.data.menusList
+      })
     } else {
       console.log('error submit!')
       return false
@@ -73,5 +107,5 @@ const resetForm = (formEl) => {
 </script>
 
 <style scoped lang="scss">
-@import "./index.scss";
+@import './index.scss';
 </style>

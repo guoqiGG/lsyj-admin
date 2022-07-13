@@ -30,7 +30,7 @@ const menuList = reactive([
       icon: 'HomeFilled',
       roles: ['sys:manage'],
     },
-    children: [],
+    children: [{}],
   },
 ])
 
