@@ -2,18 +2,11 @@
 
 import service from "../request.js";
 
-
-export function getNewsList(query) {
+export function getMenuList(query) {
+  console.log(query);
   return service({
-    method: 'get',
-    url: '/mock/news',
-    params: query
-  })
-}
-export function getGoodsList(query) {
-  return service({
-    method: 'post',
-    url: '/mock/goods',
-    data: query
-  })
+    method: "post",
+    url: "/permission/getMenu",
+    body: query,
+  });
 }

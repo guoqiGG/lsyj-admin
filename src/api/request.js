@@ -1,18 +1,15 @@
-import axios from 'axios';
-import {
-  ElMessage
-} from 'element-plus'
-
+import axios from "axios";
+import { ElMessage } from "element-plus";
 
 const service = axios.create({
-  timeout: 5000
+  timeout: 5000,
 });
 
 // Request interceptors
 service.interceptors.request.use(
   (config) => {
     // do something
-    // console.log('config',config);
+    console.log("config", config);
 
     return config;
   },
@@ -25,17 +22,17 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     // do something
-    // console.log('response',response);
+    console.log("response", response);
     // return
     if (response.status !== 200) {
       ElMessage({
-        type: 'error',
-        message: '服务器忙,请稍后再试~'
-      })
-      return
+        type: "error",
+        message: "服务器忙,请稍后再试~",
+      });
+      return;
     }
 
-    return response
+    return response;
   },
   (error) => {
     // do something
