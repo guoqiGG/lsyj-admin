@@ -7,6 +7,6 @@ export function getMenuList(query) {
   return service({
     method: "post",
     url: "/permission/getMenu",
-    body: query,
+    data: query,
   });
 }
