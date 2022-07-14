@@ -96,8 +96,10 @@ const login = (formEl) => {
       console.log(loginForm)
       getMenuList(loginForm).then((res) => {
         if (res.status == 200) {
-          // globalStore._actions.setToken(res.data.data.token)
+          globalStore.token = res.data.data.token
           ElMessage.success('登录成功！')
+
+          console.log(globalStore.token)
           // router.push({ name: 'home' })
         }
 

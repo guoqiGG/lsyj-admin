@@ -9,11 +9,8 @@ export default createStore({
   mutations: {
 
   },
-  actions: {
-    setToken(token) {
-      this.token = token
-      console.log(token)
-    }
-  },
-  modules: {}
+  actions: {},
+  modules: {
+
+  }
 })
