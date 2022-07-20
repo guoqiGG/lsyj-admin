@@ -86,25 +86,13 @@ const loginRules = reactive({
 })
 
 const globalStore = useStore() // 该方法用于返回store 实例
-console.log(globalStore) // store 实例对象
 
 const login = (formEl) => {
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
       loading.value = true
-      console.log(loginForm)
-      getMenuList(loginForm).then((res) => {
-        if (res.status == 200) {
-          globalStore.token = res.data.data.token
-          ElMessage.success('登录成功！')
-
-          console.log(globalStore.token)
-          // router.push({ name: 'home' })
-        }
-
-        // menus.mensList = res.data.menusList
-      })
+      globalStore.dispatch('user/login', loginForm)
     } else {
       console.log('error submit!')
       return false

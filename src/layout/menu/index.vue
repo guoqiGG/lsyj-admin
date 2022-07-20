@@ -19,21 +19,11 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
+import store from '../../store/index'
 import menuItems from './components/menuItems.vue'
 const isCollapse = ref(false)
-const menuList = reactive([
-  {
-    path: '/Home',
-    component: 'Loyout',
-    meta: {
-      title: '首页',
-      icon: 'HomeFilled',
-      roles: ['sys:manage'],
-    },
-    children: [{}],
-  },
-])
-
+const menuList = store.getters.menuList
+console.log(menuList)
 const handleOpen = (key, keyPath) => {
   console.log(key, keyPath)
 }

@@ -1,5 +1,8 @@
 import axios from "axios";
-import { ElMessage } from "element-plus";
+import {
+  ElMessage
+} from "element-plus";
+
 
 const service = axios.create({
   timeout: 5000,
@@ -8,7 +11,8 @@ const service = axios.create({
 // Request interceptors
 service.interceptors.request.use(
   (config) => {
-    // do something
+    if (localStorage.getItem('token'))
+      config.headers.token = localStorage.getItem('token')
     console.log("config", config);
 
     return config;

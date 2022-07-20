@@ -1,14 +1,48 @@
-const userInfo = {
-  namespaced: true, //让这里的东西独立成模块，不然mutations等都会和根state的合并
-  state: {
-    token: ''
+import {
+  getMenuList
+} from '../../api/login/index.js'
+import router from '../../router/router.js'
+import {
+  ElMessage
+} from 'element-plus'
+
+export default {
+  namespaced: true,
+  state: () => {
+    token: localStorage.getItem('token') ||
+      '';
+    isCollapse: false;
+    menuList: []
   },
   mutations: {
-    setMsg(state, str) {
-      state.token = str
+    setToken(state, token) {
+      state.token = token
+    },
+    setMenuList(state, menuList) {
+      state.menuList = menuList
+    }
+  },
+  actions: {
+    login({
+      commit
+    }, userInfo) {
+      return new Promise((resolve, reject) => {
+        getMenuList(userInfo).then(res => {
+          // console.log(res)
+          localStorage.setItem('token', res.data.data.token)
+          console.log(localStorage.getItem('token'))
+          commit('setToken', res.data.data.token)
+          commit('setMenuList', res.data.data.menu)
+          router.replace('/')
+          ElMessage({
+            message: '登录成功',
+            type: 'success',
+          })
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
     }
   }
-}​
-export {
-  userInfo
 }

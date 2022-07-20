@@ -1,7 +1,7 @@
 const getters = {
   token: (state) => state.user.token,
-  name: (state) => state.user.name,
-  avatar: (state) => state.user.avatar,
+  menuList: (state) => state.user.menuList,
+  isCollapse: (state) => state.user.isCollapse,
 };
 
 export default getters;

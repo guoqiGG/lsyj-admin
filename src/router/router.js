@@ -8,37 +8,43 @@ import Layout from '../layout/index.vue'
 
 
 
-const routes = [
-
-  {
-    path: '/',
+const routes = [{
+    path: '/login',
     name: login,
     component: login
   },
+  {
+    path: '/',
+    name: 'home',
+    component: Layout
+  }
 ]
-
 export const dynamicRouters = [{
-  name: '',
-  component: Layout,
-  name: 'container',
-  redirect: 'home',
-  mate: {
-    requiresAuth: true,
-    name: '首页',
-  },
-  children: [{
-    path: 'home',
-    component: Home,
-    name: Home,
+    path: '/',
+    component: Layout,
+    name: 'container',
+    redirect: 'home',
     meta: {
-      name: '首页',
-      icon: 'icon-name'
-    }
-  }]
-}, {
-  path: '/*',
-  component: () => import('../views/notfount/404.vue')
-}]
+      requiresAuth: true, //有一些页面是否登录才能进去  
+      name: '首页'
+    },
+    children: [{
+      path: 'home',
+      component: () => import('../views/home/index.vue'),
+      name: 'home',
+      mate: {
+        name: '首页',
+        icon: 'icon-name'
+      }
+    }]
+  },
+
+  {
+    path: "/404",
+    name: "404",
+    component: () => import("../views/ErrorMessage/404.vue"),
+  },
+]
 const router = createRouter({
   history: createWebHashHistory(),
   routes

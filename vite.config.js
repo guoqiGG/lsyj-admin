@@ -16,7 +16,7 @@ export default defineConfig({
   },
   plugins: [vue()],
   css: {
-    /* CSS 预处理器 */
+    /* CSS 预处理器   导入全局样式*/
     preprocessorOptions: {
       scss: {
         additionalData: '@import "src/styles/var.scss";'
