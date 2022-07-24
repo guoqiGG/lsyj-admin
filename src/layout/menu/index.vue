@@ -22,6 +22,7 @@ import { reactive, ref } from 'vue'
 import store from '../../store/index'
 import menuItems from './components/menuItems.vue'
 const isCollapse = ref(false)
+const activeMenu = ref('/home')
 const menuList = store.getters.menuList
 console.log(menuList)
 const handleOpen = (key, keyPath) => {
@@ -33,5 +34,7 @@ const handleClose = (key, keyPath) => {
 </script>
 
 <style scoped lang="scss">
-@import './index.scss';
+.menu {
+  width: 200px;
+}
 </style>

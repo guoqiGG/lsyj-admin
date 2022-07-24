@@ -10,9 +10,15 @@
         </el-icon>
         <span>{{ menu.meta.title }}</span>
       </template>
-      <menu-item :menuList="menu.children"></menu-item>
+      <el-menu-item :index="it.path" v-for="it in menu.children" :key="it.path">
+        <template #title>
+          <el-icon>
+            <component :is="it.meta.icon"></component>
+          </el-icon>
+          <span>{{ it.meta.title }}</span>
+        </template>
+      </el-menu-item>
     </el-sub-menu>
-
     <el-menu-item style="color: #f4f4f5" v-else :index="menu.path">
       <el-icon>
         <component :is="menu.meta.icon"></component>

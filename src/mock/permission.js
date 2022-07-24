@@ -11,7 +11,6 @@ let menuList = [{
       icon: 'HomeFilled',
       roles: ['sys:manage'],
     },
-    children: [],
   },
   {
     path: "/system",
@@ -104,7 +103,7 @@ let menuList = [{
     alwaysShow: true,
     name: "map",
     meta: {
-      title: "图表",
+      title: "图表功能",
       icon: "Histogram",
       roles: ["sys:map"],
       parentId: 0
@@ -152,7 +151,7 @@ let menuList = [{
     alwaysShow: true,
     name: 'able',
     meta: {
-      title: '功能',
+      title: '功能呢公布',
       icon: 'HelpFilled',
       roles: ['sys:able']
     },

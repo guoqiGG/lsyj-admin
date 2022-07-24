@@ -1,25 +1,52 @@
 <template>
-  <el-icon class="icon-style"> <fold /></el-icon>
-
   <el-breadcrumb separator="/">
-    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-    <el-breadcrumb-item
-      ><a href="/">promotion management</a></el-breadcrumb-item
-    >
-    <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-    <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+    <el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">
+      <span class="no-redirect" v-if="index === breadcrumbList.length - 1">{{
+        item.meta.name
+      }}</span>
+      <span class="redirect" v-else @click="handleRedirect(item.path)">{{
+        item.meta.name
+      }}</span>
+    </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 
 <script setup>
-import { Fold } from '@element-plus/icons-vue'
+import { watch, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+const route = useRoute()
+const router = useRouter()
+
+const breadcrumbList = ref([])
+
+const initBreadcrumbList = () => {
+  breadcrumbList.value = route.matched
+  console.log(route.matched)
+}
+const handleRedirect = (path) => {
+  router.push(path)
+}
+
+watch(
+  route,
+  () => {
+    initBreadcrumbList()
+  },
+  { deep: true, immediate: true }
+)
 </script>
 
-<style scoped>
-.icon-style {
-  font-size: 20px;
-  color: rgba(0, 0, 0, 0.75);
+<style lang="scss" scoped>
+.no-redirect {
+  color: #97a8be;
+  cursor: text;
+}
+.redirect {
+  color: #666;
+  font-weight: 600;
   cursor: pointer;
-  margin-right: 10px;
+  &:hover {
+    color: #fff;
+  }
 }
 </style>
