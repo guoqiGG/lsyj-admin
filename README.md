@@ -1,6 +1,6 @@
 # Vue 3 + Vite + ElementPlus + mack.js 管理后台
 
-功能有仿造 http://admin.spicyboy.cn/#/form/dynamicForm
+#### 项目依赖
 
 ## Recommended IDE Setup
 
