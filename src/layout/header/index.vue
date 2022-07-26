@@ -5,6 +5,7 @@
     </div>
     <div class="header-ri flx-center">
       <message></message>
+      <!-- <Driver></Driver> -->
       <fullScreen></fullScreen>
       <avatar></avatar>
       <el-icon class="icon-style"><setting /></el-icon>
@@ -17,6 +18,7 @@ import avatar from './components/avatar.vue'
 import fullScreen from './components/fullScreen.vue'
 import message from './components/message.vue'
 import Breadcrumb from './components/Breadcrumb.vue'
+// import Driver from './components/Driver/index.vue'
 </script>
 
 <style scoped lang="scss">

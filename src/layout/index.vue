@@ -10,14 +10,18 @@
           <router-view></router-view>
         </div>
       </el-main>
-      <!-- <el-footer>Footer</el-footer> -->
     </el-container>
   </el-container>
 </template>
 
 <script setup name="layout">
+import { computed } from 'vue-demi'
+import store from '../store/index'
 import Header from './header/index.vue'
 import Menu from './menu/index.vue'
+// const asideWidth= computed(()=>{
+//   store.getters.isCollapse ? '200px':
+// })
 </script>
 
 <style scoped lang="scss">

@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown placement="bottom" >
+  <el-dropdown placement="bottom">
     <div class="flx-center">
       <div class="avatar">
         <img
@@ -46,6 +46,7 @@ const handleClick = () => {
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
+  margin-left: 20px;
 
   img {
     width: 100%;

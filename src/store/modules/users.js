@@ -20,6 +20,9 @@ export default {
     },
     setMenuList(state, menuList) {
       state.menuList = menuList
+    },
+    setisCollapse(state, isCollapse) {
+      state.isCollapse = isCollapse
     }
   },
   actions: {
@@ -43,6 +46,13 @@ export default {
           reject(err)
         })
       })
+    },
+    setIsCollapse({
+      commit
+    }, str) {
+      console.log(str)
+      commit('setisCollapse', str)
+
     }
   }
 }

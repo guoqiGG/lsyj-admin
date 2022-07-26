@@ -1,4 +1,8 @@
 <template>
+  <el-icon class="icon-style" @click="changeShrinkage">
+    <Fold v-if="!isCollapse" />
+    <Expand v-else="isCollapse" />
+  </el-icon>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">
       <span class="no-redirect" v-if="index === breadcrumbList.length - 1">{{
@@ -14,10 +18,14 @@
 <script setup>
 import { watch, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import store from '../../../store'
+import { useStore } from 'vuex'
 const route = useRoute()
 const router = useRouter()
 
 const breadcrumbList = ref([])
+const isCollapse = ref(false)
+const globalStore = useStore()
 
 const initBreadcrumbList = () => {
   breadcrumbList.value = route.matched
@@ -25,6 +33,11 @@ const initBreadcrumbList = () => {
 }
 const handleRedirect = (path) => {
   router.push(path)
+}
+
+const changeShrinkage = () => {
+  isCollapse.value = !store.getters.isCollapse
+  globalStore.dispatch('user/setIsCollapse', isCollapse.value)
 }
 
 watch(
@@ -46,7 +59,13 @@ watch(
   font-weight: 600;
   cursor: pointer;
   &:hover {
-    color: #fff;
+    color: #97a8be;
   }
+}
+.icon-style {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+  margin-right: 20px;
 }
 </style>
