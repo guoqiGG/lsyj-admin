@@ -1,29 +1,34 @@
 <template>
-  <el-tooltip class="box-item" effect="dark" content="全屏" placement="bottom">
-    <el-icon class="icon-style" @click="handleFullScreen"
-      ><full-screen
-    /></el-icon>
-  </el-tooltip>
+  <!-- <el-tooltip class="box-item" effect="dark" content="全屏" placement="bottom"> -->
+  <el-icon class="icon-style" @click="handleFullScreen"><full-screen /></el-icon>
+  <!-- </el-tooltip> -->
 </template>
 
 <script setup>
-// import { screenfull } from 's/creenfull'
-// // import { FullScreen } from '@element-plus/icons-vue'
-import { ref, onMounted, onBeforeMount } from 'vue'
+// import  } from "screenfull";
+import { ref, onMounted, onBeforeMount } from "vue";
 
+import { ElMessage } from "element-plus";
 const handleFullScreen = () => {
-  // if (FullScreen.isEnabled) {
-  //   FullScreen.toggle()
-  // }
-}
+  ElMessage({
+    showClose: true,
+    message: "开启全屏模式",
+    type: "success",
+  });
+  // ElMessage({
+  //   showClose: true,
+  //   message: "关闭全屏模式",
+  //   type: "success",
+  // });
+};
 
-// onMounted(() => {
-//   screenfull.on('change', changeIcon)
-// })
+onMounted(() => {
+  // screenfull.on('change', changeIcon)
+});
 
-// onBeforeMount(() => {
-//   screenfull.off('change')
-// })
+onBeforeMount(() => {
+  // screenfull.off('change')
+});
 </script>
 
 <style scoped>
