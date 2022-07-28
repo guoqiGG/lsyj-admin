@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="menu"
-    :style="{ width: store.getters.isCollapse == true ? '' : '200px' }"
-  >
+  <div id="guide" class="menu" :style="{ width: store.getters.isCollapse == true ? '' : '200px' }">
     <!-- <div class="logo">后台管理系统</div> -->
     <el-scrollbar>
       <el-menu
@@ -22,18 +19,18 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
-import store from '../../store/index'
-import menuItems from './components/menuItems.vue'
-const activeMenu = ref('/home')
-const menuList = store.getters.menuList
-console.log(menuList)
+import { reactive, ref } from "vue";
+import store from "../../store/index";
+import menuItems from "./components/menuItems.vue";
+const activeMenu = ref("/home");
+const menuList = store.getters.menuList;
+console.log(menuList);
 const handleOpen = (key, keyPath) => {
-  console.log(key, keyPath)
-}
+  console.log(key, keyPath);
+};
 const handleClose = (key, keyPath) => {
-  console.log(key, keyPath)
-}
+  console.log(key, keyPath);
+};
 </script>
 
 <style scoped lang="scss">

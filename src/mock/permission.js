@@ -3,13 +3,14 @@ import Mock from "mockjs";
 // 获取 mock.Random 对象
 const Random = Mock.Random;
 
-let menuList = [{
-    path: '/home',
-    component: 'Loyout',
+let menuList = [
+  {
+    path: "/home",
+    component: "Loyout",
     meta: {
-      title: '首页',
-      icon: 'HomeFilled',
-      roles: ['sys:manage'],
+      title: "首页",
+      icon: "HomeFilled",
+      roles: ["sys:manage"],
     },
   },
   {
@@ -21,9 +22,10 @@ let menuList = [{
       title: "系统管理",
       icon: "Tools",
       roles: ["sys:manage"],
-      parentId: 0
+      parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/Department",
         component: "/system/Department",
         alwaysShow: false,
@@ -32,8 +34,8 @@ let menuList = [{
           title: "机构管理",
           // icon: "ZoomOut",
           roles: ["sys:dept"],
-          parentId: 17
-        }
+          parentId: 17,
+        },
       },
       {
         path: "/UserList",
@@ -44,8 +46,8 @@ let menuList = [{
           title: "用户管理",
           // icon: "ZoomOut",
           roles: ["sys:user"],
-          parentId: 17
-        }
+          parentId: 17,
+        },
       },
       {
         path: "/RoleList",
@@ -56,8 +58,8 @@ let menuList = [{
           title: "角色管理",
           // icon: "ZoomOut",
           roles: ["sys:role"],
-          parentId: 17
-        }
+          parentId: 17,
+        },
       },
       {
         path: "/MenuList",
@@ -68,10 +70,10 @@ let menuList = [{
           title: "权限管理",
           // icon: "ZoomOut",
           roles: ["sys:menu"],
-          parentId: 17
-        }
-      }
-    ]
+          parentId: 17,
+        },
+      },
+    ],
   },
   {
     path: "/goods",
@@ -82,20 +84,22 @@ let menuList = [{
       title: "商品管理",
       icon: "Briefcase",
       roles: ["sys:goods"],
-      parentId: 0
+      parentId: 0,
     },
-    children: [{
-      path: "/goodCategory",
-      component: "/goods/goodCategory",
-      alwaysShow: false,
-      name: "goodCategory",
-      meta: {
-        title: "商品分类",
-        // icon: "ZoomOut",
-        roles: ["sys:goodsCategory"],
-        parentId: 34
-      }
-    }]
+    children: [
+      {
+        path: "/goodCategory",
+        component: "/goods/goodCategory",
+        alwaysShow: false,
+        name: "goodCategory",
+        meta: {
+          title: "商品分类",
+          // icon: "ZoomOut",
+          roles: ["sys:goodsCategory"],
+          parentId: 34,
+        },
+      },
+    ],
   },
   {
     path: "/map",
@@ -106,9 +110,10 @@ let menuList = [{
       title: "图表功能",
       icon: "Histogram",
       roles: ["sys:map"],
-      parentId: 0
+      parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/BaiduMap",
         component: "/map/BaiduMap",
         alwaysShow: false,
@@ -117,82 +122,83 @@ let menuList = [{
           title: "百度地图",
           // icon: "ZoomOut",
           roles: ["sys:BaiduMap"],
-          parentId: 34
-        }
+          parentId: 34,
+        },
       },
       {
-        path: '/GooleMap',
-        component: '/map/GooleMap',
+        path: "/GooleMap",
+        component: "/map/GooleMap",
         alwaysShow: false,
         name: "GooleMap",
         meta: {
           title: "谷歌地图",
           // icon: "ZoomOut",
           roles: ["sys:GooleMap"],
-          parentId: 34
-        }
+          parentId: 34,
+        },
       },
       {
-        path: '/Echarts',
-        component: '/map/Echarts',
+        path: "/Echarts",
+        component: "/map/Echarts",
         alwaysShow: false,
-        name: 'Echarts',
+        name: "Echarts",
         meta: {
           title: "Ehacrts图表",
           roles: ["sys:map"],
-          parentId: 34
-        }
-      }
-    ]
+          parentId: 34,
+        },
+      },
+    ],
   },
   {
-    path: '/able',
+    path: "/able",
     component: "Loyout",
     alwaysShow: true,
-    name: 'able',
+    name: "able",
     meta: {
-      title: '功能呢公布',
-      icon: 'HelpFilled',
-      roles: ['sys:able']
+      title: "功能呢公布",
+      icon: "HelpFilled",
+      roles: ["sys:able"],
     },
-    children: [{
-        path: '/watermark',
-        component: '/able/watermark',
-        name: 'watermark',
+    children: [
+      {
+        path: "/watermark",
+        component: "/able/watermark",
+        name: "watermark",
         meta: {
           title: "水印",
-          roles: ['sys:able']
-        }
+          roles: ["sys:able"],
+        },
       },
       {
-        path: '/Drag',
-        component: '/able/Drag',
-        name: 'Drag',
+        path: "/Drag",
+        component: "/able/Drag",
+        name: "Drag",
         meta: {
           title: "拖拽",
-          roles: ['sys:able']
-        }
+          roles: ["sys:able"],
+        },
       },
-      {
-        path: '/Guidepage',
-        component: '/able/Guidepage',
-        name: 'Guidepage',
-        meta: {
-          title: "引导页",
-          roles: ['sys:able']
-        }
-      }
-    ]
-  }
-]
+    ],
+  },
+  {
+    path: "/DataReport",
+    component: "Loyout",
+    alwaysShow: true,
+    name: "DataReport",
+    meta: {
+      title: "数据统计",
+      icon: "Tools",
+      roles: ["sys:manage"],
+      parentId: 0,
+    },
+  },
+];
 
 const getMenu = function (data) {
   console.log(data, "接收post参数");
   let body = JSON.parse(data.body);
-  const {
-    username,
-    password
-  } = JSON.parse(data.body);
+  const { username, password } = JSON.parse(data.body);
   console.log(JSON.parse(data.body));
   if (username === "admin" || username === "wp") {
     if (username === "admin" && password === "123456") {
@@ -208,7 +214,8 @@ const getMenu = function (data) {
       return {
         code: 200,
         data: {
-          menu: [{
+          menu: [
+            {
               path: "/",
               name: "home",
               label: "首页",
