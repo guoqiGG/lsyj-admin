@@ -1,5 +1,4 @@
-export const steps = (i18n) => [
-  {
+export const steps = () => [{
     element: "#guide",
     popover: {
       title: "菜单栏",

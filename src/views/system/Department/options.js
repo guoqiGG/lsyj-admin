@@ -1,0 +1,37 @@
+export const options = [{
+    label: '用户名',
+    props: 'username',
+    width: 'auto',
+    align: 'left'
+  },
+  {
+    label: '邮箱',
+    props: 'email',
+    width: 'auto',
+    align: 'left'
+  },
+  {
+    label: '创建时间',
+    props: 'date',
+    width: 'auto',
+    align: 'left'
+  },
+  {
+    label: '在线状态',
+    props: 'state',
+    width: 'auto',
+    align: 'left'
+  },
+  {
+    label: '备注',
+    props: 'content',
+    width: 'auto',
+    align: 'left'
+  },
+  {
+    label: '操作',
+    props: 'actions',
+    width: '100',
+    align: 'center'
+  }
+]
