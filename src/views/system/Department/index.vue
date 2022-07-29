@@ -31,17 +31,26 @@
 
 <script setup>
 import { Search, Edit, Delete, UserFilled } from '@element-plus/icons-vue'
+import { getUserlist } from '../../../api/modules/index.js'
 import { options } from './options.js'
-import { ref } from 'vue'
-const tableData = ref([
-  {
-    username: 'amdmin',
-    email: '12356@qq.com',
-    date: '2022-07-28',
-    state: '在线',
-    content: '测试数据',
-  },
-])
+import { onMounted, ref } from 'vue'
+const queryData = ref({
+  keyworld: '',
+  page: 1,
+  size: 10,
+})
+const tableData = ref([])
+
+const initData = () => {
+  getUserlist(queryData.value).then((res) => {
+    console.log(res)
+    tableData.value = res.data
+  })
+}
+
+onMounted(() => {
+  initData()
+})
 </script>
 
 <style lang="scss" scoped>

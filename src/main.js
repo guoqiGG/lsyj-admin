@@ -8,7 +8,7 @@ import ElementPlus from "element-plus";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import "element-plus/dist/index.css";
 import App from "./App.vue";
-import "./mock/permission.js";
+import "./mock/index.js";
 import * as ELIcons from '@element-plus/icons-vue'
 const app = createApp(App);
 

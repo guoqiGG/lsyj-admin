@@ -11,7 +11,7 @@ export default defineConfig({
   viteMockServe: {
     supportTs: false,
     logger: false,
-    mockPath: "./mock/permission.js"
+    mockPath: "./mock/index.js"
 
   },
   plugins: [vue()],

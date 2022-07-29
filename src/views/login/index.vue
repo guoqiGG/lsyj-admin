@@ -61,8 +61,6 @@
 <script setup name="login">
 import axios from 'axios'
 import { useStore } from 'vuex' // 引入useStore 方法
-
-import { getMenuList } from '../../api/login/index.js'
 import {
   CircleClose,
   UserFilled,

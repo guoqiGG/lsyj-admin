@@ -17,8 +17,8 @@ export const options = [{
     align: 'left'
   },
   {
-    label: '在线状态',
-    props: 'state',
+    label: '地址',
+    props: 'address',
     width: 'auto',
     align: 'left'
   },
