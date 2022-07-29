@@ -26,7 +26,8 @@ export const options = [{
     label: '备注',
     props: 'content',
     width: 'auto',
-    align: 'left'
+    align: 'left',
+    show: true
   },
   {
     label: '操作',

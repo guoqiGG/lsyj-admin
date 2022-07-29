@@ -2,7 +2,8 @@
   <el-card shadow="never" class="henader-card">
     <el-row :gutter="12">
       <el-col :span="8">
-        <el-input placeholder="请输入搜索内容"> </el-input>
+        <el-input placeholder="请输入搜索内容" v-model="queryData.keyworld">
+        </el-input>
       </el-col>
       <el-col :span="4">
         <el-button type="primary" :icon="Search">搜索</el-button>
@@ -19,6 +20,7 @@
         :label="item.label"
         :width="item.width"
         :align="item.align"
+        show-overflow-tooltip
       >
         <template #default v-if="item.props === 'actions'">
           <el-icon class="icon-edit"><Edit /></el-icon>
@@ -26,6 +28,13 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      small
+      background
+      layout="prev, pager, next"
+      :total="2"
+      class="mt-4"
+    />
   </el-card>
 </template>
 
@@ -40,11 +49,16 @@ const queryData = ref({
   size: 10,
 })
 const tableData = ref([])
+const total = ref(0)
 
 const initData = () => {
   getUserlist(queryData.value).then((res) => {
-    console.log(res)
-    tableData.value = res.data
+    console.log(Math.ceil(res.data.length / 10))
+    total.value = Math.ceil(res.data.length / 10)
+    if (queryData.value.page == 1) {
+      tableData.value = res.data.splice(0, 10)
+    }
+    // tableData.value = res.data
   })
 }
 
@@ -65,5 +79,11 @@ onMounted(() => {
 .icon-dele {
   font-size: 20px;
   color: #ff5722;
+}
+.mt-4 {
+  float: right;
+  text-align: right;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 </style>
