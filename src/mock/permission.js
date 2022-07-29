@@ -251,13 +251,14 @@ export const getMenu = function (data) {
 export const Userlist = () => {
   let userlist = []
   for (let index = 0; index < 20; index++) {
-    console.log(userlist)
-    return userlist.push({
+    let obj = {
       username: Random.cname(),
       email: Random.email(),
       date: Random.date(),
       address: Random.city(true),
       content: Random.csentence(),
-    })
+    }
+    userlist.push(obj)
   }
+  return userlist
 }
