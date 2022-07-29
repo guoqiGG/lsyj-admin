@@ -24,16 +24,20 @@
       >
         <template #default v-if="item.props === 'actions'">
           <el-icon class="icon-edit"><Edit /></el-icon>
-          <el-icon class="icon-dele"><Delete /></el-icon>
+          <el-icon class="icon-dele" @click="deleteItem(item, index)"
+            ><Delete
+          /></el-icon>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
       small
       background
+      :page-size="queryData.size"
       layout="prev, pager, next"
-      :total="2"
+      :total="total"
       class="mt-4"
+      @current-change="handleCurrentChange"
     />
   </el-card>
 </template>
@@ -48,18 +52,26 @@ const queryData = ref({
   page: 1,
   size: 10,
 })
+const oldtableData = ref([])
 const tableData = ref([])
 const total = ref(0)
 
 const initData = () => {
   getUserlist(queryData.value).then((res) => {
-    console.log(Math.ceil(res.data.length / 10))
-    total.value = Math.ceil(res.data.length / 10)
+    console.log(res.data.length)
+    oldtableData.value = res.data
+    total.value = res.data.length
     if (queryData.value.page == 1) {
-      tableData.value = res.data.splice(0, 10)
+      tableData.value = res.data.slice(0, 10)
     }
-    // tableData.value = res.data
   })
+}
+
+const handleCurrentChange = (val) => {
+  tableData.value = oldtableData.value.slice(val - 1, 10)
+}
+const deleteItem = (item, index) => {
+  tableData.value.splice(index, 1)
 }
 
 onMounted(() => {
