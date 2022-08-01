@@ -1,8 +1,9 @@
 // 引入mockjs
 import Mock from "mockjs";
-const Random = Mock.Random
+const Random = Mock.Random;
 
-let menuList = [{
+let menuList = [
+  {
     path: "/home",
     component: "Loyout",
     meta: {
@@ -22,7 +23,8 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/Department",
         component: "/system/Department",
         alwaysShow: false,
@@ -83,18 +85,20 @@ let menuList = [{
       roles: ["sys:goods"],
       parentId: 0,
     },
-    children: [{
-      path: "/goodCategory",
-      component: "/goods/goodCategory",
-      alwaysShow: false,
-      name: "goodCategory",
-      meta: {
-        title: "商品分类",
-        // icon: "ZoomOut",
-        roles: ["sys:goodsCategory"],
-        parentId: 34,
+    children: [
+      {
+        path: "/goodCategory",
+        component: "/goods/goodCategory",
+        alwaysShow: false,
+        name: "goodCategory",
+        meta: {
+          title: "商品分类",
+          // icon: "ZoomOut",
+          roles: ["sys:goodsCategory"],
+          parentId: 34,
+        },
       },
-    }, ],
+    ],
   },
   {
     path: "/map",
@@ -107,7 +111,8 @@ let menuList = [{
       roles: ["sys:map"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/BaiduMap",
         component: "/map/BaiduMap",
         alwaysShow: false,
@@ -154,7 +159,8 @@ let menuList = [{
       icon: "HelpFilled",
       roles: ["sys:able"],
     },
-    children: [{
+    children: [
+      {
         path: "/watermark",
         component: "/able/watermark",
         name: "watermark",
@@ -191,10 +197,7 @@ let menuList = [{
 export const getMenu = function (data) {
   console.log(data, "接收post参数");
   let body = JSON.parse(data.body);
-  const {
-    username,
-    password
-  } = JSON.parse(data.body);
+  const { username, password } = JSON.parse(data.body);
   console.log(JSON.parse(data.body));
   if (username === "admin" || username === "wp") {
     if (username === "admin" && password === "123456") {
@@ -210,7 +213,8 @@ export const getMenu = function (data) {
       return {
         code: 200,
         data: {
-          menu: [{
+          menu: [
+            {
               path: "/",
               name: "home",
               label: "首页",
@@ -247,9 +251,9 @@ export const getMenu = function (data) {
   }
 };
 
-
-export const Userlist = () => {
-  let userlist = []
+export const UserList = (data) => {
+  let info = JSON.parse(data.body);
+  let userList = [];
   for (let index = 0; index < 20; index++) {
     let obj = {
       username: Random.cname(),
@@ -257,8 +261,24 @@ export const Userlist = () => {
       date: Random.date(),
       address: Random.city(true),
       content: Random.csentence(),
+    };
+    if (info.keyWord && obj.username.indexOf(info.keyWord)) {
+      userList.push(obj);
+    } else {
+      userList.push(obj);
     }
-    userlist.push(obj)
   }
-  return userlist
-}
+  return userList;
+};
+
+export const addUserList = (from) => {
+  let UserList = UserList();
+  return UserList.unshift(from);
+};
+
+export const DeleteUser = (index) => {
+  let UserList = UserList();
+  return UserList.splice(index, 1);
+};
+
+export const UserInfo = (item) => {};

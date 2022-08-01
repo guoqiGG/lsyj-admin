@@ -5,17 +5,16 @@ import service from "../request.js";
 export function getMenuList(query) {
   console.log(query);
   return service({
-    method: "get",
+    method: "post",
     url: "/permission/getMenu",
     data: query,
   });
 }
 
-
-export function getUserlist(query) {
+export function getUserList(query) {
   return service({
-    method: 'get',
-    url: '/permission/Userlist',
-    data: query
-  })
+    method: "get",
+    url: "/permission/UserList",
+    data: query,
+  });
 }

@@ -1,9 +1,6 @@
 import Mock from "mockjs";
 
-import {
-  getMenu,
-  Userlist
-} from "./permission.js";
+import { getMenu, UserList } from "./permission.js";
 
-Mock.mock("/permission/getMenu", "get", getMenu);
-Mock.mock("/permission/Userlist", "get", Userlist);
+Mock.mock("/permission/getMenu", "post", getMenu);
+Mock.mock("/permission/UserList", "get", UserList);
