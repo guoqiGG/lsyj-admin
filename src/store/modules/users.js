@@ -1,17 +1,13 @@
-import {
-  getMenuList
-} from "../../api/modules/index.js";
+import { getMenuList } from "../../api/modules/index.js";
 import router from "../../router/router.js";
-import {
-  ElMessage
-} from "element-plus";
+import { ElMessage } from "element-plus";
 
 export default {
   namespaced: true,
   state: () => {
     token: localStorage.getItem("token") || "";
     isCollapse: false;
-    menuList: [];
+    menuList: localStorage.getItem("setMenuList") || [];
   },
   mutations: {
     setToken(state, token) {
@@ -26,20 +22,18 @@ export default {
   },
 
   actions: {
-    login({
-      commit
-    }, userInfo) {
+    login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         getMenuList(userInfo)
           .then((res) => {
-            // console.log(res)
             localStorage.setItem("token", res.data.data.token);
             console.log(localStorage.getItem("token"));
             commit("setToken", res.data.data.token);
             commit("setMenuList", res.data.data.menu);
+            localStorage.setItem("setMenuList", res.data.data.menu);
             router.replace("/");
             ElMessage({
-              message: "登录成功",
+              message: res.data.message,
               type: "success",
             });
             resolve();
@@ -49,9 +43,7 @@ export default {
           });
       });
     },
-    changeIsCollapse({
-      commit
-    }, str) {
+    changeIsCollapse({ commit }, str) {
       console.log(str);
       commit("SetIsCollapse", str);
     },

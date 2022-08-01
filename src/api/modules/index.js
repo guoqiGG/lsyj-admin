@@ -3,9 +3,8 @@
 import service from "../request.js";
 
 export function getMenuList(query) {
-  console.log(query);
   return service({
-    method: "post",
+    method: "POST",
     url: "/permission/getMenu",
     data: query,
   });

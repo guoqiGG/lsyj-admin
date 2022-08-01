@@ -6,7 +6,7 @@
       </el-col>
       <el-col :span="4">
         <el-button type="primary" :icon="Search" @click="initData">搜索</el-button>
-        <el-button type="primary" @click="dialogVisible = true">+添加</el-button>
+        <el-button type="primary">+添加</el-button>
       </el-col>
     </el-row>
   </el-card>
@@ -31,12 +31,12 @@
         <el-input v-model="form.email" autocomplete="off" />
       </el-form-item>
 
-      <el-form-item label="Zones" :label-width="formLabelWidth">
+      <!-- <el-form-item label="Zones" :label-width="formLabelWidth">
         <el-select v-model="form.region" placeholder="Please select a zone">
           <el-option label="Zone No.1" value="shanghai" />
           <el-option label="Zone No.2" value="beijing" />
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <template #footer>
       <span class="dialog-footer">

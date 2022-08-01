@@ -256,6 +256,7 @@ export const UserList = (data) => {
   let userList = [];
   for (let index = 0; index < 20; index++) {
     let obj = {
+      id: Random.id(),
       username: Random.cname(),
       email: Random.email(),
       date: Random.date(),
