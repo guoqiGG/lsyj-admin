@@ -46,7 +46,7 @@
   </el-card>
 
   <el-dialog v-model="dialogVisible" title="添加用户" width="50%" draggable>
-    <el-form :model="form" :rules="rules" ref="FormRef" class="demo-ruleForm">
+    <el-form :model="from" :rules="rules" ref="FormRef" class="demo-ruleForm">
       <el-form-item label="用户名" :label-width="formLabelWidth">
         <el-input v-model="from.name" autocomplete="off" />
       </el-form-item>
@@ -67,7 +67,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="onSubmit(FormRef)">添加</el-button>
+        <el-button type="primary" @click="onSubmit()">添加</el-button>
       </span>
     </template>
   </el-dialog>
@@ -131,11 +131,12 @@ const initData = () => {
     }
   })
 }
-const onSubmit = (formEl) => {
-  if (!formEl) return
-  formEl.validate((valid) => {
+const onSubmit = () => {
+  // console.log(formEl)
+  if (!FormRef.value) return
+  FormRef.value.validate((valid) => {
     if (valid) {
-      console.log(valid)
+      console.log('submit!')
     } else {
       console.log('error submit!')
       return false
