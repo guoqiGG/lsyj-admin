@@ -1,7 +1,7 @@
 <template>
   <el-card shadow="never" class="henader-card">
     <el-row :gutter="12">
-      <el-col :span="8">
+      <el-col :span="6">
         <el-input placeholder="请输入搜索内容" v-model="queryData.keyWord">
         </el-input>
       </el-col>
@@ -16,7 +16,13 @@
     </el-row>
   </el-card>
   <el-card shadow="never">
-    <el-table :data="tableData" border stripe style="width: 100%">
+    <el-table
+      :data="tableData"
+      :header-cell-style="{ backgroundColor: '#ecf5ff' }"
+      border
+      stripe
+      style="width: 100%"
+    >
       <el-table-column
         v-for="item in options"
         :key="item.type"
