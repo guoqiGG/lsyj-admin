@@ -28,37 +28,6 @@ const routes = [
           name: "首页",
         },
       },
-
-      // {
-      //   path: 'categories',
-      //   name: 'categories',
-      //   component: () => import('@/views/categories/index.vue')
-      // },
-      // {
-      //   path: 'goods',
-      //   name: 'goods',
-      //   component: () => import('@/views/goods/index.vue')
-      // },
-      // {
-      //   path: 'orders',
-      //   name: 'orders',
-      //   component: () => import('@/views/orders/index.vue')
-      // },
-      // {
-      //   path: 'params',
-      //   name: 'params',
-      //   component: () => import('@/views/params/index.vue')
-      // },
-      // {
-      //   path: 'reports',
-      //   name: 'reports',
-      //   component: () => import('@/views/reports/index.vue')
-      // },
-      // {
-      //   path: 'rights',
-      //   name: 'rights',
-      //   component: () => import('@/views/rights/index.vue')
-      // },
     ],
   },
   {
@@ -103,6 +72,25 @@ const routes = [
         meta: {
           requiresAuth: true,
           name: "权限管理",
+        },
+      },
+    ],
+  },
+  {
+    path: "/able",
+    name: "able",
+    component: Layout,
+    meta: {
+      name: "功能",
+    },
+    children: [
+      {
+        path: "/watermark",
+        name: "watermark",
+        component: () => import("../views/able/watermark.vue"),
+        meta: {
+          requiresAuth: true, //有一些页面是否登录才能进去
+          name: "水印",
         },
       },
     ],
