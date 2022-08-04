@@ -109,6 +109,15 @@ const routes = [{
           name: "富文本编辑器",
         },
       },
+      {
+        path: "/guide",
+        name: "guide",
+        component: () => import("../views/able/guide.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "引导页",
+        },
+      },
     ],
   },
 ];

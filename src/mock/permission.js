@@ -190,6 +190,15 @@ let menuList = [{
           roles: ["sys:able"],
         },
       },
+      {
+        path: "/guide",
+        component: "/able/guide",
+        name: "guide",
+        meta: {
+          title: "引导页",
+          roles: ["sys:able"],
+        },
+      },
     ],
   },
   {
