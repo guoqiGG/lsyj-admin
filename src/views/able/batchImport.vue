@@ -1,19 +1,35 @@
 <template>
-  <el-card class="box-card" shadow="never">
-    <el-upload action="#" list-type="picture-card" :auto-upload="false">
+  <el-card class="box-card col-center" shadow="never">
+    <span class="box-card-title">图片上传 🍓🍇🍈🍉</span>
+    <el-upload
+      action="#"
+      list-type="picture-card"
+      :auto-upload="false"
+      class="m20"
+    >
       <el-icon><Plus /></el-icon>
-
       <template #file="{ file }">
         <div>
           <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
           <span class="el-upload-list__item-actions">
-            <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
+            <span
+              class="el-upload-list__item-preview"
+              @click="handlePictureCardPreview(file)"
+            >
               <el-icon><zoom-in /></el-icon>
             </span>
-            <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">
+            <span
+              v-if="!disabled"
+              class="el-upload-list__item-delete"
+              @click="handleDownload(file)"
+            >
               <el-icon><Download /></el-icon>
             </span>
-            <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
+            <span
+              v-if="!disabled"
+              class="el-upload-list__item-delete"
+              @click="handleRemove(file)"
+            >
               <el-icon><Delete /></el-icon>
             </span>
           </span>
@@ -22,7 +38,12 @@
     </el-upload>
 
     <el-dialog v-model="dialogVisible">
-      <img w-full :src="dialogImageUrl" alt="Preview Image" />
+      <img
+        w-full
+        :src="dialogImageUrl"
+        alt="Preview Image"
+        style="width: 100%"
+      />
     </el-dialog>
   </el-card>
 </template>
@@ -31,18 +52,18 @@
 import { ref } from 'vue'
 import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
 
-// import type { UploadFile } from 'element-plus'
-
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 const disabled = ref(false)
 
 const handleRemove = (file) => {
   console.log(file)
+  dialogImageUrl.value = ''
 }
 
 const handlePictureCardPreview = (file) => {
-  dialogImageUrl.value = file.url!
+  console.log(file.url)
+  dialogImageUrl.value = file.url
   dialogVisible.value = true
 }
 
@@ -50,21 +71,8 @@ const handleDownload = (file) => {
   console.log(file)
 }
 </script>
-<style>
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
+<style lang="scss" scoped>
 .box-card {
   width: 100%;
 }
