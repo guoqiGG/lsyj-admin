@@ -178,6 +178,15 @@ let menuList = [
           roles: ["sys:able"],
         },
       },
+      {
+        path: "/batchImport",
+        component: "/able/batchImport",
+        name: "batchImport",
+        meta: {
+          title: "文件上传",
+          roles: ["sys:able"],
+        },
+      },
     ],
   },
   {

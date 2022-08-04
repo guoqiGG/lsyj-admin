@@ -93,6 +93,15 @@ const routes = [
           name: "水印",
         },
       },
+      {
+        path: "/batchImport",
+        name: "batchImport",
+        component: () => import("../views/able/batchImport.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "文件上传",
+        },
+      },
     ],
   },
 ];
