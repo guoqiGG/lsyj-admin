@@ -199,6 +199,15 @@ let menuList = [{
           roles: ["sys:able"],
         },
       },
+      {
+        path: "/embedded",
+        component: "/able/embedded",
+        name: "embedded",
+        meta: {
+          title: "内嵌页",
+          roles: ["sys:able"],
+        },
+      },
     ],
   },
   {

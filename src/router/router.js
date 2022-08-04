@@ -118,6 +118,15 @@ const routes = [{
           name: "引导页",
         },
       },
+      {
+        path: "/embedded",
+        name: "embedded",
+        component: () => import("../views/able/embedded.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "内嵌页",
+        },
+      },
     ],
   },
 ];
