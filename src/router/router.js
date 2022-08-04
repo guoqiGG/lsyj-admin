@@ -1,10 +1,12 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHashHistory
+} from "vue-router";
 import home from "../views/home/index.vue";
 import login from "../views/login/index.vue";
 import Layout from "../layout/index.vue";
 
-const routes = [
-  {
+const routes = [{
     path: "/login",
     name: login,
     component: login,
@@ -18,17 +20,15 @@ const routes = [
       requiresAuth: true, //有一些页面是否登录才能进去
       name: "首页",
     },
-    children: [
-      {
-        path: "/home",
-        name: "home",
-        component: () => import("../views/home/index.vue"),
-        meta: {
-          requiresAuth: true, //有一些页面是否登录才能进去
-          name: "首页",
-        },
+    children: [{
+      path: "/home",
+      name: "home",
+      component: () => import("../views/home/index.vue"),
+      meta: {
+        requiresAuth: true, //有一些页面是否登录才能进去
+        name: "首页",
       },
-    ],
+    }, ],
   },
   {
     path: "/system",
@@ -37,8 +37,7 @@ const routes = [
     meta: {
       name: "系统管理",
     },
-    children: [
-      {
+    children: [{
         path: "/Department",
         name: "Department",
         component: () => import("../views/system/Department/index.vue"),
@@ -83,8 +82,7 @@ const routes = [
     meta: {
       name: "功能",
     },
-    children: [
-      {
+    children: [{
         path: "/watermark",
         name: "watermark",
         component: () => import("../views/able/watermark.vue"),
@@ -100,6 +98,15 @@ const routes = [
         meta: {
           requiresAuth: true,
           name: "文件上传",
+        },
+      },
+      {
+        path: "/wangEditor",
+        name: "wangEditor",
+        component: () => import("../views/able/wangEditor.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "富文本编辑器",
         },
       },
     ],
