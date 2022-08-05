@@ -164,16 +164,16 @@ let menuList = [{
           roles: ["sys:able"],
         },
       },
-      {
-        path: "/Drag",
-        component: "/able/Drag",
-        name: "Drag",
-        meta: {
-          title: "拖拽",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
-      },
+      // {
+      //   path: "/Drag",
+      //   component: "/able/Drag",
+      //   name: "Drag",
+      //   meta: {
+      //     title: "拖拽",
+      //     icon: "Menu",
+      //     roles: ["sys:able"],
+      //   },
+      // },
       {
         path: "/batchImport",
         component: "/able/batchImport",
@@ -215,6 +215,39 @@ let menuList = [{
         },
       },
     ],
+  },
+  {
+    path: "/directives",
+    component: "Loyout",
+    alwaysShow: true,
+    name: "directives",
+    meta: {
+      title: "自定义指令",
+      icon: "Stamp",
+      roles: ["sys:manage"],
+      parentId: 0,
+    },
+    children: [{
+        path: "/copy",
+        component: "/directives/copy",
+        name: "copy",
+        meta: {
+          title: "复制",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
+      },
+      {
+        path: "/Drag",
+        component: "/directives/Drag",
+        name: "Drag",
+        meta: {
+          title: "拖拽",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
+      },
+    ]
   },
   {
     path: "/DataReport",

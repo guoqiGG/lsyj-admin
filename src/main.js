@@ -6,6 +6,8 @@ import store from "../src/store/index";
 import "../src/styles/common.scss";
 import ElementPlus from "element-plus";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
+// 引入注册自定义指令
+import directives from './instruction/index.js'
 import "element-plus/dist/index.css";
 import App from "./App.vue";
 import "./mock/index.js";
@@ -19,7 +21,7 @@ for (const iconName in ELIcons) {
 }
 
 
-app.use(router).use(store).use(ElementPlus, {
+app.use(router).use(store).use(directives).use(ElementPlus, {
   locale: zhCn,
 });
 app.mount("#app");

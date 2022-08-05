@@ -91,15 +91,15 @@ const routes = [{
           name: "水印",
         },
       },
-      {
-        path: "/Drag",
-        name: "Drag",
-        component: () => import("../views/able/Drag.vue"),
-        meta: {
-          requiresAuth: true, //有一些页面是否登录才能进去
-          name: "拖拽",
-        },
-      },
+      // {
+      //   path: "/Drag",
+      //   name: "Drag",
+      //   component: () => import("../views/directives/Drag.vue"),
+      //   meta: {
+      //     requiresAuth: true, //有一些页面是否登录才能进去
+      //     name: "拖拽",
+      //   },
+      // },
       {
         path: "/batchImport",
         name: "batchImport",
@@ -155,7 +155,35 @@ const routes = [{
         name: '项目一'
       }
     }]
-  }
+  },
+  {
+    path: "/directives",
+    name: "directives",
+    component: Layout,
+    meta: {
+      name: "自定义指令",
+    },
+    children: [{
+        path: '/Drag',
+        name: 'Drag',
+        component: () => import('../views/directives/Drag.vue'),
+        meta: {
+          requiresAuth: true,
+          name: '拖拽'
+        }
+      },
+      {
+        path: '/copy',
+        name: 'copy',
+        component: () => import('../views/directives/copy.vue'),
+        meta: {
+          requiresAuth: true,
+          name: '复制'
+        }
+      }
+    ]
+  },
+
 ];
 
 const router = createRouter({
