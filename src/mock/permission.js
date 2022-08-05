@@ -2,7 +2,8 @@
 import Mock from "mockjs";
 const Random = Mock.Random;
 
-let menuList = [{
+let menuList = [
+  {
     path: "/home",
     component: "Loyout",
     meta: {
@@ -22,14 +23,15 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/Department",
         component: "/system/Department",
         alwaysShow: false,
         name: "Department",
         meta: {
           title: "机构管理",
-          // icon: "ZoomOut",
+          icon: "Menu",
           roles: ["sys:dept"],
           parentId: 17,
         },
@@ -41,7 +43,7 @@ let menuList = [{
         name: "UserList",
         meta: {
           title: "用户管理",
-          // icon: "ZoomOut",
+          icon: "Menu",
           roles: ["sys:user"],
           parentId: 17,
         },
@@ -53,7 +55,7 @@ let menuList = [{
         name: "RoleList",
         meta: {
           title: "角色管理",
-          // icon: "ZoomOut",
+          icon: "Menu",
           roles: ["sys:role"],
           parentId: 17,
         },
@@ -65,7 +67,7 @@ let menuList = [{
         name: "MenuList",
         meta: {
           title: "权限管理",
-          // icon: "ZoomOut",
+          icon: "Menu",
           roles: ["sys:menu"],
           parentId: 17,
         },
@@ -83,18 +85,20 @@ let menuList = [{
       roles: ["sys:goods"],
       parentId: 0,
     },
-    children: [{
-      path: "/goodCategory",
-      component: "/goods/goodCategory",
-      alwaysShow: false,
-      name: "goodCategory",
-      meta: {
-        title: "商品分类",
-        // icon: "ZoomOut",
-        roles: ["sys:goodsCategory"],
-        parentId: 34,
+    children: [
+      {
+        path: "/goodCategory",
+        component: "/goods/goodCategory",
+        alwaysShow: false,
+        name: "goodCategory",
+        meta: {
+          title: "商品分类",
+          icon: "Menu",
+          roles: ["sys:goodsCategory"],
+          parentId: 34,
+        },
       },
-    }, ],
+    ],
   },
   {
     path: "/map",
@@ -107,14 +111,15 @@ let menuList = [{
       roles: ["sys:map"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/BaiduMap",
         component: "/map/BaiduMap",
         alwaysShow: false,
         name: "BaiduMap",
         meta: {
           title: "百度地图",
-          // icon: "ZoomOut",
+          icon: "Menu",
           roles: ["sys:BaiduMap"],
           parentId: 34,
         },
@@ -126,7 +131,7 @@ let menuList = [{
         name: "GooleMap",
         meta: {
           title: "谷歌地图",
-          // icon: "ZoomOut",
+          icon: "Menu",
           roles: ["sys:GooleMap"],
           parentId: 34,
         },
@@ -154,12 +159,14 @@ let menuList = [{
       icon: "HelpFilled",
       roles: ["sys:able"],
     },
-    children: [{
+    children: [
+      {
         path: "/watermark",
         component: "/able/watermark",
         name: "watermark",
         meta: {
           title: "水印",
+          icon: "Menu",
           roles: ["sys:able"],
         },
       },
@@ -169,6 +176,7 @@ let menuList = [{
         name: "Drag",
         meta: {
           title: "拖拽",
+          icon: "Menu",
           roles: ["sys:able"],
         },
       },
@@ -178,6 +186,7 @@ let menuList = [{
         name: "batchImport",
         meta: {
           title: "文件上传",
+          icon: "Menu",
           roles: ["sys:able"],
         },
       },
@@ -187,6 +196,7 @@ let menuList = [{
         name: "wangEditor",
         meta: {
           title: "富文本编辑器",
+          icon: "Menu",
           roles: ["sys:able"],
         },
       },
@@ -196,6 +206,7 @@ let menuList = [{
         name: "guide",
         meta: {
           title: "引导页",
+          icon: "Menu",
           roles: ["sys:able"],
         },
       },
@@ -205,6 +216,7 @@ let menuList = [{
         name: "embedded",
         meta: {
           title: "内嵌页",
+          icon: "Menu",
           roles: ["sys:able"],
         },
       },
@@ -227,10 +239,7 @@ let menuList = [{
 export const getMenu = function (data) {
   console.log(data, "接收post参数");
   let body = JSON.parse(data.body);
-  const {
-    username,
-    password
-  } = JSON.parse(data.body);
+  const { username, password } = JSON.parse(data.body);
   console.log(JSON.parse(data.body));
   if (username === "admin" || username === "wp") {
     if (username === "admin" && password === "123456") {
@@ -246,7 +255,8 @@ export const getMenu = function (data) {
       return {
         code: 200,
         data: {
-          menu: [{
+          menu: [
+            {
               path: "/",
               name: "home",
               label: "首页",

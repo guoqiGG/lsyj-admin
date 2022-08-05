@@ -1,10 +1,6 @@
 <template>
   <div class="content-box" style="height: 100%">
-    <iframe
-      src="https://cn.bing.com/"
-      frameborder="0"
-      class="full-iframe"
-    ></iframe>
+    <iframe src="https://cn.bing.com/" frameborder="0" class="full-iframe"></iframe>
   </div>
 </template>
 
@@ -17,8 +13,8 @@
   background-color: #fff;
 }
 .full-iframe {
-  margin-top: 2.5%;
-  width: 95%;
-  height: 95%;
+  // margin-top: 2.5%;
+  width: 100%;
+  height: 100%;
 }
 </style>
