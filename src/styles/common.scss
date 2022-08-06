@@ -118,6 +118,10 @@ body,
   width: 100%;
 }
 
+.ml20 {
+  margin-left: 20px;
+}
+
 /* 清除浮动 */
 .clearfix::after {
   content: "";
@@ -187,5 +191,3 @@ body,
   line-height: 100px;
   min-height: 400px;
 }
-
-// @import './element-variables.scss'

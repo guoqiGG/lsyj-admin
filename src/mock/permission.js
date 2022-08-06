@@ -331,44 +331,55 @@ export const getMenu = function (data) {
     };
   }
 };
-
-export const UserList = (data) => {
-  let info = JSON.parse(data.body);
-  console.log(info.keyWord);
-  let userList = [];
-  for (let index = 0; index < 20; index++) {
-    let obj = {
-      id: Random.id(),
-      username: Random.cname(),
-      email: Random.email(),
-      date: Random.date(),
-      address: Random.city(true),
-      content: Random.csentence(),
-    };
-    if (info.keyWord) {
-      console.log(obj.username);
-      if (obj.username.indexOf(info.keyWord) != -1) {
-        console.log("存在");
-        userList.push(obj);
-      } else {
-        return {
-          code: 400,
-          data: {
-            message: "不存在该数据",
-          },
-        };
-      }
-    } else {
-      userList.push(obj);
-    }
-  }
-  return userList;
+// 用户列表
+let userList = [];
+for (let index = 0; index < 50; index++) {
+  let obj = {
+    id: Random.id(),
+    username: Random.cname(),
+    email: Random.email(),
+    date: Random.date(),
+    address: Random.city(true),
+    content: Random.csentence(),
+  };
+  userList.push(obj);
+}
+const param2Obj = (url) => {
+  let obj = JSON.parse(url)
+  let page = obj.page
+  console.log(page)
+  return page;
 };
 
-export const addUserList = (from) => {
-  let UserList = UserList();
-  return UserList.unshift(from);
+
+export const UserList = (options) => {
+  const currentPage = param2Obj(options.body);
+  let cameraData = userList.filter((item, index) => {
+    return (
+      index >= (currentPage - 1) * 10 &&
+      index < currentPage * 10
+    );
+  });
+  return {
+    code: 200,
+    data: {
+      total: userList.length,
+      userList: cameraData,
+    },
+  };
 };
+
+export const addUserList = (options) => {
+  console.log("传过来的数据" + JSON.parse(options.body));
+  let obj = JSON.parse(options.body)
+  obj.id = Random.id()
+  userList.unshift(obj); // 将前台返回来的数据，拼接到数组中。
+  return {
+    data: userList,
+    id: obj.id
+  };
+};
+
 
 export const DeleteUser = (index) => {
   let UserList = UserList();

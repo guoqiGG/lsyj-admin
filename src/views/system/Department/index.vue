@@ -1,19 +1,36 @@
 <template>
   <el-card shadow="never" class="henader-card">
-    <el-row :gutter="12">
-      <el-col :span="6">
+    <div class="flx-row">
+      <el-form :inline="true" :model="queryData" style="flex: 1">
         <el-input placeholder="请输入搜索内容" v-model="queryData.keyWord">
         </el-input>
-      </el-col>
-      <el-col :span="4">
-        <el-button type="primary" :icon="Search" @click="initData"
+        <el-select v-model="value" clearable placeholder="Select" class="ml20">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+        <el-date-picker
+          class="ml20"
+          v-model="queryData.date"
+          type="datetimerange"
+          :shortcuts="shortcuts"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        />
+      </el-form>
+      <div class="flex-right">
+        <el-button type="primary" :icon="Search" @click="initData" class="ml20"
           >搜索</el-button
         >
         <el-button type="primary" @click="dialogVisible = true"
           >+添加</el-button
         >
-      </el-col>
-    </el-row>
+      </div>
+    </div>
   </el-card>
   <el-card shadow="never">
     <el-table
@@ -32,8 +49,10 @@
         :align="item.align"
         show-overflow-tooltip
       >
-        <template #default v-if="item.props === 'actions'">
-          <el-icon class="icon-edit"><Edit /></el-icon>
+        <template v-slot:default="scope" v-if="item.props === 'actions'">
+          <el-icon class="icon-edit" @click="editorClick(scope.row)"
+            ><Edit
+          /></el-icon>
           <el-icon class="icon-dele" @click="deleteItem(item, index)"
             ><Delete
           /></el-icon>
@@ -51,23 +70,35 @@
     />
   </el-card>
 
-  <el-dialog v-model="dialogVisible" title="添加用户" width="50%" draggable>
-    <el-form :model="from" :rules="rules" ref="FormRef" class="demo-ruleForm">
-      <el-form-item label="用户名" :label-width="formLabelWidth">
-        <el-input v-model="from.name" autocomplete="off" />
+  <el-dialog
+    v-model="dialogVisible"
+    :title="`${dialogData.title}用户`"
+    :width="dialogWidth"
+    :hide-required-asterisk="dialogData.isView"
+    draggable
+  >
+    <el-form
+      :model="dialogData.FormData"
+      :rules="rules"
+      ref="FormRef"
+      class="demo-ruleForm"
+    >
+      <el-form-item
+        label="用户名"
+        :label-width="formLabelWidth"
+        prop="username"
+      >
+        <el-input v-model="dialogData.FormData.username" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="邮箱" :label-width="formLabelWidth">
-        <el-input v-model="from.email" autocomplete="off" />
+      <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
+        <el-input v-model="dialogData.FormData.email" autocomplete="off" />
       </el-form-item>
 
-      <el-form-item label="地址" :label-width="formLabelWidth">
-        <el-select placeholder="Please select a zone" v-model="from.address">
-          <el-option label="Zone No.1" value="shanghai" />
-          <el-option label="Zone No.2" value="beijing" />
-        </el-select>
+      <el-form-item label="地址" :label-width="formLabelWidth" prop="address">
+        <el-input v-model="dialogData.FormData.address" type="textarea" />
       </el-form-item>
-      <el-form-item label="备注" :label-width="formLabelWidth">
-        <el-input v-model="from.content" type="textarea" />
+      <el-form-item label="备注" :label-width="formLabelWidth" prop="content">
+        <el-input v-model="dialogData.FormData.content" type="textarea" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -81,10 +112,11 @@
 
 <script setup>
 import { Search, Edit, Delete, UserFilled } from '@element-plus/icons-vue'
-import { getUserList } from '../../../api/modules/index.js'
+import { getUserList, addUserList } from '../../../api/modules/index.js'
 import { options } from './options.js'
 import { onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
+import { getDateTime } from '../../../until/index.js'
 const queryData = ref({
   keyWord: '',
   page: 1,
@@ -92,30 +124,24 @@ const queryData = ref({
 })
 const FormRef = ref()
 const formLabelWidth = '140px'
-const from = reactive({
-  name: '',
-  email: '',
-  address: '',
-  content: '',
+const dialogData = reactive({
+  isView: true,
+  title: '添加',
+  FormData: {
+    username: '',
+    email: '',
+    address: '',
+    content: '',
+  },
 })
 
-const rules = {
-  name: [
-    {
-      required: true,
-      message: '姓名不能为空',
-      trigger: 'blur',
-    },
-  ],
-  email: [{ required: true, message: '邮箱不能为空', trigger: 'blur' }],
-  content: [
-    {
-      required: true,
-      message: 'Please input activity form',
-      trigger: 'blur',
-    },
-  ],
-}
+const dialogWidth = ref('0')
+const rules = reactive({
+  username: [{ required: true, message: '请填写用户姓名', trigger: 'change' }],
+  email: [{ required: true, message: '请填写邮箱', trigger: 'change' }],
+  address: [{ required: true, message: '请填写居住地址', trigger: 'change' }],
+  content: [{ required: true, message: '请填写备注信息', trigger: 'change' }],
+})
 const oldTableData = ref([])
 const dialogVisible = ref(false)
 const tableData = ref([])
@@ -123,40 +149,65 @@ const total = ref(0)
 
 const initData = () => {
   getUserList(queryData.value).then((res) => {
-    console.log(res)
-    if (res.data.code == 400) {
-      return ElMessage({
-        message: res.data.data.message,
-        type: 'error',
-      })
-    }
-    oldTableData.value = res.data
-    total.value = res.data.length
-    if (queryData.value.page == 1) {
-      tableData.value = res.data.slice(0, 10)
-    }
+    total.value = res.data.data.total
+    tableData.value = res.data.data.userList
   })
 }
 const onSubmit = () => {
-  // console.log(formEl)
-  if (!FormRef.value) return
-  FormRef.value.validate((valid) => {
-    if (valid) {
-      console.log('submit!')
-    } else {
-      console.log('error submit!')
-      return false
+  FormRef.value.validate(async (valid) => {
+    if (!valid) return
+    try {
+      dialogData.FormData.date = getDateTime('')
+      addUserList(dialogData.FormData)
+        .then((res) => {
+          ElMessage({
+            message: `${dialogData.value.title}用户成功！`,
+            type: 'success',
+          })
+          dialogData.FormData.id = res.data.data.id
+          tableData.value.unshift(dialogData.FormData)
+        })
+        .catch((err) => {})
+      dialogVisible.value = false
+    } catch (error) {
+      console.log(error)
     }
   })
 }
 const handleCurrentChange = (val) => {
-  tableData.value = oldTableData.value.slice(val - 1, 10)
+  queryData.value.page = val
+  initData(queryData.value)
 }
+const editorClick = (item) => {
+  dialogVisible.value = true
+
+  dialogData.FormData = item
+  console.log(dialogData.FormData)
+  dialogData.isView = false
+  dialogData.title = '编辑'
+}
+
 const deleteItem = (item, index) => {
   tableData.value.splice(index, 1)
 }
 
+const setDialogWidth = () => {
+  console.log(document.body.clientWidth)
+  var val = document.body.clientWidth
+  const def = 800 // 默认宽度
+  if (val < def) {
+    dialogWidth.value = '100%'
+  } else {
+    dialogWidth.value = def + 'px'
+  }
+}
 onMounted(() => {
+  setDialogWidth()
+  window.onresize = () => {
+    return (() => {
+      setDialogWidth()
+    })()
+  }
   initData()
 })
 </script>

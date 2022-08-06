@@ -17,3 +17,10 @@ export function getUserList(query) {
     data: query,
   });
 }
+export function addUserList(query) {
+  return service({
+    method: "post",
+    url: "/permission/addUserList",
+    data: query,
+  });
+}
