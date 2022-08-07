@@ -380,10 +380,20 @@ export const addUserList = (options) => {
   };
 };
 
-
-export const DeleteUser = (index) => {
-  let UserList = UserList();
-  return UserList.splice(index, 1);
+// 数据的修改操作
+export const listUpdate = (options) => {
+  let obj = JSON.parse(options.body)
+  userList = userList.map((val) => {
+    return val.id == obj.id ? obj : val;
+  });
+  return {
+    data: userList,
+  };
 };
 
-export const UserInfo = (item) => {};
+// export const DeleteUser = (index) => {
+//   let UserList = UserList();
+//   return UserList.splice(index, 1);
+// };
+
+// export const UserInfo = (item) => {};

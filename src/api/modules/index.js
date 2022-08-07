@@ -24,3 +24,10 @@ export function addUserList(query) {
     data: query,
   });
 }
+export function listUpdate(query) {
+  return service({
+    method: "post",
+    url: "/permission/listUpdate",
+    data: query,
+  });
+}

@@ -32,7 +32,7 @@ export function getDateTime(type) {
     currentdate = year + hengGang + month;
     return currentdate;
   } else {
-    currentdate = year + hengGang + month + hengGang + curDate + " " + curHours + maoHao + curMinutes + maoHao + curSeconds;
+    currentdate = year + hengGang + month + hengGang + curDate + " "
     return currentdate;
   }
 }

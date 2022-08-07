@@ -1,6 +1,10 @@
-import { getMenuList } from "../../api/modules/index.js";
+import {
+  getMenuList
+} from "../../api/modules/index.js";
 import router from "../../router/router.js";
-import { ElMessage } from "element-plus";
+import {
+  ElMessage
+} from "element-plus";
 
 export default {
   namespaced: true,
@@ -22,7 +26,9 @@ export default {
   },
 
   actions: {
-    login({ commit }, userInfo) {
+    login({
+      commit
+    }, userInfo) {
       return new Promise((resolve, reject) => {
         getMenuList(userInfo)
           .then((res) => {
@@ -33,7 +39,7 @@ export default {
             localStorage.setItem("setMenuList", res.data.data.menu);
             router.replace("/");
             ElMessage({
-              message: res.data.message,
+              message: '登录成功',
               type: "success",
             });
             resolve();
@@ -43,7 +49,9 @@ export default {
           });
       });
     },
-    changeIsCollapse({ commit }, str) {
+    changeIsCollapse({
+      commit
+    }, str) {
       console.log(str);
       commit("SetIsCollapse", str);
     },

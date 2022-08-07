@@ -4,14 +4,6 @@
       <el-form :inline="true" :model="queryData" style="flex: 1">
         <el-input placeholder="请输入搜索内容" v-model="queryData.keyWord">
         </el-input>
-        <el-select v-model="value" clearable placeholder="Select" class="ml20">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
         <el-date-picker
           class="ml20"
           v-model="queryData.date"
@@ -26,9 +18,7 @@
         <el-button type="primary" :icon="Search" @click="initData" class="ml20"
           >搜索</el-button
         >
-        <el-button type="primary" @click="dialogVisible = true"
-          >+添加</el-button
-        >
+        <el-button type="primary" @click="dialogVisibleShow">+添加</el-button>
       </div>
     </div>
   </el-card>
@@ -53,9 +43,19 @@
           <el-icon class="icon-edit" @click="editorClick(scope.row)"
             ><Edit
           /></el-icon>
-          <el-icon class="icon-dele" @click="deleteItem(item, index)"
-            ><Delete
-          /></el-icon>
+          <el-popconfirm
+            confirm-button-text="确认"
+            cancel-button-text="取消"
+            :icon="InfoFilled"
+            icon-color="#626AEF"
+            title="确认删除该用户?"
+            @confirm="DeleteItem(index)"
+            @cancel="cancelEvent"
+          >
+            <template #reference>
+              <el-icon class="icon-dele"><Delete /></el-icon>
+            </template>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -104,15 +104,25 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="onSubmit()">添加</el-button>
+        <el-button type="primary" @click="onSubmit()">确认</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
 
 <script setup>
-import { Search, Edit, Delete, UserFilled } from '@element-plus/icons-vue'
-import { getUserList, addUserList } from '../../../api/modules/index.js'
+import {
+  Search,
+  Edit,
+  Delete,
+  UserFilled,
+  InfoFilled,
+} from '@element-plus/icons-vue'
+import {
+  getUserList,
+  addUserList,
+  listUpdate,
+} from '../../../api/modules/index.js'
 import { options } from './options.js'
 import { onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
@@ -153,21 +163,43 @@ const initData = () => {
     tableData.value = res.data.data.userList
   })
 }
+
+const dialogVisibleShow = () => {
+  dialogData.FormData = {
+    username: '',
+    email: '',
+    address: '',
+    content: '',
+  }
+  dialogVisible.value = true
+}
 const onSubmit = () => {
   FormRef.value.validate(async (valid) => {
     if (!valid) return
     try {
-      dialogData.FormData.date = getDateTime('')
-      addUserList(dialogData.FormData)
-        .then((res) => {
+      if (dialogData.FormData.id) {
+        listUpdate(dialogData.FormData).then((res) => {
+          console.log('编辑数据成功')
+          console.log(ElMessage)
           ElMessage({
-            message: `${dialogData.value.title}用户成功！`,
+            message: '编辑用户成功',
             type: 'success',
           })
-          dialogData.FormData.id = res.data.data.id
-          tableData.value.unshift(dialogData.FormData)
+          tableData.value = res.data.data
         })
-        .catch((err) => {})
+      } else {
+        dialogData.FormData.date = getDateTime('')
+        addUserList(dialogData.FormData)
+          .then((res) => {
+            ElMessage({
+              message: '添加用户成功',
+              type: 'success',
+            })
+            dialogData.FormData.id = res.data.data.id
+            tableData.value.unshift(dialogData.FormData)
+          })
+          .catch((err) => {})
+      }
       dialogVisible.value = false
     } catch (error) {
       console.log(error)
@@ -187,10 +219,13 @@ const editorClick = (item) => {
   dialogData.title = '编辑'
 }
 
-const deleteItem = (item, index) => {
+const DeleteItem = (index) => {
+  console.log(index)
   tableData.value.splice(index, 1)
 }
-
+const cancelEvent = () => {
+  console.log('cancel!')
+}
 const setDialogWidth = () => {
   console.log(document.body.clientWidth)
   var val = document.body.clientWidth
