@@ -2,10 +2,10 @@
 
 import service from "../request.js";
 
-export function getMenuList(query) {
+export function LoginInfo(query) {
   return service({
     method: "POST",
-    url: "/permission/getMenu",
+    url: "/permission/LoginInfo",
     data: query,
   });
 }

@@ -19,18 +19,22 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
-import store from "../../store/index";
+import { onMounted, reactive, ref } from "vue";
+import { getMenuLsit } from "../../api/modules/index.js";
+// import from "../../api/modules/index.js";
 import menuItems from "./components/menuItems.vue";
 const activeMenu = ref("/home");
-const menuList = store.getters.menuList;
-console.log(menuList);
+const menuList = ref([]);
 const handleOpen = (key, keyPath) => {
   console.log(key, keyPath);
 };
 const handleClose = (key, keyPath) => {
   console.log(key, keyPath);
 };
+
+onMounted(() => {
+  getMenuLsit().then((res) => {});
+});
 </script>
 
 <style scoped lang="scss">
