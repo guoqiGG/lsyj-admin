@@ -170,16 +170,16 @@ let menuList = [
           roles: ["sys:able"],
         },
       },
-      // {
-      //   path: "/Drag",
-      //   component: "/able/Drag",
-      //   name: "Drag",
-      //   meta: {
-      //     title: "拖拽",
-      //     icon: "Menu",
-      //     roles: ["sys:able"],
-      //   },
-      // },
+      {
+        path: "/countTo",
+        component: "/able/countTo",
+        name: "countTo",
+        meta: {
+          title: "数字动画",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
+      },
       {
         path: "/batchImport",
         component: "/able/batchImport",
@@ -305,7 +305,7 @@ export const LoginInfo = (options) => {
   }
 };
 
-export const getMenuLsit = (options) => {
+export const getMenuList = (options) => {
   const obj = JSON.parse(options.body);
   if (obj.user_id) {
     return {

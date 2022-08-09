@@ -11,7 +11,7 @@ const writeNames = ["/login"];
 router.beforeEach((to, from, next) => {
   NProgress.start();
   console.log(store.getters);
-  if (store.getters.token) {
+  if (localStorage.getItem("token")) {
     if (to.path === "/login") {
       next("/");
     }
@@ -23,8 +23,6 @@ router.beforeEach((to, from, next) => {
       next("/login");
     }
   }
-
-  // next()
 });
 
 router.afterEach((transition) => {

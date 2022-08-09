@@ -6,24 +6,16 @@ export default {
   namespaced: true,
   state: () => {
     UserInfo: {
-      image: "";
-      name: "";
-      token: "";
-      user_id: "";
     }
     token: localStorage.getItem("token") || "";
     isCollapse: false;
-    menuList: localStorage.getItem("setMenuList") || [];
   },
   mutations: {
-    setUserInfo(state, UserInfo) {
-      state.UserInfo = UserInfo;
-    },
     setToken(state, token) {
       state.token = token;
     },
-    setMenuList(state, menuList) {
-      state.menuList = menuList;
+    setUserInfo(state, userinfo) {
+      state.UserInfo = userinfo;
     },
     SetIsCollapse(state, isCollapse) {
       state.isCollapse = isCollapse;
@@ -35,7 +27,10 @@ export default {
       return new Promise((resolve, reject) => {
         LoginInfo(userInfo)
           .then((res) => {
+            console.log(res.data.data);
             localStorage.setItem("token", res.data.data.token);
+            localStorage.setItem("UserInfo", JSON.stringify(res.data.data));
+            console.log(JSON.parse(localStorage.getItem("UserInfo")));
             commit("setToken", res.data.data.token);
             commit("setUserInfo", res.data.data);
             router.replace("/");

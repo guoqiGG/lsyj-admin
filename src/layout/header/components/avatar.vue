@@ -2,12 +2,9 @@
   <el-dropdown placement="bottom">
     <div class="flx-center">
       <div class="avatar">
-        <img
-          src="https://img.wxcha.com/m00/45/6e/ad1189f63cc71e06659340c078094873.jpg"
-          alt="avatar"
-        />
+        <img src="https://portrait.gitee.com/uploads/avatars/user/636/1908423_tanzo_1657785658.png!avatar100" alt="avatar" />
       </div>
-      <span class="username">用户名</span>
+      <span class="username">宇宙无敌大可爱</span>
     </div>
     <template #dropdown>
       <el-dropdown-menu>
@@ -18,12 +15,15 @@
   </el-dropdown>
 </template>
 <script setup>
-import { ArrowDown } from '@element-plus/icons-vue'
+import { ArrowDown } from "@element-plus/icons-vue";
+import { nextTick, onMounted, ref } from "vue";
+import store from "../../../store/index.js";
 
+const uersInfo = store.getters.UserInfo;
 const handleClick = () => {
   // eslint-disable-next-line no-alert
-  alert('button click')
-}
+  alert("button click");
+};
 </script>
 <style lang="scss" scoped>
 .el-dropdown {

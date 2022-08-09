@@ -9,6 +9,13 @@ export function LoginInfo(query) {
     data: query,
   });
 }
+export function getMenuList(query) {
+  return service({
+    method: "get",
+    url: "/permission/getMenuList",
+    data: query,
+  });
+}
 
 export function getUserList(query) {
   return service({
