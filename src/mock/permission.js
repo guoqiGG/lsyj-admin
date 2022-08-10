@@ -80,7 +80,7 @@ let menuList = [
     alwaysShow: true,
     name: "goods",
     meta: {
-      title: "商品管理",
+      title: "列表页",
       icon: "Briefcase",
       roles: ["sys:goods"],
       parentId: 0,
@@ -92,9 +92,33 @@ let menuList = [
         alwaysShow: false,
         name: "goodCategory",
         meta: {
-          title: "商品分类",
+          title: "基础列表",
           icon: "Menu",
           roles: ["sys:goodsCategory"],
+          parentId: 34,
+        },
+      },
+      {
+        path: "/cardList",
+        component: "/goods/cardList",
+        alwaysShow: false,
+        name: "cardList",
+        meta: {
+          title: "卡片列表",
+          icon: "Menu",
+          roles: ["sys:cardList"],
+          parentId: 34,
+        },
+      },
+      {
+        path: "/searchList",
+        component: "/goods/searchList",
+        alwaysShow: false,
+        name: "searchList",
+        meta: {
+          title: "搜索列表",
+          icon: "Menu",
+          roles: ["sys:searchList"],
           parentId: 34,
         },
       },
