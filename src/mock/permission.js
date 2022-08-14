@@ -17,7 +17,7 @@ let menuList = [{
     alwaysShow: true,
     name: "system",
     meta: {
-      title: "系统管理",
+      title: "表格管理",
       icon: "Tools",
       roles: ["sys:manage"],
       parentId: 0,
@@ -28,7 +28,7 @@ let menuList = [{
         alwaysShow: false,
         name: "Department",
         meta: {
-          title: "机构管理",
+          title: "基础表格",
           icon: "Menu",
           roles: ["sys:dept"],
           parentId: 17,
@@ -40,7 +40,7 @@ let menuList = [{
         alwaysShow: false,
         name: "UserList",
         meta: {
-          title: "用户管理",
+          title: "可编辑表格",
           icon: "Menu",
           roles: ["sys:user"],
           parentId: 17,
@@ -52,7 +52,7 @@ let menuList = [{
         alwaysShow: false,
         name: "RoleList",
         meta: {
-          title: "角色管理",
+          title: "滑动加载",
           icon: "Menu",
           roles: ["sys:role"],
           parentId: 17,
@@ -64,7 +64,7 @@ let menuList = [{
         alwaysShow: false,
         name: "MenuList",
         meta: {
-          title: "权限管理",
+          title: "内嵌表格",
           icon: "Menu",
           roles: ["sys:menu"],
           parentId: 17,
@@ -272,6 +272,16 @@ let menuList = [{
           roles: ["sys:able"],
         },
       },
+      {
+        path: "/debounceDirect",
+        component: "/directives/debounceDirect",
+        name: "debounceDirect",
+        meta: {
+          title: "防抖指令",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
+      },
     ],
   },
   {
@@ -391,9 +401,22 @@ export const listUpdate = (options) => {
   };
 };
 
-// export const DeleteUser = (index) => {
-//   let UserList = UserList();
-//   return UserList.splice(index, 1);
-// };
+export const Newslist = (options) => {
+  let obj = JSON.parse(options.body)
+  let newList = []
+  for (let i = 0; i < 10; i++) {
+    let item = {
+      title: Random.csentence(5, 30), //  Random.csentence( min, max )
+      notifyPic: Random.dataImage('300x250', 'mock的图片'), // Random.dataImage( size, text ) 生成一段随机的 Base64 图片编码
+      notifyType: Random.integer(1, 3), //随机生成1-3的Integer
+      isTop: Random.integer(1, 2), //随机生成1-2的Integer
+      createUser: Random.cname(), // Random.cname() 随机生成一个常见的中文姓名
+      createTime: Random.date() + ' ' + Random.time()
+    }
+    newList.push(item)
 
-// export const UserInfo = (item) => {};
+  }
+  return {
+    data: newList
+  }
+}

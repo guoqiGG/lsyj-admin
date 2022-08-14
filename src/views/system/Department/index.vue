@@ -41,7 +41,9 @@
         :fixed="item.fixed"
       >
         <template v-slot:default="scope" v-if="item.props === 'actions'">
-          <el-icon class="icon-view"><View /></el-icon>
+          <el-icon class="icon-view" @click="ItemView(scope.row)"
+            ><View
+          /></el-icon>
           <el-icon class="icon-edit" @click="editorClick(scope.row)"
             ><Edit
           /></el-icon>
@@ -220,6 +222,13 @@ const editorClick = (item) => {
   console.log(dialogData.FormData)
   dialogData.isView = false
   dialogData.title = '编辑'
+}
+
+const ItemView = (item) => {
+  dialogVisible.value = true
+  dialogData.FormData = item
+  dialogData.isView = false
+  dialogData.title = ''
 }
 
 const DeleteItem = (index) => {

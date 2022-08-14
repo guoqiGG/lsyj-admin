@@ -38,3 +38,10 @@ export function listUpdate(query) {
     data: query,
   });
 }
+export function Newslist(query) {
+  return service({
+    method: "get",
+    url: "/permission/Newslist",
+    data: query,
+  });
+}
