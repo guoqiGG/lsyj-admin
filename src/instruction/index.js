@@ -1,9 +1,11 @@
 import draggable from "./modules/draggable";
 import copy from "./modules/copy";
+import debounce from './modules/debounce'
 
 const directivesList = {
   draggable,
-  copy
+  copy,
+  debounce
 };
 
 const directives = {

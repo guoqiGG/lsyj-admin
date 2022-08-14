@@ -9,16 +9,14 @@
 
 <style lang="scss" scoped>
 .box-card-title {
-  padding: 20px;
-  display: block;
+  padding: 10px;
+  // display: block;
 }
 .box-card-content {
   width: 100%;
   height: 100%;
   background-color: #fff;
-  text-align: center;
-  align-content: center;
-  align-items: center;
+
   position: relative;
   .drag-box {
     position: absolute;

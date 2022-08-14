@@ -1,6 +1,7 @@
 <template>
   <el-card shadow="never">
-    <div class="m20" style="text-align: center">复制指令 🍇🍇🍇🍓🍓🍓</div>
+    <div>复制指令 🍇🍇🍇🍓🍓🍓</div>
+    <br />
     <el-input
       v-model="input3"
       placeholder="复制指令 🍇🍇🍇🍓🍓🍓"
