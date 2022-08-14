@@ -32,7 +32,8 @@ export const options = [{
   {
     label: '操作',
     props: 'actions',
-    width: '100',
-    align: 'center'
+    width: '150',
+    align: 'center',
+    fixed: 'right',
   }
 ]

@@ -1,64 +1,38 @@
 <template>
   <el-card class="box-card col-center" shadow="never">
-    <span class="box-card-title">图片上传 🍓🍇🍈🍉</span>
+    <div class="box-card-title">图片上传 🍓🍇🍈🍉</div>
     <el-upload
-      action="#"
+      v-model:file-list="fileList"
+      action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
       list-type="picture-card"
-      :auto-upload="false"
-      class="m20"
+      :on-preview="handlePictureCardPreview"
+      :on-remove="handleRemove"
     >
       <el-icon><Plus /></el-icon>
-      <template #file="{ file }">
-        <div>
-          <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-          <span class="el-upload-list__item-actions">
-            <span
-              class="el-upload-list__item-preview"
-              @click="handlePictureCardPreview(file)"
-            >
-              <el-icon><zoom-in /></el-icon>
-            </span>
-            <span
-              v-if="!disabled"
-              class="el-upload-list__item-delete"
-              @click="handleDownload(file)"
-            >
-              <el-icon><Download /></el-icon>
-            </span>
-            <span
-              v-if="!disabled"
-              class="el-upload-list__item-delete"
-              @click="handleRemove(file)"
-            >
-              <el-icon><Delete /></el-icon>
-            </span>
-          </span>
-        </div>
-      </template>
     </el-upload>
-
-    <el-dialog v-model="dialogVisible">
-      <img
-        w-full
-        :src="dialogImageUrl"
-        alt="Preview Image"
-        style="width: 100%"
-      />
-    </el-dialog>
+    <el-image-viewer
+      v-if="dialogVisible"
+      @close="imageView"
+      style="width: 100px; height: 100px"
+      :url-list="[dialogImageUrl]"
+    />
   </el-card>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
+import { reactive, ref } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
 
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
-const disabled = ref(false)
-
+const pictureUpload = ref(null)
+const fileList = ref([])
 const handleRemove = (file) => {
   console.log(file)
-  dialogImageUrl.value = ''
+}
+
+const imageView = () => {
+  dialogVisible.value = false
 }
 
 const handlePictureCardPreview = (file) => {
@@ -66,14 +40,19 @@ const handlePictureCardPreview = (file) => {
   dialogImageUrl.value = file.url
   dialogVisible.value = true
 }
-
-const handleDownload = (file) => {
-  console.log(file)
-}
 </script>
 
 <style lang="scss" scoped>
 .box-card {
   width: 100%;
+  .box-card-title {
+    padding-bottom: 20px;
+  }
+}
+.el-image-viewer__canvas {
+  img {
+    width: 120px !important;
+    height: auto !important;
+  }
 }
 </style>
