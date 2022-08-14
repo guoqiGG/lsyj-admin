@@ -2,8 +2,7 @@
 import Mock from "mockjs";
 const Random = Mock.Random;
 
-let menuList = [
-  {
+let menuList = [{
     path: "/home",
     component: "Loyout",
     meta: {
@@ -23,8 +22,7 @@ let menuList = [
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [
-      {
+    children: [{
         path: "/Department",
         component: "/system/Department",
         alwaysShow: false,
@@ -85,8 +83,7 @@ let menuList = [
       roles: ["sys:goods"],
       parentId: 0,
     },
-    children: [
-      {
+    children: [{
         path: "/goodCategory",
         component: "/goods/goodCategory",
         alwaysShow: false,
@@ -135,8 +132,7 @@ let menuList = [
       roles: ["sys:map"],
       parentId: 0,
     },
-    children: [
-      {
+    children: [{
         path: "/BaiduMap",
         component: "/map/BaiduMap",
         alwaysShow: false,
@@ -183,8 +179,7 @@ let menuList = [
       icon: "HelpFilled",
       roles: ["sys:able"],
     },
-    children: [
-      {
+    children: [{
         path: "/watermark",
         component: "/able/watermark",
         name: "watermark",
@@ -257,8 +252,7 @@ let menuList = [
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [
-      {
+    children: [{
         path: "/copy",
         component: "/directives/copy",
         name: "copy",
@@ -291,24 +285,25 @@ let menuList = [
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [
-      {
-        path: "/demo1",
-        component: "/DataReport/demo1",
-        name: "demo1",
-        meta: {
-          title: "项目一",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+    children: [{
+      path: "/demo1",
+      component: "/DataReport/demo1",
+      name: "demo1",
+      meta: {
+        title: "项目一",
+        icon: "Menu",
+        roles: ["sys:able"],
       },
-    ],
+    }, ],
   },
 ];
 
 export const LoginInfo = (options) => {
   console.log(options, "接收post参数");
-  const { username, password } = JSON.parse(options.body);
+  const {
+    username,
+    password
+  } = JSON.parse(options.body);
   if (username == "admin" && password != "123456") {
     return {
       code: "-200",
@@ -331,73 +326,15 @@ export const LoginInfo = (options) => {
 
 export const getMenuList = (options) => {
   const obj = JSON.parse(options.body);
-  if (obj.user_id) {
-    return {
-      code: 200,
-      data: {
-        menuList: menuList,
-      },
-    };
+
+  return {
+    code: 200,
+    data: {
+      menuList: menuList,
+    },
   }
 };
-// export const getMenu = function (data) {
-//   console.log(data, "接收post参数");
-//   let body = JSON.parse(data.body);
-//   const {
-//     username,
-//     password
-//   } = JSON.parse(data.body);
-//   console.log(JSON.parse(data.body));
-//   if (username === "admin" || username === "wp") {
-//     if (username === "admin" && password === "123456") {
-//       return {
-//         code: 200,
-//         data: {
-//           menu: menuList,
-//           token: Mock.Random.guid(),
-//           message: "获取成功",
-//         },
-//       };
-//     } else if (username === "wp" && password === "123456") {
-//       return {
-//         code: 200,
-//         data: {
-//           menu: [{
-//               path: "/",
-//               name: "home",
-//               label: "首页",
-//               icon: "s-home",
-//               url: "Home/Home",
-//             },
-//             {
-//               path: "/video",
-//               name: "video",
-//               label: "视频管理页",
-//               icon: "video-play",
-//               url: "VideoManage/VideoManage",
-//             },
-//           ],
-//           token: Mock.Random.guid(),
-//           message: "获取成功",
-//         },
-//       };
-//     } else {
-//       return {
-//         code: -999,
-//         data: {
-//           message: "密码错误",
-//         },
-//       };
-//     }
-//   } else {
-//     return {
-//       code: -999,
-//       data: {
-//         message: "用户不存在",
-//       },
-//     };
-//   }
-// };
+
 // 用户列表
 let userList = [];
 for (let index = 0; index < 50; index++) {
