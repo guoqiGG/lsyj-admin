@@ -1,7 +1,5 @@
 <template>
-  <el-card class="box-card" shadow="never">
-    <div class="box-card-title">卡片列表 🍓🍇🍈🍉</div>
-  </el-card>
+  <el-card class="box-card" shadow="never"> 卡片列表 🍓🍇🍈🍉 </el-card>
   <el-card class="box-card mt10" shadow="never"> </el-card>
 </template>
 
