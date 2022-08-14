@@ -44,28 +44,5 @@ onMounted(() => {
     margin-bottom: 20px;
   }
 }
-
-.infinite-list {
-  height: 72vh;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-.infinite-list {
-  .infinite-list-item {
-    background: #f0f2f5;
-    margin: 10px;
-    padding: 10px 10px 0 10px;
-    // color: var(--el-color-primary);
-    .infinite-list-item-top {
-      padding-bottom: 10px;
-    }
-    .infinite-list-item-main {
-      padding-bottom: 10px;
-    }
-  }
-}
-.infinite-list .infinite-list-item + .list-item {
-  margin-top: 10px;
-}
+@import './index.scss';
 </style>
