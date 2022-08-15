@@ -2,7 +2,7 @@
   <el-dropdown placement="bottom">
     <div class="flx-center">
       <div class="avatar">
-        <img src="https://portrait.gitee.com/uploads/avatars/user/636/1908423_tanzo_1657785658.png!avatar100" alt="avatar" />
+        <img src="../../../assets/images/avart.jpg" alt="avatar" />
       </div>
       <span class="username">宇宙无敌大可爱</span>
     </div>
