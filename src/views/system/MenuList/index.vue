@@ -37,6 +37,45 @@
       @current-change="handleCurrentChange"
     />
   </el-card>
+
+  <el-dialog
+    v-model="dialogVisible"
+    :title="`${dialogData.title}用户`"
+    :width="dialogWidth"
+    :hide-required-asterisk="dialogData.isView"
+    draggable
+  >
+    <el-form
+      :model="dialogData.FormData"
+      :rules="rules"
+      ref="FormRef"
+      class="demo-ruleForm"
+    >
+      <el-form-item
+        label="用户名"
+        :label-width="formLabelWidth"
+        prop="username"
+      >
+        <el-input v-model="dialogData.FormData.username" autocomplete="off" />
+      </el-form-item>
+      <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
+        <el-input v-model="dialogData.FormData.email" autocomplete="off" />
+      </el-form-item>
+
+      <el-form-item label="地址" :label-width="formLabelWidth" prop="address">
+        <el-input v-model="dialogData.FormData.address" type="textarea" />
+      </el-form-item>
+      <el-form-item label="备注" :label-width="formLabelWidth" prop="content">
+        <el-input v-model="dialogData.FormData.content" type="textarea" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="onSubmit()">确认</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
