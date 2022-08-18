@@ -141,7 +141,7 @@ const DialogColumn = ref([
 
 const columnData = ref(JSON.parse(JSON.stringify(options)))
 const disabled = ref(false)
-const dialogVisible = ref(true)
+const dialogVisible = ref(false)
 const total = ref('')
 const queryData = ref({
   keyWord: '',

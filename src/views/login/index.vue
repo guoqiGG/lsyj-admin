@@ -7,7 +7,7 @@
       <div class="login-form">
         <div class="login-logo">
           <!-- <img class="login-icon" src="../assets/images/logo.svg" alt="" /> -->
-          <p class="logo-text">holle Admin</p>
+          <p class="logo-text">宇宙无敌大可爱</p>
         </div>
         <el-form
           ref="loginFormRef"

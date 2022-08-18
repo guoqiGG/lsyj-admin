@@ -156,6 +156,24 @@ const routes = [{
         },
       },
       {
+        path: "/strength",
+        name: "strength",
+        component: () => import("../views/able/strength.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "密码强度",
+        },
+      },
+      {
+        path: "/validation",
+        name: "validation",
+        component: () => import("../views/able/validation.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "验证组件",
+        },
+      },
+      {
         path: "/guide",
         name: "guide",
         component: () => import("../views/able/guide.vue"),

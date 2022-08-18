@@ -220,6 +220,26 @@ let menuList = [{
         },
       },
       {
+        path: "/strength",
+        component: "/able/strength",
+        name: "strength",
+        meta: {
+          title: "密码强度",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
+      },
+      {
+        path: "/validation",
+        component: "/able/validation",
+        name: "validation",
+        meta: {
+          title: "验证组件",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
+      },
+      {
         path: "/guide",
         component: "/able/guide",
         name: "guide",

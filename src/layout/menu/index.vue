@@ -2,10 +2,13 @@
   <div
     id="guide"
     class="menu"
-    :style="{ width: store.getters.isCollapse == true ? '' : '200px' }"
+    :style="{
+      width: store.getters.isCollapse == true ? '' : '200px',
+      height: '100%',
+    }"
   >
     <!-- <div class="logo">后台管理系统</div> -->
-    <el-scrollbar>
+    <el-scrollbar style="height: 100%">
       <el-menu
         :default-active="activeMenu"
         :router="true"
