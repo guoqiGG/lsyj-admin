@@ -1,27 +1,34 @@
-export const options = [
-  {
+export const options = [{
     label: "用户名",
     props: "username",
     width: "auto",
     align: "left",
+    show: true,
+    fixed: false,
   },
   {
     label: "邮箱",
     props: "email",
     width: "auto",
     align: "left",
+    show: true,
+    fixed: false,
   },
   {
     label: "创建时间",
     props: "date",
     width: "auto",
     align: "left",
+    show: true,
+    fixed: false,
   },
   {
     label: "地址",
     props: "address",
     width: "auto",
     align: "left",
+    show: true,
+    fixed: false,
   },
   {
     label: "备注",
@@ -29,5 +36,6 @@ export const options = [
     width: "auto",
     align: "left",
     show: true,
+    fixed: false,
   },
 ];
