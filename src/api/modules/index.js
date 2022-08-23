@@ -45,3 +45,10 @@ export function Newslist(query) {
     data: query,
   });
 }
+export function orderLists(query) {
+  return service({
+    method: "get",
+    url: "/permission/orderLists",
+    data: query,
+  });
+}

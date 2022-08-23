@@ -1,7 +1,3 @@
 <template>
-  <img
-    src="https://geeker-admin.vercel.app/assets/png/welcome-e459696e.png"
-    alt=""
-    :style="{ width: '90%' }"
-  />
+  <img src="../../assets/home.png" alt="" />
 </template>

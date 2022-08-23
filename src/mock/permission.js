@@ -12,13 +12,62 @@ let menuList = [{
     },
   },
   {
+    path: "/form",
+    component: "Loyout",
+    alwaysShow: true,
+    name: "form",
+    meta: {
+      title: "表单页",
+      icon: "Checked",
+      roles: ["sys:manage"],
+      parentId: 0,
+    },
+    children: [{
+        path: "/baseForm",
+        component: "/form/baseForm",
+        alwaysShow: false,
+        name: "baseForm",
+        meta: {
+          title: "基础表单",
+          icon: "Menu",
+          roles: ["sys:dept"],
+          parentId: 17,
+        },
+      },
+      {
+        path: "/stepFrom",
+        component: "/form/stepFrom",
+        alwaysShow: false,
+        name: "stepFrom",
+        meta: {
+          title: "步骤表单",
+          icon: "Menu",
+          roles: ["sys:user"],
+          parentId: 17,
+        },
+      },
+      {
+        path: "/advancedForm",
+        component: "/form/advancedForm",
+        alwaysShow: false,
+        name: "advancedForm",
+        meta: {
+          title: "高级表单",
+          icon: "Menu",
+          roles: ["sys:menu"],
+          parentId: 17,
+        },
+      },
+    ],
+  },
+  {
     path: "/system",
     component: "Loyout",
     alwaysShow: true,
     name: "system",
     meta: {
       title: "表格管理",
-      icon: "Tools",
+      icon: "Grid",
       roles: ["sys:manage"],
       parentId: 0,
     },
@@ -79,7 +128,7 @@ let menuList = [{
     name: "goods",
     meta: {
       title: "列表页",
-      icon: "Briefcase",
+      icon: "List",
       roles: ["sys:goods"],
       parentId: 0,
     },
@@ -305,13 +354,35 @@ let menuList = [{
     ],
   },
   {
+    path: "/flow",
+    component: "Loyout",
+    alwaysShow: true,
+    name: "flow",
+    meta: {
+      title: "图形编辑器",
+      icon: "BrushFilled",
+      roles: ["sys:manage"],
+      parentId: 0,
+    },
+    children: [{
+      path: "/flowCat",
+      component: "/flow/flowCat",
+      name: "flowCat",
+      meta: {
+        title: "流程图",
+        icon: "Menu",
+        roles: ["sys:able"],
+      },
+    }, ],
+  },
+  {
     path: "/DataReport",
     component: "Loyout",
     alwaysShow: true,
     name: "DataReport",
     meta: {
       title: "数据统计",
-      icon: "Tools",
+      icon: "TrendCharts",
       roles: ["sys:manage"],
       parentId: 0,
     },
@@ -438,5 +509,22 @@ export const Newslist = (options) => {
   }
   return {
     data: newList
+  }
+}
+export const orderLists = (options) => {
+  let obj = JSON.parse(options.body)
+  let orderList = []
+  for (let i = 0; i < 10; i++) {
+    let item = {
+      goodsId: i,
+      goodsname: Random.cword(2, 6), //  Random.csentence( min, max )
+      sku: '1ml', // Random.dataImage( size, text ) 生成一段随机的 Base64 图片编码
+      number: Random.integer(100, 5000), //100到5000的随机整数
+      amount: Random.integer(100, 200), //100到5000的随机整数
+    }
+    orderList.push(item)
+  }
+  return {
+    data: orderList
   }
 }
