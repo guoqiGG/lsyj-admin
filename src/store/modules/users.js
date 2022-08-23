@@ -1,18 +1,14 @@
-import {
-  LoginInfo
-} from "../../api/modules/index.js";
+import { LoginInfo } from "../../api/modules/index.js";
 import router from "../../router/router.js";
-import {
-  ElMessage
-} from "element-plus";
+import { ElMessage } from "element-plus";
 
 export default {
   namespaced: true,
   state: () => {
-    UserInfo: {}
+    UserInfo: {
+    }
     token: localStorage.getItem("token") || "";
-    isCollapse: false;
-
+    isCollapse: true;
   },
   mutations: {
     setToken(state, token) {
@@ -27,9 +23,7 @@ export default {
   },
 
   actions: {
-    login({
-      commit
-    }, userInfo) {
+    login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         LoginInfo(userInfo)
           .then((res) => {
@@ -51,9 +45,7 @@ export default {
           });
       });
     },
-    changeIsCollapse({
-      commit
-    }, str) {
+    changeIsCollapse({ commit }, str) {
       console.log(str);
       commit("SetIsCollapse", str);
     },

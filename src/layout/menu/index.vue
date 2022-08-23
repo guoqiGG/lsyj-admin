@@ -26,25 +26,25 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
-import { getMenuList } from '../../api/modules/index.js'
-import store from '../../store/index.js'
-import menuItems from './components/menuItems.vue'
-const activeMenu = ref('/home')
-const menuList = ref([])
+import { onMounted, reactive, ref } from "vue";
+import { getMenuList } from "../../api/modules/index.js";
+import store from "../../store/index.js";
+import menuItems from "./components/menuItems.vue";
+const activeMenu = ref("/home");
+const menuList = ref([]);
 const handleOpen = (key, keyPath) => {
-  console.log(key, keyPath)
-}
+  console.log(key, keyPath);
+};
 const handleClose = (key, keyPath) => {
-  console.log(key, keyPath)
-}
+  console.log(key, keyPath);
+};
 // const userInfo = store.getters.UserInfo;
 
 onMounted(() => {
   getMenuList().then((res) => {
-    menuList.value = res.data.data.menuList
-  })
-})
+    menuList.value = res.data.data.menuList;
+  });
+});
 </script>
 
 <style scoped lang="scss">
