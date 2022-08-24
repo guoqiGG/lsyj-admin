@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card col-center" shadow="never">
-    <span class="box-card-title">富文本编辑器 🍓🍇🍈🍉</span>
+    <span class="box-card-title">富文本编辑器 🍰🍰🍰🍩🍩🍩</span>
     <div class="wangeditor-box">
       <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" />
       <Editor class="editor-txt" v-model="valueHtml" :defaultConfig="editorConfig" :mode="mode" @onCreated="handleCreated" />

@@ -1,7 +1,8 @@
 <template>
   <div class="box-card-content">
-    <span class="box-card-title">拖拽🍇🍇🍇🍓🍓🍓</span>
+    <span class="box-card-title">拖拽🍻🍻🍻🍵🍵🍵</span>
     <div v-draggable class="drag-box flx-center text">我可以拖拽哦~</div>
+    <div v-draggable class="drag-box flx-center text" style="background: #eba300; width: 200px; height: 200px">我可以拖拽哦~</div>
   </div>
 </template>
 
@@ -24,7 +25,7 @@
     width: 300px;
     height: 300px;
     color: #fff;
-    background: #fab6b6;
+    background: #bad80a;
   }
 }
 </style>

@@ -1,12 +1,10 @@
-import {
-  createRouter,
-  createWebHashHistory
-} from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import home from "../views/home/index.vue";
 import login from "../views/login/index.vue";
 import Layout from "../layout/index.vue";
 
-const routes = [{
+const routes = [
+  {
     path: "/login",
     name: login,
     component: login,
@@ -20,15 +18,54 @@ const routes = [{
       requiresAuth: true, //有一些页面是否登录才能进去
       name: "首页",
     },
-    children: [{
-      path: "/home",
-      name: "home",
-      component: () => import("../views/home/index.vue"),
-      meta: {
-        requiresAuth: true, //有一些页面是否登录才能进去
-        name: "首页",
+    children: [
+      {
+        path: "/home",
+        name: "home",
+        component: () => import("../views/home/index.vue"),
+        meta: {
+          requiresAuth: true, //有一些页面是否登录才能进去
+          name: "首页",
+        },
       },
-    }, ],
+    ],
+  },
+  {
+    path: "/form",
+    name: "form",
+    component: Layout,
+    meta: {
+      name: "表单页",
+    },
+    children: [
+      {
+        path: "/baseForm",
+        name: "baseForm",
+        component: () => import("../views/form/baseForm.vue"),
+        meta: {
+          requiresAuth: true, //有一些页面是否登录才能进去
+          name: "基础表单",
+        },
+      },
+      {
+        path: "/stepFrom",
+        name: "stepFrom",
+        component: () => import("../views/form/stepFrom.vue"),
+        meta: {
+          requiresAuth: true, //有一些页面是否登录才能进去
+          name: "分页表单",
+        },
+      },
+      {
+        path: "/advancedForm",
+        name: "advancedForm",
+        component: () => import("../views/form/advancedForm.vue"),
+        meta: {
+          requiresAuth: true, //有一些页面是否登录才能进去
+          name: "高级表单",
+        },
+      },
+    ],
   },
   {
     path: "/system",
@@ -37,7 +74,8 @@ const routes = [{
     meta: {
       name: "系统管理",
     },
-    children: [{
+    children: [
+      {
         path: "/Department",
         name: "Department",
         component: () => import("../views/system/Department/index.vue"),
@@ -82,7 +120,8 @@ const routes = [{
     meta: {
       name: "列表页",
     },
-    children: [{
+    children: [
+      {
         path: "/goodCategory",
         name: "goodCategory",
         component: () => import("../views/goods/goodCategory.vue"),
@@ -109,7 +148,6 @@ const routes = [{
           name: "搜索列表",
         },
       },
-
     ],
   },
   {
@@ -119,7 +157,8 @@ const routes = [{
     meta: {
       name: "功能",
     },
-    children: [{
+    children: [
+      {
         path: "/watermark",
         name: "watermark",
         component: () => import("../views/able/watermark.vue"),
@@ -200,15 +239,17 @@ const routes = [{
     meta: {
       name: "数据统计",
     },
-    children: [{
-      path: "/demo1",
-      name: "demo1",
-      component: () => import("../views/DataReport/demo1.vue"),
-      meta: {
-        requiresAuth: true,
-        name: "项目一",
+    children: [
+      {
+        path: "/demo1",
+        name: "demo1",
+        component: () => import("../views/DataReport/demo1.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "项目一",
+        },
       },
-    }, ],
+    ],
   },
   {
     path: "/directives",
@@ -217,7 +258,8 @@ const routes = [{
     meta: {
       name: "自定义指令",
     },
-    children: [{
+    children: [
+      {
         path: "/Drag",
         name: "Drag",
         component: () => import("../views/directives/Drag.vue"),

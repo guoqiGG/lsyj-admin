@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card col-center" shadow="never">
-    <div class="box-card-title">图片上传 🍓🍇🍈🍉</div>
+    <div class="box-card-title">图片上传 🍱🍱🍱🍱🍱</div>
     <el-upload
       v-model:file-list="fileList"
       action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
@@ -10,36 +10,31 @@
     >
       <el-icon><Plus /></el-icon>
     </el-upload>
-    <el-image-viewer
-      v-if="dialogVisible"
-      @close="imageView"
-      style="width: 100px; height: 100px"
-      :url-list="[dialogImageUrl]"
-    />
+    <el-image-viewer v-if="dialogVisible" @close="imageView" style="width: 100px; height: 100px" :url-list="[dialogImageUrl]" />
   </el-card>
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
-import { Plus } from '@element-plus/icons-vue'
+import { reactive, ref } from "vue";
+import { Plus } from "@element-plus/icons-vue";
 
-const dialogImageUrl = ref('')
-const dialogVisible = ref(false)
-const pictureUpload = ref(null)
-const fileList = ref([])
+const dialogImageUrl = ref("");
+const dialogVisible = ref(false);
+const pictureUpload = ref(null);
+const fileList = ref([]);
 const handleRemove = (file) => {
-  console.log(file)
-}
+  console.log(file);
+};
 
 const imageView = () => {
-  dialogVisible.value = false
-}
+  dialogVisible.value = false;
+};
 
 const handlePictureCardPreview = (file) => {
-  console.log(file.url)
-  dialogImageUrl.value = file.url
-  dialogVisible.value = true
-}
+  console.log(file.url);
+  dialogImageUrl.value = file.url;
+  dialogVisible.value = true;
+};
 </script>
 
 <style lang="scss" scoped>

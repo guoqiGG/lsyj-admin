@@ -2,7 +2,8 @@
 import Mock from "mockjs";
 const Random = Mock.Random;
 
-let menuList = [{
+let menuList = [
+  {
     path: "/home",
     component: "Loyout",
     meta: {
@@ -22,7 +23,8 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/baseForm",
         component: "/form/baseForm",
         alwaysShow: false,
@@ -71,7 +73,8 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/Department",
         component: "/system/Department",
         alwaysShow: false,
@@ -132,7 +135,8 @@ let menuList = [{
       roles: ["sys:goods"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/goodCategory",
         component: "/goods/goodCategory",
         alwaysShow: false,
@@ -181,7 +185,8 @@ let menuList = [{
       roles: ["sys:map"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/BaiduMap",
         component: "/map/BaiduMap",
         alwaysShow: false,
@@ -228,7 +233,8 @@ let menuList = [{
       icon: "HelpFilled",
       roles: ["sys:able"],
     },
-    children: [{
+    children: [
+      {
         path: "/watermark",
         component: "/able/watermark",
         name: "watermark",
@@ -321,7 +327,8 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/copy",
         component: "/directives/copy",
         name: "copy",
@@ -364,16 +371,18 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
-      path: "/flowCat",
-      component: "/flow/flowCat",
-      name: "flowCat",
-      meta: {
-        title: "流程图",
-        icon: "Menu",
-        roles: ["sys:able"],
+    children: [
+      {
+        path: "/flowCat",
+        component: "/flow/flowCat",
+        name: "flowCat",
+        meta: {
+          title: "流程图",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
       },
-    }, ],
+    ],
   },
   {
     path: "/DataReport",
@@ -386,25 +395,24 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
-      path: "/demo1",
-      component: "/DataReport/demo1",
-      name: "demo1",
-      meta: {
-        title: "项目一",
-        icon: "Menu",
-        roles: ["sys:able"],
+    children: [
+      {
+        path: "/demo1",
+        component: "/DataReport/demo1",
+        name: "demo1",
+        meta: {
+          title: "项目一",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
       },
-    }, ],
+    ],
   },
 ];
 
 export const LoginInfo = (options) => {
   console.log(options, "接收post参数");
-  const {
-    username,
-    password
-  } = JSON.parse(options.body);
+  const { username, password } = JSON.parse(options.body);
   if (username == "admin" && password != "123456") {
     return {
       code: "-200",
@@ -433,7 +441,7 @@ export const getMenuList = (options) => {
     data: {
       menuList: menuList,
     },
-  }
+  };
 };
 
 // 用户列表
@@ -493,38 +501,44 @@ export const listUpdate = (options) => {
 };
 
 export const Newslist = (options) => {
-  let obj = JSON.parse(options.body)
-  let newList = []
+  let obj = JSON.parse(options.body);
+  let newList = [];
   for (let i = 0; i < 10; i++) {
     let item = {
       title: Random.csentence(5, 30), //  Random.csentence( min, max )
-      notifyPic: Random.dataImage('300x250', 'mock的图片'), // Random.dataImage( size, text ) 生成一段随机的 Base64 图片编码
+      notifyPic: Random.dataImage("300x250", "mock的图片"), // Random.dataImage( size, text ) 生成一段随机的 Base64 图片编码
       notifyType: Random.integer(1, 3), //随机生成1-3的Integer
       isTop: Random.integer(1, 2), //随机生成1-2的Integer
       createUser: Random.cname(), // Random.cname() 随机生成一个常见的中文姓名
-      createTime: Random.date() + ' ' + Random.time()
-    }
-    newList.push(item)
-
+      createTime: Random.date() + " " + Random.time(),
+    };
+    newList.push(item);
   }
   return {
-    data: newList
-  }
-}
+    data: newList,
+  };
+};
 export const orderLists = (options) => {
-  let obj = JSON.parse(options.body)
-  let orderList = []
+  let obj = JSON.parse(options.body);
+  let orderList = [];
   for (let i = 0; i < 10; i++) {
     let item = {
       goodsId: i,
+      code: Random.integer(10, 100) + "13210code",
+      title: Random.ctitle(4, 5),
+      commodity: "10010" + i,
       goodsname: Random.cword(2, 6), //  Random.csentence( min, max )
-      sku: '1ml', // Random.dataImage( size, text ) 生成一段随机的 Base64 图片编码
+      brand: Random.cword(2, 4),
+      sku: "1ml", // Random.dataImage( size, text ) 生成一段随机的 Base64 图片编码
+      inventory: Random.integer(10, 100),
       number: Random.integer(100, 5000), //100到5000的随机整数
+      costPrice: Random.integer(10, 20),
       amount: Random.integer(100, 200), //100到5000的随机整数
-    }
-    orderList.push(item)
+      itemEdit: false,
+    };
+    orderList.push(item);
   }
   return {
-    data: orderList
-  }
-}
+    data: orderList,
+  };
+};

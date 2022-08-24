@@ -2,6 +2,7 @@
   <el-row>
     <el-col>
       <el-card shadow="never">
+        <div class="p10">水印组件🍬🍬🍬🍭🍭🍭</div>
         <el-form :inline="true" ref="formRef" :model="numberValidateForm" label-width="100px" class="demo-ruleForm">
           <el-form-item
             label="水印名称"

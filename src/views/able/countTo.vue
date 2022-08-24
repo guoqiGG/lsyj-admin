@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card col-center" shadow="never">
-    <div class="box-card-title">数字动画 🍓🍇🍈🍉</div>
+    <div class="box-card-title">数字动画 🍝🍝🍝🍝</div>
     <div class="number-grow-warp">
       <span ref="numberGrow" :data-time="time" class="number-grow" :data-value="number">0</span>
     </div>
@@ -15,7 +15,6 @@
     4.第二次数字变动在上次的数字累加
     5.添加监听器防止页面不更新的情况
 */
-import { val } from "dom7";
 import { onMounted, reactive, ref, watch } from "vue";
 const time = reactive(6000);
 const thousandSign = ref(false);

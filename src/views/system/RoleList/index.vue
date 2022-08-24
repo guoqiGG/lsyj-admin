@@ -1,71 +1,87 @@
 <template>
   <el-card>
-    <el-button type="primary" class="mt-4" @click="dialogVisibleHanle"
-      >导出表格</el-button
-    >
+    <el-button type="primary" :icon="Printer">打印</el-button>
+    <el-button type="primary" class="mt-4" @click="dialogVisibleHanle">滑动加载</el-button>
+    <el-button type="primary" class="mt-4" @click="dialogVisibleHanle">分页加载</el-button>
+    <el-button type="primary" class="mt-4" @click="dialogVisibleHanle">导出表格</el-button>
   </el-card>
   <el-card class="mt10">
-    <el-table
-      :data="tableData"
-      :header-cell-style="{ backgroundColor: '#ecf5ff' }"
-      border
-      stripe
-      style="width: 100%"
-    >
+    <el-table :data="tableData" :header-cell-style="{ backgroundColor: '#ecf5ff' }" border stripe style="width: 100%">
       <el-table-column
         v-for="item in columnData"
         :key="item.props"
+        :sortable="item.sortable"
         :prop="item.props"
         :label="item.label"
         :width="item.width"
         :fixed="item.fixed"
         :align="item.align"
         show-overflow-tooltip
-      ></el-table-column>
+      >
+        <template v-slot:default="scope" v-if="item.props !== 'actions'">
+          <el-input v-model="scope.row[item.props]" v-if="scope.row.itemEdit"></el-input>
+          <div v-else>{{ scope.row[item.props] }}</div>
+        </template>
+        <template v-slot:default="scope" v-if="item.props === 'actions'">
+          <el-icon class="icon-edit" @click="itemEditHanld(scope.row)"><Finished v-if="scope.row.itemEdit" /><Edit v-else /></el-icon>
+          <el-popconfirm confirm-button-text="确认" cancel-button-text="取消" :icon="InfoFilled" icon-color="#626AEF" title="确认删除该用户?" @confirm="DeleteItem(index)" @cancel="cancelEvent">
+            <template #reference>
+              <el-icon class="icon-dele"><Delete /></el-icon>
+            </template>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
     </el-table>
   </el-card>
 </template>
 <script setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
-import { orderLists } from '../../../api/modules/index.js'
-import { options } from './options.js'
-const tableData = ref([])
+import { Edit, Delete, InfoFilled, View } from "@element-plus/icons-vue";
+import { nextTick, onMounted, reactive, ref } from "vue";
+import { orderLists } from "../../../api/modules/index.js";
+import { options } from "./options.js";
+const tableData = ref([]);
+const tabclickIndex = ref();
 
-const columnData = ref(JSON.parse(JSON.stringify(options)))
-const disabled = ref(false)
-const dialogVisible = ref(false)
-const total = ref(0)
+const columnData = ref(JSON.parse(JSON.stringify(options)));
+const disabled = ref(false);
+const dialogVisible = ref(false);
+const total = ref(0);
 const queryData = ref({
-  keyWord: '',
+  keyWord: "",
   page: 1,
   size: 10,
-})
+});
 const initData = () => {
   orderLists(queryData.value).then((res) => {
-    console.log(res.data.data)
+    console.log(res.data.data);
     // total.value = res.data.data.total
-    tableData.value = res.data.data
-  })
-}
+    tableData.value = res.data.data;
+  });
+};
+const itemEditHanld = (item) => {
+  item.itemEdit = !item.itemEdit;
+  // // console.log(JSON.stringify(item));
+  // tabclickIndex.value = item;
+};
 const handleSizeChange = (val) => {
-  console.log(val)
-}
+  console.log(val);
+};
 
 const handleCurrentChange = (val) => {
-  queryData.value.page = val
-  initData(queryData.value)
-}
-const handleClose = () => {}
+  queryData.value.page = val;
+  initData(queryData.value);
+};
+const handleClose = () => {};
 const dialogVisibleHanle = () => {
-  //   console.log(tableData.value);
-}
+  console.log("导出表格");
+};
 
 // https://www.zcool.com.cn/work/ZMzUzMDA0MDQ=.html
 
 onMounted(() => {
-  console.log(columnData.value)
-  initData()
-})
+  console.log(columnData.value);
+  initData();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -85,5 +101,20 @@ onMounted(() => {
 // 选择
 .chosenClass:hover > td {
   background: rgba($color: #f56c6c, $alpha: 0.5) !important;
+}
+
+.icon-view {
+  font-size: 20px;
+  color: #673ab7;
+  margin: 0 10px;
+}
+.icon-edit {
+  font-size: 20px;
+  color: #2f60c2;
+  margin: 0 10px;
+}
+.icon-dele {
+  font-size: 20px;
+  color: #ff5722;
 }
 </style>

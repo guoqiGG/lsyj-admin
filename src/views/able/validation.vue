@@ -1,5 +1,6 @@
 <template>
   <el-card class="clo-center">
+    <div class="p10">验证组件🍨🍨🍨🍧🍧🍧</div>
     <el-form label-position="left" inline label-width="100px" :model="formLabelAlign">
       <el-form-item label="请输入验证码" style="margin-right: 0">
         <el-input v-model="formLabelAlign.code" />

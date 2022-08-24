@@ -6,27 +6,23 @@
   4.将 body 中插入的 textarea 移除
   5.在第一次调用时绑定事件，在解绑时移除事件
 */
-import {
-  ElMessage
-} from "element-plus";
+import { ElMessage } from "element-plus";
 export const copy = {
-  mounted: function (el, {
-    value
-  }) {
-    console.log(arguments)
-    el.$value = value
+  mounted: function (el, { value }) {
+    console.log(arguments);
+    el.$value = value;
 
     el.onclick = () => {
       if (!el.$value) {
         // 值为空的时候，给出提示。可根据项目UI仔细设计
         ElMessage({
           type: "error",
-          message: "无复制内容"
+          message: "无复制内容",
         });
-        return
+        return;
       }
       // 动态创建 textarea 标签
-      const textarea = document.createElement('input')
+      const textarea = document.createElement("input");
       // 将该 textarea 设为 readonly 防止 iOS 下自动唤起键盘，同时将 textarea 移出可视区域
       // textarea.readOnly = 'readonly'
       // textarea.style.position = 'absolute'
@@ -35,31 +31,29 @@ export const copy = {
       // textarea.value = el.$value
       // textarea.value = 'huangbia11111111o'
       // 将 textarea 插入到 body 中
-      document.body.appendChild(textarea)
+      document.body.appendChild(textarea);
       // 选中值并复制
-      textarea.select()
-      const result = document.execCommand('Copy')
+      textarea.select();
+      const result = document.execCommand("Copy");
       if (result) {
         ElMessage({
           type: "success",
-          message: "复制成功"
+          message: "复制成功",
         });
       }
-      document.body.removeChild(input)
-    }
+      document.body.removeChild(input);
+    };
     // 绑定点击事件，就是所谓的一键 copy 啦
-    el.addEventListener('click', el.handler)
+    el.addEventListener("click", el.handler);
   },
   // 当传进来的值更新的时候触发
-  beforeUpdate(el, {
-    value
-  }) {
-    el.$value = value
+  beforeUpdate(el, { value }) {
+    el.$value = value;
   },
   // 指令与元素解绑的时候，移除事件绑定
   unmounted(el) {
-    el.removeEventListener('click', el.handler)
+    el.removeEventListener("click", el.handler);
   },
-}
+};
 
-export default copy
+export default copy;
