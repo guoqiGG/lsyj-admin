@@ -86,6 +86,12 @@ body,
   align-items: center;
 }
 
+.flx-row-right {
+  display: flex;
+  flex-flow: row-reverse;
+  align-items: center;
+}
+
 .col-center {
   display: flex;
   flex-direction: column;

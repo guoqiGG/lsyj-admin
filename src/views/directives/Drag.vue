@@ -1,9 +1,17 @@
 <template>
-  <div class="box-card-content">
+  <el-card>
     <span class="box-card-title">拖拽🍻🍻🍻🍵🍵🍵</span>
-    <div v-draggable class="drag-box flx-center text">我可以拖拽哦~</div>
-    <div v-draggable class="drag-box flx-center text" style="background: #eba300; width: 200px; height: 200px">我可以拖拽哦~</div>
-  </div>
+    <div class="box-card-content">
+      <div v-draggable class="drag-box flx-center text">我可以拖拽哦~</div>
+      <div
+        v-draggable
+        class="drag-box flx-center text"
+        style="background: #eba300; width: 200px; height: 200px"
+      >
+        我可以拖拽哦~
+      </div>
+    </div>
+  </el-card>
 </template>
 
 <script setup></script>
@@ -15,7 +23,7 @@
 }
 .box-card-content {
   width: 100%;
-  height: 100%;
+  height: 80vh;
   background-color: #fff;
 
   position: relative;

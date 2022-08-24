@@ -15,12 +15,11 @@
 </template>
 
 <script setup name="layout">
-import { computed } from "vue-demi";
-import store from "../store/index";
-import Header from "./header/index.vue";
-import Menu from "./menu/index.vue";
+import store from '../store/index'
+import Header from './header/index.vue'
+import Menu from './menu/index.vue'
 </script>
 
 <style scoped lang="scss">
-@import "./index.scss";
+@import './index.scss';
 </style>

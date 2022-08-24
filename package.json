@@ -20,7 +20,8 @@
     "vue": "^3.2.25",
     "vue-router": "^4.0.13",
     "vuedraggable": "^4.1.0",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.1",
