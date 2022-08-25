@@ -1,16 +1,18 @@
 <template>
   <el-card class="flx-row-right">
-    <el-button type="primary" @click="dialogVisibleHanle">滑动加载</el-button>
-    <el-button type="primary" @click="dialogVisibleHanle">分页加载</el-button>
+    <el-button type="primary" @click="scrollHanlde">滑动加载</el-button>
+    <el-button type="primary" @click="isShowPagHandle">分页加载</el-button>
     <el-button type="primary" @click="educeExcel">导出表格</el-button>
   </el-card>
   <el-card class="mt10">
     <el-table
+      id="mutipleTable"
       :data="tableData"
       :header-cell-style="{ backgroundColor: '#ecf5ff' }"
       border
       stripe
       style="width: 100%"
+      :height="heightTbale"
     >
       <el-table-column
         v-for="item in columnData"
@@ -51,11 +53,14 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="isShowPag"
       small
       background
       layout="prev, pager, next"
-      :total="50"
+      :total="60"
       class="mt-4 mt10"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
     />
   </el-card>
 </template>
@@ -66,6 +71,7 @@ import { nextTick, onMounted, reactive, ref } from 'vue'
 import { orderLists } from '../../../api/modules/index.js'
 import { options } from './options.js'
 const tableData = ref([])
+const oldTableData = ref([])
 const tabclickIndex = ref()
 
 const columnData = ref(JSON.parse(JSON.stringify(options)))
@@ -77,11 +83,51 @@ const queryData = ref({
   page: 1,
   size: 10,
 })
+
+const heightTbale = ref('auto')
+const isShowPag = ref(false)
+const scrollHanlde = () => {
+  heightTbale.value = '75vh'
+  isShowPag.value = false
+  oldTableData.value = []
+  queryData.value.page = 1
+  queryData.value.size = 15
+  initData()
+
+  // let table = mutipleTable.value._value.layout.table.refs.bodyWrapper;
+  let table = document.getElementById('mutipleTable')
+  table.addEventListener(
+    'scroll',
+    (res) => {
+      console.log('/监听表格滚动事件')
+      loadmore(res)
+    },
+    true
+  )
+}
+const isShowPagHandle = () => {
+  isShowPag.value = true
+  heightTbale.value = 'auto'
+  queryData.value.page = 1
+  queryData.value.size = 10
+  initData()
+}
+const cancelEvent = (val) => {
+  console.log('取消')
+}
 const initData = () => {
   orderLists(queryData.value).then((res) => {
     console.log(res.data.data)
     // total.value = res.data.data.total
-    tableData.value = res.data.data
+    if (queryData.value.size == 10) {
+      tableData.value = res.data.data
+    } else {
+      tableData.value = res.data.data.slice(
+        queryData.value.page - 1,
+        queryData.value.size
+      )
+      oldTableData.value = res.data.data
+    }
   })
 }
 const itemEditHanld = (item) => {
@@ -115,6 +161,26 @@ onMounted(() => {
   console.log(columnData.value)
   initData()
 })
+
+const loadmore = (res) => {
+  // 再距离底部20px的时候滚动加载下一条
+  if (
+    res.target.scrollTop &&
+    res.target.scrollHeight - 2 <=
+      res.target.scrollTop + res.target.clientHeight
+  ) {
+    console.log(queryData.value.page)
+    queryData.value.page++
+    if (queryData.value.page > 5) return
+    tableData.value = tableData.value.concat(
+      // res.data.data
+      oldTableData.value.slice(
+        queryData.value.size * queryData.value.page - queryData.value.size,
+        queryData.value.size * queryData.value.page
+      )
+    )
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -41,7 +41,6 @@
             icon-color="#626AEF"
             title="确认删除该用户?"
             @confirm="DeleteItem(index)"
-            @cancel="cancelEvent"
           >
             <template #reference>
               <el-icon class="icon-dele"><Delete /></el-icon>
@@ -56,6 +55,7 @@
       layout="prev, pager, next"
       :total="50"
       class="mt-4 mt10"
+      @current-change="handleCurrentChange"
     />
   </el-card>
 </template>
@@ -94,6 +94,7 @@ const handleSizeChange = (val) => {
 }
 
 const handleCurrentChange = (val) => {
+  queryData.value.size = 10
   queryData.value.page = val
   initData(queryData.value)
 }

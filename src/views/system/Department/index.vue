@@ -54,7 +54,6 @@
             icon-color="#626AEF"
             title="确认删除该用户?"
             @confirm="DeleteItem(index)"
-            @cancel="cancelEvent"
           >
             <template #reference>
               <el-icon class="icon-dele"><Delete /></el-icon>
