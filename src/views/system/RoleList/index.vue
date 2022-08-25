@@ -1,10 +1,11 @@
 <template>
   <el-card class="flx-row-right">
+    <el-button type="primary" v-print="'#printMe'">打印</el-button>
     <el-button type="primary" @click="scrollHanlde">滑动加载</el-button>
     <el-button type="primary" @click="isShowPagHandle">分页加载</el-button>
     <el-button type="primary" @click="educeExcel">导出表格</el-button>
   </el-card>
-  <el-card class="mt10">
+  <el-card class="mt10" id="printMe">
     <el-table
       id="mutipleTable"
       :data="tableData"
@@ -65,6 +66,8 @@
   </el-card>
 </template>
 <script setup>
+import print from 'vue3-print-nb'
+
 import * as XLSX from 'xlsx'
 import { Edit, Delete, InfoFilled, View } from '@element-plus/icons-vue'
 import { nextTick, onMounted, reactive, ref } from 'vue'
@@ -180,6 +183,9 @@ const loadmore = (res) => {
       )
     )
   }
+}
+const vPrint = (event) => {
+  event.print
 }
 </script>
 
