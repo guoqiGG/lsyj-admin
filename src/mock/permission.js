@@ -2,7 +2,8 @@
 import Mock from "mockjs";
 const Random = Mock.Random;
 
-let menuList = [{
+let menuList = [
+  {
     path: "/home",
     component: "Loyout",
     meta: {
@@ -22,7 +23,8 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/baseForm",
         component: "/form/baseForm",
         alwaysShow: false,
@@ -71,7 +73,8 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/Department",
         component: "/system/Department",
         alwaysShow: false,
@@ -132,7 +135,8 @@ let menuList = [{
       roles: ["sys:goods"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/goodCategory",
         component: "/goods/goodCategory",
         alwaysShow: false,
@@ -181,7 +185,8 @@ let menuList = [{
       roles: ["sys:map"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/BaiduMap",
         component: "/map/BaiduMap",
         alwaysShow: false,
@@ -228,7 +233,8 @@ let menuList = [{
       icon: "HelpFilled",
       roles: ["sys:able"],
     },
-    children: [{
+    children: [
+      {
         path: "/watermark",
         component: "/able/watermark",
         name: "watermark",
@@ -321,7 +327,8 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
+    children: [
+      {
         path: "/copy",
         component: "/directives/copy",
         name: "copy",
@@ -364,16 +371,18 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
-      path: "/flowCat",
-      component: "/flow/flowCat",
-      name: "flowCat",
-      meta: {
-        title: "流程图",
-        icon: "Menu",
-        roles: ["sys:able"],
+    children: [
+      {
+        path: "/flowCat",
+        component: "/flow/flowCat",
+        name: "flowCat",
+        meta: {
+          title: "流程图",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
       },
-    }, ],
+    ],
   },
   {
     path: "/DataReport",
@@ -386,25 +395,48 @@ let menuList = [{
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [{
-      path: "/demo1",
-      component: "/DataReport/demo1",
-      name: "demo1",
-      meta: {
-        title: "项目一",
-        icon: "Menu",
-        roles: ["sys:able"],
+    children: [
+      {
+        path: "/demo1",
+        component: "/DataReport/demo1",
+        name: "demo1",
+        meta: {
+          title: "项目一",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
       },
-    }, ],
+    ],
+  },
+  {
+    path: "/material",
+    component: "Loyout",
+    alwaysShow: true,
+    name: "material",
+    meta: {
+      title: "素材中心",
+      icon: "PictureFilled",
+      roles: ["sys:manage"],
+      parentId: 0,
+    },
+    children: [
+      {
+        path: "/materialIndex",
+        component: "/material/materialIndex",
+        name: "materialIndex",
+        meta: {
+          title: "素材管理",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
+      },
+    ],
   },
 ];
 
 export const LoginInfo = (options) => {
   console.log(options, "接收post参数");
-  const {
-    username,
-    password
-  } = JSON.parse(options.body);
+  const { username, password } = JSON.parse(options.body);
   if (username == "admin" && password != "123456") {
     return {
       code: "-200",
@@ -533,6 +565,6 @@ export const orderLists = (options) => {
 
   return {
     total: 60,
-    data: obj.size == 10 ? orderList.slice(obj.size * obj.page - obj.size, obj.size * obj.page) : orderList
+    data: obj.size == 10 ? orderList.slice(obj.size * obj.page - obj.size, obj.size * obj.page) : orderList,
   };
 };
