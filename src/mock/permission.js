@@ -2,8 +2,7 @@
 import Mock from "mockjs";
 const Random = Mock.Random;
 
-let menuList = [
-  {
+let menuList = [{
     path: "/home",
     component: "Loyout",
     meta: {
@@ -23,8 +22,7 @@ let menuList = [
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [
-      {
+    children: [{
         path: "/baseForm",
         component: "/form/baseForm",
         alwaysShow: false,
@@ -73,8 +71,7 @@ let menuList = [
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [
-      {
+    children: [{
         path: "/Department",
         component: "/system/Department",
         alwaysShow: false,
@@ -92,7 +89,7 @@ let menuList = [
         alwaysShow: false,
         name: "UserList",
         meta: {
-          title: "可编辑表格",
+          title: "内嵌表格",
           icon: "Menu",
           roles: ["sys:user"],
           parentId: 17,
@@ -116,7 +113,7 @@ let menuList = [
         alwaysShow: false,
         name: "MenuList",
         meta: {
-          title: "内嵌表格",
+          title: "可编辑Table",
           icon: "Menu",
           roles: ["sys:menu"],
           parentId: 17,
@@ -135,8 +132,7 @@ let menuList = [
       roles: ["sys:goods"],
       parentId: 0,
     },
-    children: [
-      {
+    children: [{
         path: "/goodCategory",
         component: "/goods/goodCategory",
         alwaysShow: false,
@@ -185,8 +181,7 @@ let menuList = [
       roles: ["sys:map"],
       parentId: 0,
     },
-    children: [
-      {
+    children: [{
         path: "/BaiduMap",
         component: "/map/BaiduMap",
         alwaysShow: false,
@@ -199,28 +194,31 @@ let menuList = [
         },
       },
       {
-        path: "/GooleMap",
-        component: "/map/GooleMap",
+        path: "/echarts",
+        component: "/map/echarts",
         alwaysShow: false,
-        name: "GooleMap",
+        name: "echarts",
         meta: {
-          title: "谷歌地图",
+          title: "echarts图表",
           icon: "Menu",
           roles: ["sys:GooleMap"],
           parentId: 34,
         },
+        children: [{
+
+        }]
       },
-      {
-        path: "/Echarts",
-        component: "/map/Echarts",
-        alwaysShow: false,
-        name: "Echarts",
-        meta: {
-          title: "Ehacrts图表",
-          roles: ["sys:map"],
-          parentId: 34,
-        },
-      },
+      // {
+      //   path: "/Echarts",
+      //   component: "/map/Echarts",
+      //   alwaysShow: false,
+      //   name: "Echarts",
+      //   meta: {
+      //     title: "Ehacrts图表",
+      //     roles: ["sys:map"],
+      //     parentId: 34,
+      //   },
+      // },
     ],
   },
   {
@@ -233,8 +231,7 @@ let menuList = [
       icon: "HelpFilled",
       roles: ["sys:able"],
     },
-    children: [
-      {
+    children: [{
         path: "/watermark",
         component: "/able/watermark",
         name: "watermark",
@@ -270,6 +267,16 @@ let menuList = [
         name: "wangEditor",
         meta: {
           title: "富文本编辑器",
+          icon: "Menu",
+          roles: ["sys:able"],
+        },
+      },
+      {
+        path: "/markdown",
+        component: "/able/markdown",
+        name: "markdown",
+        meta: {
+          title: "markdown编辑器",
           icon: "Menu",
           roles: ["sys:able"],
         },
@@ -327,8 +334,7 @@ let menuList = [
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [
-      {
+    children: [{
         path: "/copy",
         component: "/directives/copy",
         name: "copy",
@@ -371,18 +377,16 @@ let menuList = [
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [
-      {
-        path: "/flowCat",
-        component: "/flow/flowCat",
-        name: "flowCat",
-        meta: {
-          title: "流程图",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+    children: [{
+      path: "/flowCat",
+      component: "/flow/flowCat",
+      name: "flowCat",
+      meta: {
+        title: "流程图",
+        icon: "Menu",
+        roles: ["sys:able"],
       },
-    ],
+    }, ],
   },
   {
     path: "/DataReport",
@@ -395,18 +399,16 @@ let menuList = [
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [
-      {
-        path: "/demo1",
-        component: "/DataReport/demo1",
-        name: "demo1",
-        meta: {
-          title: "项目一",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+    children: [{
+      path: "/demo1",
+      component: "/DataReport/demo1",
+      name: "demo1",
+      meta: {
+        title: "项目一",
+        icon: "Menu",
+        roles: ["sys:able"],
       },
-    ],
+    }, ],
   },
   {
     path: "/material",
@@ -419,24 +421,25 @@ let menuList = [
       roles: ["sys:manage"],
       parentId: 0,
     },
-    children: [
-      {
-        path: "/materialIndex",
-        component: "/material/materialIndex",
-        name: "materialIndex",
-        meta: {
-          title: "素材管理",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+    children: [{
+      path: "/materialIndex",
+      component: "/material/materialIndex",
+      name: "materialIndex",
+      meta: {
+        title: "素材管理",
+        icon: "Menu",
+        roles: ["sys:able"],
       },
-    ],
+    }, ],
   },
 ];
 
 export const LoginInfo = (options) => {
   console.log(options, "接收post参数");
-  const { username, password } = JSON.parse(options.body);
+  const {
+    username,
+    password
+  } = JSON.parse(options.body);
   if (username == "admin" && password != "123456") {
     return {
       code: "-200",
@@ -548,7 +551,7 @@ export const orderLists = (options) => {
   for (let i = 0; i < 60; i++) {
     let item = {
       goodsId: i,
-      code: Random.integer(10, 100) + "13210code",
+      code: Random.guid(),
       title: Random.ctitle(4, 5),
       commodity: "10010" + i,
       goodsname: Random.cword(2, 6), //  Random.csentence( min, max )
@@ -559,6 +562,13 @@ export const orderLists = (options) => {
       costPrice: Random.integer(10, 20),
       amount: Random.integer(100, 200), //100到5000的随机整数
       itemEdit: false,
+      ItemData: [{
+        address: Random.city(true),
+        email: Random.email(),
+        state: Random.boolean(),
+        salenumber: Random.integer(10, 100),
+        receivable: Random.integer(10, 100)
+      }]
     };
     orderList.push(item);
   }

@@ -37,15 +37,26 @@
       <el-table-column type="expand">
         <template #default="props">
           <div class="m10">
-            <div class="title">机构信息</div>
-            <el-table :data="props.row.family">
-              <el-table-column label="地址" prop="name" />
-              <el-table-column label="营业状态" prop="state" />
-              <el-table-column label="销售额" prop="city" />
-              <el-table-column label="回馈额" prop="address" />
-              <el-table-column label="数据" prop="zip" />
+            <div class="expand-title">机构信息</div>
+            <el-table
+              :header-cell-style="{ backgroundColor: '#FAFAFA' }"
+              :data="props.row.ItemData"
+              border
+              style="border-bottom: none"
+            >
+              <el-table-column
+                v-for="ctx in ItemData"
+                :key="ctx.props"
+                :sortable="ctx.sortable"
+                :prop="ctx.props"
+                :label="ctx.label"
+                :width="ctx.width"
+                :fixed="ctx.fixed"
+                :align="ctx.align"
+                show-overflow-tooltip
+              >
+              </el-table-column>
             </el-table>
-            <el-button style="width: 100%" :icon="Plus">添加信息</el-button>
           </div>
         </template>
       </el-table-column>
@@ -65,7 +76,7 @@
             v-model="scope.row[item.props]"
             v-if="scope.row.itemEdit"
           ></el-input>
-          <div v-else>{{ scope.row[item.props] }}</div>
+          <div v-else class="one-cut-txt">{{ scope.row[item.props] }}</div>
         </template>
         <template v-slot:default="scope" v-if="item.props === 'actions'">
           <el-icon class="icon-edit" @click="itemEditHanld(scope.row)"
@@ -76,7 +87,7 @@
             cancel-button-text="取消"
             :icon="InfoFilled"
             icon-color="#626AEF"
-            title="确认删除该用户?"
+            title="确认删除该数据?"
             @confirm="DeleteItem(index)"
           >
             <template #reference>
@@ -108,7 +119,7 @@ import {
 } from '@element-plus/icons-vue'
 import { nextTick, onMounted, reactive, ref } from 'vue'
 import { orderLists } from '../../../api/modules/index.js'
-import { options } from './options.js'
+import { options, ItemData } from './options.js'
 const tableData = ref([])
 const tabclickIndex = ref()
 
@@ -200,5 +211,10 @@ onMounted(() => {
 .btn-color {
   background: #fff;
   color: #4c60cc;
+}
+.expand-title {
+  padding: 10px;
+  color: #919399;
+  font-weight: 600;
 }
 </style>

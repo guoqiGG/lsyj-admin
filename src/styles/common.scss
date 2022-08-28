@@ -132,6 +132,15 @@ body,
   margin-left: 20px;
 }
 
+.one-cut-txt {
+  /*强制文字在一行文本框内*/
+  white-space: nowrap;
+  /*溢出部分文字隐藏*/
+  overflow: hidden;
+  /*溢出部分省略号处理*/
+  text-overflow: ellipsis;
+}
+
 /* 清除浮动 */
 .clearfix::after {
   content: "";
@@ -140,6 +149,7 @@ body,
   clear: both;
   overflow: hidden;
 }
+
 
 /* fade-transform */
 .fade-transform-leave-active,

@@ -7,7 +7,7 @@
       <div class="login-form">
         <div class="login-logo">
           <!-- <img class="login-icon" src="../assets/images/logo.svg" alt="" /> -->
-          <p class="logo-text">宇宙无敌大可爱</p>
+          <p class="logo-text">欢迎登录</p>
         </div>
         <el-form
           ref="loginFormRef"
@@ -75,8 +75,8 @@ const loginFormRef = ref()
 const loading = ref(false)
 const router = useRouter()
 const loginForm = reactive({
-  username: '',
-  password: '',
+  username: 'admin',
+  password: '123456',
 })
 const loginRules = reactive({
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],

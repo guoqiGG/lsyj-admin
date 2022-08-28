@@ -1,31 +1,21 @@
 <template>
-  <el-card class="box-card">
-    <template #header>
-      <div class="card-header">
-        <span>Card name</span>
-        <el-button class="button" text>Operation button</el-button>
-      </div>
-    </template>
-    <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div>
-  </el-card>
+  <el-row style="height: 90vh">
+    <el-col :span="6" style="border-right: 10px solid #f0f2f5"> </el-col>
+    <el-col :span="18"></el-col>
+  </el-row>
 </template>
 
 <style>
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.el-row {
+  margin-bottom: 20px;
 }
-
-.text {
-  font-size: 14px;
+.el-row:last-child {
+  margin-bottom: 0;
 }
-
-.item {
-  margin-bottom: 18px;
-}
-
-.box-card {
-  width: 480px;
+.el-col {
+  border-radius: 4px;
+  background-color: #fff;
+  /* margin-right: 20px; */
+  height: 100%;
 }
 </style>
