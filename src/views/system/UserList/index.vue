@@ -1,9 +1,31 @@
 <template>
-  <el-card class="flx-row-right">
-    <el-button type="primary" @click="dialogVisibleHanle">滑动加载</el-button>
-    <el-button type="primary" @click="dialogVisibleHanle">分页加载</el-button>
-    <el-button type="primary" @click="educeExcel">导出表格</el-button>
+  <el-card>
+    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+      <el-form-item label="机构名">
+        <el-input v-model="formInline.user" placeholder="请输入关键字" />
+      </el-form-item>
+      <el-form-item label="选择">
+        <el-select v-model="formInline.region" placeholder="Activity zone">
+          <el-option label="Zone one" value="shanghai" />
+          <el-option label="Zone two" value="beijing" />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">重置</el-button>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button text bg class="btn-color"
+          >更多 <el-icon class="el-icon--right"><ArrowDownBold /></el-icon
+        ></el-button>
+      </el-form-item>
+    </el-form>
+    <!-- <el-button type="primary" @click="dialogVisibleHanle">滑动加载</el-button> -->
+    <!-- <el-button type="primary" @click="dialogVisibleHanle">分页加载</el-button> -->
+    <!-- <el-button type="primary" @click="educeExcel">导出表格</el-button> -->
   </el-card>
+  <!-- <el-row :gutter="20">
+    <el-col :span="16"><div class="grid-content ep-bg-purple" /></el-col>
+    <el-col :span="8"><div class="grid-content ep-bg-purple" /></el-col>
+  </el-row> -->
   <el-card class="mt10">
     <el-table
       :data="tableData"
@@ -12,6 +34,21 @@
       stripe
       style="width: 100%"
     >
+      <el-table-column type="expand">
+        <template #default="props">
+          <div class="m10">
+            <div class="title">机构信息</div>
+            <el-table :data="props.row.family">
+              <el-table-column label="地址" prop="name" />
+              <el-table-column label="营业状态" prop="state" />
+              <el-table-column label="销售额" prop="city" />
+              <el-table-column label="回馈额" prop="address" />
+              <el-table-column label="数据" prop="zip" />
+            </el-table>
+            <el-button style="width: 100%" :icon="Plus">添加信息</el-button>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column
         v-for="item in columnData"
         :key="item.props"
@@ -61,7 +98,14 @@
 </template>
 <script setup>
 import * as XLSX from 'xlsx'
-import { Edit, Delete, InfoFilled, View } from '@element-plus/icons-vue'
+import {
+  Edit,
+  Delete,
+  InfoFilled,
+  View,
+  ArrowDownBold,
+  Plus,
+} from '@element-plus/icons-vue'
 import { nextTick, onMounted, reactive, ref } from 'vue'
 import { orderLists } from '../../../api/modules/index.js'
 import { options } from './options.js'
@@ -72,6 +116,7 @@ const columnData = ref(JSON.parse(JSON.stringify(options)))
 const disabled = ref(false)
 const dialogVisible = ref(false)
 const total = ref(0)
+const formInline = ref({})
 const queryData = ref({
   keyWord: '',
   page: 1,
@@ -92,7 +137,7 @@ const itemEditHanld = (item) => {
 const handleSizeChange = (val) => {
   console.log(val)
 }
-
+const handleSelectionChange = (val) => {}
 const handleCurrentChange = (val) => {
   queryData.value.size = 10
   queryData.value.page = val
@@ -124,7 +169,8 @@ onMounted(() => {
   text-align: right;
   margin-bottom: 20px;
 }
-
+.demo-form-inline {
+}
 .dragClass {
   background: rgba($color: #41c21a, $alpha: 0.5) !important;
 }
@@ -150,5 +196,9 @@ onMounted(() => {
 .icon-dele {
   font-size: 20px;
   color: #ff5722;
+}
+.btn-color {
+  background: #fff;
+  color: #4c60cc;
 }
 </style>

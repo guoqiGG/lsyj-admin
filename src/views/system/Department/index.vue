@@ -130,7 +130,7 @@ import {
 import { options } from './options.js'
 import { onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getDateTime } from '../../../until/index.js'
+import { getDateTime } from '../../../utils/index.js'
 const queryData = ref({
   keyWord: '',
   page: 1,

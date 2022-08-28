@@ -4,7 +4,10 @@
       <Breadcrumb></Breadcrumb>
     </div>
     <div class="header-ri flx-center">
+      <el-icon class="icon-style"><Search /></el-icon>
+      <el-icon class="icon-style"><Refresh /></el-icon>
       <message></message>
+
       <!-- <Driver></Driver> -->
       <fullScreen></fullScreen>
       <avatar></avatar>
@@ -13,7 +16,7 @@
   </div>
 </template>
 <script setup name="header">
-import { Setting } from '@element-plus/icons-vue'
+// import { Setting, Search } from '@element-plus/icons-vue'
 import avatar from './components/avatar.vue'
 import fullScreen from './components/fullScreen.vue'
 import message from './components/message.vue'
