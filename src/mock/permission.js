@@ -119,6 +119,31 @@ let menuList = [{
           parentId: 17,
         },
       },
+      {
+        path: "/Excel",
+        component: "/system/Excel",
+        alwaysShow: false,
+        name: "Excel",
+        parentId: 0,
+        meta: {
+          title: "Excel",
+          icon: "Menu",
+          roles: ["sys:menu"],
+          parentId: 17,
+        },
+        children: [{
+          path: "/importExcel",
+          component: "/system/Excel/importExcel",
+          alwaysShow: false,
+          name: "importExcel",
+          meta: {
+            title: "导入",
+            icon: "Menu",
+            roles: ["sys:menu"],
+            parentId: 17,
+          },
+        }]
+      },
     ],
   },
   {

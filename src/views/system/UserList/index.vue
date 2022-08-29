@@ -1,33 +1,14 @@
 <template>
   <el-card>
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
-      <el-form-item label="机构名">
-        <el-input v-model="formInline.user" placeholder="请输入关键字" />
-      </el-form-item>
-      <el-form-item label="选择">
-        <el-select v-model="formInline.region" placeholder="Activity zone">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">重置</el-button>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-        <el-button text bg class="btn-color"
-          >更多 <el-icon class="el-icon--right"><ArrowDownBold /></el-icon
-        ></el-button>
-      </el-form-item>
-    </el-form>
-    <!-- <el-button type="primary" @click="dialogVisibleHanle">滑动加载</el-button> -->
-    <!-- <el-button type="primary" @click="dialogVisibleHanle">分页加载</el-button> -->
-    <!-- <el-button type="primary" @click="educeExcel">导出表格</el-button> -->
+    <div class="mt-4">
+      <el-button type="primary" @click="handleExpand">折叠全部</el-button>
+      <el-button type="primary" @click="handleOpen">展开全部</el-button>
+    </div>
   </el-card>
-  <!-- <el-row :gutter="20">
-    <el-col :span="16"><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="8"><div class="grid-content ep-bg-purple" /></el-col>
-  </el-row> -->
+
   <el-card class="mt10">
     <el-table
+      ref="table"
       :data="tableData"
       :header-cell-style="{ backgroundColor: '#ecf5ff' }"
       border
@@ -121,8 +102,9 @@ import { nextTick, onMounted, reactive, ref } from 'vue'
 import { orderLists } from '../../../api/modules/index.js'
 import { options, ItemData } from './options.js'
 const tableData = ref([])
+const table = ref()
 const tabclickIndex = ref()
-
+const isExpand = ref(false)
 const columnData = ref(JSON.parse(JSON.stringify(options)))
 const disabled = ref(false)
 const dialogVisible = ref(false)
@@ -158,12 +140,18 @@ const handleClose = () => {}
 const dialogVisibleHanle = () => {
   console.log('滑动加载')
 }
-const educeExcel = () => {
-  console.log('导出表格')
-  const data = XLSX.utils.json_to_sheet(tableData.value) //此处tableData.value为表格的数据
-  const wb = XLSX.utils.book_new()
-  XLSX.utils.book_append_sheet(wb, data, 'test-data') //test-data为自定义的sheet表名
-  XLSX.writeFile(wb, '测试.xlsx') //test.xlsx为自定义的文件名
+const handleExpand = () => {
+  isExpand.value = false
+  tableData.value.forEach((item) => {
+    table.value.toggleRowExpansion(item, isExpand.value)
+  })
+}
+
+const handleOpen = () => {
+  isExpand.value = true
+  tableData.value.forEach((item) => {
+    table.value.toggleRowExpansion(item, isExpand.value)
+  })
 }
 
 // https://www.zcool.com.cn/work/ZMzUzMDA0MDQ=.html
