@@ -1,29 +1,54 @@
 <template>
-  <template v-for="menu in menuList" :key="menu.path">
+  <template v-for="subItem in menuList" :key="subItem.path">
     <el-sub-menu
-      v-if="menu.children && menu.children.length > 0"
-      :index="menu.path"
+      v-if="subItem.children && subItem.children.length > 0"
+      :index="subItem.path"
     >
       <template #title>
         <el-icon>
-          <component :is="menu.meta.icon"></component>
+          <component :is="subItem.meta.icon"></component>
         </el-icon>
-        <span>{{ menu.meta.title }}</span>
+        <span>{{ subItem.meta.title }}</span>
       </template>
-      <el-menu-item :index="it.path" v-for="it in menu.children" :key="it.path">
-        <template #title>
+      <template v-for="item in subItem.children" :key="item.path">
+        <el-sub-menu
+          v-if="item.children && item.children.length > 0"
+          :index="item.path"
+        >
+          <template #title>
+            <el-icon>
+              <component :is="item.meta.icon"></component>
+            </el-icon>
+            <span>{{ item.meta.title }}</span>
+          </template>
+          <!-- <template v-for="ele in item.children" :key="ele.path">
+            <el-menu-item :index="ele.path">
+              <el-icon>
+                <component :is="ele.meta.icon"></component>
+              </el-icon>
+              <template #title>
+                <span>{{ ele.meta.title }}</span>
+              </template>
+            </el-menu-item>
+          </template> -->
+        </el-sub-menu>
+        <el-menu-item v-else :index="item.path">
           <el-icon>
-            <component :is="it.meta.icon"></component>
+            <component :is="item.meta.icon"></component>
           </el-icon>
-          <span>{{ it.meta.title }}</span>
-        </template>
-      </el-menu-item>
+          <template #title>
+            <span>{{ item.meta.title }}</span>
+          </template>
+        </el-menu-item>
+      </template>
     </el-sub-menu>
-    <el-menu-item style="color: #f4f4f5" v-else :index="menu.path">
+    <el-menu-item v-else :index="subItem.path">
       <el-icon>
-        <component :is="menu.meta.icon"></component>
+        <component :is="subItem.meta.icon"></component>
       </el-icon>
-      <template #title>{{ menu.meta.title }}</template>
+      <template #title>
+        <span>{{ subItem.meta.title }}</span>
+      </template>
     </el-menu-item>
   </template>
 </template>

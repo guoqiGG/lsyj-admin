@@ -121,10 +121,9 @@ let menuList = [{
       },
       {
         path: "/Excel",
-        component: "/system/Excel",
-        alwaysShow: false,
+        component: "Loyout",
+        alwaysShow: true,
         name: "Excel",
-        parentId: 0,
         meta: {
           title: "Excel",
           icon: "Menu",
@@ -245,6 +244,37 @@ let menuList = [{
       //   },
       // },
     ],
+  },
+  {
+    path: '/ErrorMessage',
+    path: "/ErrorMessage",
+    component: "Loyout",
+    alwaysShow: true,
+    name: "ErrorMessage",
+    meta: {
+      title: "异常页面",
+      icon: "WarningFilled",
+      roles: ["sys:able"],
+    },
+    children: [{
+      path: "/404",
+      component: "/ErrorMessage/404",
+      name: "404",
+      meta: {
+        title: "404",
+        icon: "Menu",
+        roles: ["sys:able"],
+      },
+    }, {
+      path: "/500",
+      component: "/ErrorMessage/500",
+      name: "500",
+      meta: {
+        title: "500",
+        icon: "Menu",
+        roles: ["sys:able"],
+      },
+    }, ]
   },
   {
     path: "/able",

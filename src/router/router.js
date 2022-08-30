@@ -109,7 +109,49 @@ const routes = [{
           name: "可编辑Table",
         },
       },
+      {
+        path: '/Excel',
+        name: "Excel",
+        component: Layout,
+        meta: {
+          name: "Excel",
+        },
+        children: [{
+          path: "/importExcel",
+          name: "importExcel",
+          component: () => import("../views/system/Excel/importExcel.vue"),
+          meta: {
+            requiresAuth: true,
+            name: "导入Excel",
+          },
+        }, ]
+      }
     ],
+  },
+  {
+    path: "/ErrorMessage",
+    name: "ErrorMessage",
+    component: Layout,
+    meta: {
+      name: "异常页面",
+    },
+    children: [{
+      path: "/404",
+      name: "404",
+      component: () => import("../views/ErrorMessage/404.vue"),
+      meta: {
+        requiresAuth: true, //有一些页面是否登录才能进去
+        name: "404",
+      },
+    }, {
+      path: "/500",
+      name: "500",
+      component: () => import("../views/ErrorMessage/500.vue"),
+      meta: {
+        requiresAuth: true, //有一些页面是否登录才能进去
+        name: "500",
+      },
+    }, ]
   },
   {
     path: "/goods",
@@ -323,7 +365,9 @@ const routes = [{
         },
       },
     ],
+
   },
+
 ];
 
 const router = createRouter({
