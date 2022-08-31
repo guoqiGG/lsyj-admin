@@ -1,43 +1,22 @@
 <template>
   <template v-for="subItem in menuList" :key="subItem.path">
-    <el-sub-menu
-      v-if="subItem.children && subItem.children.length > 0"
-      :index="subItem.path"
-    >
+    <el-sub-menu v-if="subItem.children && subItem.children.length > 0" :index="subItem.path">
       <template #title>
         <el-icon>
           <component :is="subItem.meta.icon"></component>
         </el-icon>
         <span>{{ subItem.meta.title }}</span>
       </template>
-      <template v-for="item in subItem.children" :key="item.path">
-        <el-sub-menu
-          v-if="item.children && item.children.length > 0"
-          :index="item.path"
-        >
-          <template #title>
-            <el-icon>
-              <component :is="item.meta.icon"></component>
-            </el-icon>
-            <span>{{ item.meta.title }}</span>
-          </template>
-          <!-- <template v-for="ele in item.children" :key="ele.path">
-            <el-menu-item :index="ele.path">
-              <el-icon>
-                <component :is="ele.meta.icon"></component>
-              </el-icon>
-              <template #title>
-                <span>{{ ele.meta.title }}</span>
-              </template>
-            </el-menu-item>
-          </template> -->
-        </el-sub-menu>
-        <el-menu-item v-else :index="item.path">
+      <template v-for="child in subItem.children" :key="child.path">
+        <template v-if="child.children && child.children.length > 0">
+          <!-- <Menu-items :menuList="child.children"></Menu-items> -->
+        </template>
+        <el-menu-item v-else :index="child.path">
           <el-icon>
-            <component :is="item.meta.icon"></component>
+            <component :is="child.meta.icon"></component>
           </el-icon>
           <template #title>
-            <span>{{ item.meta.title }}</span>
+            <span>{{ child.meta.title }}</span>
           </template>
         </el-menu-item>
       </template>
@@ -54,7 +33,7 @@
 </template>
 
 <script setup>
-defineProps(['menuList'])
+defineProps(["menuList"]);
 </script>
 
 <style scoped>

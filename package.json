@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@braks/vue-flow": "^0.4.38",
     "@element-plus/icons-vue": "^1.1.4",
     "@kangc/v-md-editor": "^2.3.15",
     "@wangeditor/editor": "^5.1.14",

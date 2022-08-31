@@ -30,6 +30,7 @@ const setNumberGrow = (ele) => {
     start += step;
     if (start > number.value) {
       clearInterval(t);
+
       start = number.value;
       t = null;
     }
