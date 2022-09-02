@@ -52,3 +52,17 @@ export function orderLists(query) {
     data: query,
   });
 }
+export function homeList(query) {
+  return service({
+    method: "get",
+    url: "/permission/homeList",
+    data: query,
+  });
+}
+export function noticeLists(query) {
+  return service({
+    method: "get",
+    url: "/permission/noticeLists",
+    data: query,
+  });
+}

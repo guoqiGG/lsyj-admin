@@ -167,11 +167,44 @@
   .table-data {
     margin-right: 10px;
     background-color: #fff;
+    padding-bottom: 10px;
     .tit {
-      padding: 10px;
+      padding: 10px 10px 0 10px;
       font-size: 14px;
       font-weight: bold;
       letter-spacing: 1px;
+    }
+    .table-box {
+      margin: 10px;
+      .el-table {
+        width: 100%;
+        height: 360px;
+        .type {
+          font-size: 10px;
+          padding: 5px 10px;
+          font-weight: 500;
+          line-height: 0px;
+          color: #fa4a1e;
+          text-align: left;
+          border-radius: 2px;
+          background: #fa4a1e14;
+          &.error-type {
+            color: #4060c7;
+            background: #e8f3ff;
+          }
+        }
+        .state {
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          background-color: #4060c7;
+          border-radius: 50%;
+          margin-right: 5px;
+          &.error-state {
+            background-color: #fa4a1e;
+          }
+        }
+      }
     }
   }
   .data-item-three {
@@ -197,6 +230,7 @@
           border-radius: 2px;
           background: #fafafcff;
           position: relative;
+          align-items: center;
           .icon {
             position: absolute;
             right: 16px;
@@ -209,17 +243,64 @@
             font-weight: 400;
             color: rgba(25, 30, 36, 0.5);
             padding-bottom: 5px;
-          }
-          .num {
-            color: #0052d9;
-            font-size: 14px;
-            font-weight: 700;
-            span {
-              color: #666;
-              font-weight: 400;
+            display: flex;
+            align-items: center;
+            .el-icon {
+              font-size: 20px;
               color: rgba(25, 30, 36, 0.5);
+              margin-right: 5px;
             }
           }
+        }
+      }
+    }
+  }
+  .notice {
+    width: 100%;
+    height: 152px;
+    background-color: #fff;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    .notice-news {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+      .txt {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        font-size: 14px;
+        color: #fff;
+        padding: 10px;
+      }
+    }
+  }
+  .notice-lists {
+    height: 260px;
+    overflow: scroll;
+    .item {
+      font-size: 14px;
+      padding: 10px;
+      color: #666;
+      .type {
+        font-size: 10px;
+        padding: 5px 10px;
+        font-weight: 500;
+        line-height: 0px;
+        color: #fa4a1e;
+        text-align: left;
+        border-radius: 2px;
+        background: #fa4a1e14;
+        &.error-type {
+          color: #4060c7;
+          background: #e8f3ff;
         }
       }
     }
@@ -227,4 +308,13 @@
 }
 .border-right-1px {
   border-right: 1px solid #eae3e3;
+}
+.icon-edit {
+  font-size: 20px;
+  color: #2f60c2;
+  margin: 0 10px;
+}
+.icon-dele {
+  font-size: 20px;
+  color: #ff5722;
 }

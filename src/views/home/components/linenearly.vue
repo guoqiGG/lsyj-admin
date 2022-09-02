@@ -18,6 +18,7 @@ const getEcharts = () => {
         type: "shadow",
       },
     },
+    color: ["#87A2E8FF", "#74CCCCFF"],
     title: {
       text: "近一年的DAU/DNU",
       top: "8px",
@@ -77,7 +78,6 @@ const getEcharts = () => {
     yAxis: [
       {
         min: 0, // 最小值
-        max: 500, //最大值
         // splitNumber: 3, //划分3格
         type: "value",
         axisLine: {
@@ -105,12 +105,20 @@ const getEcharts = () => {
         name: "DAU",
         type: "line",
         stack: "Total",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
+        },
         data: [120, 132, 101, 134, 90, 230, 210, 134, 90, 230, 210, 230],
       },
       {
         name: "DNU",
         type: "line",
         stack: "Total",
+        areaStyle: {},
+        emphasis: {
+          focus: "series",
+        },
         data: [120, 132, 101, 134, 90, 230, 210, 134, 90, 230, 210, 290],
       },
     ],
