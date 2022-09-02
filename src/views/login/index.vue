@@ -1,12 +1,12 @@
 <template>
   <div class="login-container flx-center">
     <div class="login-box">
-      <div class="login-left">
-        <img src="../../assets/images/login_left.svg" alt="login" />
-      </div>
+      <!-- <div class="login-left">
+         <img src="../../assets/login.png" alt="login" />
+      </div> -->
       <div class="login-form">
         <div class="login-logo">
-          <!-- <img class="login-icon" src="../assets/images/logo.svg" alt="" /> -->
+          <img class="login-icon" src="../../assets/login.png" alt="" />
           <p class="logo-text">欢迎登录</p>
         </div>
         <el-form
