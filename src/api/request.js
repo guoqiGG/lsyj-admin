@@ -13,7 +13,6 @@ service.interceptors.request.use(
   (config) => {
     if (localStorage.getItem('token'))
       config.headers.token = localStorage.getItem('token')
-    console.log("config", config);
 
     return config;
   },
@@ -25,9 +24,7 @@ service.interceptors.request.use(
 // Response interceptors
 service.interceptors.response.use(
   (response) => {
-    // do something
-    console.log("response", response);
-    // return
+
     if (response.status !== 200) {
       ElMessage({
         type: "error",
