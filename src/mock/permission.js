@@ -1,503 +1,258 @@
 // 引入mockjs
 import Mock from "mockjs";
-import {
-  options
-} from "../views/home/options";
+import { options } from "../views/home/options";
 const Random = Mock.Random;
 
-let menuList = [{
-    path: "/home",
-    component: "Loyout",
-    meta: {
-      title: "首页",
-      icon: "HomeFilled",
-      roles: ["sys:manage"],
-    },
+let menuList = [
+  {
+    title: "首页",
+    url: "/home",
+    icon: "HomeFilled",
   },
   {
-    path: "/form",
-    component: "Loyout",
-    alwaysShow: true,
-    name: "form",
-    meta: {
-      title: "表单页",
-      icon: "Checked",
-      roles: ["sys:manage"],
-      parentId: 0,
-    },
-    children: [{
-        path: "/baseForm",
-        component: "/form/baseForm",
-        alwaysShow: false,
-        name: "baseForm",
-        meta: {
-          title: "基础表单",
-          icon: "Menu",
-          roles: ["sys:dept"],
-          parentId: 17,
-        },
+    title: "表单页",
+    url: "/form",
+    icon: "Checked",
+    children: [
+      {
+        title: "基础表单",
+        url: "/baseForm",
+        icon: "Menu",
       },
       {
-        path: "/stepFrom",
-        component: "/form/stepFrom",
-        alwaysShow: false,
-        name: "stepFrom",
-        meta: {
-          title: "步骤表单",
-          icon: "Menu",
-          roles: ["sys:user"],
-          parentId: 17,
-        },
+        url: "/stepFrom",
+        title: "步骤表单",
+        icon: "Menu",
       },
       {
-        path: "/advancedForm",
-        component: "/form/advancedForm",
-        alwaysShow: false,
-        name: "advancedForm",
-        meta: {
-          title: "高级表单",
-          icon: "Menu",
-          roles: ["sys:menu"],
-          parentId: 17,
-        },
+        url: "/advancedForm",
+        title: "高级表单",
+        icon: "Menu",
       },
     ],
   },
   {
-    path: "/system",
-    component: "Loyout",
-    alwaysShow: true,
-    name: "system",
-    meta: {
-      title: "表格管理",
-      icon: "Grid",
-      roles: ["sys:manage"],
-      parentId: 0,
-    },
-    children: [{
-        path: "/Department",
-        component: "/system/Department",
-        alwaysShow: false,
-        name: "Department",
-        meta: {
-          title: "基础表格",
-          icon: "Menu",
-          roles: ["sys:dept"],
-          parentId: 17,
-        },
+    title: "/system",
+    title: "表格管理",
+    icon: "Grid",
+    children: [
+      {
+        url: "/Department",
+        title: "基础表格",
+        icon: "Menu",
       },
       {
-        path: "/UserList",
-        component: "/system/UserList",
-        alwaysShow: false,
-        name: "UserList",
-        meta: {
-          title: "内嵌表格",
-          icon: "Menu",
-          roles: ["sys:user"],
-          parentId: 17,
-        },
+        url: "/UserList",
+        title: "内嵌表格",
+        icon: "Menu",
       },
       {
-        path: "/RoleList",
-        component: "/system/RoleList",
-        alwaysShow: false,
-        name: "RoleList",
-        meta: {
-          title: "滑动加载",
-          icon: "Menu",
-          roles: ["sys:role"],
-          parentId: 17,
-        },
+        url: "/RoleList",
+        title: "滑动加载",
+        icon: "Menu",
       },
       {
-        path: "/MenuList",
-        component: "/system/MenuList",
-        alwaysShow: false,
-        name: "MenuList",
-        meta: {
-          title: "可编辑Table",
-          icon: "Menu",
-          roles: ["sys:menu"],
-          parentId: 17,
-        },
-      },
-      {
-        path: "/Excel",
-        component: "/system/Excel",
-        alwaysShow: false,
-        name: "Excel",
-        meta: {
-          title: "Excel",
-          icon: "Menu",
-          roles: ["sys:menu"],
-          parentId: 17,
-        },
-        children: [{
-          path: "/importExcel",
-          component: "/system/Excel/importExcel",
-          alwaysShow: false,
-          name: "importExcel",
-          meta: {
-            title: "导入",
-            icon: "Menu",
-            roles: ["sys:menu"],
-            parentId: 17,
-          },
-        }, ],
+        url: "/MenuList",
+        title: "可编辑Table",
+        icon: "Menu",
       },
     ],
   },
   {
-    path: "/goods",
-    component: "Loyout",
-    alwaysShow: true,
-    name: "goods",
-    meta: {
-      title: "列表页",
-      icon: "List",
-      roles: ["sys:goods"],
-      parentId: 0,
-    },
-    children: [{
-        path: "/goodCategory",
-        component: "/goods/goodCategory",
-        alwaysShow: false,
-        name: "goodCategory",
-        meta: {
-          title: "基础列表",
-          icon: "Menu",
-          roles: ["sys:goodsCategory"],
-          parentId: 34,
-        },
+    url: "/goods",
+    title: "列表页",
+    icon: "List",
+    children: [
+      {
+        url: "/goodCategory",
+        title: "基础列表",
+        icon: "Menu",
       },
       {
-        path: "/cardList",
-        component: "/goods/cardList",
-        alwaysShow: false,
-        name: "cardList",
-        meta: {
-          title: "卡片列表",
-          icon: "Menu",
-          roles: ["sys:cardList"],
-          parentId: 34,
-        },
+        url: "/cardList",
+        title: "卡片列表",
+        icon: "Menu",
       },
       {
         path: "/searchList",
-        component: "/goods/searchList",
-        alwaysShow: false,
-        name: "searchList",
-        meta: {
-          title: "搜索列表",
-          icon: "Menu",
-          roles: ["sys:searchList"],
-          parentId: 34,
-        },
+        title: "搜索列表",
+        icon: "Menu",
       },
     ],
   },
   {
-    path: "/map",
-    component: "Loyout",
-    alwaysShow: true,
-    name: "map",
-    meta: {
-      title: "图表功能",
-      icon: "Histogram",
-      roles: ["sys:map"],
-      parentId: 0,
-    },
-    children: [{
-        path: "/BaiduMap",
-        component: "/map/BaiduMap",
-        alwaysShow: false,
-        name: "BaiduMap",
-        meta: {
-          title: "百度地图",
-          icon: "Menu",
-          roles: ["sys:BaiduMap"],
-          parentId: 34,
-        },
+    title: "图形图表",
+    url: "/charts",
+    icon: "Histogram",
+    children: [
+      {
+        title: "柱线图",
+        url: "/charts/bar",
+        icon: "bar-chart",
       },
       {
-        path: "/echarts",
-        component: "/map/echarts",
-        alwaysShow: false,
-        name: "echarts",
-        meta: {
-          title: "echarts图表",
-          icon: "Menu",
-          roles: ["sys:GooleMap"],
-          parentId: 34,
-        },
-        children: [{}],
-      },
-      // {
-      //   path: "/Echarts",
-      //   component: "/map/Echarts",
-      //   alwaysShow: false,
-      //   name: "Echarts",
-      //   meta: {
-      //     title: "Ehacrts图表",
-      //     roles: ["sys:map"],
-      //     parentId: 34,
-      //   },
-      // },
-    ],
-  },
-  {
-    path: "/ErrorMessage",
-    path: "/ErrorMessage",
-    component: "Loyout",
-    alwaysShow: true,
-    name: "ErrorMessage",
-    meta: {
-      title: "异常页面",
-      icon: "WarningFilled",
-      roles: ["sys:able"],
-    },
-    children: [{
-        path: "/404",
-        component: "/ErrorMessage/404",
-        name: "404",
-        meta: {
-          title: "404",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+        title: "折线图",
+        url: "/charts/line",
+        icon: "line-chart",
       },
       {
-        path: "/500",
-        component: "/ErrorMessage/500",
-        name: "500",
-        meta: {
-          title: "500",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+        title: "饼图",
+        url: "/charts/pie",
+        icon: "pie-chart",
+      },
+      {
+        title: "饼图",
+        url: "/charts/pie",
+        icon: "pie-chart",
       },
     ],
   },
   {
-    path: "/able",
-    component: "Loyout",
-    alwaysShow: true,
-    name: "able",
-    meta: {
-      title: "功能",
-      icon: "HelpFilled",
-      roles: ["sys:able"],
-    },
-    children: [{
-        path: "/watermark",
-        component: "/able/watermark",
-        name: "watermark",
-        meta: {
-          title: "水印",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+    url: "/ErrorMessage",
+    title: "异常页面",
+    icon: "WarningFilled",
+    children: [
+      {
+        url: "/404",
+        title: "404",
+        icon: "Menu",
       },
       {
-        path: "/countTo",
-        component: "/able/countTo",
-        name: "countTo",
-        meta: {
-          title: "数字动画",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
-      },
-      {
-        path: "/batchImport",
-        component: "/able/batchImport",
-        name: "batchImport",
-        meta: {
-          title: "文件上传",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
-      },
-      {
-        path: "/wangEditor",
-        component: "/able/wangEditor",
-        name: "wangEditor",
-        meta: {
-          title: "富文本编辑器",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
-      },
-      {
-        path: "/markdown",
-        component: "/able/markdown",
-        name: "markdown",
-        meta: {
-          title: "markdown编辑器",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
-      },
-      {
-        path: "/strength",
-        component: "/able/strength",
-        name: "strength",
-        meta: {
-          title: "密码强度",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
-      },
-      {
-        path: "/validation",
-        component: "/able/validation",
-        name: "validation",
-        meta: {
-          title: "验证组件",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
-      },
-      {
-        path: "/guide",
-        component: "/able/guide",
-        name: "guide",
-        meta: {
-          title: "引导页",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
-      },
-      {
-        path: "/embedded",
-        component: "/able/embedded",
-        name: "embedded",
-        meta: {
-          title: "内嵌页",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+        url: "/500",
+        title: "500",
+        icon: "Menu",
       },
     ],
   },
   {
-    path: "/directives",
-    component: "Loyout",
-    alwaysShow: true,
-    name: "directives",
-    meta: {
-      title: "自定义指令",
-      icon: "Stamp",
-      roles: ["sys:manage"],
-      parentId: 0,
-    },
-    children: [{
-        path: "/copy",
-        component: "/directives/copy",
-        name: "copy",
-        meta: {
-          title: "复制",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+    url: "/able",
+    title: "功能",
+    icon: "HelpFilled",
+    children: [
+      {
+        url: "/watermark",
+        title: "水印",
+        icon: "Menu",
       },
       {
-        path: "/Drag",
-        component: "/directives/Drag",
-        name: "Drag",
-        meta: {
-          title: "拖拽",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+        url: "/countTo",
+        title: "数字动画",
+        icon: "Menu",
       },
       {
-        path: "/debounceDirect",
-        component: "/directives/debounceDirect",
-        name: "debounceDirect",
-        meta: {
-          title: "防抖指令",
-          icon: "Menu",
-          roles: ["sys:able"],
-        },
+        url: "/batchImport",
+        title: "文件上传",
+        icon: "Menu",
+      },
+      {
+        url: "markdown",
+        icon: "Platform",
+        title: "编辑器",
+        children: [
+          {
+            url: "/wangEditor",
+            title: "富文本编辑器",
+            icon: "Menu",
+          },
+          {
+            url: "/markdown",
+            title: "markdown",
+            icon: "Menu",
+          },
+        ],
+      },
+      {
+        url: "/strength",
+        title: "密码强度",
+        icon: "Menu",
+      },
+      {
+        url: "/validation",
+        title: "验证组件",
+        icon: "Menu",
+      },
+      {
+        url: "/guide",
+        title: "引导页",
+        icon: "Menu",
+      },
+      {
+        url: "/embedded",
+        title: "内嵌页",
+        icon: "Menu",
       },
     ],
   },
   {
-    path: "/flow",
-    component: "Loyout",
-    alwaysShow: true,
-    name: "flow",
-    meta: {
-      title: "图形编辑器",
-      icon: "BrushFilled",
-      roles: ["sys:manage"],
-      parentId: 0,
-    },
-    children: [{
-      path: "/flowCat",
-      component: "/flow/flowCat",
-      name: "flowCat",
-      meta: {
+    url: "/directives",
+    title: "自定义指令",
+    icon: "Stamp",
+    children: [
+      {
+        url: "/copy",
+        title: "复制",
+        icon: "Menu",
+      },
+      {
+        url: "/Drag",
+        title: "拖拽",
+        icon: "Menu",
+      },
+      {
+        url: "/debounceDirect",
+        title: "防抖指令",
+        icon: "Menu",
+      },
+      {
+        url: "/longPress",
+        title: "长按指令",
+        icon: "Menu",
+      },
+    ],
+  },
+  {
+    url: "/flow",
+    title: "图形编辑器",
+    icon: "BrushFilled",
+    //
+    children: [
+      {
+        url: "/flowCat",
         title: "流程图",
         icon: "Menu",
-        roles: ["sys:able"],
       },
-    }, ],
+    ],
   },
   {
-    path: "/DataReport",
-    component: "Loyout",
-    alwaysShow: true,
-    name: "DataReport",
-    meta: {
-      title: "数据统计",
-      icon: "TrendCharts",
-      roles: ["sys:manage"],
-      parentId: 0,
-    },
-    children: [{
-      path: "/demo1",
-      component: "/DataReport/demo1",
-      name: "demo1",
-      meta: {
+    url: "/DataReport",
+    title: "数据统计",
+    icon: "TrendCharts",
+
+    children: [
+      {
+        url: "/demo1",
         title: "项目一",
         icon: "Menu",
-        roles: ["sys:able"],
       },
-    }, ],
+    ],
   },
   {
-    path: "/material",
-    component: "Loyout",
-    alwaysShow: true,
-    name: "material",
-    meta: {
-      title: "素材中心",
-      icon: "PictureFilled",
-      roles: ["sys:manage"],
-      parentId: 0,
-    },
-    children: [{
-      path: "/materialIndex",
-      component: "/material/materialIndex",
-      name: "materialIndex",
-      meta: {
+    url: "/material",
+    title: "素材中心",
+    icon: "PictureFilled",
+    children: [
+      {
+        url: "/materialIndex",
         title: "素材管理",
         icon: "Menu",
-        roles: ["sys:able"],
       },
-    }, ],
+    ],
   },
 ];
 
 export const LoginInfo = (options) => {
   console.log(options, "接收post参数");
-  const {
-    username,
-    password
-  } = JSON.parse(options.body);
+  const { username, password } = JSON.parse(options.body);
   if (username == "admin" && password != "123456") {
     return {
       code: "-200",
@@ -520,7 +275,6 @@ export const LoginInfo = (options) => {
 
 export const getMenuList = (options) => {
   const obj = JSON.parse(options.body);
-
   return {
     code: 200,
     data: {
@@ -620,13 +374,15 @@ export const orderLists = (options) => {
       costPrice: Random.integer(10, 20),
       amount: Random.integer(100, 200), //100到5000的随机整数
       itemEdit: false,
-      ItemData: [{
-        address: Random.city(true),
-        email: Random.email(),
-        state: Random.boolean(),
-        salenumber: Random.integer(10, 100),
-        receivable: Random.integer(10, 100),
-      }, ],
+      ItemData: [
+        {
+          address: Random.city(true),
+          email: Random.email(),
+          state: Random.boolean(),
+          salenumber: Random.integer(10, 100),
+          receivable: Random.integer(10, 100),
+        },
+      ],
     };
     orderList.push(item);
   }

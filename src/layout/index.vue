@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="container">
     <el-aside><Menu></Menu></el-aside>
     <el-container>
       <el-header>
@@ -15,11 +15,11 @@
 </template>
 
 <script setup name="layout">
-import store from '../store/index'
-import Header from './header/index.vue'
-import Menu from './menu/index.vue'
+import store from "../store/index";
+import Header from "./header/index.vue";
+import Menu from "./menu/index.vue";
 </script>
 
 <style scoped lang="scss">
-@import './index.scss';
+@import "./index.scss";
 </style>

@@ -13,5 +13,5 @@
 <script setup>
 import { ref } from "vue";
 import { CopyDocument } from "@element-plus/icons-vue";
-const input3 = ref("复制内容");
+const input3 = ref("复制内容复制内容复制内容复制内容复制内容");
 </script>
