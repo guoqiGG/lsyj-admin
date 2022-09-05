@@ -4,7 +4,7 @@
       <Breadcrumb></Breadcrumb>
     </div>
     <div class="header-ri flx-center">
-      <el-icon class="icon-style"><Search /></el-icon>
+      <Search></Search>
       <el-icon class="icon-style"><Refresh /></el-icon>
       <message></message>
 
@@ -18,6 +18,7 @@
 <script setup name="header">
 // import { Setting, Search } from '@element-plus/icons-vue'
 import avatar from './components/avatar.vue'
+import Search from './components/Search.vue'
 import fullScreen from './components/fullScreen.vue'
 import message from './components/message.vue'
 import Breadcrumb from './components/Breadcrumb.vue'

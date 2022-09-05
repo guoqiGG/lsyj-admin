@@ -1,10 +1,11 @@
 // 引入mockjs
 import Mock from "mockjs";
-import { options } from "../views/home/options";
+import {
+  options
+} from "../views/home/options";
 const Random = Mock.Random;
 
-let menuList = [
-  {
+let menuList = [{
     title: "首页",
     url: "/home",
     icon: "HomeFilled",
@@ -13,8 +14,7 @@ let menuList = [
     title: "表单页",
     url: "/form",
     icon: "Checked",
-    children: [
-      {
+    children: [{
         title: "基础表单",
         url: "/baseForm",
         icon: "Menu",
@@ -35,8 +35,7 @@ let menuList = [
     title: "/system",
     title: "表格管理",
     icon: "Grid",
-    children: [
-      {
+    children: [{
         url: "/Department",
         title: "基础表格",
         icon: "Menu",
@@ -56,14 +55,18 @@ let menuList = [
         title: "可编辑Table",
         icon: "Menu",
       },
+      {
+        url: "/importExcel",
+        title: "导入Excel",
+        icon: "Menu",
+      },
     ],
   },
   {
     url: "/goods",
     title: "列表页",
     icon: "List",
-    children: [
-      {
+    children: [{
         url: "/goodCategory",
         title: "基础列表",
         icon: "Menu",
@@ -84,8 +87,7 @@ let menuList = [
     title: "图形图表",
     url: "/charts",
     icon: "Histogram",
-    children: [
-      {
+    children: [{
         title: "柱线图",
         url: "/charts/bar",
         icon: "bar-chart",
@@ -111,8 +113,7 @@ let menuList = [
     url: "/ErrorMessage",
     title: "异常页面",
     icon: "WarningFilled",
-    children: [
-      {
+    children: [{
         url: "/404",
         title: "404",
         icon: "Menu",
@@ -128,8 +129,7 @@ let menuList = [
     url: "/able",
     title: "功能",
     icon: "HelpFilled",
-    children: [
-      {
+    children: [{
         url: "/watermark",
         title: "水印",
         icon: "Menu",
@@ -141,6 +141,11 @@ let menuList = [
       },
       {
         url: "/batchImport",
+        title: "图片上传",
+        icon: "Menu",
+      },
+      {
+        url: "/fileImport",
         title: "文件上传",
         icon: "Menu",
       },
@@ -148,8 +153,7 @@ let menuList = [
         url: "markdown",
         icon: "Platform",
         title: "编辑器",
-        children: [
-          {
+        children: [{
             url: "/wangEditor",
             title: "富文本编辑器",
             icon: "Menu",
@@ -187,8 +191,7 @@ let menuList = [
     url: "/directives",
     title: "自定义指令",
     icon: "Stamp",
-    children: [
-      {
+    children: [{
         url: "/copy",
         title: "复制",
         icon: "Menu",
@@ -215,44 +218,41 @@ let menuList = [
     title: "图形编辑器",
     icon: "BrushFilled",
     //
-    children: [
-      {
-        url: "/flowCat",
-        title: "流程图",
-        icon: "Menu",
-      },
-    ],
+    children: [{
+      url: "/flowCat",
+      title: "流程图",
+      icon: "Menu",
+    }, ],
   },
   {
     url: "/DataReport",
     title: "数据统计",
     icon: "TrendCharts",
 
-    children: [
-      {
-        url: "/demo1",
-        title: "项目一",
-        icon: "Menu",
-      },
-    ],
+    children: [{
+      url: "/demo1",
+      title: "项目一",
+      icon: "Menu",
+    }, ],
   },
   {
     url: "/material",
     title: "素材中心",
     icon: "PictureFilled",
-    children: [
-      {
-        url: "/materialIndex",
-        title: "素材管理",
-        icon: "Menu",
-      },
-    ],
+    children: [{
+      url: "/materialIndex",
+      title: "素材管理",
+      icon: "Menu",
+    }, ],
   },
 ];
 
 export const LoginInfo = (options) => {
   console.log(options, "接收post参数");
-  const { username, password } = JSON.parse(options.body);
+  const {
+    username,
+    password
+  } = JSON.parse(options.body);
   if (username == "admin" && password != "123456") {
     return {
       code: "-200",
@@ -374,15 +374,13 @@ export const orderLists = (options) => {
       costPrice: Random.integer(10, 20),
       amount: Random.integer(100, 200), //100到5000的随机整数
       itemEdit: false,
-      ItemData: [
-        {
-          address: Random.city(true),
-          email: Random.email(),
-          state: Random.boolean(),
-          salenumber: Random.integer(10, 100),
-          receivable: Random.integer(10, 100),
-        },
-      ],
+      ItemData: [{
+        address: Random.city(true),
+        email: Random.email(),
+        state: Random.boolean(),
+        salenumber: Random.integer(10, 100),
+        receivable: Random.integer(10, 100),
+      }, ],
     };
     orderList.push(item);
   }
