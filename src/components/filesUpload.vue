@@ -2,14 +2,7 @@
   <el-dialog v-model="dialogVisible" title="添加数据">
     <el-form v-model="uploadFrom">
       <el-form-item label="文件上传:">
-        <el-upload
-          style="width: 80%"
-          drag
-          multiple
-          :show-file-list="true"
-          :limit="excelLimit"
-          accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        >
+        <el-upload style="width: 80%" drag multiple :show-file-list="true" :limit="excelLimit" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
           <el-icon class="el-icon--upload"><upload-filled /></el-icon>
           <div class="el-upload__text">将文件拖到此处<em>或点击上传</em></div>
           <template #tip>
@@ -29,19 +22,21 @@
 </template>
 
 <script setup name="filesUpload">
-import { ref } from 'vue'
-const excelLimit = ref(1)
-const dialogVisible = ref(false)
-const parameter = ref({})
-const is_cover = ref(false)
+import { ref, defineEmits } from "vue";
+const excelLimit = ref(1);
+const dialogVisible = ref(false);
+const parameter = ref({});
+const is_cover = ref(false);
+const emit = defineEmits(["acceptParams"]);
 
 // 接收父组件参数
 const acceptParams = (params) => {
-  parameter.value = params
-  dialogVisible.value = true
-}
+  parameter.value = params;
+  emit("gatewayData", parameter.value);
+  dialogVisible.value = true;
+};
 // 接受父组件得参数
 defineExpose({
   acceptParams,
-})
+});
 </script>
