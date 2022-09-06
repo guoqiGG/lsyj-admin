@@ -88,23 +88,34 @@ let menuList = [{
     url: "/charts",
     icon: "Histogram",
     children: [{
-        title: "柱线图",
-        url: "/charts/bar",
-        icon: "bar-chart",
+        title: "地图",
+        url: "/charts/map",
+        icon: "Menu",
+        children: [{
+            url: '/baidumap',
+            title: '百度地图',
+            icon: 'Menu'
+          },
+          {
+            url: '/gaodeMap',
+            title: '高德地图',
+            icon: "Menu"
+          }
+        ]
       },
       {
-        title: "折线图",
-        url: "/charts/line",
-        icon: "line-chart",
-      },
-      {
-        title: "饼图",
+        title: "雷达图",
         url: "/charts/pie",
         icon: "pie-chart",
       },
       {
-        title: "饼图",
+        title: "柱状图",
         url: "/charts/pie",
+        icon: "pie-chart",
+      },
+      {
+        title: "折线图",
+        url: "/charts/line",
         icon: "pie-chart",
       },
     ],

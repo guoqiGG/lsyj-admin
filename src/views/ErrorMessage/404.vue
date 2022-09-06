@@ -438,6 +438,19 @@
         </linearGradient>
       </defs>
     </svg>
-    <el-button type="primary">返回首页</el-button>
+    <el-button type="primary" @click="backUrl()">返回首页</el-button>
   </div>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const backUrl = () => {
+  router.push({
+    name: 'home',
+    query: {
+      // ...route.query,
+    },
+  })
+}
+</script>

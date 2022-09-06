@@ -5,24 +5,28 @@
     </div>
     <div class="header-ri flx-center">
       <Search></Search>
-      <el-icon class="icon-style"><Refresh /></el-icon>
+      <el-icon class="icon-style" @click="refresh"><Refresh /></el-icon>
       <message></message>
 
       <!-- <Driver></Driver> -->
       <fullScreen></fullScreen>
       <avatar></avatar>
-      <el-icon class="icon-style"><setting /></el-icon>
+      <setting></setting>
     </div>
   </div>
 </template>
 <script setup name="header">
+import { inject } from 'vue'
 // import { Setting, Search } from '@element-plus/icons-vue'
 import avatar from './components/avatar.vue'
+import setting from './components/setting.vue'
 import Search from './components/Search.vue'
 import fullScreen from './components/fullScreen.vue'
 import message from './components/message.vue'
 import Breadcrumb from './components/Breadcrumb.vue'
 // import Driver from "./components/Driver/index.vue";
+
+const refresh = inject('reload')
 </script>
 
 <style scoped lang="scss">

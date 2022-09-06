@@ -1,6 +1,4 @@
-<template>
-  <div>users</div>
-</template>
+<template></template>
 
 <script></script>
 

@@ -5,19 +5,19 @@
   <filesUpload ref="importRef" @gatewayData="gatewayData"></filesUpload>
 </template>
 <script setup>
-import { ref } from "vue";
-import XLSX from "xlsx";
-import filesUpload from "../../../components/filesUpload.vue";
-const importRef = ref("");
+import { ref } from 'vue'
+// import XLSX from "xlsx";
+import filesUpload from '../../../components/filesUpload.vue'
+const importRef = ref('')
 const importExcel = () => {
-  let params = {};
-  importRef.value.acceptParams(params);
+  let params = {}
+  importRef.value.acceptParams(params)
   // console.log(importRef.value.acceptParams(params))
-};
+}
 
 const gatewayData = (params) => {
-  console.log(params);
-};
+  console.log(params)
+}
 </script>
 
 <style lang="scss" scoped>
