@@ -1,6 +1,6 @@
 # Vue 3.2 + vuex + Vite2 + Element-Plus 后台管理系统（🌷🌷🌷🌷🌷🌷）
 
-![banner]()
+![banner](https://s1.328888.xyz/2022/09/07/5cqsX.png)
 
 ### 前言 📖
 
@@ -105,23 +105,18 @@ npm run commit
 
 ![login-light](https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/md/login-light.png)
 
-![login-dark](https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/md/login-dark.png)
-
 #### 2、首页：
 
-![home_light](https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/md/home_light.png)
+![home_light](https://s1.328888.xyz/2022/09/07/5cqsX.png)
 
-![home-dark](https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220602145003.png)
 
 #### 3、表格页：
 
-![table_light](https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/md/table_light.png)
+![table_light](https://s1.328888.xyz/2022/09/07/5cXqI.png)
 
-![table-dark](https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220602145016.png)
+#### 4、流程图组件：
 
-#### 4、数据大屏：
-
-![dataScreen02](https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220602170253.png)
+![dataScreen02](https://s1.328888.xyz/2022/09/07/5cnjj.png)
 
 ### 七、文件资源目录 📚
 
