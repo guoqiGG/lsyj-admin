@@ -4,9 +4,9 @@ import {
 import user from './modules/users'
 import getters from './getters'
 export default createStore({
-
+  getters,
   modules: {
     user
   },
-  getters
+
 })
