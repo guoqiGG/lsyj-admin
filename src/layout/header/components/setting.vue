@@ -8,11 +8,28 @@
       <!-- <el-divider class="divider" content-position="center">
         <el-icon><ColdDrink /></el-icon>
          全局主题-->
-
-      <div class="theme-item">
-        <span>主题颜色</span>
-        <el-color-picker v-model="themeConfig.primary" :predefine="colorList" @change="changePrimary"> </el-color-picker>
+      <el-divider>主题颜色</el-divider>
+      <div class="flx-row">
+        <div
+          class="theme-item"
+          v-for="item in colorList"
+          :key="item"
+          :style="{ backgroundColor: item }"
+          @click="changePrimary(item)"
+        >
+          <el-icon v-if="item == themeConfig.primary" class="icon"
+            ><Select
+          /></el-icon>
+        </div>
       </div>
+      <!-- <div class="theme-item">
+        <el-color-picker
+          v-model="themeConfig.primary"
+          :predefine="colorList"
+          @change="changePrimary"
+        >
+        </el-color-picker>
+      </div> -->
       <!--  <div class="theme-item">
         <span>暗黑模式</span>
         <SwitchDark></SwitchDark>
@@ -61,21 +78,30 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, useAttrs } from 'vue'
 // import { useTheme } from '@/hooks/useTheme'
 // import SwitchDark from '@/components/SwitchDark/index.vue'
 // import { MenuStore } from '@/store/modules/menu'
-import store from "../../../store/index.js";
+import store from '../../../store/index.js'
+import { useStore } from 'vuex'
 
 // 预定义主题颜色
-const colorList = ["#4060c7", "#409EFF", "#DAA96E", "#0C819F", "#009688", "#27ae60", "#ff5c93", "#e74c3c", "#fd726d", "#f39c12", "#9b59b6"];
+const colorList = [
+  '#4060c7',
+  '#409EFF',
+  '#009688',
+  '#27ae60',
+  '#e74c3c',
+  '#fd726d',
+  '#f39c12',
+  '#9b59b6',
+]
 
 // 主题初始化
-const themeConfig = store.getters.themeConfig.primary;
-// const themeConfig = computed(() => {
-//   console.log(store.getters.themeConfig.primary);
-//   store.getters.themeConfig;
-// });
+const globalStore = useStore()
+const themeConfig = computed(() => {
+  return store.getters.themeConfig
+})
 
 // // const menuStore = MenuStore()
 // const isCollapse = computed({
@@ -88,15 +114,15 @@ const themeConfig = store.getters.themeConfig.primary;
 // })
 
 const changePrimary = (val) => {
-  console.log(val);
-};
+  globalStore.dispatch('user/changeThem', val)
+}
 // const { changePrimary, changeGreyOrWeak } = useTheme()
 
 // 打开主题设置
-const drawerVisible = ref(false);
+const drawerVisible = ref(false)
 const openDrawer = () => {
-  drawerVisible.value = true;
-};
+  drawerVisible.value = true
+}
 </script>
 
 <style scoped lang="scss">
@@ -105,5 +131,24 @@ const openDrawer = () => {
   color: rgba(0, 0, 0, 0.75);
   cursor: pointer;
   margin: 0 11px;
+}
+.flx-row {
+  flex-wrap: wrap;
+}
+.theme-item {
+  margin: 16px 5px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  position: relative;
+  .icon {
+    color: #fff;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    font-size: 14px;
+  }
 }
 </style>

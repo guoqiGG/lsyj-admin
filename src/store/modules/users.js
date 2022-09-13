@@ -1,6 +1,10 @@
-import { LoginInfo } from "../../api/modules/index.js";
+import {
+  LoginInfo
+} from "../../api/modules/index.js";
 import router from "../../router/router.js";
-import { ElMessage } from "element-plus";
+import {
+  ElMessage
+} from "element-plus";
 
 export default {
   namespaced: true,
@@ -22,10 +26,15 @@ export default {
     SetIsCollapse(state, isCollapse) {
       state.isCollapse = isCollapse;
     },
+    setThemeConfig(state, primary) {
+      state.themeConfig.primary = primary
+    }
   },
 
   actions: {
-    login({ commit }, userInfo) {
+    login({
+      commit
+    }, userInfo) {
       return new Promise((resolve, reject) => {
         LoginInfo(userInfo)
           .then((res) => {
@@ -46,9 +55,17 @@ export default {
           });
       });
     },
-    changeIsCollapse({ commit }, str) {
+    changeIsCollapse({
+      commit
+    }, str) {
       console.log(str);
       commit("SetIsCollapse", str);
     },
+
+    changeThem({
+      commit
+    }, str) {
+      commit('setThemeConfig', str)
+    }
   },
 };
