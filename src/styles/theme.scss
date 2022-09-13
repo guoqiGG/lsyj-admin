@@ -1,7 +1,45 @@
-/* 改变主题色变量 */
-$--color-primary: red;
+// scss样式
+$themes: (
+  light: (
+    background_color: #cccccc,
+    //背景色
+    text-color: rgba(0, 0, 0, 0.65),
+    // 主文本色
+  ),
+  dark: (
+    background_color: #181c27,
+    //背景
+    text-color: rgba(255, 255, 255, 0.65),
+    // 主文本色
+  ),
+);
 
-/* 改变 icon 字体路径变量，必需 */
-$--font-path: '~element-ui/lib/theme-chalk/fonts';
+// 处理样式，遍历主题map
+@mixin themeify {
+  @each $theme-name, $theme-map in $themes {
+    //!global 把局部变量提升为全局变量
+    $theme-map: $theme-map !global;
+    //判断html的data-theme的属性值  #{}是sass的插值表达式
+    //& sass嵌套里的父容器标识   @content是混合器插槽，像vue的slot
+    [data-theme="#{$theme-name}"] & {
+      @content;
+    }
+  }
+}
+//声明一个根据Key获取颜色的function
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
 
-@import "~element-ui/packages/theme-chalk/src/index";
+// 获取颜色
+@mixin background_color($color) {
+  @include themeify {
+    background: themed($color) !important;
+  }
+}
+//获取字体颜色
+@mixin font_color($color) {
+  @include themeify {
+    color: themed($color) !important;
+  }
+}

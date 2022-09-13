@@ -1,21 +1,16 @@
-import {
-  LoginInfo
-} from "../../api/modules/index.js";
+import { LoginInfo } from "../../api/modules/index.js";
 import router from "../../router/router.js";
-import {
-  ElMessage
-} from "element-plus";
+import { ElMessage } from "element-plus";
 
 export default {
   namespaced: true,
-  state: () => {
-    UserInfo: {}
-    token: localStorage.getItem("token") || "";
-    isCollapse: true;
+  state: {
+    UserInfo: {},
+    token: sessionStorage.getItem("token") || "",
+    isCollapse: true,
     themeConfig: {
-      // 默认 primary 主题颜色
-      primary: "#4060c7"
-    }
+      primary: "#4060c7",
+    },
   },
   mutations: {
     setToken(state, token) {
@@ -30,16 +25,13 @@ export default {
   },
 
   actions: {
-    login({
-      commit
-    }, userInfo) {
+    login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         LoginInfo(userInfo)
           .then((res) => {
             console.log(res.data.data);
-            localStorage.setItem("token", res.data.data.token);
-            localStorage.setItem("UserInfo", JSON.stringify(res.data.data));
-            console.log(JSON.parse(localStorage.getItem("UserInfo")));
+            sessionStorage.setItem("token", res.data.data.token);
+            sessionStorage.setItem("UserInfo", JSON.stringify(res.data.data));
             commit("setToken", res.data.data.token);
             commit("setUserInfo", res.data.data);
             router.replace("/");
@@ -54,9 +46,7 @@ export default {
           });
       });
     },
-    changeIsCollapse({
-      commit
-    }, str) {
+    changeIsCollapse({ commit }, str) {
       console.log(str);
       commit("SetIsCollapse", str);
     },

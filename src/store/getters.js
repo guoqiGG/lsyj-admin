@@ -2,10 +2,7 @@ const getters = {
   token: (state) => state.user.token,
   isCollapse: (state) => state.user.isCollapse,
   UserInfo: (state) => state.user.UserInfo,
-  themeConfig: (state) => {
-    console.log(state)
-    state.user.themeConfig
-  }
+  themeConfig: (state) => state.user.themeConfig,
 };
 
 export default getters;
