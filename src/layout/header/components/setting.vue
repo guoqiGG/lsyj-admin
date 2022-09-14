@@ -22,6 +22,20 @@
           /></el-icon>
         </div>
       </div>
+      <el-divider>导航栏颜色</el-divider>
+      <div class="flx-row">
+        <div
+          class="theme-item"
+          v-for="item in colorList"
+          :key="item"
+          :style="{ backgroundColor: item }"
+          @click="changePrimary(item)"
+        >
+          <el-icon v-if="item == themeConfig.primary" class="icon"
+            ><Select
+          /></el-icon>
+        </div>
+      </div>
       <!-- <div class="theme-item">
         <el-color-picker
           v-model="themeConfig.primary"
@@ -69,10 +83,6 @@
         <span>页脚</span>
         <el-switch v-model="themeConfig.footer" />
       </div> -->
-      <template #footer>
-        <el-button>取消</el-button>
-        <el-button type="primary">确认</el-button>
-      </template>
     </el-drawer>
   </div>
 </template>
@@ -83,6 +93,7 @@ import { ref, computed, useAttrs } from 'vue'
 // import SwitchDark from '@/components/SwitchDark/index.vue'
 // import { MenuStore } from '@/store/modules/menu'
 import store from '../../../store/index.js'
+import { mix } from '../../../utils/color.js'
 import { useStore } from 'vuex'
 
 // 预定义主题颜色
@@ -116,7 +127,6 @@ const themeConfig = computed(() => {
 const changePrimary = (val) => {
   globalStore.dispatch('user/changeThem', val)
 }
-// const { changePrimary, changeGreyOrWeak } = useTheme()
 
 // 打开主题设置
 const drawerVisible = ref(false)

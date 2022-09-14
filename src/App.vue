@@ -6,9 +6,10 @@
 
 <script setup>
 import { onMounted, ref, nextTick, provide } from 'vue'
+import { useStore } from 'vuex'
 // 局部组件刷新
 const isRouterAlive = ref(true)
-
+const globalStore = useStore()
 const reload = () => {
   isRouterAlive.value = false
   nextTick(() => {
@@ -19,9 +20,10 @@ const reload = () => {
 
 provide('reload', reload)
 onMounted(() => {
-  document.body.style.setProperty('--el-color-primary', '#4060c7')
-  document.body.style.setProperty('--el-color-primary-light-9', '#F5FBF0')
-  document.body.style.setProperty('--el-color-primary-light-3', '#6c88d5')
+  globalStore.dispatch('user/changeThem', '#4060c7')
+  // document.body.style.setProperty('--el-color-primary', '#4060c7')
+  // document.body.style.setProperty('--el-color-primary-light-9', '#F5FBF0')
+  // document.body.style.setProperty('--el-color-primary-light-3', '#6c88d5')
 })
 </script>
 
