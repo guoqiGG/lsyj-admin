@@ -106,7 +106,6 @@ const openDrawer = () => {
 <style scoped lang="scss">
 .icon-style {
   font-size: 20px;
-  color: rgba(0, 0, 0, 0.75);
   cursor: pointer;
   margin: 0 11px;
 }

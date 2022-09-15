@@ -12,6 +12,7 @@ export default {
     themeConfig: {
       primary: "#4060c7",
       tabColor: "#FFFFFF",
+      footColor: "#606266",
     },
   },
   mutations: {
@@ -29,6 +30,11 @@ export default {
     },
     setThemeConfigTbaColor(state, primary) {
       state.themeConfig.tabColor = primary;
+      if (primary == "#FFFFFF") {
+        state.themeConfig.footColor = "#606266";
+      } else {
+        state.themeConfig.footColor = "#ffffff";
+      }
     },
   },
 

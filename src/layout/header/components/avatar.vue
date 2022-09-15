@@ -4,7 +4,7 @@
       <div class="avatar">
         <img src="../../../assets/images/avart.jpg" alt="avatar" />
       </div>
-      <span class="username">宇宙无敌大可爱</span>
+      <span class="username" :style="{ color: themeConfig.footColor }">宇宙无敌大可爱</span>
     </div>
     <template #dropdown>
       <el-dropdown-menu>
@@ -19,7 +19,7 @@ import { ArrowDown } from "@element-plus/icons-vue";
 import { nextTick, onMounted, ref } from "vue";
 import store from "../../../store/index.js";
 
-const uersInfo = store.getters.UserInfo;
+const themeConfig = store.getters.themeConfig;
 const handleClick = () => {
   // eslint-disable-next-line no-alert
   alert("button click");

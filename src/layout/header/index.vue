@@ -1,5 +1,5 @@
 <template>
-  <div class="header" :style="{ backgroundColor: themeConfig.tabColor, color: fontColor }">
+  <div class="header" :style="{ backgroundColor: themeConfig.tabColor, color: themeConfig.footColor }">
     <div class="header-lf flx-center">
       <Breadcrumb></Breadcrumb>
     </div>
@@ -16,7 +16,7 @@
   </div>
 </template>
 <script setup name="header">
-import { inject, ref, watch } from "vue";
+import { inject, ref } from "vue";
 import store from "../../store/index.js";
 // import { Setting, Search } from '@element-plus/icons-vue'
 import avatar from "./components/avatar.vue";
@@ -28,20 +28,8 @@ import Breadcrumb from "./components/Breadcrumb.vue";
 // import Driver from "./components/Driver/index.vue";
 
 const refresh = inject("reload");
-const fontColor = ref("#000000bf");
 
 const themeConfig = store.getters.themeConfig;
-
-watch(themeConfig.tabColor, (newValue, oldValue) => {
-  console.log(themeConfig.tabColor);
-  console.log("watch 已触发", newValue);
-  if (newValue != "#FFFFFF") {
-    fontColor.value = "#FFFFFF";
-  } else {
-    console.log(fontColor.value);
-    fontColor.value = "#000000bf";
-  }
-});
 </script>
 
 <style scoped lang="scss">
