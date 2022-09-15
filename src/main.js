@@ -1,4 +1,6 @@
-import { createApp } from "vue";
+import {
+  createApp
+} from "vue";
 import router from "./router/index";
 import store from "../src/store/index";
 import "../src/styles/common.scss";

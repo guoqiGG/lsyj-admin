@@ -15,9 +15,9 @@
         :collapse="store.getters.isCollapse"
         :collapse-transition="false"
         :unique-opened="true"
-        background-color="#20222a"
+        background-color="#fff"
         text-color="#bdbdc0"
-        active-text-color="#fff"
+        :active-text-color="themeConfig.primary"
       >
         <menuItems :menuList="menuList"></menuItems>
       </el-menu>
@@ -38,7 +38,7 @@ const handleOpen = (key, keyPath) => {
 const handleClose = (key, keyPath) => {
   console.log(key, keyPath)
 }
-// const userInfo = store.getters.UserInfo;
+const themeConfig = store.getters.themeConfig
 
 onMounted(() => {
   getMenuList().then((res) => {
