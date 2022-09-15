@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" :style="{ backgroundColor: themeConfig.tabColor, color: fontColor }">
     <div class="header-lf flx-center">
       <Breadcrumb></Breadcrumb>
     </div>
@@ -16,17 +16,32 @@
   </div>
 </template>
 <script setup name="header">
-import { inject } from 'vue'
+import { inject, ref, watch } from "vue";
+import store from "../../store/index.js";
 // import { Setting, Search } from '@element-plus/icons-vue'
-import avatar from './components/avatar.vue'
-import setting from './components/setting.vue'
-import Search from './components/Search.vue'
-import fullScreen from './components/fullScreen.vue'
-import message from './components/message.vue'
-import Breadcrumb from './components/Breadcrumb.vue'
+import avatar from "./components/avatar.vue";
+import setting from "./components/setting.vue";
+import Search from "./components/Search.vue";
+import fullScreen from "./components/fullScreen.vue";
+import message from "./components/message.vue";
+import Breadcrumb from "./components/Breadcrumb.vue";
 // import Driver from "./components/Driver/index.vue";
 
-const refresh = inject('reload')
+const refresh = inject("reload");
+const fontColor = ref("#000000bf");
+
+const themeConfig = store.getters.themeConfig;
+
+watch(themeConfig.tabColor, (newValue, oldValue) => {
+  console.log(themeConfig.tabColor);
+  console.log("watch 已触发", newValue);
+  if (newValue != "#FFFFFF") {
+    fontColor.value = "#FFFFFF";
+  } else {
+    console.log(fontColor.value);
+    fontColor.value = "#000000bf";
+  }
+});
 </script>
 
 <style scoped lang="scss">
@@ -39,7 +54,6 @@ const refresh = inject('reload')
   padding: 0 15px;
   height: 48px;
   line-height: 48px;
-  background-color: #fff;
 
   .header-lf {
     .collapse-icon {
@@ -70,13 +84,12 @@ const refresh = inject('reload')
         font-size: 22px;
         margin-right: 20px;
         cursor: pointer;
-        color: rgba(0, 0, 0, 0.75);
       }
     }
 
     .icon-style {
       font-size: 20px;
-      color: rgba(0, 0, 0, 0.75);
+
       cursor: pointer;
       margin: 0 0 0 11px;
     }

@@ -36,7 +36,7 @@ const handleClick = () => {
 }
 .username {
   font-size: 15px;
-  color: rgba(0, 0, 0, 0.75);
+
   margin: 0 0 0 10px;
 }
 

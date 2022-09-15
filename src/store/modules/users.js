@@ -1,13 +1,7 @@
-import {
-  LoginInfo
-} from "../../api/modules/index.js";
+import { LoginInfo } from "../../api/modules/index.js";
 import router from "../../router/router.js";
-import {
-  mix
-} from '../../utils/color.js'
-import {
-  ElMessage
-} from "element-plus";
+import { mix } from "../../utils/color.js";
+import { ElMessage } from "element-plus";
 
 export default {
   namespaced: true,
@@ -17,6 +11,7 @@ export default {
     isCollapse: true,
     themeConfig: {
       primary: "#4060c7",
+      tabColor: "#FFFFFF",
     },
   },
   mutations: {
@@ -30,14 +25,15 @@ export default {
       state.isCollapse = isCollapse;
     },
     setThemeConfig(state, primary) {
-      state.themeConfig.primary = primary
-    }
+      state.themeConfig.primary = primary;
+    },
+    setThemeConfigTbaColor(state, primary) {
+      state.themeConfig.tabColor = primary;
+    },
   },
 
   actions: {
-    login({
-      commit
-    }, userInfo) {
+    login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         LoginInfo(userInfo)
           .then((res) => {
@@ -58,29 +54,28 @@ export default {
           });
       });
     },
-    changeIsCollapse({
-      commit
-    }, str) {
+    changeIsCollapse({ commit }, str) {
       console.log(str);
       commit("SetIsCollapse", str);
     },
 
-    changeThem({
-      commit
-    }, str) {
-      commit('setThemeConfig', str)
-      const pre = '--el-color-primary'
+    changeThem({ commit }, str) {
+      commit("setThemeConfig", str);
+      const pre = "--el-color-primary";
       // 白色混合色
-      const mixWhite = '#ffffff'
+      const mixWhite = "#ffffff";
       // 黑色混合色
-      const mixBlack = '#000000'
-      const el = document.documentElement
-      el.style.setProperty(pre, str)
+      const mixBlack = "#000000";
+      const el = document.documentElement;
+      el.style.setProperty(pre, str);
       // 这里是覆盖原有颜色的核心代码
       for (let i = 1; i < 10; i += 1) {
-        el.style.setProperty(`${pre}-light-${i}`, mix(str, mixWhite, i * 0.1))
+        el.style.setProperty(`${pre}-light-${i}`, mix(str, mixWhite, i * 0.1));
       }
-      el.style.setProperty('--el-color-primary-dark', mix(str, mixBlack, 0.1))
-    }
+      el.style.setProperty("--el-color-primary-dark", mix(str, mixBlack, 0.1));
+    },
+    changeTabColor({ commit }, val) {
+      commit("setThemeConfigTbaColor", val);
+    },
   },
 };
