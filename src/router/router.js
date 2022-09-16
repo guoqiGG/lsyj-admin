@@ -323,6 +323,15 @@ const routes = [
           name: "百度地图",
         },
       },
+      {
+        path: "/gaodemap",
+        name: "gaodemap",
+        component: () => import("../views/echarts/map/gaodemap.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "高德地图",
+        },
+      },
     ],
   },
   {

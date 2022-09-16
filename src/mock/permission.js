@@ -101,7 +101,7 @@ let menuList = [
             icon: "Menu",
           },
           {
-            url: "/gaodeMap",
+            url: "/gaodemap",
             title: "高德地图",
             icon: "Menu",
           },
