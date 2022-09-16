@@ -26,7 +26,7 @@ import fullScreen from "./components/fullScreen.vue";
 import message from "./components/message.vue";
 import Breadcrumb from "./components/Breadcrumb.vue";
 // import Driver from "./components/Driver/index.vue";
-
+// 局部数据刷新
 const refresh = inject("reload");
 
 const themeConfig = store.getters.themeConfig;

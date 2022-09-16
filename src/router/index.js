@@ -11,7 +11,7 @@ const writeNames = ["/login"];
 router.beforeEach((to, from, next) => {
   NProgress.start();
   console.log(store.getters);
-  if (store.getters.token) {
+  if (sessionStorage.getItem("token")) {
     if (to.path === "/login") {
       next("/");
     }

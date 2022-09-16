@@ -15,8 +15,8 @@
         :collapse="store.getters.isCollapse"
         :collapse-transition="false"
         :unique-opened="true"
-        background-color="#fff"
-        text-color="#bdbdc0"
+        :background-color="themeConfig.backgroundColor"
+        :text-color="themeConfig.textColor"
         :active-text-color="themeConfig.primary"
       >
         <menuItems :menuList="menuList"></menuItems>
@@ -26,26 +26,26 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
-import { getMenuList } from '../../api/modules/index.js'
-import store from '../../store/index.js'
-import menuItems from './components/menuItems.vue'
-const activeMenu = ref('/home')
-const menuList = ref([])
+import { onMounted, reactive, ref } from "vue";
+import { getMenuList } from "../../api/modules/index.js";
+import store from "../../store/index.js";
+import menuItems from "./components/menuItems.vue";
+const activeMenu = ref("/home");
+const menuList = ref([]);
 const handleOpen = (key, keyPath) => {
-  console.log(key, keyPath)
-}
+  console.log(key, keyPath);
+};
 const handleClose = (key, keyPath) => {
-  console.log(key, keyPath)
-}
-const themeConfig = store.getters.themeConfig
+  console.log(key, keyPath);
+};
+const themeConfig = store.getters.themeConfig;
 
 onMounted(() => {
   getMenuList().then((res) => {
-    menuList.value = res.data.data.menuList
-    console.log(menuItems.value)
-  })
-})
+    menuList.value = res.data.data.menuList;
+    console.log(menuItems.value);
+  });
+});
 </script>
 
 <style scoped lang="scss">

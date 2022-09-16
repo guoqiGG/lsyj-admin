@@ -49,7 +49,14 @@ const setNumberGrow = (ele) => {
 
 watch(number.value, (newV, oldV) => {
   setNumberGrow(numberGrow.value);
+  // gsap.to(this, { duration: 0.5, tweened: Number(n) || 0 });
 });
+
+// watch: {
+//     number(n) {
+//       gsap.to(this, { duration: 0.5, tweened: Number(n) || 0 })
+//     }
+//   }
 onMounted(() => {
   setNumberGrow(numberGrow.value);
 });

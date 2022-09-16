@@ -1,6 +1,6 @@
 <template>
   <el-row class="data-lists">
-    <el-col :span="9"
+    <el-col :span="9" :class="{ shake: disabled }"
       ><div class="data-item-one flx-row">
         <div class="item-left">
           <img src="../../assets/home.png" alt="" srcset="" />
@@ -28,7 +28,7 @@
         </div>
       </div></el-col
     >
-    <el-col :span="9"
+    <el-col :span="9" :class="{ shake: disabled }"
       ><div class="data-item-two">
         <div class="item">
           <div class="item-des flx-row">
@@ -74,7 +74,7 @@
         </div>
       </div></el-col
     >
-    <el-col :span="6">
+    <el-col :span="6" :class="{ shakeRight: disabled }">
       <div class="data-item-three">
         <div class="tit">待处理</div>
         <div class="content">
@@ -113,10 +113,10 @@
   <el-row class="dataLayer">
     <el-col :span="18">
       <div class="flx-row">
-        <div class="datalayer-echarts"><GMVnearly></GMVnearly></div>
-        <div class="datalayer-echarts"><linenearly></linenearly></div>
+        <div class="datalayer-echarts" :class="{ shake: disabled }"><GMVnearly></GMVnearly></div>
+        <div class="datalayer-echarts" :class="{ shake: disabled }"><linenearly></linenearly></div>
       </div>
-      <div class="table-data">
+      <div class="table-data" :class="{ shake: disabled }">
         <div class="tit">主题页列表</div>
         <div class="table-box">
           <el-table
@@ -137,46 +137,18 @@
               height: '44px',
             }"
           >
-            <el-table-column
-              v-for="item in options"
-              :key="item.type"
-              :prop="item.props"
-              :label="item.label"
-              :width="item.width"
-              :align="item.align"
-              show-overflow-tooltip
-              :fixed="item.fixed"
-            >
+            <el-table-column v-for="item in options" :key="item.type" :prop="item.props" :label="item.label" :width="item.width" :align="item.align" show-overflow-tooltip :fixed="item.fixed">
               <template v-slot:default="scope" v-if="item.props === 'type'">
-                <span class="type" v-if="scope.row[item.props] == true"
-                  >外部链接</span
-                >
-                <span
-                  class="type error-type"
-                  v-if="scope.row[item.props] == false"
-                  >内部链接</span
-                >
+                <span class="type" v-if="scope.row[item.props] == true">外部链接</span>
+                <span class="type error-type" v-if="scope.row[item.props] == false">内部链接</span>
               </template>
               <template v-slot:default="scope" v-if="item.props === 'state'">
-                <span v-if="scope.row[item.props] == true">
-                  <i class="state"></i>已上线</span
-                >
-                <span v-if="scope.row[item.props] == false">
-                  <i class="state error-state"></i>已下线</span
-                >
+                <span v-if="scope.row[item.props] == true"> <i class="state"></i>已上线</span>
+                <span v-if="scope.row[item.props] == false"> <i class="state error-state"></i>已下线</span>
               </template>
               <template v-slot:default="scope" v-if="item.props === 'actions'">
-                <el-icon class="icon-edit" @click="editorClick(scope.row)"
-                  ><Edit
-                /></el-icon>
-                <el-popconfirm
-                  confirm-button-text="确认"
-                  cancel-button-text="取消"
-                  :icon="InfoFilled"
-                  icon-color="#626AEF"
-                  title="确认删除该主题?"
-                  @confirm="DeleteItem(index)"
-                >
+                <el-icon class="icon-edit" @click="editorClick(scope.row)"><Edit /></el-icon>
+                <el-popconfirm confirm-button-text="确认" cancel-button-text="取消" :icon="InfoFilled" icon-color="#626AEF" title="确认删除该主题?" @confirm="DeleteItem(index)">
                   <template #reference>
                     <el-icon class="icon-dele"><Delete /></el-icon>
                   </template>
@@ -188,7 +160,7 @@
       </div>
     </el-col>
     <el-col :span="6">
-      <div class="data-item-three">
+      <div class="data-item-three" :class="{ shakeRight: disabled }">
         <div class="tit">常用功能</div>
         <div class="content">
           <div class="item">
@@ -244,17 +216,13 @@
       <div class="notice">
         <div class="notice-news">
           <img src="../../assets/bg.jpg" alt="" />
-          <div class="txt one-cut-txt">
-            查看更多查看更多查看更多查看更查看更多查看更多查看更多查看更
-          </div>
+          <div class="txt one-cut-txt">查看更多查看更多查看更多查看更查看更多查看更多查看更多查看更</div>
         </div>
       </div>
-      <div class="data-item-three">
+      <div class="data-item-three" :class="{ shakeRight: disabled }">
         <div class="tit">公告栏</div>
         <div class="notice-lists">
-          <div class="item one-cut-txt" v-for="item in notList" :key="item.id">
-            <span class="type">通知</span> {{ item.text }}
-          </div>
+          <div class="item one-cut-txt" v-for="item in notList" :key="item.id"><span class="type">通知</span> {{ item.text }}</div>
         </div>
       </div>
     </el-col>
@@ -262,33 +230,38 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import GMVnearly from './components/GMVnearly.vue'
-import linenearly from './components/linenearly.vue'
-import { options } from './options.js'
-import { homeList, noticeLists } from '../../api/modules/index.js'
-const tableData = ref([])
-const notList = ref([])
+import { onMounted, ref } from "vue";
+import GMVnearly from "./components/GMVnearly.vue";
+import linenearly from "./components/linenearly.vue";
+import { options } from "./options.js";
+import { homeList, noticeLists } from "../../api/modules/index.js";
+const tableData = ref([]);
+const notList = ref([]);
+const disabled = ref(false);
 
 const DeleteItem = (index) => {
-  tableData.value.splice(index, 1)
-}
+  tableData.value.splice(index, 1);
+};
 
 const initData = () => {
   homeList().then((res) => {
-    tableData.value = res.data.data
-  })
+    tableData.value = res.data.data;
+  });
 
   noticeLists().then((res) => {
-    notList.value = res.data.data
-  })
-}
+    notList.value = res.data.data;
+  });
+};
 
 onMounted(() => {
-  initData()
-})
+  initData();
+  disabled.value = true;
+  setTimeout(() => {
+    disabled.value = false;
+  }, 1500);
+});
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@import "./index.scss";
 </style>

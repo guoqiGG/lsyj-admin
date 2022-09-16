@@ -20,7 +20,7 @@
     "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
     "screenfull": "^6.0.1",
-    "video.js": "^7.20.2",
+    "video.js": "^7.20.3",
     "vue": "^3.2.25",
     "vue-router": "^4.0.13",
     "vue-video-player": "^6.0.0",

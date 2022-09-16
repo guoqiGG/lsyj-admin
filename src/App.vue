@@ -1,30 +1,25 @@
 <template>
-  <!-- <el-config-provider :locale="i18nLocale" :button="config" :size="assemblySize"> -->
   <router-view v-if="isRouterAlive"></router-view>
-  <!-- </el-config-provider> -->
 </template>
 
 <script setup>
-import { onMounted, ref, nextTick, provide } from 'vue'
-import { useStore } from 'vuex'
+import { onMounted, ref, nextTick, provide } from "vue";
+import { useStore } from "vuex";
 // 局部组件刷新
-const isRouterAlive = ref(true)
-const globalStore = useStore()
+const isRouterAlive = ref(true);
+const globalStore = useStore();
 const reload = () => {
-  isRouterAlive.value = false
+  isRouterAlive.value = false;
   nextTick(() => {
-    isRouterAlive.value = true
-    console.log('数据刷新成功')
-  })
-}
+    isRouterAlive.value = true;
+    console.log("数据刷新成功");
+  });
+};
 
-provide('reload', reload)
+provide("reload", reload);
 onMounted(() => {
-  globalStore.dispatch('user/changeThem', '#4060c7')
-  // document.body.style.setProperty('--el-color-primary', '#4060c7')
-  // document.body.style.setProperty('--el-color-primary-light-9', '#F5FBF0')
-  // document.body.style.setProperty('--el-color-primary-light-3', '#6c88d5')
-})
+  globalStore.dispatch("user/changeThem", "#4060c7");
+});
 </script>
 
 <style scoped lang="scss"></style>

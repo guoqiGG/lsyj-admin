@@ -13,6 +13,8 @@ export default {
       primary: "#4060c7",
       tabColor: "#FFFFFF",
       footColor: "#606266",
+      backgroundColor: "#1d2129",
+      textColor: "#bdbdc0",
     },
   },
   mutations: {
@@ -34,6 +36,15 @@ export default {
         state.themeConfig.footColor = "#606266";
       } else {
         state.themeConfig.footColor = "#ffffff";
+      }
+    },
+    setThemeConfigMenuColor(state, primary) {
+      if (primary) {
+        state.themeConfig.backgroundColor = "#FFFFFF";
+        state.themeConfig.textColor = "#252933";
+      } else {
+        state.themeConfig.backgroundColor = "#1d2129";
+        state.themeConfig.textColor = "#bdbdc0";
       }
     },
   },
@@ -82,6 +93,9 @@ export default {
     },
     changeTabColor({ commit }, val) {
       commit("setThemeConfigTbaColor", val);
+    },
+    changeMenuColor({ commit }, val) {
+      commit("setThemeConfigMenuColor", val);
     },
   },
 };

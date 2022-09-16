@@ -1,6 +1,6 @@
 <template>
   <el-container class="container">
-    <el-aside><Menu></Menu></el-aside>
+    <el-aside :style="{ backgroundColor: themeConfig.backgroundColor }"><Menu></Menu></el-aside>
     <el-container>
       <el-header>
         <Header></Header>
@@ -15,9 +15,11 @@
 </template>
 
 <script setup name="layout">
-import store from "../store/index";
+import store from "../store/index.js";
 import Header from "./header/index.vue";
 import Menu from "./menu/index.vue";
+const themeConfig = store.getters.themeConfig;
+console.log(themeConfig.backgroundColor);
 </script>
 
 <style scoped lang="scss">

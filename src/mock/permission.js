@@ -87,12 +87,12 @@ let menuList = [
   },
   {
     title: "图形图表",
-    url: "/charts",
+    url: "/echarts",
     icon: "Histogram",
     children: [
       {
         title: "地图",
-        url: "/charts/map",
+        url: "/echarts/map",
         icon: "Menu",
         children: [
           {
@@ -248,7 +248,7 @@ let menuList = [
   {
     url: "/video",
     title: "视频播放器",
-    icon: "BrushFilled",
+    icon: "VideoCameraFilled",
     //
     children: [
       {
