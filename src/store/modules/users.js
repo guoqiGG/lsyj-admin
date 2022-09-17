@@ -1,7 +1,13 @@
-import { LoginInfo } from "../../api/modules/index.js";
+import {
+  LoginInfo
+} from "../../api/modules/index.js";
 import router from "../../router/router.js";
-import { mix } from "../../utils/color.js";
-import { ElMessage } from "element-plus";
+import {
+  mix
+} from "../../utils/color.js";
+import {
+  ElMessage
+} from "element-plus";
 
 export default {
   namespaced: true,
@@ -41,7 +47,7 @@ export default {
     setThemeConfigMenuColor(state, primary) {
       if (primary) {
         state.themeConfig.backgroundColor = "#FFFFFF";
-        state.themeConfig.textColor = "#252933";
+        state.themeConfig.textColor = "#00000099";
       } else {
         state.themeConfig.backgroundColor = "#1d2129";
         state.themeConfig.textColor = "#bdbdc0";
@@ -50,7 +56,9 @@ export default {
   },
 
   actions: {
-    login({ commit }, userInfo) {
+    login({
+      commit
+    }, userInfo) {
       return new Promise((resolve, reject) => {
         LoginInfo(userInfo)
           .then((res) => {
@@ -71,12 +79,16 @@ export default {
           });
       });
     },
-    changeIsCollapse({ commit }, str) {
+    changeIsCollapse({
+      commit
+    }, str) {
       console.log(str);
       commit("SetIsCollapse", str);
     },
 
-    changeThem({ commit }, str) {
+    changeThem({
+      commit
+    }, str) {
       commit("setThemeConfig", str);
       const pre = "--el-color-primary";
       // 白色混合色
@@ -91,10 +103,14 @@ export default {
       }
       el.style.setProperty("--el-color-primary-dark", mix(str, mixBlack, 0.1));
     },
-    changeTabColor({ commit }, val) {
+    changeTabColor({
+      commit
+    }, val) {
       commit("setThemeConfigTbaColor", val);
     },
-    changeMenuColor({ commit }, val) {
+    changeMenuColor({
+      commit
+    }, val) {
       commit("setThemeConfigMenuColor", val);
     },
   },

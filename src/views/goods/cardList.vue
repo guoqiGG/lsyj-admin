@@ -8,13 +8,73 @@
   >
     <el-col :span="6" v-for="item in listData" :key="item" offset="1">
       <el-card shadow="hover" class="card-lists">
-        <div>
-          🍓🍇🍈🍉
-          <div style="padding-top: 10px">
-            <div class="time" style="padding-bottom: 10px">
-              创建人：{{ item.createUser }}
+        <!-- <div
+          class="item-state-pos"
+          :style="{
+            backgroundColor:
+              item.pay_state == '1002'
+                ? '#6C88D5'
+                : item.pay_state == '1003'
+                ? '#fa4a1e'
+                : '#00AA5A',
+          }"
+        >
+          {{
+            item.pay_state == '1001'
+              ? '已支付'
+              : item.pay_state == '1002'
+              ? '待支付'
+              : '未支付'
+          }}
+        </div> -->
+        <div class="item-state-pos">
+          <el-icon><MoreFilled /></el-icon>
+        </div>
+        <div class="item-title">
+          <img src="../../assets/images/avart.jpg" alt="" />{{ item.title }}
+        </div>
+        <div class="item-content flx-row">
+          <div class="cot">
+            <div class="cot-tit">发行日期</div>
+            <div class="cot-txt">{{ item.date }}</div>
+          </div>
+          <div class="cot">
+            <div class="cot-tit">客户姓名</div>
+            <div class="cot-txt">{{ item.user_name }}</div>
+          </div>
+        </div>
+        <div class="item-content flx-row">
+          <div class="cot">
+            <div class="cot-tit">
+              金额 <span>{{ item.number }}</span>
             </div>
-            <div style="flex: 1">发布时间：{{ item.createTime }}</div>
+          </div>
+          <div class="cot">
+            <div class="cot-tit">
+              状态
+              <span
+                :class="[
+                  item.pay_state == '1002'
+                    ? 'type suc-type'
+                    : item.pay_state == '1003'
+                    ? 'type'
+                    : 'type error-type',
+                ]"
+                >{{
+                  item.pay_state == '1001'
+                    ? '已支付'
+                    : item.pay_state == '1002'
+                    ? '待支付'
+                    : '未支付'
+                }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="item-content flx-row">
+          <div class="cot">
+            <div class="cot-tit">详情</div>
+            <div class="cot-txt one-cut-txt">{{ item.content }}</div>
           </div>
         </div>
       </el-card>
@@ -23,19 +83,19 @@
 </template>
 
 <script setup>
-import { Newslist } from '../../api/modules/index.js'
+import { cardlists } from '../../api/modules/index.js'
 
 import { onMounted, ref } from 'vue'
 const listData = ref([])
 const load = () => {
-  Newslist().then((res) => {
+  cardlists().then((res) => {
     listData.value = listData.value.concat(res.data.data)
   })
   // count.value += 2
 }
 
 const getListData = () => {
-  Newslist().then((res) => {
+  cardlists().then((res) => {
     listData.value = res.data.data
   })
 }
@@ -45,20 +105,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.infinite-list-card {
-  background-color: #fff;
-  flex-wrap: wrap;
-  .infinite-list-item {
-    flex: 20%;
-    margin-left: 2.5%;
-    // margin-bottom: 2.5%;
-  }
-}
-.card-lists {
-  margin-right: 10px;
-  margin-bottom: 10px;
-  &:nth-child(4n) {
-    margin-right: 0;
-  }
-}
+@import './index.scss';
 </style>

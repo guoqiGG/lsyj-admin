@@ -66,3 +66,10 @@ export function noticeLists(query) {
     data: query,
   });
 }
+export function cardlists(query) {
+  return service({
+    method: "get",
+    url: "/permission/cardlists",
+    data: query,
+  });
+}

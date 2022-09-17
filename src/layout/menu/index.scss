@@ -34,8 +34,7 @@
       // flex: 1;
       overflow: auto;
       overflow-x: hidden;
-      border-right: none;
-
+      border: none !important;
       width: 100% !important;
 
       &::-webkit-scrollbar {

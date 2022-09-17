@@ -1,5 +1,9 @@
-<template></template>
+<template>
+  <el-card>
+    <div>💐🌸💮🏵️🌹🌺🌻</div>
+  </el-card>
+</template>
 
-<script></script>
+<script setup></script>
 
 <style lang="scss" scoped></style>
