@@ -33,11 +33,15 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { getMenuList } from '../../api/modules/index.js'
 import store from '../../store/index.js'
 import menuItems from './components/menuItems.vue'
-const activeMenu = ref('/home')
+import { useRouter, useRoute } from 'vue-router'
+const route = useRoute()
+const activeMenu = computed(() => {
+  return route.path
+})
 const menuList = ref([])
 const handleOpen = (key, keyPath) => {
   console.log(key, keyPath)

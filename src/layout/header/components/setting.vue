@@ -42,6 +42,15 @@
         :inactive-icon="Moon"
       />
     </div>
+    <div class="flx-row">
+      <div class="flx-tit">标签栏是否显示</div>
+      <el-switch
+        v-model="istags"
+        @change="changeTags($event)"
+        class="mt-2"
+        style="margin-left: 24px"
+      />
+    </div>
     <!-- <div class="theme-item">
         <el-color-picker
           v-model="themeConfig.primary"
@@ -99,6 +108,9 @@ import store from '../../../store/index.js'
 import { mix } from '../../../utils/color.js'
 import { useStore } from 'vuex'
 const value2 = ref(false)
+const istags = computed(() => {
+  return store.getters.themeConfig.istags
+})
 // 预定义主题颜色
 const colorList = [
   '#4060c7',
@@ -142,6 +154,9 @@ const openDrawer = () => {
 const changeGreyOrWeak = (e) => {
   globalStore.dispatch('user/changeMenuColor', e)
 }
+const changeTags = (e) => {
+  globalStore.dispatch('user/changeTags', e)
+}
 </script>
 
 <style scoped lang="scss">
@@ -154,7 +169,7 @@ const changeGreyOrWeak = (e) => {
   flex-wrap: wrap;
 }
 .flx-tit {
-  color: #bdbdc0;
+  color: #303133;
   flex: 1;
   font-size: 14px;
 }

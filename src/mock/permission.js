@@ -11,78 +11,100 @@ let menuList = [{
     icon: "HomeFilled",
   },
   {
-    title: "表单页",
+    title: "页面管理",
     url: "/form",
     icon: "Checked",
     children: [{
-        title: "基础表单",
-        url: "/baseForm",
-        icon: "Menu",
+        title: "表单页",
+        url: "/form",
+        icon: "Checked",
+        children: [{
+            title: "基础表单",
+            url: "/baseForm",
+            icon: "Menu",
+          },
+          {
+            url: "/stepFrom",
+            title: "步骤表单",
+            icon: "Menu",
+          },
+          {
+            url: "/advancedForm",
+            title: "高级表单",
+            icon: "Menu",
+          },
+        ],
       },
       {
-        url: "/stepFrom",
-        title: "步骤表单",
-        icon: "Menu",
+        title: "/system",
+        title: "表格管理",
+        icon: "Grid",
+        children: [{
+            url: "/Department",
+            title: "基础表格",
+            icon: "Menu",
+          },
+          {
+            url: "/UserList",
+            title: "内嵌表格",
+            icon: "Menu",
+          },
+          {
+            url: "/RoleList",
+            title: "滑动加载",
+            icon: "Menu",
+          },
+          {
+            url: "/MenuList",
+            title: "可编辑Table",
+            icon: "Menu",
+          },
+          {
+            url: "/importExcel",
+            title: "导入Excel",
+            icon: "Menu",
+          },
+        ],
       },
       {
-        url: "/advancedForm",
-        title: "高级表单",
-        icon: "Menu",
+        url: "/goods",
+        title: "列表页",
+        icon: "List",
+        children: [{
+            url: "/goodCategory",
+            title: "基础列表",
+            icon: "Menu",
+          },
+          {
+            url: "/cardList",
+            title: "卡片列表",
+            icon: "Menu",
+          },
+          {
+            url: "/searchList",
+            title: "搜索列表",
+            icon: "Menu",
+          },
+        ],
+      }, {
+        url: "/ErrorMessage",
+        title: "异常页面",
+        icon: "WarningFilled",
+        children: [{
+            url: "/404",
+            title: "404",
+            icon: "Menu",
+          },
+          {
+            url: "/500",
+            title: "500",
+            icon: "Menu",
+          },
+        ],
       },
-    ],
+    ]
   },
-  {
-    title: "/system",
-    title: "表格管理",
-    icon: "Grid",
-    children: [{
-        url: "/Department",
-        title: "基础表格",
-        icon: "Menu",
-      },
-      {
-        url: "/UserList",
-        title: "内嵌表格",
-        icon: "Menu",
-      },
-      {
-        url: "/RoleList",
-        title: "滑动加载",
-        icon: "Menu",
-      },
-      {
-        url: "/MenuList",
-        title: "可编辑Table",
-        icon: "Menu",
-      },
-      {
-        url: "/importExcel",
-        title: "导入Excel",
-        icon: "Menu",
-      },
-    ],
-  },
-  {
-    url: "/goods",
-    title: "列表页",
-    icon: "List",
-    children: [{
-        url: "/goodCategory",
-        title: "基础列表",
-        icon: "Menu",
-      },
-      {
-        url: "/cardList",
-        title: "卡片列表",
-        icon: "Menu",
-      },
-      {
-        url: "/searchList",
-        title: "搜索列表",
-        icon: "Menu",
-      },
-    ],
-  },
+
   {
     title: "图形图表",
     url: "/echarts",
@@ -120,22 +142,7 @@ let menuList = [{
       },
     ],
   },
-  {
-    url: "/ErrorMessage",
-    title: "异常页面",
-    icon: "WarningFilled",
-    children: [{
-        url: "/404",
-        title: "404",
-        icon: "Menu",
-      },
-      {
-        url: "/500",
-        title: "500",
-        icon: "Menu",
-      },
-    ],
-  },
+
   {
     url: "/able",
     title: "功能",

@@ -21,6 +21,7 @@ export default {
       footColor: "#606266",
       backgroundColor: "#1d2129",
       textColor: "#bdbdc0",
+      istags: true,
     },
   },
   mutations: {
@@ -51,6 +52,13 @@ export default {
       } else {
         state.themeConfig.backgroundColor = "#1d2129";
         state.themeConfig.textColor = "#bdbdc0";
+      }
+    },
+    setThemeConfigchangeTags(state, primary) {
+      if (primary) {
+        state.themeConfig.istags = true
+      } else {
+        state.themeConfig.istags = false
       }
     },
   },
@@ -112,6 +120,11 @@ export default {
       commit
     }, val) {
       commit("setThemeConfigMenuColor", val);
+    },
+    changeTags({
+      commit
+    }, val) {
+      commit("setThemeConfigchangeTags", val);
     },
   },
 };
