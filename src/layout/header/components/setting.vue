@@ -107,7 +107,7 @@ import { Sunny, Moon } from '@element-plus/icons-vue'
 import store from '../../../store/index.js'
 import { mix } from '../../../utils/color.js'
 import { useStore } from 'vuex'
-const value2 = ref(false)
+const value2 = ref(true)
 const istags = computed(() => {
   return store.getters.themeConfig.istags
 })

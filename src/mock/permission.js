@@ -12,7 +12,7 @@ let menuList = [{
   },
   {
     title: "页面管理",
-    url: "/form",
+    url: "/page",
     icon: "Checked",
     children: [{
         title: "表单页",
