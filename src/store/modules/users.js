@@ -21,7 +21,7 @@ export default {
       footColor: "#606266",
       backgroundColor: "#FFFFFF",
       textColor: "#00000099",
-      istags: false,
+      istags: true,
     },
   },
   mutations: {

@@ -1,26 +1,31 @@
 <template>
-  <el-tag
-    v-for="tag in tags"
-    :key="tag.title"
-    class="mR10 tabs"
-    :closable="tag.close"
-    :effect="tag.checked ? 'dark' : 'plain'"
-    @click="tagChange(tag)"
-    @close="delectTag(tag, index)"
-  >
-    <el-icon class="tabs-icon">
-      <component :is="tag.icon"></component>
-    </el-icon>
-    {{ tag.title }}
-  </el-tag>
+  <div class="tags">
+    <el-tag
+      ref="tagRef"
+      v-for="tag in tags"
+      :key="tag.title"
+      class="mR10 tabs"
+      :closable="tag.close"
+      :effect="tag.checked ? 'dark' : 'plain'"
+      @click="tagChange(tag)"
+      @close="delectTag(tag, index)"
+    >
+      <el-icon class="tabs-icon">
+        <component :is="tag.icon"></component>
+      </el-icon>
+      {{ tag.title }}
+    </el-tag>
+  </div>
 </template>
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import store from '../../store/index.js'
 import { useStore } from 'vuex'
 const tabsMenuValue = ref('')
+const nameScroll = ref(false)
+const tagRef = ref()
 const route = useRoute()
 const router = useRouter()
 const globalStore = useStore() // 该方法用于返回store 实例
@@ -51,12 +56,24 @@ const delectTag = (item, index) => {
   globalStore.dispatch('tabs/delectTag', item)
 }
 onMounted(() => {
-  console.log()
+  nextTick(() => {})
 })
 </script>
 
 <style lang="scss" scoped>
-.tabs {
-  height: 30px;
+.tags {
+  width: 95%;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-flow: row;
+  overflow: scroll;
+  white-space: nowrap;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .tabs {
+    height: 30px;
+  }
 }
 </style>
