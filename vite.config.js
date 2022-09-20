@@ -1,30 +1,26 @@
-import {
-  defineConfig
-} from 'vite'
-import vue from '@vitejs/plugin-vue'
-import {
-  viteMockServe
-} from 'vite-plugin-mock';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { viteMockServe } from "vite-plugin-mock";
 
-import viteCompression from 'vite-plugin-compression'
+import viteCompression from "vite-plugin-compression";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   viteMockServe: {
     supportTs: false,
     logger: false,
-    mockPath: "./mock/index.js"
-
+    mockPath: "./mock/index.js",
   },
 
-  plugins: [vue(),
-    viteCompression({ //gzip压缩
+  plugins: [
+    vue(),
+    viteCompression({
+      //gzip压缩
       verbose: true,
       disable: false,
       threshold: 10240,
-      algorithm: 'gzip',
-      ext: '.gz',
-    })
+      algorithm: "gzip",
+      ext: ".gz",
+    }),
   ],
   build: {
     terserOptions: {
@@ -35,25 +31,26 @@ export default defineConfig({
     },
     // chunkSizeWarningLimit: 1500,大文件报警阈值设置,不建议使用
     rollupOptions: {
-      output: { //静态资源分类打包
-        chunkFileNames: 'static/js/[name]-[hash].js',
-        entryFileNames: 'static/js/[name]-[hash].js',
-        assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
-        manualChunks(id) { //静态资源分拆打包
-          if (id.includes('node_modules')) {
-            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+      output: {
+        //静态资源分类打包
+        chunkFileNames: "static/js/[name]-[hash].js",
+        entryFileNames: "static/js/[name]-[hash].js",
+        assetFileNames: "static/[ext]/[name]-[hash].[ext]",
+        manualChunks(id) {
+          //静态资源分拆打包
+          if (id.includes("node_modules")) {
+            return id.toString().split("node_modules/")[1].split("/")[0].toString();
           }
-        }
-      }
-    }
+        },
+      },
+    },
   },
   css: {
     /* CSS 预处理器   导入全局样式*/
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "src/styles/var.scss";'
-      }
-    }
+        additionalData: '@import "src/styles/common.scss";',
+      },
+    },
   },
-
-})
+});
