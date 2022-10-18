@@ -1,6 +1,10 @@
-import { defineConfig } from "vite";
+import {
+  defineConfig
+} from "vite";
 import vue from "@vitejs/plugin-vue";
-import { viteMockServe } from "vite-plugin-mock";
+import {
+  viteMockServe
+} from "vite-plugin-mock";
 
 import viteCompression from "vite-plugin-compression";
 
@@ -49,7 +53,7 @@ export default defineConfig({
     /* CSS 预处理器   导入全局样式*/
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "src/styles/common.scss";',
+        // additionalData: '@import "src/styles/common.scss";',
       },
     },
   },
