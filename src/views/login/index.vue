@@ -155,6 +155,7 @@ import {
   User,
   Iphone,
 } from '@element-plus/icons-vue'
+import { Base64 } from 'js-base64'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
@@ -164,7 +165,7 @@ const router = useRouter()
 const loginForm = reactive({
   username: 'admin',
   password: '123456',
-  checked: false,
+  checked: true,
 })
 const loginRules = reactive({
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -179,6 +180,14 @@ const login = (formEl) => {
     if (valid) {
       loading.value = true
       console.log(globalStore)
+
+      if (loginForm.checked) {
+        let password = Base64.encode(loginForm.password) // base64加密
+        setCookie(loginForm.username, password, 7)
+      } else {
+        setCookie('', '', -1)
+      }
+
       globalStore.dispatch('user/login', loginForm)
     } else {
       console.log('error submit!')
@@ -187,6 +196,31 @@ const login = (formEl) => {
   })
 }
 
+const setCookie = (userId, password, days) => {
+  let date = new Date() // 获取时间
+  date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * days) // 保存的天数
+  // 字符串拼接cookie
+  window.document.cookie =
+    'userId' + '=' + userId + ';path=/;expires=' + date.toGMTString()
+  window.document.cookie =
+    'password' + '=' + password + ';path=/;expires=' + date.toGMTString()
+}
+
+// 读取cookie 将用户名和密码回显到input框中
+const getCookie = () => {
+  if (document.cookie.length > 0) {
+    let arr = document.cookie.split('; ') //分割成一个个独立的“key=value”的形式
+    for (let i = 0; i < arr.length; i++) {
+      let arr2 = arr[i].split('=') // 再次切割，arr2[0]为key值，arr2[1]为对应的value
+      if (arr2[0] === 'userId') {
+        loginForm.username = arr2[1]
+      } else if (arr2[0] === 'password') {
+        loginForm.password = Base64.decode(arr2[1]) // base64解密
+        loginForm.checked = true
+      }
+    }
+  }
+}
 const resetForm = (formEl) => {
   if (!formEl) return
   formEl.resetFields()

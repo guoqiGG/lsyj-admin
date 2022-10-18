@@ -13,8 +13,7 @@
     border-radius: 6px;
     color: #fff;
 
-    .item-left {
-    }
+    .item-left {}
 
     .item-right {
       padding-left: 20px;
@@ -365,6 +364,7 @@
 .shake {
   animation: shake 0.5s linear;
 }
+
 .shakeRight {
   animation: shakeRight 0.5s linear;
 }
@@ -373,14 +373,17 @@
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(0);
   }
 }
+
 @keyframes shakeRight {
   from {
     transform: translateX(100%);
   }
+
   to {
     transform: translateX(0);
   }
