@@ -419,6 +419,15 @@ const routes = [{
         },
       },
       {
+        path: "/throttle",
+        name: "throttle",
+        component: () => import("../views/directives/throttle.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "节流",
+        },
+      },
+      {
         path: "/copy",
         name: "copy",
         component: () => import("../views/directives/copy.vue"),

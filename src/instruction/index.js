@@ -2,12 +2,14 @@ import draggable from "./modules/draggable";
 import copy from "./modules/copy";
 import debounce from "./modules/debounce";
 import longPress from "./modules/longPress";
+import throttle from "./modules/throttle";
 
 const directivesList = {
   draggable,
   copy,
   debounce,
   longPress,
+  throttle
 };
 
 const directives = {

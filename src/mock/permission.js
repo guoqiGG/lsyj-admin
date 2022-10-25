@@ -225,6 +225,11 @@ let menuList = [{
         icon: "Menu",
       },
       {
+        url: "/throttle",
+        title: "节流指令",
+        icon: "Menu",
+      },
+      {
         url: "/longPress",
         title: "长按指令",
         icon: "Menu",
