@@ -1,6 +1,6 @@
 #💐💐💐 Vue 3.2 + vuex + Vite2 + Element-Plus 后台管理系统
 
-![banner](https://s1.328888.xyz/2022/09/18/oJc4N.png)
+![banner](./src/assets/login2.png)
 
 ### 前言 📖
 
@@ -13,7 +13,7 @@
 
 ### 一、在线预览 🛫
 
-- Link：http://124.221.156.158:3330/#/login
+- Link：http://124.221.156.158:9797/#/login
 
 ### 二、gitee 地址 🛫
 
@@ -46,19 +46,19 @@ npm run dev
 
 #### 1、登录页：
 
-![login-light](https://s1.328888.xyz/2022/09/18/oJc4N.png)
+![login-light](./src/assets/login2.png)
 
 #### 2、首页：
 
-![home_light](https://s1.328888.xyz/2022/09/18/oJ2rC.png)
+![home_light](./src/assets/home2.png)
 
 #### 3、表格页：
 
-![table_light](https://s1.328888.xyz/2022/09/18/oJyrr.png)
+![table_light](./src/assets/table.png)
 
 #### 4、流程图：
 
-![dataScreen02](https://s1.328888.xyz/2022/09/07/5cnjj.png)
+![dataScreen02](./src/assets/flow.png)
 
 ### 六、文件资源目录 📚
 
