@@ -13,11 +13,20 @@
     <div className="sliderContent">
       <div className="imgDev" style="width: 500px">
         <canvas id="canvasImg" width="500" height="auto"></canvas>
-        <canvas className="slider" id="sliderBlock" :width="500" :height="280" :style="{ left: sildLeft + 'px' }"></canvas>
+        <canvas
+          className="slider"
+          id="sliderBlock"
+          :width="500"
+          :height="280"
+          :style="{ left: sildLeft + 'px' }"
+        ></canvas>
         <!-- <el-slider class="moveSlider" @change="changeValue1" v-model="value1" /> -->
       </div>
     </div>
-    <div class="moveSlider" :style="{ background: verifyResult ? '#859baa' : '#f7f8fa', color: verifyResult ? '#fff' : '606266' }">
+    <div
+      class="moveSlider"
+      :style="{ background: verifyResult ? '#859baa' : '#f7f8fa', color: verifyResult ? '#fff' : '606266' }"
+    >
       {{ verifyResult ? "解锁成功" : "滑动解锁" }}
       <div class="slider" @mousedown="sliderMove" ref="slider">
         <el-icon v-if="verifyResult" class="icon-style" style="color: #859baa"><Select /></el-icon>

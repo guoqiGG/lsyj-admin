@@ -8,7 +8,7 @@
       <template #prepend>
         <el-select v-model="select" placeholder="" style="width: 115px">
           <el-option label="邮箱" value="1" />
-          <el-option label="wexin" value="2" />
+          <el-option label="weixin" value="2" />
           <el-option label="Tel" value="3" />
         </el-select>
       </template>
@@ -25,37 +25,27 @@
       ></template>
       <template #append><el-button :icon="Search" /></template>
     </el-input>
-    <el-input
-      class="mt10"
-      v-for="item in inputList"
-      :key="item"
-      :v-model="item"
-      placeholder="请输入"
-    >
-      <template #append
-        ><el-button @click="deleteHanle(item)">Delete</el-button></template
-      >
+    <el-input class="mt10" v-for="item in inputList" :key="item" :v-model="item" placeholder="请输入">
+      <template #append><el-button @click="deleteHanle(item)">Delete</el-button></template>
     </el-input>
-    <el-button icon="Plus" class="mt10 w100" @click="addInput()"
-      >添加</el-button
-    >
+    <el-button icon="Plus" class="mt10 w100" @click="addInput()">添加</el-button>
   </el-card>
 </template>
 
 <script setup>
-import { Search, Plus } from '@element-plus/icons-vue'
-import { ref } from 'vue'
-const input1 = ref('')
-const inputList = ref([])
-const select = ref('1')
-const Select2 = ref('1')
+import { Search, Plus } from "@element-plus/icons-vue";
+import { ref } from "vue";
+const input1 = ref("");
+const inputList = ref([]);
+const select = ref("1");
+const Select2 = ref("1");
 
 const addInput = () => {
-  inputList.value.push('')
-}
+  inputList.value.push("");
+};
 const deleteHanle = (item) => {
-  inputList.value.splice(inputList.value[item], 1)
-}
+  inputList.value.splice(inputList.value[item], 1);
+};
 </script>
 
 <style lang="scss" scoped>

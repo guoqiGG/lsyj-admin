@@ -1,11 +1,10 @@
 // 引入mockjs
 import Mock from "mockjs";
-import {
-  options
-} from "../views/home/options";
+import { options } from "../views/home/options";
 const Random = Mock.Random;
 
-let menuList = [{
+let menuList = [
+  {
     title: "首页",
     url: "/home",
     icon: "HomeFilled",
@@ -14,11 +13,13 @@ let menuList = [{
     title: "页面管理",
     url: "/page",
     icon: "Checked",
-    children: [{
+    children: [
+      {
         title: "表单页",
         url: "/form",
         icon: "Checked",
-        children: [{
+        children: [
+          {
             title: "基础表单",
             url: "/baseForm",
             icon: "Menu",
@@ -39,7 +40,8 @@ let menuList = [{
         title: "/system",
         title: "表格管理",
         icon: "Grid",
-        children: [{
+        children: [
+          {
             url: "/Department",
             title: "基础表格",
             icon: "Menu",
@@ -70,7 +72,8 @@ let menuList = [{
         url: "/goods",
         title: "列表页",
         icon: "List",
-        children: [{
+        children: [
+          {
             url: "/goodCategory",
             title: "基础列表",
             icon: "Menu",
@@ -86,11 +89,13 @@ let menuList = [{
             icon: "Menu",
           },
         ],
-      }, {
+      },
+      {
         url: "/ErrorMessage",
         title: "异常页面",
         icon: "WarningFilled",
-        children: [{
+        children: [
+          {
             url: "/404",
             title: "404",
             icon: "Menu",
@@ -102,18 +107,20 @@ let menuList = [{
           },
         ],
       },
-    ]
+    ],
   },
 
   {
     title: "图形图表",
     url: "/echarts",
     icon: "Histogram",
-    children: [{
+    children: [
+      {
         title: "地图",
         url: "/echarts/map",
         icon: "Menu",
-        children: [{
+        children: [
+          {
             url: "/baidumap",
             title: "百度地图",
             icon: "Menu",
@@ -147,7 +154,8 @@ let menuList = [{
     url: "/able",
     title: "功能",
     icon: "HelpFilled",
-    children: [{
+    children: [
+      {
         url: "/watermark",
         title: "水印",
         icon: "Menu",
@@ -168,10 +176,16 @@ let menuList = [{
         icon: "Menu",
       },
       {
+        url: "/Filepreview",
+        title: "文件预览",
+        icon: "Menu",
+      },
+      {
         url: "markdown",
         icon: "Platform",
         title: "编辑器",
-        children: [{
+        children: [
+          {
             url: "/wangEditor",
             title: "富文本编辑器",
             icon: "Menu",
@@ -209,7 +223,8 @@ let menuList = [{
     url: "/directives",
     title: "自定义指令",
     icon: "Stamp",
-    children: [{
+    children: [
+      {
         url: "/copy",
         title: "复制",
         icon: "Menu",
@@ -229,45 +244,50 @@ let menuList = [{
         title: "节流指令",
         icon: "Menu",
       },
-      {
-        url: "/longPress",
-        title: "长按指令",
-        icon: "Menu",
-      },
+      // {
+      //   url: "/longPress",
+      //   title: "长按指令",
+      //   icon: "Menu",
+      // },
     ],
   },
   {
     url: "/flow",
     title: "图形编辑器",
     icon: "BrushFilled",
-    //
-    children: [{
-      url: "/flowCat",
-      title: "流程图",
-      icon: "Menu",
-    }, ],
+    children: [
+      {
+        url: "/flowCat",
+        title: "流程图",
+        icon: "Menu",
+      },
+    ],
   },
   {
     url: "/video",
     title: "视频播放器",
     icon: "VideoCameraFilled",
     //
-    children: [{
-      url: "/video",
-      title: "视频播放器",
-      icon: "Menu",
-    }, ],
+    children: [
+      {
+        url: "/video",
+        title: "视频播放器",
+        icon: "Menu",
+      },
+    ],
   },
   {
     url: "/DataReport",
     title: "数据统计",
     icon: "TrendCharts",
 
-    children: [{
-      url: "/demo1",
-      title: "项目一",
-      icon: "Menu",
-    }, ],
+    children: [
+      {
+        url: "/demo1",
+        title: "项目一",
+        icon: "Menu",
+      },
+    ],
   },
   // {
   //   url: "/material",
@@ -283,20 +303,19 @@ let menuList = [{
     url: "/user",
     title: "个人中心",
     icon: "Avatar",
-    children: [{
-      url: "/user",
-      title: "关于我",
-      icon: "Menu",
-    }, ],
+    children: [
+      {
+        url: "/user",
+        title: "关于我",
+        icon: "Menu",
+      },
+    ],
   },
 ];
 
 export const LoginInfo = (options) => {
   console.log(options, "接收post参数");
-  const {
-    username,
-    password
-  } = JSON.parse(options.body);
+  const { username, password } = JSON.parse(options.body);
   if (username == "admin" && password != "123456") {
     return {
       code: "-200",
@@ -311,7 +330,8 @@ export const LoginInfo = (options) => {
         user_id: Random.id(),
         name: Random.cname(),
         token: Random.guid(),
-        image: "https://img2.baidu.com/it/u=2859542338,3761174075&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1660064400&t=6fe6057370cbe369654ff2e132d02a37",
+        image:
+          "https://img2.baidu.com/it/u=2859542338,3761174075&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1660064400&t=6fe6057370cbe369654ff2e132d02a37",
       },
     };
   }
@@ -394,9 +414,9 @@ export const Newslist = (options) => {
       isTop: Random.integer(1, 2), //随机生成1-2的Integer
       createUser: Random.cname(), // Random.cname() 随机生成一个常见的中文姓名
       email: Random.email(),
-      number: '$' + Random.integer(100, 5000) + '.00',
+      number: "$" + Random.integer(100, 5000) + ".00",
       createTime: Random.date() + " " + Random.time(),
-      pay_state: '100' + Random.integer(1, 3),
+      pay_state: "100" + Random.integer(1, 3),
     };
     newList.push(item);
   }
@@ -421,13 +441,15 @@ export const orderLists = (options) => {
       costPrice: Random.integer(10, 20),
       amount: Random.integer(100, 200), //100到5000的随机整数
       itemEdit: false,
-      ItemData: [{
-        address: Random.city(true),
-        email: Random.email(),
-        state: Random.boolean(),
-        salenumber: Random.integer(10, 100),
-        receivable: Random.integer(10, 100),
-      }, ],
+      ItemData: [
+        {
+          address: Random.city(true),
+          email: Random.email(),
+          state: Random.boolean(),
+          salenumber: Random.integer(10, 100),
+          receivable: Random.integer(10, 100),
+        },
+      ],
     };
     orderList.push(item);
   }
@@ -471,7 +493,6 @@ export const noticeLists = (options) => {
   };
 };
 
-
 export const cardlists = (options) => {
   let obj = JSON.parse(options.body);
   let cardlists = [];
@@ -480,11 +501,10 @@ export const cardlists = (options) => {
       title: Random.csentence(5, 8), //  Random.csentence( min, max )
       user_name: Random.cname(), // Random.cname() 随机生成一个常见的中文姓名
       email: Random.email(),
-      number: '$' + Random.integer(100, 5000) + '.00',
+      number: "$" + Random.integer(100, 5000) + ".00",
       date: Random.date(),
-      pay_state: '100' + Random.integer(1, 3),
+      pay_state: "100" + Random.integer(1, 3),
       content: Random.csentence(),
-
     };
     cardlists.push(item);
   }

@@ -32,13 +32,7 @@ export function getDateTime(type) {
     currentdate = year + hengGang + month;
     return currentdate;
   } else {
-    currentdate = year + hengGang + month + hengGang + curDate + " "
+    currentdate = year + hengGang + month + hengGang + curDate + " ";
     return currentdate;
   }
 }
-// var year = getDateTime('year');  
-// console.log(year);  // 2021
-// var month = getDateTime('month');  
-// console.log(month); // 12
-// var date = getDateTime('');
-// console.log(date);  // 2021-12-03 09:00:00

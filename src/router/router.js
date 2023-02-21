@@ -227,6 +227,15 @@ const routes = [{
         },
       },
       {
+        path: "/Filepreview",
+        name: "Filepreview",
+        component: () => import("../views/able/Filepreview.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "文件预览",
+        },
+      },
+      {
         path: "/wangEditor",
         name: "wangEditor",
         component: () => import("../views/able/wangEditor.vue"),
