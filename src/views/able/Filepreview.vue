@@ -44,6 +44,7 @@ const viewItem = (item) => {
   let index = item.url.lastIndexOf('.')
   let ext = item.url.substr(index)
   console.log(ext)
+  iframeUrl.value =''
   if (ext == '.xlsx' || ext == '.docx' || ext == '.pptx') {
     iframeUrl.value =
       'https://view.officeapps.live.com/op/view.aspx?src=' + item.url
