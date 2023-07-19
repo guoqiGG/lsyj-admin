@@ -51,11 +51,14 @@ const handleClose = (key, keyPath) => {
 }
 const themeConfig = store.getters.themeConfig
 
+
 onMounted(() => {
   getMenuList().then((res) => {
     menuList.value = res.data.data.menuList
     console.log(menuItems.value)
   })
+
+ 
 })
 </script>
 

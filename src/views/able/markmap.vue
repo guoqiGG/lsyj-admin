@@ -86,13 +86,13 @@ const sendItem = (item)=>{
   selectTemp.value=`生成${item.name}的思维导图`
 }
 const UseTemplates = ()=>{
-  inputValue.value=selectTemp.value
+  inputValue.value=selectTemp.value 
   dialogVisible.value=false
 }
 
 const createMind= ()=>{
   Iconloading.value=true
-  markdown.value=md.value
+  markdown.value=md.value?md.value:markdown.value
   initData()
   inputValue.value=''
   Iconloading.value=false
