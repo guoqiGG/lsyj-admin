@@ -102,7 +102,7 @@ export default {
       // 白色混合色
       const mixWhite = "#ffffff";
       // 黑色混合色
-      const mixBlack = "#000000";
+      const mixBlack = "#606266";
       const el = document.documentElement;
       el.style.setProperty(pre, str);
       // 这里是覆盖原有颜色的核心代码
