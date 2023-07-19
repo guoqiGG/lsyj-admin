@@ -263,6 +263,15 @@ const routes = [{
         },
       },
       {
+        path: "/markmap",
+        name: "markmap",
+        component: () => import("../views/able/markmap.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "思维导图",
+        },
+      },
+      {
         path: "/validation",
         name: "validation",
         component: () => import("../views/able/validation.vue"),

@@ -171,6 +171,11 @@ let menuList = [
         icon: "Menu",
       },
       {
+        url: "/markmap",
+        title: "思维导图",
+        icon: "Menu",
+      },
+      {
         url: "/fileImport",
         title: "文件上传",
         icon: "Menu",
