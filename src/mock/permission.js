@@ -176,6 +176,11 @@ let menuList = [
         icon: "Menu",
       },
       {
+        url: "/jsmind",
+        title: "可编辑的思维导图",
+        icon: "Menu",
+      },
+      {
         url: "/fileImport",
         title: "文件上传",
         icon: "Menu",

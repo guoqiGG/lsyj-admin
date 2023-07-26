@@ -272,6 +272,15 @@ const routes = [{
         },
       },
       {
+        path: "/jsmind",
+        name: "jsmind",
+        component: () => import("../views/able/jsmind.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "可编辑的思维导图",
+        },
+      },
+      {
         path: "/validation",
         name: "validation",
         component: () => import("../views/able/validation.vue"),

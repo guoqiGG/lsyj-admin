@@ -1,6 +1,9 @@
 <template>
   <el-card>
     <svg class="flexSvg" ref="svgRef" />
+    <div class="flx-row pos">
+      放大  编辑 下载
+    </div>
   </el-card>
   <el-card class="mt20">
     <el-input v-model="inputValue" type="text" placeholder="Please input">
@@ -10,9 +13,7 @@
         </div>
       </template>
       <template #append
-        ><el-button class="btn" icon="Promotion" :loading="Iconloading" @click="createMind">
-          生成</el-button
-        ></template
+        ><el-button class="btn" icon="Promotion" :loading="Iconloading" @click="createMind"> 生成</el-button></template
       >
     </el-input>
   </el-card>
@@ -20,13 +21,13 @@
     <div class="flx-row dialog-content">
       <div class="flx1 dialog-lists">
         <div v-for="item in list" :key="item.id" class="drag-item" @click="sendItem(item)">
-          {{ item.name}}
+          {{ item.name }}
         </div>
       </div>
       <div class="flx1 dialog-right">
         <textarea class="dialog-input" v-model="md"></textarea>
-        <el-button class="pos-btn" round
-          @click="UseTemplates"><el-icon><EditPen /></el-icon> 使用模板</el-button
+        <el-button class="pos-btn" round @click="UseTemplates"
+          ><el-icon><EditPen /></el-icon> 使用模板</el-button
         >
       </div>
     </div>
@@ -37,15 +38,15 @@
 import { onMounted, ref } from "vue";
 import { Transformer } from "markmap-lib";
 import { Markmap } from "markmap-view";
-
+import { Toolbar } from "markmap-toolbar";
 const markmap = ref();
 const transformer = new Transformer();
 const svgRef = ref("");
 const dialogVisible = ref(false);
-const Iconloading = ref(false)
+const Iconloading = ref(false);
 const inputValue = ref("");
-const md = ref('')
-const selectTemp=ref('')
+const md = ref("");
+const selectTemp = ref("");
 const markdown = ref(`## 思维导图
 ### 笔记总结
 ### 日程安排
@@ -74,9 +75,9 @@ const list = ref([
   { name: "企业战略思维导图", md: "" },
 ]);
 
-const sendItem = (item)=>{
-  console.log(item.name)
-  md.value=`## ${item.name} 
+const sendItem = (item) => {
+  console.log(item.name);
+  md.value = `## ${item.name} 
   ### 二级标题 
    - 描述。。。
    - jkjshgs
@@ -84,21 +85,21 @@ const sendItem = (item)=>{
    - 12131
    - 1333
     - 13131
-  `
-  selectTemp.value=`生成${item.name}的思维导图`
-}
-const UseTemplates = ()=>{
-  inputValue.value=selectTemp.value 
-  dialogVisible.value=false
-}
+  `;
+  selectTemp.value = `生成${item.name}的思维导图`;
+};
+const UseTemplates = () => {
+  inputValue.value = selectTemp.value;
+  dialogVisible.value = false;
+};
 
-const createMind= ()=>{
-  Iconloading.value=true
-  markdown.value=md.value?md.value:markdown.value
-  initData()
-  inputValue.value=''
-  Iconloading.value=false
-}
+const createMind = () => {
+  Iconloading.value = true;
+  markdown.value = md.value ? md.value : markdown.value;
+  initData();
+  inputValue.value = "";
+  Iconloading.value = false;
+};
 const initData = () => {
   const { root } = transformer.transform(markdown.value);
   markmap.value.setData(root);
@@ -107,12 +108,10 @@ const initData = () => {
 
 onMounted(() => {
   markmap.value = Markmap.create(svgRef.value);
+  console.log(markmap)
   initData();
 });
 </script>
-
-
-
 
 <style lang="scss" scoped>
 .flexSvg {
