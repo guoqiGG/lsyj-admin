@@ -1,122 +1,204 @@
 <template>
-  <el-card>
-    <div class="card-title">在线编辑思维导图🍬🍬🍬🍭🍭🍭</div>
-    <el-button-group class="ml-4">
-      <el-button :icon="Edit" />
-      <el-button :icon="Share" />
-      <el-button :icon="Delete" />
-    </el-button-group>
-    <div id="jsmind_container"></div>
-  </el-card>
-</template>
-<script setup>
-import "jsmind/style/jsmind.css";
-import jsMind from "jsmind/js/jsmind.js";
-import { onMounted, ref } from "vue";
-import { Edit, Share, Delete, } from "@element-plus/icons-vue";
+  <el-card style="height: 80vh" class="posRe">
+    <mindmap
+      style="height: 75vh"
+      ref="mind"
+      v-model="data"
+      :add-node-btn="addnodeBtn"
+      :download-btn="downloadBtn"
+      :ctm="ctm"
+      :zoom="zoom"
+      :edit="edit"
+      scale-extent="[0.1,0.8]"
+      :sharp-corner="sharpCorner"
+    ></mindmap>
 
-var options = ref({
-    // options 将在下一章中详细介绍
-    container: "jsmind_container", // [必选] 容器的ID，或者为容器的对象
-    editable: true, // [可选] 是否启用编辑
-    theme: null, // [可选] 主题
-  direction: "left",
-  view: {
-    // engine: "canvas", // 思维导图各节点之间线条的绘制引擎
-    hmargin: 15, // 思维导图距容器外框的最小水平距离
-    vmargin: 15, // 思维导图距容器外框的最小垂直距离
-    line_width: 2, // 思维导图线条的粗细
-    line_color: "#5382de", // 思维导图线条的颜色
+    <div class="flx-row posbtn">
+      <!-- <el-button @click="editItem">编辑</el-button> -->
+      <el-button>下载</el-button>
+      <el-button @click="sharpCorner=!sharpCorner">样式切换</el-button>
+      <!-- 放大  编辑 下载 -->
+    </div>
+  </el-card>
+
+  <el-card class="mt20">
+    <el-input v-model="inputValue" type="text" placeholder="Please input">
+      <template #prepend>
+        <div @click="dialogVisible = true">
+          <el-icon><Document /></el-icon> 模板库
+        </div>
+      </template>
+      <template #append
+        ><el-button class="btn" icon="Promotion" :loading="Iconloading" @click="createMind"> 生成</el-button></template
+      >
+    </el-input>
+  </el-card>
+
+  <el-dialog v-model="dialogVisible" title="模板库" width="60%" draggable>
+    <div class="flx-row dialog-content">
+      <div class="flx1 dialog-lists">
+        <div v-for="item in list" :key="item.id" class="drag-item" @click="sendItem(item)">
+          {{ item.name }}
+        </div>
+      </div>
+      <div class="flx1 dialog-right">
+        <textarea class="dialog-input" v-model="md"></textarea>
+        <el-button class="pos-btn" round @click="UseTemplates"
+          ><el-icon><EditPen /></el-icon> 使用模板</el-button
+        >
+      </div>
+    </div>
+  </el-dialog>
+</template>
+
+<script setup>
+import mindmap from "vue3-mindmap";
+import { onMounted, ref } from "vue";
+import "vue3-mindmap/dist/style.css";
+const addnodeBtn = ref(true);
+const downloadBtn = ref(true);
+const sharpCorner = ref(false);
+const dialogVisible = ref(false);
+const Iconloading = ref(false);
+const ctm = ref(true);
+const zoom = ref(true);
+const mind = ref(null);
+const edit = ref(true);
+const inputValue = ref("");
+const md= ref('')
+const selectTemp= ref('')
+const list = ref([
+  { name: "2023年度计划", md: "" },
+  { name: "运营知识地图", md: "" },
+  { name: "考试复习规划", md: "" },
+  { name: "总结内容框架", md: "" },
+  { name: "项目管理方案", md: "" },
+  { name: "用户旅程地图", md: "" },
+  { name: "魔兽世界风格", md: "" },
+  { name: "产品思维导图", md: "" },
+  { name: "创业策划思维导图", md: "" },
+  { name: "市场营销思维导图", md: "" },
+  { name: "学习笔记思维导图", md: "" },
+  { name: "组织架构思维导图", md: "" },
+  { name: "个人成长思维导图", md: "" },
+  { name: "教学计划思维导图", md: "" },
+  { name: "网站架构思维导图", md: "" },
+  { name: "企业战略思维导图", md: "" },
+]);
+const data = ref([
+  {
+    name: "思维导图",
+    children: [
+      // // {
+      // //   name: "预备知识",
+      // //   children: [{ name: "HTML & CSS" }, { name: "JavaScript" }],
+      // // },
+      // // {
+      // //   name: "安装",
+      // //   collapse: true,
+      // //   children: [{ name: "折叠节点" }],
+      // // },
+      { name: "笔记总结", collapse: true },
+      { name: "日程安排", collapse: true },
+      { name: "项目管理", collapse: true },
+      { name: "头脑风暴", collapse: true },
+      { name: "框架梳理", collapse: true },
+      { name: "一键生成", collapse: true },
+    ],
   },
-  layout: {
-    hspace: 30, // 节点之间的水平间距
-    vspace: 20, // 节点之间的垂直间距
-    pspace: 20, // 节点与连接线之间的水平间距（用于容纳节点收缩/展开控制器）
-    cousin_space: 10, // 相邻节点的子节点之间的额外的垂直间距
-  },
-});
-// const jm = new jsMind({
-//   container: "jsmind_container",
-//   theme: "orange",
-//   editable: true,
-// });
+]);
+
+const createMind = () => {
+  data.value = [{
+    name:selectTemp.value,
+    children: [
+      // {
+      //   name: "预备知识",
+      //   children: [{ name: "HTML & CSS" }, { name: "JavaScript" }],
+      // },
+      // {
+      //   name: "安装",
+      //   collapse: true,
+      //   children: [{ name: "折叠节点" }],
+      // },
+      { name: "笔记总结", collapse: true },
+      { name: "日程安排", collapse: true },
+      { name: "项目管理", collapse: true },
+      { name: "头脑风暴", collapse: true },
+      { name: "框架梳理", collapse: true },
+      { name: "一键生成", collapse: true },
+    ],
+
+  }]
+  console.log()
+};
+
+const sendItem = (item) => {
+  selectTemp.value =item.name;
+  md.value=`生成${item.name}的思维导图`
+}
+
+const UseTemplates = () => {
+  inputValue.value=`生成${selectTemp.value}的思维导图`;
+  dialogVisible.value = false;
+
+}
+
 
 onMounted(() => {
-    let jm = new jsMind(options.value);
-  console.log(jm)
-  jm.show({
-    meta: {
-      name: "jsMind-demo-tree",
-      author: "hizzgdev@163.com",
-      version: "0.2",
-    },
-    /* 数据格式声明 */
-    format: "node_tree",
-    /* 数据内容 */
-    data: {
-      id: "root",
-      topic: "jsMind",
-      children: [
-        {
-          id: ".121",
-          topic: "Easy",
-          direction: "right",
-          expanded: false,
-          children: [
-            { id: "easy1", topic: "Easy to show" },
-            { id: "easy2", topic: "Easy to edit" },
-            { id: "easy3", topic: "Easy to store" },
-            { id: "easy4", topic: "Easy to embed" },
-          ],
-        },
-        {
-          id: "open",
-          topic: "Open Source",
-          direction: "right",
-          expanded: true,
-          children: [
-            { id: "open1", topic: "on GitHub" },
-            { id: "open2", topic: "BSD License" },
-          ],
-        },
-        {
-          id: "powerful",
-          topic: "Powerful",
-          direction: "right",
-          children: [
-            { id: "powerful1", topic: "Base on Javascript" },
-            { id: "powerful2", topic: "Base on HTML5" },
-            { id: "powerful3", topic: "Depends on you" },
-          ],
-        },
-        {
-          id: "other",
-          topic: "test node",
-          direction: "right",
-          children: [
-            { id: "other1", topic: "I'm from local variable" },
-            { id: "other2", topic: "I can do everything" },
-            { id: "other3", topic: "I can do everything" },
-          ],
-        },
-      ],
-    },
-  });
+  console.log(mind.value);
+  console.log(mindmap);
+  data.value = [{ name: "思维导图", children: [ { name: "笔记总结", collapse: true },
+      { name: "日程安排", collapse: true },
+    { name: "项目管理", collapse: true },]
+  }];
+      
+  console.log(data.value)
 });
 </script>
-<style lang="scss" >
-@import './index.scss';
-.card-title {
-  padding-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  span {
-    color: #673ab7;
-    cursor: pointer;
+
+
+
+<style lang="scss" scoped>
+.posRe{
+  position: relative;
+  .posbtn{
+    position: absolute;
+    top:30px;
+    right:30px;
   }
 }
-#jsmind_container {
+
+
+.dialog-content {
   width: 100%;
-  height: 80vh;
+  height: 40vh;
+  overflow: hidden;
+  .dialog-lists {
+    overflow: scroll;
+    height: 40vh;
+    .drag-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #f5f5f5;
+    }
+  }
+  .dialog-right {
+    margin-left: 10px;
+    background-color: #f7f8fa;
+    height: 100%;
+    position: relative;
+    .dialog-input {
+      width: 95%;
+      height: 95%;
+      padding: 2.5%;
+      border: none;
+      background-color: #f7f8fa;
+    }
+    .pos-btn {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+    }
+  }
 }
 </style>

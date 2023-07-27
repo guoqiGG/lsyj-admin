@@ -1,10 +1,17 @@
 <template>
   <el-card>
-    <svg class="flexSvg" ref="svgRef" />
+    <svg class="flexSvg" ref="svgRef" @contextmenu.prevent.native="openMenu($event)" />
     <div class="flx-row pos">
-      放大  编辑 下载
+      <!-- <el-button @click="editItem">编辑</el-button> -->
+      <el-button @click="editItem">下载</el-button>
+      <el-button @click="editItem">放大</el-button>
+      <!-- 放大  编辑 下载 -->
     </div>
   </el-card>
+
+  <div v-if="visible" class="contextmenu" :style="{ left: left + 'px', top: top + 'px' }">
+    <div class="contextmenu-item" @click="addMenuItem">添加节点</div>
+  </div>
   <el-card class="mt20">
     <el-input v-model="inputValue" type="text" placeholder="Please input">
       <template #prepend>
@@ -38,7 +45,6 @@
 import { onMounted, ref } from "vue";
 import { Transformer } from "markmap-lib";
 import { Markmap } from "markmap-view";
-import { Toolbar } from "markmap-toolbar";
 const markmap = ref();
 const transformer = new Transformer();
 const svgRef = ref("");
@@ -46,10 +52,15 @@ const dialogVisible = ref(false);
 const Iconloading = ref(false);
 const inputValue = ref("");
 const md = ref("");
+const left = ref("");
+const top = ref("");
 const selectTemp = ref("");
+const itemValue = ref("");
+const visible = ref(false);
 const markdown = ref(`## 思维导图
 ### 笔记总结
-### 日程安排
+### 日程安排 
+### 232212
 ### 项目管理
 ### 头脑风暴
 ### 框架梳理
@@ -85,6 +96,7 @@ const sendItem = (item) => {
    - 12131
    - 1333
     - 13131
+      - 131313
   `;
   selectTemp.value = `生成${item.name}的思维导图`;
 };
@@ -106,9 +118,31 @@ const initData = () => {
   markmap.value.fit();
 };
 
+/**
+ * 
+ * @param {*} 添加子节点  md格式生成思维导图 
+ */
+
+const openMenu = (e) => {
+  console.log(e);
+  console.log(e.target.value);
+  itemValue.value = e.target.value;
+  if (e.target.className == "editinput") {
+    let x = e.pageX;
+    let y = e.pageY;
+    left.value = x;
+    top.value = y;
+    visible.value = true;
+  }
+};
+const addMenuItem = () => {
+  console.log(md.value);
+  // initData();
+};
+
 onMounted(() => {
   markmap.value = Markmap.create(svgRef.value);
-  console.log(markmap)
+  console.log(markmap);
   initData();
 });
 </script>
@@ -150,6 +184,30 @@ onMounted(() => {
       right: 10px;
       bottom: 10px;
     }
+  }
+}
+.editinput {
+  color: #303133;
+  text-align: center;
+  border: none;
+}
+.contextmenu {
+  margin: 0;
+  background: #fff;
+  z-index: 3000;
+  position: absolute;
+  list-style-type: none;
+  padding: 5px 0;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #333;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+  .contextmenu-item {
+    padding: 10px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #f5f5f5;
   }
 }
 </style>
