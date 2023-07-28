@@ -4,6 +4,11 @@
       style="height: 75vh"
       ref="mind"
       v-model="data"
+    ></mindmap>
+    <!-- <mindmap
+      style="height: 75vh"
+      ref="mind"
+      v-model="data"
       :add-node-btn="addnodeBtn"
       :download-btn="downloadBtn"
       :ctm="ctm"
@@ -11,7 +16,7 @@
       :edit="edit"
       scale-extent="[0.1,0.8]"
       :sharp-corner="sharpCorner"
-    ></mindmap>
+    ></mindmap> -->
 
     <div class="flx-row posbtn">
       <!-- <el-button @click="editItem">编辑</el-button> -->
@@ -52,9 +57,11 @@
 </template>
 
 <script setup>
-import mindmap from "vue3-mindmap";
-import { onMounted, ref } from "vue";
-import "vue3-mindmap/dist/style.css";
+import mindmap from '@hellowuxin/mindmap'
+
+// import mindmap from "vue3-mindmap";
+import { onMounted, reactive, ref } from "vue";
+// import "vue3-mindmap/dist/style.css";
 const addnodeBtn = ref(true);
 const downloadBtn = ref(true);
 const sharpCorner = ref(false);
@@ -85,28 +92,28 @@ const list = ref([
   { name: "网站架构思维导图", md: "" },
   { name: "企业战略思维导图", md: "" },
 ]);
-const data = ref([
-  {
-    name: "思维导图",
-    children: [
-      // // {
-      // //   name: "预备知识",
-      // //   children: [{ name: "HTML & CSS" }, { name: "JavaScript" }],
-      // // },
-      // // {
-      // //   name: "安装",
-      // //   collapse: true,
-      // //   children: [{ name: "折叠节点" }],
-      // // },
-      { name: "笔记总结", collapse: true },
-      { name: "日程安排", collapse: true },
-      { name: "项目管理", collapse: true },
-      { name: "头脑风暴", collapse: true },
-      { name: "框架梳理", collapse: true },
-      { name: "一键生成", collapse: true },
-    ],
-  },
-]);
+const data = reactive( [{
+      "name":"如何学习D3",
+      "children": [
+        {
+          "name":"预备知识",
+          "children": [
+            { "name":"HTML & CSS" },
+            { "name":"JavaScript" },
+          ]
+        },
+        {
+          "name":"安装",
+          "_children": [
+            { "name": "折叠节点" }
+          ]
+        },
+        {
+          "name":"进阶",
+          "left": true
+        },
+      ]
+    }]);
 
 const createMind = () => {
   data.value = [{
@@ -146,14 +153,14 @@ const UseTemplates = () => {
 
 
 onMounted(() => {
-  console.log(mind.value);
+  console.log(mind);
   console.log(mindmap);
-  data.value = [{ name: "思维导图", children: [ { name: "笔记总结", collapse: true },
-      { name: "日程安排", collapse: true },
-    { name: "项目管理", collapse: true },]
-  }];
+  // data.value = [{ name: "思维导图", children: [ { name: "笔记总结", collapse: true },
+  //     { name: "日程安排", collapse: true },
+  //   { name: "项目管理", collapse: true },]
+  // }];
       
-  console.log(data.value)
+  console.log(data)
 });
 </script>
 
