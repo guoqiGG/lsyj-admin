@@ -1,11 +1,7 @@
 <template>
   <el-card style="height: 80vh" class="posRe">
+    
     <mindmap
-      style="height: 75vh"
-      ref="mind"
-      v-model="data"
-    ></mindmap>
-    <!-- <mindmap
       style="height: 75vh"
       ref="mind"
       v-model="data"
@@ -16,7 +12,7 @@
       :edit="edit"
       scale-extent="[0.1,0.8]"
       :sharp-corner="sharpCorner"
-    ></mindmap> -->
+    ></mindmap>
 
     <div class="flx-row posbtn">
       <!-- <el-button @click="editItem">编辑</el-button> -->
@@ -57,11 +53,11 @@
 </template>
 
 <script setup>
-import mindmap from '@hellowuxin/mindmap'
+// import mindmap from '@hellowuxin/mindmap'
 
-// import mindmap from "vue3-mindmap";
+import mindmap from "vue3-mindmap";
 import { onMounted, reactive, ref } from "vue";
-// import "vue3-mindmap/dist/style.css";
+import "vue3-mindmap/dist/style.css";
 const addnodeBtn = ref(true);
 const downloadBtn = ref(true);
 const sharpCorner = ref(false);
