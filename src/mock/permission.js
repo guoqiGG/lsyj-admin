@@ -470,38 +470,7 @@ export const orderLists = (options) => {
   };
 };
 
-export const homeList = (options) => {
-  let homeList = [];
-  for (let index = 0; index < 10; index++) {
-    let obj = {
-      name: "限时秒杀",
-      title_id: Random.integer(0, 10) + "id",
-      type: Random.boolean(),
-      number: Random.integer(10, 100),
-      order_number: Random.integer(100, 1000),
-      GWV_number: Random.integer(100, 5000),
-      state: Random.boolean(),
-    };
-    homeList.push(obj);
-  }
 
-  return {
-    data: homeList,
-  };
-};
-
-export const noticeLists = (options) => {
-  let noticeLists = [];
-  for (let index = 0; index < 10; index++) {
-    let item = {
-      text: Random.csentence(),
-    };
-    noticeLists.push(item);
-  }
-  return {
-    data: noticeLists,
-  };
-};
 
 export const cardlists = (options) => {
   let obj = JSON.parse(options.body);

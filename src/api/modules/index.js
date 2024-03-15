@@ -2,20 +2,15 @@
 
 import service from "../request.js";
 
+// 登录
 export function LoginInfo(query) {
   return service({
     method: "POST",
-    url: "/permission/LoginInfo",
-    data: query,
+    url: "/admin/login",
+    data: JSON.stringify(query),
   });
 }
-export function getMenuList(query) {
-  return service({
-    method: "get",
-    url: "/permission/getMenuList",
-    data: query,
-  });
-}
+
 
 export function getUserList(query) {
   return service({
@@ -31,6 +26,7 @@ export function addUserList(query) {
     data: query,
   });
 }
+
 export function listUpdate(query) {
   return service({
     method: "post",
@@ -52,20 +48,7 @@ export function orderLists(query) {
     data: query,
   });
 }
-export function homeList(query) {
-  return service({
-    method: "get",
-    url: "/permission/homeList",
-    data: query,
-  });
-}
-export function noticeLists(query) {
-  return service({
-    method: "get",
-    url: "/permission/noticeLists",
-    data: query,
-  });
-}
+
 export function cardlists(query) {
   return service({
     method: "get",

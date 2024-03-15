@@ -28,7 +28,6 @@ import Header from './header/index.vue'
 import Menu from './menu/index.vue'
 import tabs from './Tabs/index.vue'
 const themeConfig = store.getters.themeConfig
-console.log(themeConfig.backgroundColor)
 
 let router = useRouter()
 const disabled = ref(false)
@@ -42,8 +41,6 @@ const disabled = ref(false)
 watch(
   () => router.currentRoute.value.path,
   (newValue, oldValue) => {
-    console.log('watch', newValue)
-    console.log('watch', oldValue)
     if (newValue == oldValue) {
     } else {
       disabled.value = true

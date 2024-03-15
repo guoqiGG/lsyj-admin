@@ -270,7 +270,6 @@ import { onMounted, ref } from 'vue'
 import GMVnearly from './components/GMVnearly.vue'
 import linenearly from './components/linenearly.vue'
 import { options } from './options.js'
-import { homeList, noticeLists } from '../../api/modules/index.js'
 const tableData = ref([])
 const notList = ref([])
 const disabled = ref(false)
@@ -280,13 +279,7 @@ const DeleteItem = (index) => {
 }
 
 const initData = () => {
-  homeList().then((res) => {
-    tableData.value = res.data.data
-  })
 
-  noticeLists().then((res) => {
-    notList.value = res.data.data
-  })
 }
 
 onMounted(() => {

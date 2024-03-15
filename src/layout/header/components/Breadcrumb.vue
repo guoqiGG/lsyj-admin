@@ -9,7 +9,6 @@
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
-
 <script setup>
 import { watch, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -24,7 +23,6 @@ const globalStore = useStore();
 const themeConfig = store.getters.themeConfig;
 const initBreadcrumbList = () => {
   breadcrumbList.value = route.matched;
-  console.log(route.matched);
 };
 const handleRedirect = (path) => {
   router.push(path);

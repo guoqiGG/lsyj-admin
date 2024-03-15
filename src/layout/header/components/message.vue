@@ -29,16 +29,13 @@
 import { Bell } from "@element-plus/icons-vue";
 import { nextTick, onMounted, ref } from "vue";
 
-import { noticeLists } from "../../../api/modules/index.js";
 const visible = ref(false);
 const activeName = ref("first");
 const notList = ref("first");
 
 onMounted(() => {
   nextTick(() => {
-    noticeLists().then((res) => {
-      notList.value = res.data.data;
-    });
+ 
   });
 });
 </script>

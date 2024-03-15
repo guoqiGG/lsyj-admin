@@ -15,7 +15,6 @@ export default {
   },
   mutations: {
     addTabsMenu(state, obj) {
-
       let titles = state.tabsMenuList.map(item => item.title).join(',')
       if (titles.includes(obj.title)) {
         for (let index = 0; index < state.tabsMenuList.length; index++) {
@@ -55,7 +54,6 @@ export default {
     addTabs({
       commit
     }, str) {
-      console.log(str);
       commit("addTabsMenu", str);
     },
     delectTag({

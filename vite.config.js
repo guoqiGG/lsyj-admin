@@ -1,10 +1,6 @@
-import {
-  defineConfig
-} from "vite";
+import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import {
-  viteMockServe
-} from "vite-plugin-mock";
+import { viteMockServe } from "vite-plugin-mock";
 
 import viteCompression from "vite-plugin-compression";
 
@@ -26,6 +22,17 @@ export default defineConfig({
       ext: ".gz",
     }),
   ],
+  server: {
+    proxy: {
+      "/api": {
+        ws: true,
+        target: "https://qct.hnliyue.cn/youth",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(new RegExp("^/api"), ""),
+        secure: false,
+      },
+    },
+  },
   build: {
     terserOptions: {
       compress: {
@@ -43,7 +50,11 @@ export default defineConfig({
         manualChunks(id) {
           //静态资源分拆打包
           if (id.includes("node_modules")) {
-            return id.toString().split("node_modules/")[1].split("/")[0].toString();
+            return id
+              .toString()
+              .split("node_modules/")[1]
+              .split("/")[0]
+              .toString();
           }
         },
       },

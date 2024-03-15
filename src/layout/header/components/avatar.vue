@@ -5,7 +5,7 @@
         <img src="../../../assets/images/avart.jpg" alt="avatar" />
       </div>
       <span class="username" :style="{ color: themeConfig.footColor }"
-        >BIG CUTE</span
+        >{{userInfo.name}}</span
       >
     </div>
     <template #dropdown>
@@ -22,6 +22,8 @@ import { nextTick, onMounted, ref } from 'vue'
 import store from '../../../store/index.js'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+
+const userInfo=store.getters.UserInfo
 const themeConfig = store.getters.themeConfig
 const handleClick = () => {
   // eslint-disable-next-line no-alert
