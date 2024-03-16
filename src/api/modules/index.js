@@ -1,6 +1,7 @@
 //src/api/user/index.js
 
 import service from "../request.js";
+import qs from "qs";
 
 // 登录
 export function LoginInfo(query) {
@@ -11,48 +12,42 @@ export function LoginInfo(query) {
   });
 }
 
-
-export function getUserList(query) {
+export function orderList(query) {
   return service({
     method: "get",
-    url: "/permission/UserList",
-    data: query,
-  });
-}
-export function addUserList(query) {
-  return service({
-    method: "post",
-    url: "/permission/addUserList",
-    data: query,
+    url: "/order/get/list",
+    params: query,
   });
 }
 
-export function listUpdate(query) {
-  return service({
-    method: "post",
-    url: "/permission/listUpdate",
-    data: query,
-  });
-}
-export function Newslist(query) {
+export function leaderList(query) {
   return service({
     method: "get",
-    url: "/permission/Newslist",
-    data: query,
-  });
-}
-export function orderLists(query) {
-  return service({
-    method: "get",
-    url: "/permission/orderLists",
-    data: query,
+    url: "/user/leader/get/list",
+    params: query,
   });
 }
 
-export function cardlists(query) {
+export function updateLeaderInfo(query) {
+  return service({
+    method: "POST",
+    url: "user/leader/update",
+    data: JSON.stringify(query),
+  });
+}
+
+export function applyleaderList(query) {
   return service({
     method: "get",
-    url: "/permission/cardlists",
-    data: query,
+    url: "user/leader/process/get/list",
+    params: query,
+  });
+}
+
+export function auditApplyleader(query) {
+  return service({
+    method: "get",
+    url: "/user/leader/examine",
+    params: query,
   });
 }

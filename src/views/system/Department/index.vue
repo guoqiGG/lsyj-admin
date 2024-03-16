@@ -4,93 +4,45 @@
       <el-form :inline="true" :model="queryData" style="flex: 1">
         <el-input placeholder="请输入搜索内容" v-model="queryData.keyWord">
         </el-input>
-        <el-date-picker
-          class="ml20"
-          v-model="queryData.date"
-          type="datetimerange"
-          :shortcuts="shortcuts"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        />
+        <el-date-picker class="ml20" v-model="queryData.date" type="datetimerange" :shortcuts="shortcuts"
+          range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" />
       </el-form>
       <div class="flex-right">
-        <el-button type="primary" :icon="Search" @click="initData" class="ml20"
-          >搜索</el-button
-        >
+        <el-button type="primary" :icon="Search" @click="initData" class="ml20">搜索</el-button>
         <el-button type="primary" @click="dialogVisibleShow">+添加</el-button>
       </div>
     </div>
   </el-card>
   <el-card shadow="never">
-    <el-table
-      :data="tableData"
-      :header-cell-style="{ backgroundColor: '#ecf5ff' }"
-      border
-      stripe
-      style="width: 100%"
-    >
-      <el-table-column
-        v-for="item in options"
-        :key="item.type"
-        :prop="item.props"
-        :label="item.label"
-        :width="item.width"
-        :align="item.align"
-        show-overflow-tooltip
-        :fixed="item.fixed"
-      >
+    <el-table :data="tableData" :header-cell-style="{ backgroundColor: '#ecf5ff' }" border stripe style="width: 100%">
+      <el-table-column v-for="item in options" :key="item.type" :prop="item.props" :label="item.label"
+        :width="item.width" :align="item.align" show-overflow-tooltip :fixed="item.fixed">
         <template v-slot:default="scope" v-if="item.props === 'actions'">
-          <el-icon class="icon-view" @click="ItemView(scope.row)"
-            ><View
-          /></el-icon>
-          <el-icon class="icon-edit" @click="editorClick(scope.row)"
-            ><Edit
-          /></el-icon>
-          <el-popconfirm
-            confirm-button-text="确认"
-            cancel-button-text="取消"
-            :icon="InfoFilled"
-            icon-color="#626AEF"
-            title="确认删除该用户?"
-            @confirm="DeleteItem(index)"
-          >
+          <el-icon class="icon-view" @click="ItemView(scope.row)">
+            <View />
+          </el-icon>
+          <el-icon class="icon-edit" @click="editorClick(scope.row)">
+            <Edit />
+          </el-icon>
+          <el-popconfirm confirm-button-text="确认" cancel-button-text="取消" :icon="InfoFilled" icon-color="#626AEF"
+            title="确认删除该用户?" @confirm="DeleteItem(index)">
             <template #reference>
-              <el-icon class="icon-dele"><Delete /></el-icon>
+              <el-icon class="icon-dele">
+                <Delete />
+              </el-icon>
             </template>
           </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      small
-      background
-      :page-size="queryData.size"
-      layout="prev, pager, next"
-      :total="total"
-      class="mt-4"
-      @current-change="handleCurrentChange"
-    />
+    <el-pagination small background :page-size="queryData.size" layout="prev, pager, next" :total="total" class="mt-4"
+      @current-change="handleCurrentChange" />
   </el-card>
 
-  <el-dialog
-    v-model="dialogVisible"
-    :title="`${dialogData.title}用户`"
-    :width="dialogWidth"
-    :hide-required-asterisk="dialogData.isView"
-    draggable
-  >
-    <el-form
-      :model="dialogData.FormData"
-      :rules="rules"
-      ref="FormRef"
-      class="demo-ruleForm"
-    >
-      <el-form-item
-        label="用户名"
-        :label-width="formLabelWidth"
-        prop="username"
-      >
+  <el-dialog v-model="dialogVisible" :title="`${dialogData.title}用户`" :width="dialogWidth"
+    :hide-required-asterisk="dialogData.isView" draggable>
+    <el-form :model="dialogData.FormData" :rules="rules" ref="FormRef" class="demo-ruleForm">
+      <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
         <el-input v-model="dialogData.FormData.username" autocomplete="off" />
       </el-form-item>
       <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
@@ -202,7 +154,7 @@ const onSubmit = () => {
             dialogData.FormData.id = res.data.data.id
             tableData.value.unshift(dialogData.FormData)
           })
-          .catch((err) => {})
+          .catch((err) => { })
       }
       dialogVisible.value = false
     } catch (error) {
@@ -262,35 +214,43 @@ onMounted(() => {
 .henader-card {
   margin-bottom: 20px;
 }
+
 .icon-view {
   font-size: 20px;
   color: #673ab7;
   margin: 0 10px;
 }
+
 .icon-edit {
   font-size: 20px;
   color: #2f60c2;
   margin: 0 10px;
 }
+
 .icon-dele {
   font-size: 20px;
   color: #ff5722;
 }
+
 .mt-4 {
   float: right;
   text-align: right;
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
 .el-button--text {
   margin-right: 15px;
 }
+
 .el-select {
   width: 300px;
 }
+
 .el-input {
   width: 300px;
 }
+
 .dialog-footer button:first-child {
   margin-right: 10px;
 }

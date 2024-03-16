@@ -54,6 +54,23 @@ const menuList = ref([
       },
     ],
   },
+  {
+    title: "团长管理",
+    url: "/leader",
+    icon: "Checked",
+    children: [
+      {
+        title: "团长列表",
+        url: "/leaderList",
+        icon: "Menu",
+      },
+      {
+        title: "团长申请列表",
+        url: "/applyList",
+        icon: "Menu",
+      },
+    ],
+  },
 ]);
 
 

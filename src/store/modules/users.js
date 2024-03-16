@@ -70,10 +70,11 @@ export default {
       return new Promise((resolve, reject) => {
         LoginInfo(userInfo)
           .then((res) => {
-            sessionStorage.setItem("token", res.data.data.token);
-            sessionStorage.setItem("UserInfo", JSON.stringify(res.data.data.data));
-            commit("setToken", res.data.data.token);
-            commit("setUserInfo",res.data.data.data);
+            console.log(res)
+            sessionStorage.setItem("token", res.data.token);
+            sessionStorage.setItem("UserInfo", JSON.stringify(res.data.data));
+            commit("setToken", res.data.token);
+            commit("setUserInfo",res.data.data);
             router.replace("/");
             ElMessage({
               message: "登录成功",

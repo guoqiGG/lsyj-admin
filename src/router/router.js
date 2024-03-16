@@ -61,6 +61,37 @@ const routes = [
       },
     ],
   },
+  //团长
+  {
+    path: "/leader",
+    name: "leader",
+    component: Layout,
+    meta: {
+      name: "团长管理",
+    },
+    children: [
+      //团长列表
+      {
+        path: "/leaderList",
+        name: "leaderList",
+        component: () => import("../views/leader/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "团长列表",
+        },
+      },
+      //申请列表
+      {
+        path: "/applyList",
+        name: "applyList",
+        component: () => import("../views/leader/apply.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "团长申请列表",
+        },
+      },
+    ],
+  },
 
   // {
   //   path: "/form",
