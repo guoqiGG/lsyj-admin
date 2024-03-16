@@ -14,7 +14,7 @@ export default {
   state: {
     UserInfo: {},
     token: sessionStorage.getItem("token") || "",
-    isCollapse: true,
+    isCollapse: false,
     themeConfig: {
       primary: "#4060c7",
       tabColor: "#FFFFFF",

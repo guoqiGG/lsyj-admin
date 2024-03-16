@@ -4,8 +4,10 @@
   </el-icon>
   <el-breadcrumb separator="/" id="breadcrumb">
     <el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">
-      <span class="no-redirect" v-if="index === breadcrumbList.length - 1" :style="{ color: themeConfig.footColor }">{{ item.meta.name }}</span>
-      <span class="redirect" v-else @click="handleRedirect(item.path)" :style="{ color: themeConfig.footColor }">{{ item.meta.name }}</span>
+      <span class="no-redirect" v-if="index === breadcrumbList.length - 1" :style="{ color: themeConfig.footColor }">{{
+    item.meta.name }}</span>
+      <span class="redirect" v-else @click="handleRedirect(item.path)" :style="{ color: themeConfig.footColor }">{{
+    item.meta.name }}</span>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
@@ -18,7 +20,7 @@ const route = useRoute();
 const router = useRouter();
 
 const breadcrumbList = ref([]);
-const isCollapse = ref(true);
+const isCollapse = ref(false);
 const globalStore = useStore();
 const themeConfig = store.getters.themeConfig;
 const initBreadcrumbList = () => {
@@ -47,13 +49,16 @@ watch(
   // color: #97a8be;
   cursor: text;
 }
+
 .redirect {
   font-weight: 600;
   cursor: pointer;
+
   &:hover {
     color: #97a8be;
   }
 }
+
 .icon-style {
   font-size: 20px;
   cursor: pointer;
