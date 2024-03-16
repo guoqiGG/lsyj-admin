@@ -92,6 +92,29 @@ const routes = [
       },
     ],
   },
+  // 用户
+  {
+    path: "/user",
+    name: "user",
+    component: Layout,
+    meta: {
+      name: "用户管理",
+    },
+    children:
+    
+     [
+      // 用户列表
+      {
+        path: "/userList",
+        name: "userList",
+        component: () => import("../views/user/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "用户列表",
+        },
+      },
+    ],
+  },
 
   // {
   //   path: "/form",

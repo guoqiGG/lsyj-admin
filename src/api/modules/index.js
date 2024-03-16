@@ -11,7 +11,7 @@ export function LoginInfo(query) {
     data: JSON.stringify(query),
   });
 }
-
+// 订单列表
 export function orderList(query) {
   return service({
     method: "get",
@@ -19,7 +19,7 @@ export function orderList(query) {
     params: query,
   });
 }
-
+// 团长列表
 export function leaderList(query) {
   return service({
     method: "get",
@@ -27,7 +27,7 @@ export function leaderList(query) {
     params: query,
   });
 }
-
+// 修改团长信息
 export function updateLeaderInfo(query) {
   return service({
     method: "POST",
@@ -35,7 +35,7 @@ export function updateLeaderInfo(query) {
     data: JSON.stringify(query),
   });
 }
-
+// 团长审核列表
 export function applyleaderList(query) {
   return service({
     method: "get",
@@ -43,11 +43,19 @@ export function applyleaderList(query) {
     params: query,
   });
 }
-
+// 审批团长
 export function auditApplyleader(query) {
   return service({
     method: "get",
     url: "/user/leader/examine",
+    params: query,
+  });
+}
+// 用户列表
+export function userList(query) {
+  return service({
+    method: "get",
+    url: "/user/get/list",
     params: query,
   });
 }

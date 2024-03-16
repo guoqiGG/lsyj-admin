@@ -71,6 +71,18 @@ const menuList = ref([
       },
     ],
   },
+  {
+    title: "用户管理",
+    url: "/user",
+    icon: "Checked",
+    children: [
+      {
+        title: "用户列表",
+        url: "/userList",
+        icon: "Menu",
+      }
+    ],
+  },
 ]);
 
 
