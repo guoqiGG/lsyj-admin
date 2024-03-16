@@ -80,14 +80,14 @@ const routes = [
           name: "团长列表",
         },
       },
-      //申请列表
+      //审批团长
       {
         path: "/applyList",
         name: "applyList",
         component: () => import("../views/leader/apply.vue"),
         meta: {
           requiresAuth: true,
-          name: "团长申请列表",
+          name: "审批团长",
         },
       },
     ],

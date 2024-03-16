@@ -18,7 +18,7 @@ const route = useRoute();
 const router = useRouter();
 
 const breadcrumbList = ref([]);
-const isCollapse = ref(false);
+const isCollapse = ref(true);
 const globalStore = useStore();
 const themeConfig = store.getters.themeConfig;
 const initBreadcrumbList = () => {

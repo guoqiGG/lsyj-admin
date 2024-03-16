@@ -65,7 +65,7 @@ const menuList = ref([
         icon: "Menu",
       },
       {
-        title: "团长申请列表",
+        title: "审批团长",
         url: "/applyList",
         icon: "Menu",
       },
