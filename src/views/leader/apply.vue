@@ -111,7 +111,7 @@ const loading = ref(false)
 const searchForm = ref({ ...searchParams })
 const pages = ref({
     pageNo: 1,
-    pageSize: 10,
+    pageSize: 20,
     total: 0
 })
 let applyLeaderListData = ref([])

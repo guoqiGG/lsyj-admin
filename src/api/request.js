@@ -4,13 +4,12 @@ import { tansParams, blobValidate } from "@/utils/ruoyi";
 
 const service = axios.create({
   timeout: 50000,
-  baseURL: "/api",
+  baseURL: '/api',
 });
 // Request interceptors
 service.interceptors.request.use(
   (config) => {
     config.headers["Content-Type"] = "application/json;charset=UTF-8";
-
     if (localStorage.getItem("token"))
       config.headers.Authorization = localStorage.getItem("token");
     // get请求映射params参数

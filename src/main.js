@@ -10,7 +10,7 @@ import zhCn from "element-plus/es/locale/lang/zh-cn";
 import directives from "./instruction/index.js";
 import "element-plus/dist/index.css";
 import App from "./App.vue";
-import "./mock/index.js";
+// import "./mock/index.js";
 import * as ELIcons from "@element-plus/icons-vue";
 
 import VMdEditor from "@kangc/v-md-editor";

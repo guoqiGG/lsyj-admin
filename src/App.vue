@@ -5,6 +5,7 @@
 <script setup>
 import { onMounted, ref, nextTick, provide } from "vue";
 import { useStore } from "vuex";
+
 // 局部组件刷新
 const isRouterAlive = ref(true);
 const globalStore = useStore();

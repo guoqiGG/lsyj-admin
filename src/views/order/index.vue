@@ -172,7 +172,7 @@ const loading = ref(false)
 const searchForm = ref({ ...searchParams })
 const pages = ref({
   pageNo: 1,
-  pageSize: 10,
+  pageSize: 20,
   total: 0
 })
 let orderListData = ref([])
@@ -210,53 +210,49 @@ watch(searchForm.value, (newValue, oldValue) => {
 .order {
   text-align: left;
 
-  .time {}
-}
+  .goodsInfo {
+    display: flex;
+    flex-direction: row;
 
-.goodsInfo {
-  display: flex;
-  flex-direction: row;
-
-  .el-image__inner {
-    width: 60px;
-    height: 60px;
-  }
-
-  .left {
-    margin-left: 20px;
-
-    .goodsName {
-      white-space: nowrap;
+    .el-image__inner {
+      width: 60px;
+      height: 60px;
     }
 
-    .info {
-      display: block;
-      width: 40px;
-      line-height: 20px;
-      margin-top: 10px;
-      text-align: center;
-      border: 1px solid #F53F3F;
-      border-radius: 3px;
-      padding: 0 5px;
+    .left {
+      margin-left: 20px;
 
-      &.blue {
-        border: 1px solid blue;
+      .goodsName {
+        white-space: nowrap;
+      }
+
+      .info {
+        display: block;
+        width: 40px;
+        line-height: 20px;
+        margin-top: 10px;
+        text-align: center;
+        border: 1px solid #F53F3F;
+        border-radius: 3px;
+        padding: 0 5px;
+
+        &.blue {
+          border: 1px solid blue;
+        }
       }
     }
   }
-}
 
-.price {
-  text-align: center;
+  .price {
+    text-align: center;
 
-  .price-title {
-    color: #F53F3F;
+    .price-title {
+      color: #F53F3F;
+    }
   }
-}
 
-.demo-form-inline {
-  ::deep(.el-form-item__content .el-input) {
-    width: 100%;
-  }
-}
-</style>
+  .demo-form-inline {
+    ::deep(.el-form-item__content .el-input) {
+      width: 100%;
+    }
+  }</style>

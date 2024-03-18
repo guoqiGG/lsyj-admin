@@ -48,7 +48,7 @@
     </el-card>
 
     <el-dialog v-model="editLeaderDialogVisible" title="修改团长信息" width="600px" :close="clearEditForm">
-        <el-form :model="searchForm" class="demo-form-inline" lable-width="100px">
+        <el-form :model="leaderForm" class="demo-form-inline" lable-width="100px">
             <el-form-item label="团长姓名">
                 <el-input v-model="leaderForm.leaderName" placeholder="团长姓名" clearable />
             </el-form-item>
@@ -84,7 +84,7 @@ const loading = ref(false)
 const searchForm = ref({ ...searchParams })
 const pages = ref({
     pageNo: 1,
-    pageSize: 10,
+    pageSize: 20,
     total: 0
 })
 let leaderListData = ref([])
