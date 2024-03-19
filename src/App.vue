@@ -19,7 +19,7 @@ const reload = () => {
 
 provide("reload", reload);
 onMounted(() => {
-  globalStore.dispatch("user/changeThem", "#4060c7");
+  globalStore.dispatch("user/changeThem", "#155bd4");
 });
 </script>
 
@@ -30,11 +30,12 @@ onMounted(() => {
   color: #78797d;
   background-color: #FFF;
   border-color: #dee1e7;
+  font-size: 12px;
 
   &:hover {
-    color: #78797d;
+    color: #409eff;
     background-color: #FFF;
-    border-color: #dee1e7;
+    border-color: #409eff;
   }
 
   &:focus {
@@ -53,26 +54,26 @@ onMounted(() => {
 
 .el-button--primary {
   color: #fff;
-  background-color: #4060c7;
-  border-color: #4060c7;
-  font-size: 14px;
+  background-color: #155bd4;
+  border-color: #155bd4;
 
   &:hover {
     color: #FFF;
-    background-color: #4060c7;
-    border-color: #4060c7;
+    background-color: #155bd4;
+    border-color: #155bd4;
+    opacity: 0.8;
   }
 
   &:focus {
     color: #FFF;
-    background-color: #4060c7;
-    border-color: #4060c7;
+    background-color: #155bd4;
+    border-color: #155bd4;
   }
 
   &:active {
     color: #FFF;
-    background-color: #4060c7;
-    border-color: #4060c7;
+    background-color: #155bd4;
+    border-color: #155bd4;
   }
 }
 
@@ -80,7 +81,6 @@ onMounted(() => {
   color: #fff;
   background-color: #909399;
   border-color: #909399;
-  font-size: 14px;
 
   &:hover {
     color: #FFF;
@@ -105,7 +105,6 @@ onMounted(() => {
   color: #fff;
   background-color: #67c23a;
   border-color: #67c23a;
-  font-size: 14px;
 
   &:hover {
     color: #FFF;
@@ -130,7 +129,6 @@ onMounted(() => {
   color: #fff;
   background-color: #e6a23c;
   border-color: #e6a23c;
-  font-size: 14px;
 
   &:hover {
     color: #FFF;
@@ -155,7 +153,6 @@ onMounted(() => {
   color: #fff;
   background-color: #f56c6c;
   border-color: #f56c6c;
-  font-size: 14px;
 
   &:hover {
     color: #FFF;
@@ -175,6 +172,4 @@ onMounted(() => {
     border-color: #f56c6c;
   }
 }
-
-
 </style>
