@@ -156,3 +156,11 @@ export function giftAdd(data) {
     data,
   });
 }
+// 修改礼品卡与删除礼品卡
+export function giftUpdate(data) {
+  return service({
+    method: "POST",
+    url: "/gift/update",
+    data,
+  });
+}
