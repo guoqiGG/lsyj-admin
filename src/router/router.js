@@ -198,6 +198,28 @@ const routes = [
         },
       ],
   },
+  // 礼品卡列表
+  {
+    path: "/gift",
+    name: "gift",
+    component: Layout,
+    meta: {
+      name: "礼品卡管理",
+    },
+    children:
+      [
+        // 礼品卡列表
+        {
+          path: "/giftList",
+          name: "giftList",
+          component: () => import("../views/gift/index.vue"),
+          meta: {
+            requiresAuth: true,
+            name: "礼品卡列表",
+          },
+        },
+      ],
+  },
 
 
 

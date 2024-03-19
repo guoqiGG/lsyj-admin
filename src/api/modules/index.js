@@ -140,3 +140,19 @@ export function couponList(query) {
     params: query,
   });
 }
+//礼品卡列表
+export function giftList(query) {
+  return service({
+    method: "get",
+    url: "/gift/get/list",
+    params: query,
+  });
+}
+// 新增礼品卡
+export function giftAdd(data) {
+  return service({
+    method: "POST",
+    url: "/gift/add",
+    data,
+  });
+}

@@ -129,6 +129,18 @@ const menuList = ref([
       }
     ],
   },
+  {
+    title: "礼品卡管理",
+    url: "/gift",
+    icon: "Checked",
+    children: [
+      {
+        title: "礼品卡",
+        url: "/giftList",
+        icon: "Menu",
+      }
+    ],
+  },
 ]);
 
 const handleOpen = (key, keyPath) => {

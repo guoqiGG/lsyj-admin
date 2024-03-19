@@ -101,7 +101,9 @@ onMounted(() => {
 })
 </script>
 <style lang="scss" scoped>
-
+.pagination{
+    margin-top: 20px;
+}
 .operation{
     color: #4060c7;
     margin: 0px 5px;
