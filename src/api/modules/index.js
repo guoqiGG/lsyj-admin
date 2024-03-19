@@ -113,6 +113,7 @@ export function deleteVideo(query) {
     data: JSON.stringify(query),
   });
 }
+
 // 新增视频
 export function createVideo(query) {
   return service({
@@ -130,7 +131,6 @@ export function upload(query) {
     data: JSON.stringify(query),
   });
 }
-
 
 // 优惠券列表
 export function couponList(query) {

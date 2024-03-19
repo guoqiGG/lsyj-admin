@@ -33,7 +33,7 @@
         </el-form>
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-button type="primary">新增</el-button>
+        <el-button type="primary" @click="editOrCreateDialog()">新增</el-button>
         <el-table v-loading="loading" :data="videoListData" style="width: 100%;margin-top:10px;">
             <el-table-column prop="id" label="ID" />
             <el-table-column prop="total" label="视频标题" />
@@ -48,7 +48,7 @@
             <el-table-column prop="typeStr" label="创建方式" />
             <el-table-column fixed="right" label="操作" width="180">
                 <template #default="scope">
-                    <el-button class="view" type="info" @click="auditLeader(scope.row.id, 1)">修改</el-button>
+                    <el-button class="view" type="info" @click="editOrCreateDialog(scope)" :icon="Edit">编辑</el-button>
                     <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" :icon="InfoFilled"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="deleteVideoById(scope.row.id, 1)"
                         @cancel="cancelEvent">
@@ -66,46 +66,44 @@
                 @current-change="tableHandleChange" />
         </div>
     </el-card>
-    <el-dialog v-model="editOrCreateDialogVisible" title="新增视频" width="600px" :close="clearEditForm">
-        <el-form :model="videoForm" class="demo-form-inline" lable-width="100px">
-            <el-form-item label="视频标题">
+    <el-dialog v-model="editOrCreateDialogVisible" :title="isCreate ? '新增视频' : '编辑视频'" width="600px"
+        :close="clearEditForm">
+        <el-form ref="videoFormRef" :rules="rules" :model="videoForm" class="demo-form-inline" lable-width="100px">
+            <el-form-item label="视频标题" prop="total">
                 <el-input v-model="videoForm.total" placeholder="视频标题" clearable />
             </el-form-item>
-            <el-form-item label="视频内容">
-                <div><video src=""></video></div>
-                <el-upload :limit="1" accept="video/*"    v-model:file-list="fileList" class="video-uploader"
-                    :action="BaseUrl + '/upload/oss'" :headers="{ Authorization: token }" :on-success="handleSuccess"
-                    :on-error="handleError" :before-upload="beforeUpload">
-                    <el-button type="primary">请选择视频文件</el-button>
-                    <template #tip>
-                        <div class="el-upload__tip">
-                            只能上传一个视频
-                        </div>
-                    </template>
+            <el-form-item label="视频内容" prop="video">
+                <el-upload :limit="1" accept="video/*" v-model:file-list="fileList" class="video-uploader"
+                    :show-file-list="false" :action="BaseUrl + '/upload/oss'" :headers="{ Authorization: token }"
+                    :on-success="handleSuccess" :on-error="handleError" :before-upload="beforeUpload">
+                    <video class="avatar" v-if="videoForm.video" controls="controls" :src="videoForm.video"></video>
+                    <el-icon v-else class="video-uploader-icon">
+                        <Plus />
+                    </el-icon>
                 </el-upload>
             </el-form-item>
-
             <el-form-item>
                 <el-button type="primary" @click="save">保存</el-button>
-                <el-button @click="closEditLeaderDialog">关闭</el-button>
+                <el-button @click="closeEditOrCreateDialog">关闭</el-button>
             </el-form-item>
-
         </el-form>
     </el-dialog>
 </template>
 <script setup>
-import { onMounted, ref, } from "vue";
-import { videoList, deleteVideo, upload } from "@/api/modules";
-
+import { onMounted, ref, reactive } from "vue";
+import { videoList, deleteVideo, createVideo } from "@/api/modules";
+import { ElMessage } from "element-plus";
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
+
 const token = sessionStorage.getItem('token')
-console.log(BaseUrl, token)
+
 const searchParams = {
     total: '',
     leaderName: '',
     leaderMobile: '',
     type: ''
 }
+const isCreate = ref(true)
 const loading = ref(false)
 const searchForm = ref({ ...searchParams })
 const pages = ref({
@@ -115,11 +113,21 @@ const pages = ref({
 const total = ref(0)
 let videoListData = ref([])
 const videoForm = ref({
+    id: 0,
     total: '',
     video: '',
 })
+const videoFormRef = ref()
+const rules = reactive({
+    total: [
+        { required: true, message: '视频标题不能为空', trigger: 'blur' },
+    ],
+    video: [
+        { required: true, message: '请选择上传视频', trigger: 'blur' },
+    ]
+})
 
-const editOrCreateDialogVisible = ref(true)
+const editOrCreateDialogVisible = ref(false)
 
 const getVideoList = async () => {
     loading.value = true
@@ -148,19 +156,25 @@ const deleteVideoById = async (id, isDeleted) => {
 }
 
 const handleSuccess = (response, file, fileList) => {
-    // 成功回调
-    console.log('Upload success:', response, file, fileList);
+    videoForm.value.video = response
+    ElMessage({
+        showClose: false,
+        message: '上传成功',
+        type: 'success',
+    })
 }
 const handleError = (err, file, fileList) => {
-    // 错误回调
-    console.error('Upload error:', err, file, fileList);
+    ElMessage({
+        showClose: false,
+        message: '上传失败',
+        type: 'danger'
+    })
 }
 
 const beforeUpload = (file) => {
     // 可在这里添加额外的文件校验逻辑
     const isVideo = file.type === 'video/mp4' || file.type === 'video/ogg';
     const isLt500MB = file.size / 1024 / 1024 < 500;
-
     if (!isVideo) {
         this.$message.error('请上传视频文件!');
     }
@@ -170,14 +184,90 @@ const beforeUpload = (file) => {
     return isVideo && isLt500MB;
 }
 
+const editOrCreateDialog = (e) => {
+    editOrCreateDialogVisible.value = true
+    if (e) { //编辑
+        console.log(e)
+        isCreate.value = false
+        videoForm.value.id = e.row.id
+        videoForm.value.total = e.row.total
+        videoForm.value.video = e.row.video
+    } else { // 新增
+        isCreate.value = true
+    }
+}
+
+const closeEditOrCreateDialog = () => {
+    editOrCreateDialogVisible.value = false
+    clearEditForm()
+}
+
+const save = async () => {
+    videoFormRef.value.validate(async (valid) => {
+        if (valid) {
+            if (isCreate.value) {//新增提交
+                const res = await createVideo({ total: videoForm.value.total, video: videoForm.value.video })
+                if (res.code == 0) {
+                    closeEditOrCreateDialog()
+                    getVideoList()
+                }
+            } else { // 编辑提交
+                const res = await deleteVideo({ id: videoForm.value.id, total: videoForm.value.total, video: videoForm.value.video })
+                if (res.code == 0) {
+                    closeEditOrCreateDialog()
+                    getVideoList()
+                }
+            }
+        } else {
+            return false
+        }
+    })
+}
+
+// 清空表单数据
+const clearEditForm = () => {
+    videoForm.value = {
+        id: 0,
+        total: '',
+        video: ''
+    }
+}
+
+
+
 onMounted(() => {
     getVideoList()
 })
 
 </script>
 
-<style lang="scss" scoped>
-.video-uploader .el-upload__tip {
-    margin-top: 0;
+<style scoped>
+.video-uploader .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+}
+</style>
+
+<style>
+.video-uploader .el-upload {
+    border: 1px dashed var(--el-border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: var(--el-transition-duration-fast);
+}
+
+.video-uploader .el-upload:hover {
+    border-color: var(--el-color-primary);
+}
+
+.el-icon.video-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    text-align: center;
 }
 </style>
