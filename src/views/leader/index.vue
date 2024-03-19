@@ -33,9 +33,9 @@
             <el-table-column prop="totalIncome" label="总收益" />
             <el-table-column prop="balance" label="当前余额" />
             <el-table-column prop="withrawingAmt" label="正在提余额" />
-            <el-table-column fixed="right" label="操作" width="120">
+            <el-table-column fixed="right" label="操作" width="120" align="center">
                 <template #default="scope">
-                    <el-button class="view" @click="openUpdateUserInfoDialog(scope)">修改团长信息</el-button>
+                    <span class="operation" @click="openUpdateUserInfoDialog(scope)">修改团长信息</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -68,7 +68,6 @@
                 <el-button type="primary" @click="save">保存</el-button>
                 <el-button @click="closEditLeaderDialog">关闭</el-button>
             </el-form-item>
-
         </el-form>
     </el-dialog>
 </template>
@@ -157,3 +156,12 @@ onMounted(() => {
     getLeaderList()
 })
 </script>
+<style scoped>
+.pagination{
+    margin-top: 20px;
+}
+.operation{
+    color: #4060c7;
+    margin: 0px 5px;
+}
+</style>

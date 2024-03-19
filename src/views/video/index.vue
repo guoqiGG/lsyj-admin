@@ -33,7 +33,7 @@
         </el-form>
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-button type="primary" @click="editOrCreateDialog()">新增</el-button>
+        <el-button :icon="CirclePlus" type="primary" @click="editOrCreateDialog()">新增</el-button>
         <el-table v-loading="loading" :data="videoListData" style="width: 100%;margin-top:10px;">
             <el-table-column prop="id" label="ID" />
             <el-table-column prop="total" label="视频标题" />
@@ -46,14 +46,14 @@
             <el-table-column prop="leaderName" label="团长" />
             <el-table-column prop="leaderMobile" label="手机号" />
             <el-table-column prop="typeStr" label="创建方式" />
-            <el-table-column fixed="right" label="操作" width="180">
+            <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
-                    <el-button class="view" type="info" @click="editOrCreateDialog(scope)" :icon="Edit">编辑</el-button>
+                    <span class="operation" @click="editOrCreateDialog(scope)" :icon="Edit">编辑</span>
                     <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" :icon="InfoFilled"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="deleteVideoById(scope.row.id, 1)"
                         @cancel="cancelEvent">
                         <template #reference>
-                            <el-button class="view" type="danger">删除</el-button>
+                            <span class="operation">删除</span>
                         </template>
                     </el-popconfirm>
                 </template>
@@ -82,7 +82,7 @@
                     </el-icon>
                 </el-upload>
             </el-form-item>
-            <el-form-item>
+            <el-form-item class="footer">
                 <el-button type="primary" @click="save">保存</el-button>
                 <el-button @click="closeEditOrCreateDialog">关闭</el-button>
             </el-form-item>
@@ -93,6 +93,9 @@
 import { onMounted, ref, reactive } from "vue";
 import { videoList, deleteVideo, createVideo } from "@/api/modules";
 import { ElMessage } from "element-plus";
+import {
+    CirclePlus
+} from '@element-plus/icons-vue'
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 
 const token = sessionStorage.getItem('token')
@@ -270,4 +273,18 @@ onMounted(() => {
     height: 178px;
     text-align: center;
 }
+</style>
+
+<style scoped>
+.pagination{
+    margin-top: 20px;
+}
+.operation{
+    color: #4060c7;
+    margin: 0px 5px;
+}
+.footer {
+    padding-left: 80px;
+}
+
 </style>

@@ -157,8 +157,8 @@ const routes = [
   },
   // 视频
   {
-    path: "/live",
-    name: "live",
+    path: "/video",
+    name: "video",
     component: Layout,
     meta: {
       name: "视频管理",
@@ -184,19 +184,18 @@ const routes = [
     meta: {
       name: "优惠券管理",
     },
-    children:
-      [
-        // 优惠券列表
-        {
-          path: "/couponList",
-          name: "couponList",
-          component: () => import("../views/coupon/index.vue"),
-          meta: {
-            requiresAuth: true,
-            name: "优惠券列表",
-          },
+    children: [
+      // 优惠券列表
+      {
+        path: "/couponList",
+        name: "couponList",
+        component: () => import("../views/coupon/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "优惠券列表",
         },
-      ],
+      },
+    ],
   },
   // 礼品卡列表
   {
@@ -206,22 +205,19 @@ const routes = [
     meta: {
       name: "礼品卡管理",
     },
-    children:
-      [
-        // 礼品卡列表
-        {
-          path: "/giftList",
-          name: "giftList",
-          component: () => import("../views/gift/index.vue"),
-          meta: {
-            requiresAuth: true,
-            name: "礼品卡列表",
-          },
+    children: [
+      // 礼品卡列表
+      {
+        path: "/giftList",
+        name: "giftList",
+        component: () => import("../views/gift/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "礼品卡列表",
         },
-      ],
+      },
+    ],
   },
-
-
 
   // {
   //   path: "/form",

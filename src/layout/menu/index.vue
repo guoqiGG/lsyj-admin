@@ -111,7 +111,7 @@ const menuList = ref([
     icon: "Checked",
     children: [
       {
-        title: "直播间列表",
+        title: "视频列表",
         url: "/videoList",
         icon: "Menu",
       }

@@ -136,9 +136,9 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="120">
+      <el-table-column fixed="right" label="操作" width="120" align="center">
         <template #default>
-          <div class="view">查看详情</div>
+          <span class="operation">查看详情</span>
         </template>
       </el-table-column>
     </el-table>
@@ -257,3 +257,13 @@ watch(searchForm.value, (newValue, oldValue) => {
     }
   }
   </style>
+
+  <style scoped>
+.pagination{
+    margin-top: 20px;
+}
+.operation{
+    color: #4060c7;
+    margin: 0px 5px;
+}
+</style>

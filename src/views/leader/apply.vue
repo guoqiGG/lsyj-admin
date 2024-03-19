@@ -78,12 +78,12 @@
             </el-table-column>
 
 
-            <el-table-column fixed="right" label="操作" width="180">
+            <el-table-column fixed="right"  label="操作" align="center" width="180">
                 <template #default="scope">
-                    <el-button v-if="scope.row.status == 0" class="view" type="success"
-                        @click="auditLeader(scope.row.id, 1)">同意</el-button>
-                    <el-button v-if="scope.row.status == 0" class="view" type="danger"
-                        @click="auditLeader(scope.row.id, 1)">拒绝</el-button>
+                    <span v-if="scope.row.status == 0" class="operation" 
+                        @click="auditLeader(scope.row.id, 1)">同意</span>
+                    <span v-if="scope.row.status == 0" class="operation" 
+                        @click="auditLeader(scope.row.id, 1)">拒绝</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -161,5 +161,12 @@ onMounted(() => {
     &.blue {
         border: 1px solid blue;
     }
+}
+.pagination{
+    margin-top: 20px;
+}
+.operation{
+    color: #4060c7;
+    margin: 0px 5px;
 }
 </style>

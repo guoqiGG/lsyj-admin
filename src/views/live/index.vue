@@ -93,3 +93,9 @@ onMounted(() => {
     getLiveList()
 })
 </script>
+
+<style scoped>
+.pagination{
+    margin-top: 20px;
+}
+</style>

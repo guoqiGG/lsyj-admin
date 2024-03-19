@@ -56,9 +56,9 @@
                 </template>
             </el-table-column>
             <el-table-column prop="examineRemarks" label="审批备注" />
-            <el-table-column fixed="right" label="操作" width="120">
+            <el-table-column fixed="right" label="操作" width="120" align="center">
                 <template #default="scope">
-                    <el-button v-if="scope.row.status == 0" class="view" @click="openLeaderWithdrawApproveDialog(scope)">审批</el-button>
+                    <span v-if="scope.row.status == 0" class="operation" @click="openLeaderWithdrawApproveDialog(scope)">审批</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -70,7 +70,7 @@
         </div>
     </el-card>
 
-    <el-dialog center v-model="leaderWithdrawApprovalDialogVisible" title="团长提现审批" width="600px" :close="clearEditForm">
+    <el-dialog v-model="leaderWithdrawApprovalDialogVisible" title="团长提现审批" width="600px" :close="clearEditForm">
         <el-form ref="leaderFormRef" :model="leaderForm" class="demo-form-inline" lable-width="100px" :rules="rules">
             <div class="applyInfo">
                 <div class="leaderInfo">
@@ -213,10 +213,6 @@ onMounted(() => {
 //     , { deep: true })
 </script>
 <style lang="scss" scoped>
-.el-dialog__header {
-    text-align: center;
-}
-
 .applyInfo{
     font-size: 16px;
     color: #010101;
@@ -246,5 +242,15 @@ onMounted(() => {
 
 ::deep(.el-dialog__header){
     text-align: center;
+}
+</style>
+
+<style scoped>
+.pagination{
+    margin-top: 20px;
+}
+.operation{
+    color: #4060c7;
+    margin: 0px 5px;
 }
 </style>
