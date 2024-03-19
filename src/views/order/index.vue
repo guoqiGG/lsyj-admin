@@ -208,7 +208,7 @@ watch(searchForm.value, (newValue, oldValue) => {
 </script>
 <style lang="scss">
 .order {
-  text-align: left;
+  text-align: left;}
 
   .goodsInfo {
     display: flex;
@@ -255,4 +255,5 @@ watch(searchForm.value, (newValue, oldValue) => {
     ::deep(.el-form-item__content .el-input) {
       width: 100%;
     }
-  }</style>
+  }
+  </style>

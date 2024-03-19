@@ -176,30 +176,31 @@ const routes = [
       },
     ],
   },
-    ],
-  },
-// 优惠券列表
-{
-  path: "/coupon",
-  name: "coupon",
-  component: Layout,
-  meta: {
-    name: "优惠券管理",
-  },
-  children:
-   [
-    // 优惠券列表
-    {
-      path: "/couponList",
-      name: "couponList",
-      component: () => import("../views/coupon/index.vue"),
-      meta: {
-        requiresAuth: true,
-        name: "优惠券列表",
-      },
+  // 优惠券列表
+  {
+    path: "/coupon",
+    name: "coupon",
+    component: Layout,
+    meta: {
+      name: "优惠券管理",
     },
-  ],
-},
+    children:
+      [
+        // 优惠券列表
+        {
+          path: "/couponList",
+          name: "couponList",
+          component: () => import("../views/coupon/index.vue"),
+          meta: {
+            requiresAuth: true,
+            name: "优惠券列表",
+          },
+        },
+      ],
+  },
+
+
+
   // {
   //   path: "/form",
   //   name: "form",
