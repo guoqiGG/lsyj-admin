@@ -218,6 +218,27 @@ const routes = [
       },
     ],
   },
+  // 商品管理
+  {
+    path: "/prod",
+    name: "prod",
+    component: Layout,
+    meta: {
+      name: "商品管理",
+    },
+    children: [
+      // 商品分类列表
+      {
+        path: "/proCategoryList",
+        name: "proCategoryList",
+        component: () => import("../views/prod/category.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "商品分类",
+        },
+      },
+    ],
+  },
 
   // {
   //   path: "/form",

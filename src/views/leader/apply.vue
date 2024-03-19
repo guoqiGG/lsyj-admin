@@ -168,5 +168,6 @@ onMounted(() => {
 .operation{
     color: #4060c7;
     margin: 0px 5px;
+    cursor: pointer;
 }
 </style>

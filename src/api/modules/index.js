@@ -156,3 +156,30 @@ export function giftAdd(data) {
     data,
   });
 }
+
+// 商品分类列表
+export function prodCategoryList(query) {
+  return service({
+    method: "get",
+    url: "/category/admin/list",
+    params: query,
+  });
+}
+
+// 商品分类新增
+export function prodCategoryAdd(query) {
+  return service({
+    method: "POST",
+    url: "/category/admin/add",
+    data: JSON.stringify(query),
+  });
+}
+
+// 删除、编辑商品分类
+export function deleteProdCategory(query) {
+  return service({
+    method: "POST",
+    url: "/category/admin/update",
+    data: JSON.stringify(query),
+  });
+}

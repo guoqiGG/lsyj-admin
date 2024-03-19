@@ -141,6 +141,18 @@ const menuList = ref([
       }
     ],
   },
+  {
+    title: "商品管理",
+    url: "/prod",
+    icon: "Checked",
+    children: [
+      {
+        title: "商品分类",
+        url: "/proCategoryList",
+        icon: "Menu",
+      }
+    ],
+  },
 ]);
 
 const handleOpen = (key, keyPath) => {

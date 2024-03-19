@@ -48,6 +48,7 @@ export default defineConfig(({ mode }) => {
           drop_debugger: true,
         },
       },
+      minify: 'terser',
       // chunkSizeWarningLimit: 1500,大文件报警阈值设置,不建议使用
       rollupOptions: {
         output: {

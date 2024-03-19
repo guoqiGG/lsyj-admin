@@ -95,7 +95,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.pagination{
+.pagination {
     margin-top: 20px;
 }
 </style>

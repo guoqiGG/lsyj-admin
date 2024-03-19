@@ -70,7 +70,7 @@
         </div>
     </el-card>
 
-    <el-dialog v-model="leaderWithdrawApprovalDialogVisible" title="团长提现审批" width="600px" :close="clearEditForm">
+    <el-dialog v-model="leaderWithdrawApprovalDialogVisible" title="团长提现审批" width="600px" @close="clearEditForm">
         <el-form ref="leaderFormRef" :model="leaderForm" class="demo-form-inline" lable-width="100px" :rules="rules">
             <div class="applyInfo">
                 <div class="leaderInfo">
@@ -252,5 +252,6 @@ onMounted(() => {
 .operation{
     color: #4060c7;
     margin: 0px 5px;
+    cursor: pointer;
 }
 </style>

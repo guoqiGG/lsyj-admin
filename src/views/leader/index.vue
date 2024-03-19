@@ -47,7 +47,7 @@
         </div>
     </el-card>
 
-    <el-dialog v-model="editLeaderDialogVisible" title="修改团长信息" width="600px" :close="clearEditForm">
+    <el-dialog v-model="editLeaderDialogVisible" title="修改团长信息" width="600px" @close="clearEditForm">
         <el-form :model="leaderForm" class="demo-form-inline" lable-width="100px">
             <el-form-item label="团长姓名">
                 <el-input v-model="leaderForm.leaderName" placeholder="团长姓名" clearable />
@@ -163,5 +163,6 @@ onMounted(() => {
 .operation{
     color: #4060c7;
     margin: 0px 5px;
+    cursor: pointer;
 }
 </style>
