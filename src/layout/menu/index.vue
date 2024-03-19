@@ -117,6 +117,18 @@ const menuList = ref([
       }
     ],
   },
+  {
+    title: "优惠券管理",
+    url: "/coupon",
+    icon: "Checked",
+    children: [
+      {
+        title: "优惠券",
+        url: "/couponList",
+        icon: "Menu",
+      }
+    ],
+  },
 ]);
 
 const handleOpen = (key, keyPath) => {

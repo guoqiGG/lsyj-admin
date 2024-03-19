@@ -131,3 +131,12 @@ export function upload(query) {
   });
 }
 
+
+// 优惠券列表
+export function couponList(query) {
+  return service({
+    method: "get",
+    url: "/coupon/get/list",
+    params: query,
+  });
+}
