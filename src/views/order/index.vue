@@ -206,7 +206,7 @@ watch(searchForm.value, (newValue, oldValue) => {
   , { deep: true })
 
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .order {
   text-align: left;}
 
