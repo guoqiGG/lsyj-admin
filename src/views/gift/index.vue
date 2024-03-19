@@ -8,7 +8,7 @@
                     </el-form-item>
                 </el-col>
                 <el-form-item>
-                    <el-button type="primary" @click="getUserList">查询</el-button>
+                    <el-button type="primary" @click="getGiftList">查询</el-button>
                     <el-button @click="resetForm()">重置</el-button>
                 </el-form-item>
             </el-row>
@@ -25,9 +25,14 @@
             <el-table-column prop="startDate" label="开始时间" align="center" />
             <el-table-column prop="endDate" label="结束时间" align="center" />
             <el-table-column fixed="right" label="操作" width="180" align="center">
-                <template #default>
-                    <span class="operation" @click="editor">修改</span>
-                    <span class="operation" @click="del">删除</span>
+                <template #default="scope">
+                    <span class="operation" @click="editor(scope)">修改</span>
+                    <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
+                        icon-color="#626AEF" title="确定要删除吗?" @confirm="handleDel(scope.row)" @cancel="cancelEvent">
+                        <template #reference>
+                            <span class="operation">删除</span>
+                        </template>
+                    </el-popconfirm>
                 </template>
             </el-table-column>
         </el-table>
@@ -39,21 +44,21 @@
         </div>
     </el-card>
     <!-- 新增 -->
-    <el-dialog v-model="editOrCreateDialogVisible" title="新增礼品卡" width="600px" :close="clearEditForm">
-        <el-form :model="form" class="demo-form-inline" lable-width="100px">
-            <el-form-item label="礼品卡名">
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑礼品卡' : '新增礼品卡'" width="600px" :close="clearEditForm">
+        <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" lable-width="100px">
+            <el-form-item label="礼品卡名" prop="name">
                 <el-input v-model="form.name" placeholder="礼品卡名" clearable />
             </el-form-item>
-            <el-form-item label="限制数量">
+            <el-form-item label="限制数量" prop="number">
                 <el-input type="number" v-model="form.number" placeholder="限制数量" clearable />
             </el-form-item>
-            <el-form-item label="卡总数量">
+            <el-form-item label="卡总数量" prop="total">
                 <el-input type="number" v-model="form.total" placeholder="卡总数量" clearable />
             </el-form-item>
-            <el-form-item label="生效时间">
-                <el-date-picker v-model="time" type="datetimerange" start-placeholder="开始时间" end-placeholder="结束时间"
-                    format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd" time-format="A hh:mm:ss"
-                    value-format="YYYY-MM-DD h:m:s" />
+            <el-form-item label="使用时间" prop="time">
+                <el-date-picker @change="timeChange" v-model="form.time" type="datetimerange" start-placeholder="开始时间"
+                    end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd"
+                    time-format="A hh:mm:ss" />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm(formRef)">保存</el-button>
@@ -63,13 +68,13 @@
     </el-dialog>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
-import { giftList, giftAdd } from "../../api/modules";
+import { onMounted, ref, reactive } from "vue";
+import { giftList, giftAdd, giftUpdate } from "../../api/modules";
 import {
     CirclePlus
 } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus';
-
+import dayjs from "dayjs";
 const searchParams = {
     name: null,//名称
 }
@@ -84,10 +89,11 @@ let giftListData = ref([])
 // 重置
 const resetForm = () => {
     searchForm.value = { ...searchParams }
-    getUserList()
+    getGiftList()
 }
+
 // 列表数据
-const getUserList = async () => {
+const getGiftList = async () => {
     loading.value = true
     const res = await giftList({ ...searchForm.value, ...pages.value })
     loading.value = false
@@ -100,39 +106,56 @@ const tableHandleSizeChange = (e) => {
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e
-    getUserList()
+    getGiftList()
 }
+
 // 新增弹框
 const dialogVisible = ref(false)
+const isEdit = ref(false)
 const formRef = ref(null);
 const form = ref({
+    id: '',
     name: '',
     number: '',
     total: '',
+    time: '',
+    startDate: '',
+    endDate: ''
 })
-const time = ref('')
+const rules = reactive({
+    name: [{ required: true, message: '请输入礼品卡名', trigger: 'blur' }],
+    number: [{ required: true, message: '请输入限制数量', trigger: 'blur' }],
+    total: [{ required: true, message: '请输入礼品卡总数', trigger: 'blur' }],
+    time: [{ required: true, message: '时间不能为空', trigger: 'blur' }],
+
+})
+const timeChange = (e) => {
+    console.log(e)
+    form.value.startDate = dayjs(e[0]).format('YYYY-MM-DD HH:mm:ss')
+    form.value.endDate = dayjs(e[1]).format('YYYY-MM-DD HH:mm:ss')
+    console.log(form.value.startDate)
+}
 // 新增弹框
 const add = () => {
     dialogVisible.value = true
+    isEdit.value = false
     form.value = {}
 }
 // 修改
-const handleClick = (item) => {
-    form.value = item
+const editor = (scope) => {
+    isEdit.value = true
+    form.value = scope.row
     form.value.time = []
-    form.value.time[0] = item.startDate
-    form.value.time[1] = item.endDate
+    form.value.time[0] = scope.row.startDate
+    form.value.time[1] = scope.row.endDate
     dialogVisible.value = true
-
 }
 // 新增弹框-保存按钮
 const submitForm = () => {
     formRef.value.validate(async (valid) => {
         if (valid) {
-            if (form.value.time.length > 0) {
-                form.value.startDate = form.value.time[0]
-                form.value.endDate = form.value.time[1]
-            }
+            form.value.startDate = form.value.time[0]
+            form.value.endDate = form.value.time[1]
             const res = ref()
             // 修改
             if (form.value.id) {
@@ -141,40 +164,46 @@ const submitForm = () => {
                     name: form.value.name,
                     number: form.value.number,
                     total: form.value.total,
-                    startDate: form.value.startDate,
-                    endDate: form.value.endDate,
+                    startDate: dayjs(form.value.startDate).format('YYYY-MM-DD HH:mm:ss'),
+                    endDate: dayjs(form.value.endDate).format('YYYY-MM-DD HH:mm:ss'),
                 }
                 res.value = await giftUpdate(obj)
             } else {
                 // 新增
-                res.value = await giftAdd(JSON.stringify(form.value))
+                console.log(form.value)
+                res.value = await giftAdd(JSON.stringify({
+                    name: form.value.name,
+                    number: form.value.number,
+                    total: form.value.total,
+                    startDate: dayjs(form.value.startDate).format('YYYY-MM-DD HH:mm:ss'),
+                    endDate: dayjs(form.value.endDate).format('YYYY-MM-DD HH:mm:ss'),
+                }))
             }
-            if (res.code === 0) {
+
+            if (res.value.code === 0) {
                 dialogVisible.value = false
-                ElMessage.success('提交成功');
-                getUserList()
+                getGiftList()
             }
         } else {
-            ElMessage.error('表单验证失败');
             return false;
         }
     });
 };
 // 删除
 const handleDel = async (item) => {
-    const res = await giftUpdate({ id: item.id,isDeleted:1 })
+    const res = await giftUpdate({ id: item.id, isDeleted: 1 })
     if (res.code === 0) {
-        ElMessage.success('删除成功');
-        getUserList()
+        getGiftList()
     } else {
-        ElMessage.error(res.msg);
         return false;
     }
 }
 
 onMounted(() => {
-    getUserList()
+    getGiftList()
 })
+
+
 </script>
 <style lang="scss" scoped>
 .add {
@@ -184,6 +213,7 @@ onMounted(() => {
 .operation {
     color: #4060c7;
     margin: 0px 5px;
+    cursor: pointer;
 }
 
 .pagination {

@@ -75,7 +75,6 @@ const login = (formEl) => {
   formEl.validate((valid) => {
     if (valid) {
       loading.value = true
-      console.log(globalStore)
 
       if (loginForm.checked) {
         let password = Base64.encode(loginForm.password) // base64加密
