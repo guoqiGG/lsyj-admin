@@ -56,8 +56,8 @@
                     value-format="YYYY-MM-DD h:m:s" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="save">保存</el-button>
-                <el-button @click="closEditLeaderDialog">关闭</el-button>
+                <el-button type="primary" @click="submitForm(formRef)">保存</el-button>
+                <el-button @click="dialogVisible = false">关闭</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -68,7 +68,7 @@ import { giftList, giftAdd } from "../../api/modules";
 import {
     CirclePlus
 } from '@element-plus/icons-vue'
-import dayjs from "dayjs";
+import { ElMessage } from 'element-plus';
 
 const searchParams = {
     name: null,//名称
@@ -81,7 +81,12 @@ const pages = ref({
 })
 const total = ref(0)
 let giftListData = ref([])
-
+// 重置
+const resetForm = () => {
+    searchForm.value = { ...searchParams }
+    getUserList()
+}
+// 列表数据
 const getUserList = async () => {
     loading.value = true
     const res = await giftList({ ...searchForm.value, ...pages.value })
@@ -89,7 +94,7 @@ const getUserList = async () => {
     giftListData.value = res.data.list
     total.value = res.data.total
 }
-
+// 分页
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
 }
@@ -97,11 +102,9 @@ const tableHandleChange = (e) => {
     pages.value.pageNo = e
     getUserList()
 }
-const resetForm = () => {
-    searchForm.value = { ...searchParams }
-    getUserList()
-}
-const editOrCreateDialogVisible = ref(false)
+// 新增弹框
+const dialogVisible = ref(false)
+const formRef = ref(null);
 const form = ref({
     name: '',
     number: '',
@@ -112,34 +115,64 @@ const form = ref({
 const time = ref('')
 // 新增弹框
 const add = () => {
-    editOrCreateDialogVisible.value = true
+    dialogVisible.value = true
+    form.value = {}
 }
 // 修改
-const editor = () => {
-    editOrCreateDialogVisible.value = true
+const handleClick = (item) => {
+    form.value = item
+    form.value.time = []
+    form.value.time[0] = item.startDate
+    form.value.time[1] = item.endDate
+    dialogVisible.value = true
+
 }
+// 新增弹框-保存按钮
+const submitForm = () => {
+    formRef.value.validate(async (valid) => {
+        if (valid) {
+            if (form.value.time.length > 0) {
+                form.value.startDate = form.value.time[0]
+                form.value.endDate = form.value.time[1]
+            }
+            const res = ref()
+            // 修改
+            if (form.value.id) {
+                let obj = {
+                    id: form.value.id,
+                    name: form.value.name,
+                    number: form.value.number,
+                    total: form.value.total,
+                    startDate: form.value.startDate,
+                    endDate: form.value.endDate,
+                }
+                res.value = await giftUpdate(obj)
+            } else {
+                // 新增
+                res.value = await giftAdd(JSON.stringify(form.value))
+            }
+            if (res.code === 0) {
+                dialogVisible.value = false
+                ElMessage.success('提交成功');
+                getUserList()
+            }
+        } else {
+            ElMessage.error('表单验证失败');
+            return false;
+        }
+    });
+};
 // 删除
-const del = () => {
-    console.log('删除')
-}
-
-// 新增弹框-保存按钮
-const closEditLeaderDialog = () => {
-    editOrCreateDialogVisible.value = false
-}
-// 新增弹框-保存按钮
-const save =async () => {
-    editOrCreateDialogVisible.value = false
-    if (time.value.length > 0) {
-        form.value.startDate = time.value[0]
-        form.value.endDate = time.value[1]
+const handleDel = async (item) => {
+    const res = await giftUpdate({ id: item.id,isDeleted:1 })
+    if (res.code === 0) {
+        ElMessage.success('删除成功');
+        getUserList()
+    } else {
+        ElMessage.error(res.msg);
+        return false;
     }
-    const res = await giftAdd(JSON.stringify(form.value))
-    console.log(res,'res=====新增弹框=====>')
-
 }
-
-
 
 onMounted(() => {
     getUserList()

@@ -239,6 +239,27 @@ const routes = [
       },
     ],
   },
+  // 合成卡列表
+  {
+    path: "/compositeCard",
+    name: "compositeCard",
+    component: Layout,
+    meta: {
+      name: "礼品卡管理",
+    },
+    children: [
+      // 合成卡列表
+      {
+        path: "/compositeCardList",
+        name: "compositeCardList",
+        component: () => import("../views/compositeCard/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "礼品卡列表",
+        },
+      },
+    ],
+  },
 
   // {
   //   path: "/form",

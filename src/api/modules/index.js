@@ -191,3 +191,28 @@ export function giftUpdate(data) {
     data,
   });
 }
+//合成卡列表
+export function compositeCardList( query) {
+  return service({
+    method: "POST",
+    url: "/gift/rule/get/list",
+    data: JSON.stringify(query),
+  });
+}
+// 新增合成卡
+export function compositeCardAdd(data) {
+  return service({
+    method: "POST",
+    url: "/gift/rule/add",
+    data,
+  });
+}
+
+// 修改合成卡与删除合成卡
+export function compositeCardUpdate(data) {
+  return service({
+    method: "POST",
+    url: "/gift/rule/update",
+    data,
+  });
+}

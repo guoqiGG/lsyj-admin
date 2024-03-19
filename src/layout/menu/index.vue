@@ -153,6 +153,18 @@ const menuList = ref([
       }
     ],
   },
+  {
+    title: "合成卡管理",
+    url: "/compositeCard",
+    icon: "Checked",
+    children: [
+      {
+        title: "合成卡",
+        url: "/compositeCardList",
+        icon: "Menu",
+      }
+    ],
+  },
 ]);
 
 const handleOpen = (key, keyPath) => {
