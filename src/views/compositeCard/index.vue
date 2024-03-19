@@ -12,18 +12,9 @@
                         <el-date-picker v-model="searchForm.time" type="datetimerange" start-placeholder="开始时间"
                             end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd"
                             time-format="A hh:mm:ss" value-format="YYYY-MM-DD h:m:s" />
-
-
-                        <!-- <el-date-picker v-model="searchForm.startDate" type="datetime" value-format="YYYY-MM-DD h:m:s"
-                            placeholder="开始时间" /> -->
                     </el-form-item>
                 </el-col>
-                <!-- <el-col :span="6">
-                    <el-form-item label="结束时间">
-                        <el-date-picker v-model="searchForm.endDate" type="datetime" value-format="YYYY-MM-DD h:m:s"
-                            placeholder="结束时间" />
-                    </el-form-item>
-                </el-col> -->
+                
                 <el-form-item>
                     <el-button type="primary" @click="getUserList">查询</el-button>
                     <el-button @click="resetForm()">重置</el-button>
@@ -89,8 +80,6 @@ import { ElMessage } from 'element-plus';
 const loading = ref(false)
 const searchParams = {
     name: null,//名称
-    // startDate: null,
-    // endDate: null,
     time: [],
 }
 const searchForm = ref({ ...searchParams })
@@ -142,7 +131,7 @@ const handleTableData = (tableData) => {
             rowSpanList.push(1);
             position = 0;
         } else {
-            if (item['parentName']) {
+            if (item['parentId']) {
                 if (item['parentId'] == tableData[index - 1]['parentId']) {
                     rowSpanList[position] += 1; //项目名称相同，合并到同一个数组中
                     rowSpanList.push(0);
@@ -185,7 +174,6 @@ const optionsList = async () => {
         pageSize: 10,
     })
     options.value = res.data.list
-    console.log(options, 'options')
 }
 // 新增弹框
 const dialogVisible = ref(false)
@@ -220,7 +208,6 @@ const add = () => {
 // 新增弹框-保存按钮
 const submitForm = () => {
     formRef.value.validate(async (valid) => {
-        console.log(form.value, 'form======>')
         if (valid) {
             const res = ref()
             let obj = {
@@ -257,7 +244,6 @@ const submitForm = () => {
 };
 //  修改
 const handleEditor = (item) => {
-    console.log(item, 'item============>')
     form.value.name = item.parentName
     form.value.number = item.number
     form.value.ruleIds = item.ruleIds

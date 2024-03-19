@@ -108,8 +108,6 @@ const formRef = ref(null);
 const form = ref({
     name: '',
     number: '',
-    // startDate: '',
-    // endDate: '',
     total: '',
 })
 const time = ref('')
