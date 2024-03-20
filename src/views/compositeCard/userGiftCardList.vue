@@ -12,11 +12,11 @@
                         <el-input v-model="searchForm.mobile" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <!-- <el-col :span="6">
                     <el-form-item label="用户ID">
                         <el-input v-model="searchForm.userId" placeholder="请输入" clearable />
                     </el-form-item>
-                </el-col>
+                </el-col> -->
                 <el-col :span="6">
                     <el-form-item label="礼品卡名称">
                         <el-input v-model="searchForm.giftName" placeholder="请输入" clearable />
@@ -78,7 +78,7 @@ import { userGiftList} from "../../api/modules";
 const searchParams = {
     name: null,//用户名称
     mobile: null,
-    userId:null,
+    // userId:null,
     status:null,//0未合成 1已合成 2已过期
     type:null,//0系统发放 1 后台赠送的
     giftName:null,//礼品卡名称
