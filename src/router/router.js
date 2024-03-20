@@ -251,7 +251,8 @@ const routes = [
       {
         path: "/userCompositeCardList",
         name: "userCompositeCardList",
-        component: () => import("../views/compositeCard/userCompositeCardList.vue"),
+        component: () =>
+          import("../views/compositeCard/userCompositeCardList.vue"),
         meta: {
           requiresAuth: true,
           name: "用户合成卡",
@@ -268,6 +269,15 @@ const routes = [
       name: "商品管理",
     },
     children: [
+      {
+        path: "/prodList",
+        name: "prodList",
+        component: () => import("../views/prod/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "商品列表",
+        },
+      },
       // 商品分类列表
       {
         path: "/proCategoryList",
@@ -280,7 +290,6 @@ const routes = [
       },
     ],
   },
-  
 
   // {
   //   path: "/form",

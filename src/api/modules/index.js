@@ -140,6 +140,7 @@ export function upload(query) {
   });
 }
 
+
 // 商品分类列表
 export function prodCategoryList(query) {
   return service({
@@ -164,6 +165,15 @@ export function deleteProdCategory(query) {
     method: "POST",
     url: "/category/admin/update",
     data: JSON.stringify(query),
+  });
+}
+
+// 商品列表
+export function prodList(query) {
+  return service({
+    method: "get",
+    url: "/goods/get/list",
+    params: query,
   });
 }
 

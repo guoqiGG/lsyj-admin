@@ -169,6 +169,11 @@ const menuList = ref([
     icon: "Checked",
     children: [
       {
+        title: "商品列表",
+        url: "/prodList",
+        icon: "Menu",
+      },
+      {
         title: "商品分类",
         url: "/proCategoryList",
         icon: "Menu",
