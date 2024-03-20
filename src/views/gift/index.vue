@@ -13,7 +13,6 @@
                 </el-form-item>
             </el-row>
         </el-form>
-
     </el-card>
     <el-card style="margin-top: 10px;">
         <el-button type="primary" :icon="CirclePlus" class="add" @click="add()">新增</el-button>
@@ -57,10 +56,10 @@
             </el-form-item>
             <el-form-item label="使用时间" prop="time">
                 <el-date-picker @change="timeChange" v-model="form.time" type="datetimerange" start-placeholder="开始时间"
-                    end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd"
+                    end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd" value-format="YYYY-MM-DD h:m:s"
                     time-format="A hh:mm:ss" />
             </el-form-item>
-            <el-form-item>
+            <el-form-item class="footer">
                 <el-button type="primary" @click="submitForm(formRef)">保存</el-button>
                 <el-button @click="dialogVisible = false">关闭</el-button>
             </el-form-item>
@@ -75,23 +74,16 @@ import {
 } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus';
 import dayjs from "dayjs";
-const searchParams = {
-    name: null,//名称
-}
 const loading = ref(false)
-const searchForm = ref({ ...searchParams })
+const searchForm = ref( {
+    name: null,//名称
+})
 const pages = ref({
     pageNo: 1,
     pageSize: 10,
 })
 const total = ref(0)
 let giftListData = ref([])
-// 重置
-const resetForm = () => {
-    searchForm.value = { ...searchParams }
-    getGiftList()
-}
-
 // 列表数据
 const getGiftList = async () => {
     loading.value = true
@@ -108,6 +100,11 @@ const tableHandleChange = (e) => {
     pages.value.pageNo = e
     getGiftList()
 }
+// 重置
+const resetForm = () => {
+    searchForm.value.name = null
+    getGiftList()
+}
 
 // 新增弹框
 const dialogVisible = ref(false)
@@ -118,7 +115,7 @@ const form = ref({
     name: '',
     number: '',
     total: '',
-    time: '',
+    time: [],
     startDate: '',
     endDate: ''
 })
@@ -130,12 +127,12 @@ const rules = reactive({
 
 })
 const timeChange = (e) => {
-    console.log(e)
-    form.value.startDate = dayjs(e[0]).format('YYYY-MM-DD HH:mm:ss')
-    form.value.endDate = dayjs(e[1]).format('YYYY-MM-DD HH:mm:ss')
-    console.log(form.value.startDate)
+    // form.value.startDate = dayjs(e[0]).format('YYYY-MM-DD HH:mm:ss')
+    // form.value.endDate = dayjs(e[1]).format('YYYY-MM-DD HH:mm:ss')
+    form.value.startDate =e[0]
+    form.value.endDate = e[1]
 }
-// 新增弹框
+// 新增按钮
 const add = () => {
     dialogVisible.value = true
     isEdit.value = false
@@ -154,32 +151,25 @@ const editor = (scope) => {
 const submitForm = () => {
     formRef.value.validate(async (valid) => {
         if (valid) {
-            form.value.startDate = form.value.time[0]
-            form.value.endDate = form.value.time[1]
             const res = ref()
-            // 修改
-            if (form.value.id) {
-                let obj = {
+            let obj = {
                     id: form.value.id,
                     name: form.value.name,
                     number: form.value.number,
                     total: form.value.total,
-                    startDate: dayjs(form.value.startDate).format('YYYY-MM-DD HH:mm:ss'),
-                    endDate: dayjs(form.value.endDate).format('YYYY-MM-DD HH:mm:ss'),
+                    startDate: form.value.startDate,
+                    endDate: form.value.endDate,
+                    // startDate: dayjs(form.value.startDate).format('YYYY-MM-DD HH:mm:ss'),
+                    // endDate: dayjs(form.value.endDate).format('YYYY-MM-DD HH:mm:ss'),
                 }
-                res.value = await giftUpdate(obj)
+            // 修改
+            if (form.value.id) {
+                res.value = await giftUpdate(JSON.stringify(obj))
+
             } else {
                 // 新增
-                console.log(form.value)
-                res.value = await giftAdd(JSON.stringify({
-                    name: form.value.name,
-                    number: form.value.number,
-                    total: form.value.total,
-                    startDate: dayjs(form.value.startDate).format('YYYY-MM-DD HH:mm:ss'),
-                    endDate: dayjs(form.value.endDate).format('YYYY-MM-DD HH:mm:ss'),
-                }))
+                res.value = await giftAdd(JSON.stringify(obj))
             }
-
             if (res.value.code === 0) {
                 dialogVisible.value = false
                 getGiftList()
@@ -193,8 +183,10 @@ const submitForm = () => {
 const handleDel = async (item) => {
     const res = await giftUpdate({ id: item.id, isDeleted: 1 })
     if (res.code === 0) {
+        ElMessage.success('删除成功');
         getGiftList()
     } else {
+        ElMessage.error(res.msg);
         return false;
     }
 }
@@ -213,10 +205,12 @@ onMounted(() => {
 .operation {
     color: #4060c7;
     margin: 0px 5px;
-    cursor: pointer;
 }
 
 .pagination {
     margin-top: 20px;
+}
+.footer{
+    margin-left: 80px;
 }
 </style>

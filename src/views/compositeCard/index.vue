@@ -14,9 +14,9 @@
                             time-format="A hh:mm:ss" value-format="YYYY-MM-DD h:m:s" />
                     </el-form-item>
                 </el-col>
-                
+
                 <el-form-item>
-                    <el-button type="primary" @click="getUserList">查询</el-button>
+                    <el-button type="primary" @click="geCompositeCardList">查询</el-button>
                     <el-button @click="resetForm()">重置</el-button>
                 </el-form-item>
             </el-row>
@@ -28,6 +28,7 @@
         <el-table :data="compositeData" :span-method="objectSpanMethod" border v-loading="loading" style="width: 100%"
             :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
             <el-table-column align="center" prop="parentName" label="合成卡名称" show-overflow-tooltip></el-table-column>
+            <!-- <el-table-column align="center" prop="parentName" label="需礼品卡数" show-overflow-tooltip></el-table-column> -->
             <el-table-column align="center" prop="name" label="礼品卡名称" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="number" label="用户最大领取数量" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="total" label="礼品卡总数量" show-overflow-tooltip></el-table-column>
@@ -36,7 +37,12 @@
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="handleEditor(scope.row)">修改</span>
-                    <span class="operation" @click="handleDel(scope.row)">删除</span>
+                    <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
+                        icon-color="#626AEF" title="确定要删除吗?" @confirm="handleDel(scope.row)" @cancel="cancelEvent">
+                        <template #reference>
+                            <span class="operation">删除</span>
+                        </template>
+                    </el-popconfirm>
                 </template>
             </el-table-column>
         </el-table>
@@ -48,8 +54,8 @@
         </div>
     </el-card>
     <!-- 新增 -->
-    <el-dialog v-model="dialogVisible" title="新增合成卡" width="600px">
-        <el-form ref="formRef" :model="form" :rules="rules" class="demo-form-inline" lable-width="100px">
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑合成卡' : '新增合成卡'" width="600px">
+        <el-form ref="formRef" :model="form" :rules="rules" class="add_dialog" lable-width="100px">
             <el-form-item label="合成卡名" prop="name">
                 <el-input v-model="form.name" placeholder="合成卡名" clearable />
             </el-form-item>
@@ -58,10 +64,10 @@
                     <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id" />
                 </el-select>
             </el-form-item>
-            <el-form-item label="卡总数量" prop="number">
-                <el-input type="number" v-model.number="form.number" placeholder="卡总数量" clearable />
+            <el-form-item label="需礼品卡数" prop="number">
+                <el-input type="number" v-model.number="form.number" placeholder="需礼品卡数" clearable />
             </el-form-item>
-            <el-form-item>
+            <el-form-item class="footer">
                 <el-button type="primary" @click="submitForm(formRef)">保存</el-button>
                 <el-button @click="dialogVisible = false">关闭</el-button>
             </el-form-item>
@@ -90,13 +96,13 @@ const pages = ref({
 // 查询
 const resetForm = () => {
     searchForm.value = { ...searchParams }
-    getUserList()
+    geCompositeCardList()
 }
 // 获取列表
 const total = ref(0)
 let compositeData = ref([])
 let rowSpanArr = ref([]);
-const getUserList = async () => {
+const geCompositeCardList = async () => {
     loading.value = true
     let obj = { ...pages.value }
     obj.name = searchForm.value.name
@@ -164,19 +170,20 @@ const tableHandleSizeChange = (e) => {
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e
-    getUserList()
+    geCompositeCardList()
 }
 const options = ref([])
 // 礼品卡数据
 const optionsList = async () => {
     const res = await giftList({
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 1000,
     })
     options.value = res.data.list
 }
 // 新增弹框
 const dialogVisible = ref(false)
+const isEdit = ref(false)
 const formRef = ref(null);
 const form = ref({
     name: '',
@@ -188,21 +195,12 @@ const rules = reactive({
     name: [{ required: true, message: '请输入合成卡名', trigger: 'blur' }],
     number: [{ required: true, message: '请输入限制数量', trigger: 'blur' }],
     ruleIds: [{ required: true, message: '请选择礼品卡', trigger: 'blur' }]
-    // total: [{ required: true, message: '请输入卡总数量', trigger: 'blur' },],
-    // time: [{
-    //     type: 'array',
-    //     required: true,
-    //     message: '请选择生效时间',
-    //     fields: {
-    //         0: { type: 'date', required: true, message: '请选择开始日期' },
-    //         1: { type: 'date', required: true, message: '请选择结束日期' },
-    //     },
-    // },],
 })
 
 // 新增
 const add = () => {
     dialogVisible.value = true
+    isEdit.value = false
     form.value = {}
 }
 // 新增弹框-保存按钮
@@ -222,7 +220,6 @@ const submitForm = () => {
                     obj.ruleIds += item
                 }
             })
-
             // 修改
             if (form.value.id) {
                 res.value = await compositeCardUpdate(JSON.stringify(obj))
@@ -233,7 +230,7 @@ const submitForm = () => {
             if (res.value.code == 0) {
                 dialogVisible.value = false
                 ElMessage.success('提交成功');
-                getUserList()
+                geCompositeCardList()
             }
 
         } else {
@@ -244,6 +241,7 @@ const submitForm = () => {
 };
 //  修改
 const handleEditor = (item) => {
+    isEdit.value = true
     form.value.name = item.parentName
     form.value.number = item.number
     form.value.ruleIds = item.ruleIds
@@ -254,7 +252,7 @@ const handleDel = async (item) => {
     const res = await compositeCardUpdate({ id: item.parentId, isDeleted: 1 })
     if (res.code === 0) {
         ElMessage.success('删除成功');
-        getUserList()
+        geCompositeCardList()
     } else {
         ElMessage.error(res.msg);
         return false;
@@ -263,7 +261,7 @@ const handleDel = async (item) => {
 
 
 onMounted(() => {
-    getUserList()
+    geCompositeCardList()
     optionsList()
 })
 </script>
@@ -280,4 +278,17 @@ onMounted(() => {
 .pagination {
     margin-top: 20px;
 }
+
+.footer {
+    margin-left: 95px;
+}
+
+
+.add_dialog{
+       :deep(.el-form-item__label) {
+    width: 95px !important;
+} 
+}
+
+
 </style>

@@ -16,24 +16,22 @@
                     </el-form-item>
                 </el-col>
                 <el-form-item>
-                    <el-button type="primary" @click="getUserList">查询</el-button>
+                    <el-button type="primary" @click="getCouponList">查询</el-button>
                     <el-button @click="resetForm()">重置</el-button>
                 </el-form-item>
             </el-row>
         </el-form>
-
     </el-card>
     <el-card style="margin-top: 10px;">
         <el-table v-loading="loading" :data="couponListData" style="width: 100%">
             <el-table-column prop="name" label="优惠券名" align="center" />
             <el-table-column prop="status" label="状态" align="center">
                 <template #default="scope">
-                    {{ scope.row.status == 1 ? '上架' : scope.row.status == 1 ? '下架' : '' }}
+                    {{ scope.row.status == 1 ? '上架' : scope.row.status == 2 ? '下架' : '' }}
                 </template>
             </el-table-column>
             <el-table-column prop="deadlineType" label="生效类型" align="center">
                 <template #default="scope">
-                    <!-- {{ scope.row.status == 1 ? '领取后' :scope.row.status == 1 ?'固定时间': '' }} -->
                     {{ scope.row.status == 1 ? scope.row.deadlineDay + '天' : scope.row.status == 1 ?
             scope.row.deadlineTime :
             '' }}
@@ -42,14 +40,6 @@
             <el-table-column prop="createTime" label="开始时间" align="center" />
             <el-table-column prop="updateTime" label="更新时间" align="center" />
             <el-table-column prop="amount" label="优惠券金额" align="center" />
-            <el-table-column fixed="right" label="操作" width="220" align="center">
-                <template #default>
-                    <span class="operation">修改</span>
-                    <span class="operation">查看</span>
-                    <span class="operation">违规下架</span>
-                    <span class="operation">删除</span>
-                </template>
-            </el-table-column>
         </el-table>
         <div class="pagination">
             <el-pagination background layout="total, sizes, prev, pager, next, jumper"
@@ -65,7 +55,7 @@ import { couponList } from "../../api/modules";
 import dayjs from "dayjs";
 const searchParams = {
     name: null,//优惠券名称
-    status: null,//优惠券状态--status	状态 1上架 2下架
+    status: null,//优惠券状态  1上架 2下架
 }
 const loading = ref(false)
 const searchForm = ref({ ...searchParams })
@@ -75,8 +65,7 @@ const pages = ref({
 })
 const total = ref(0)
 let couponListData = ref([])
-
-const getUserList = async () => {
+const getCouponList = async () => {
     loading.value = true
     const res = await couponList({ ...searchForm.value, ...pages.value })
     loading.value = false
@@ -89,15 +78,15 @@ const tableHandleSizeChange = (e) => {
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e
-    getUserList()
+    getCouponList()
 }
 const resetForm = () => {
     searchForm.value = { ...searchParams }
-    getUserList()
+    getCouponList()
 }
 
 onMounted(() => {
-    getUserList()
+    getCouponList()
 })
 </script>
 <style lang="scss" scoped>
@@ -107,5 +96,8 @@ onMounted(() => {
 .operation{
     color: #4060c7;
     margin: 0px 5px;
+}
+footer{
+    margin-left: 80px;
 }
 </style>

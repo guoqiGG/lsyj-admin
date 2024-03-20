@@ -216,3 +216,19 @@ export function compositeCardUpdate(data) {
     data,
   });
 }
+// 用户领取的礼品卡列表-page
+export function userGiftList(query) {
+  return service({
+    method: "get",
+    url: "/gift/user/get/list",
+    params: query,
+  });
+}
+// 用户合成卡列表-page
+export function userCompositeList(query) {
+  return service({
+    method: "get",
+    url: "/gift/rule/user/get/list",
+    params: query,
+  });
+}

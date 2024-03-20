@@ -224,7 +224,7 @@ const routes = [
     name: "compositeCard",
     component: Layout,
     meta: {
-      name: "礼品卡管理",
+      name: "合成卡管理",
     },
     children: [
       // 合成卡列表
@@ -234,7 +234,27 @@ const routes = [
         component: () => import("../views/compositeCard/index.vue"),
         meta: {
           requiresAuth: true,
-          name: "礼品卡列表",
+          name: "合成卡列表",
+        },
+      },
+      // 用户礼品卡列表
+      {
+        path: "/userGiftCardList",
+        name: "userGiftCardList",
+        component: () => import("../views/compositeCard/userGiftCardList.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "用户礼品卡",
+        },
+      },
+      // 用户合成卡列表
+      {
+        path: "/userCompositeCardList",
+        name: "userCompositeCardList",
+        component: () => import("../views/compositeCard/userCompositeCardList.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "用户合成卡",
         },
       },
     ],

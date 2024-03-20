@@ -150,6 +150,16 @@ const menuList = ref([
         title: "合成卡",
         url: "/compositeCardList",
         icon: "Menu",
+      },
+      {
+        title: "用户礼品卡",
+        url: "/userGiftCardList",
+        icon: "Menu",
+      },
+      {
+        title: "用户合成卡",
+        url: "/userCompositeCardList",
+        icon: "Menu",
       }
     ],
   },
