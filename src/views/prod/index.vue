@@ -124,56 +124,63 @@
                 </div>
 
                 <el-table :data="prodForm.adminGoodsSkuInputVOS" style="width: 100%" max-height="250">
-                    <el-table-column prop="prodForm.adminGoodsSkuInputVOS.specificationName" label="规格"
-                        v-if="prodForm.adminGoodsSkuInputVOS.specificationName != '默认'">
+                    <el-table-column label="规格" v-if="prodForm.adminGoodsSkuInputVOS[0].specificationName != '默认'">
                         <template #default="scope">
                             {{ scope.row.specificationName }}
                         </template>
                     </el-table-column>
-                    <el-table-column prop="prodForm.adminGoodsSkuInputVOS.price" label="售价" align="center">
+                    <el-table-column label="售价" align="center">
                         <template #default="scope">
-                            <el-input-number controls-position="right" v-model="skuObj.price" min="0" size="small"
-                                step="0.01" :precision="2" />
+                            <el-input-number controls-position="right"
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].price" min="0" size="small"
+                                step="0.01"  />
                         </template>
                     </el-table-column>
-                    <el-table-column prop="prodForm.adminGoodsSkuInputVOS.stock" label="库存" align="center">
+                    <el-table-column label="库存" align="center">
                         <template #default="scope">
-                            <el-input-number controls-position="right" v-model="skuObj.stock" min="0" size="small" />
+                            <el-input-number controls-position="right"
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].stock" min="0" size="small" />
                         </template>
                     </el-table-column>
-                    <el-table-column prop="prodForm.adminGoodsSkuInputVOS.virtuallyNum" label="注水销量" align="center">
+                    <el-table-column label="注水销量" align="center">
                         <template #default="scope">
-                            <el-input-number controls-position="right" v-model="skuObj.virtuallyNum" min="0"
+                            <el-input-number controls-position="right"
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].virtuallyNum" min="0"
                                 size="small" />
                         </template>
                     </el-table-column>
-                    <el-table-column prop="prodForm.adminGoodsSkuInputVOS.status" label="状态" align="center">
-                        <template #default>
-                            <el-select style="width:92%" placeholder="请选择" v-model="skuObj.status" size="small">
+                    <el-table-column label="状态" align="center">
+                        <template #default="scope">
+                            <el-select style="width:92%" placeholder="请选择"
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].status" size="small">
                                 <el-option label="下架" :value="0" />
                                 <el-option label="上架" :value="1" />
                             </el-select>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="prodForm.adminGoodsSkuInputVOS.limit_type" label="限制类型" align="center">
+                    <el-table-column label="限制类型" align="center">
                         <template #default="scope">
-                            <el-input-number controls-position="right" v-model="skuObj.limit_type" min="1" max="1"
-                                size="small" disabled />
+                            <el-input-number controls-position="right"
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].limit_type" min="1" max="1"
+                                size="small" />
                         </template>
                     </el-table-column>
-                    <el-table-column prop="prodForm.adminGoodsSkuInputVOS.limitBuy" label="限购数量" align="center">
+                    <el-table-column label="限购数量" align="center">
                         <template #default="scope">
-                            <el-input-number controls-position="right" v-model="skuObj.limitBuy" min="0" size="small" />
+                            <el-input-number controls-position="right"
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].limitBuy" min="0" size="small" />
                         </template>
                     </el-table-column>
-                    <el-table-column prop="prodForm.adminGoodsSkuInputVOS.sort" label="排序" align="center">
+                    <el-table-column label="排序" align="center">
                         <template #default="scope">
-                            <el-input-number controls-position="right" v-model="skuObj.sort" min="0" size="small" />
+                            <el-input-number controls-position="right"
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].sort" min="0" size="small" />
                         </template>
                     </el-table-column>
                     <el-table-column fixed="right" label="操作" width="120">
                         <template #default="scope">
-                            <el-button link type="primary" size="small" @click.prevent="deleteRow(scope.$index)">
+                            <el-button link type="primary" size="small" @click.prevent="handleClose(scope.row)"
+                                v-if="scope.row.specificationName != '默认'">
                                 删除
                             </el-button>
                         </template>
@@ -189,7 +196,7 @@
     </el-dialog>
 </template>
 <script setup>
-import { onMounted, ref, reactive, nextTick } from "vue";
+import { onMounted, ref, reactive, nextTick, isRef } from "vue";
 import { prodList, prodCategoryList, deleteProdCategory, prodCategoryAdd } from "@/api/modules";
 import { ElMessage, ElInput } from "element-plus";
 import {
@@ -230,7 +237,7 @@ const prodForm = ref({
 
 })
 
-const skuObj1 = {
+const skuObj = ref({
     price: 0,
     specificationName: '默认',
     stock: 0,
@@ -239,11 +246,11 @@ const skuObj1 = {
     limit_type: 1,
     limitBuy: 0,
     sort: 0
-}
-const skuObj = ref({ ...skuObj1 })
+})
+
 
 if (prodForm.value.adminGoodsSkuInputVOS.length < 1) {
-    prodForm.value.adminGoodsSkuInputVOS.push(skuObj1)
+    prodForm.value.adminGoodsSkuInputVOS.push(Object.assign({}, skuObj.value))
 }
 
 const inputValue = ref('')
@@ -253,10 +260,10 @@ const InputRef = ref()
 const handleClose = (item) => {
     if (prodForm.value.adminGoodsSkuInputVOS.length > 1) {
         prodForm.value.adminGoodsSkuInputVOS.splice(prodForm.value.adminGoodsSkuInputVOS.indexOf(item), 1)
-        return
     } else {
         prodForm.value.adminGoodsSkuInputVOS = []
-        prodForm.value.adminGoodsSkuInputVOS.push(skuObj1)
+        skuObj.value.specificationName = '默认'
+        prodForm.value.adminGoodsSkuInputVOS.push(Object.assign({}, skuObj.value))
     }
 }
 const showInput = () => {
@@ -270,22 +277,18 @@ const handleInputConfirm = () => {
     if (inputValue.value) {
         if (prodForm.value.adminGoodsSkuInputVOS.length == 1 && prodForm.value.adminGoodsSkuInputVOS[0].specificationName == '默认') {
             prodForm.value.adminGoodsSkuInputVOS[0].specificationName = inputValue.value
-            console.log(1,prodForm.value.adminGoodsSkuInputVOS)
             inputVisible.value = false
             inputValue.value = ''
             return
         }
 
         if (prodForm.value.adminGoodsSkuInputVOS[0].specificationName !== '默认') {
-            const aa = skuObj1
-            aa.specificationName = inputValue.value
-            prodForm.value.adminGoodsSkuInputVOS.push(aa)
-            console.log(2,prodForm.value.adminGoodsSkuInputVOS)
+            skuObj.value.specificationName = inputValue.value
+            prodForm.value.adminGoodsSkuInputVOS.push(Object.assign({}, skuObj.value))
             inputVisible.value = false
             inputValue.value = ''
             return
         }
-
     }
 
 }
@@ -406,6 +409,7 @@ const closeEditOrCreateDialog = () => {
 }
 
 const save = async () => {
+    console.log(prodForm.value)
     categoryFormRef.value.validate(async (valid) => {
         if (valid) {
             if (isCreate.value) {//新增提交
