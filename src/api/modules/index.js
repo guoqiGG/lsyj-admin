@@ -19,6 +19,14 @@ export function orderList(query) {
     params: query,
   });
 }
+// 订单详情
+export function orderDetail(query) {
+  return service({
+    method: "get",
+    url: `/order/get/detail?id=`+query,
+    // params: query,
+  });
+}
 // 团长列表
 export function leaderList(query) {
   return service({

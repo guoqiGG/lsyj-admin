@@ -137,8 +137,8 @@
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="120" align="center">
-        <template #default>
-          <span class="operation">查看详情</span>
+        <template #default="scope">
+          <span class="operation" @click="handleDetail(scope.row.id)">查看详情</span>
         </template>
       </el-table-column>
     </el-table>
@@ -148,11 +148,109 @@
         @size-change="tableHandleSizeChange" @current-change="tableHandleChange" />
     </div>
   </el-card>
+  <!-- 详情弹框 -->
+  <el-dialog v-model="dialogVisible" title="订单详情" width="900px">
+    <div class="detail_dialog">
+      <div class="orderNumber">
+        <p>订单编号：<span class="num">{{ detail.orderNumber }}</span></p>
+        <p>下单时间：<span class="num">{{ detail.statusCreateTime }}</span></p>
+      </div>
+      <div class="orderStatus">
+        <!-- 订单状态:1000-待付款,1001-已支付(待发货),2001-待收货,2002-后台确认收货（已完成),3001-用户点击确认收货(已完成),9000-已取消,-8000-错误 -->
+        <p class="big">
+          {{ detail.orderStatus === 1000 ? '待付款' : detail.orderStatus === 1001 ? '已支付' : detail.orderStatus === 2001 ? '待收货' : detail.orderStatus === 2002 ? '已完成' : detail.orderStatus === 3001 ? '已完成' : detail.orderStatus === 9000 ? '已取消' : '' }}
+        </p>
+        <!-- <p>订单已取消，商品交易失败</p> -->
+      </div>
+      <div class="order_status">
+        <div class="status_box">
+          <p class="yuan" :class="detail.orderStatus === 1000 ? 'borderColor' : ''">1</p>
+          <p :class="detail.orderStatus == 1000 ? 'color' : ''">提交订单</p>
+          <p :class="detail.orderStatus == 1000 ? 'color' : ''">{{ detail.statusCreateTime }}</p>
+        </div>
+        <p class="line"></p>
+        <div class="status_box">
+          <p v-if="detail.orderStatus === 9000" class="yuan" :class="detail.orderStatus === 9000 ? 'redColor' : ''">2</p>
+          <p v-else class="yuan" :class="detail.orderStatus === 1001 ? 'borderColor' : ''">2</p>
+          <p :class="detail.orderStatus === 1001 ? 'color' : ''">买家已付款</p>
+          <p>{{ detail.statusPayedTime }}</p>
+        </div>
+        <p class="line"></p>
+        <div class="status_box">
+          <p class="yuan" :class="detail.orderStatus === 2002 ? 'borderColor' : ''">3</p>
+          <p :class="detail.orderStatus === 2002 ? 'color' : ''">买家已自提</p>
+          <p>{{ detail.statusFinishedTime }}</p>
+        </div>
+        <p class="line"></p>
+        <div class="status_box">
+          <p class="yuan" :class="detail.orderStatus === 2002 || detail.orderStatus === 3001 ? 'borderColor' : ''">4</p>
+          <p :class="detail.orderStatus === 2002 || detail.orderStatus === 3001 ? 'color' : ''">买家已收货</p>
+          <p>{{ detail.statusFinishedTime }}</p>
+        </div>
+      </div>
+      <div class="orderDetail">
+        <div class="left">
+          <p class="blod">配送信息</p>
+          <p>提货人:<span class="num">{{ detail.leaderName }}</span></p>
+          <p>联系电话:<span class="num">{{ detail.leaderMobile }}</span></p>
+        </div>
+        <div class="left">
+          <p class="blod">收货人信息</p>
+          <p>配送方式:<span class="num">{{ detail.orderType===0?'快递':detail.orderType===1?'自提':'' }}</span></p>
+          <p>发货时间:<span class="num"></span></p>
+          <p>门店名称:<span class="num">{{detail.leaderAddress}}</span></p>
+
+        </div>
+        <div class="left">
+          <p class="blod">付款信息</p>
+          <p>实付金额:<span class="num">{{ detail.payCallback }}</span></p>
+          <p>付款方式:<span class="num">微信支付</span></p>
+          <p>付款时间:<span class="num">{{ detail.statusPayedTime }}</span></p>
+
+        </div>
+        <div class="left">
+          <p class="blod">买家信息</p>
+          <p>买家昵称:<span class="num">{{ detail.userName }}</span></p>
+          <p>买家留言:<span class="num">{{ detail.comment }}</span></p>
+
+        </div>
+      </div>
+      <div class="product">
+        <p style="display: flex;justify-content: center;align-items: center;">商品：
+          <img class="product_img" :src=" detail.orderGoods[0].picAddr" alt="">
+        </p>
+        <p>
+          单价/规格:
+          <span>{{detail.orderGoods[0].salePrice}}</span>
+          <span style="margin: 0px 5px;">/</span>
+          <span>{{ detail.orderGoods[0].number }}</span>
+        </p>
+        <p>
+          优惠金额：
+          <!-- <span>detail.orderGoods[0].picAddr</span> -->
+        </p>
+        <p>
+          总价：
+          <span>{{ detail.orderGoods[0].amount }}</span>
+        </p>
+        <p>
+          操作：
+          <span style="color: #025BFF;">后台发起退款</span>
+        </p>
+
+      </div>
+      <div style="width: 100%; border-top: 1px dashed #E6E6E6 ;">
+        <p style="font-weight: 600;">订单日志</p>
+        <!-- <p style="margin: 5px 0;padding: 0;">2024-03-20 10:36:36 洁儿妈 创建订单(成功)</p> -->
+      </div>
+    </div>
+
+  </el-dialog>
 
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { orderList } from "../../api/modules";
+import { orderList, orderDetail } from "../../api/modules";
 import dayjs from "dayjs";
 const searchParams = {
   orderNumber: '',
@@ -194,6 +292,21 @@ const tableHandleChange = (e) => {
 const resetForm = () => {
   searchForm.value = { ...searchParams }
 }
+// 订单详情
+const dialogVisible = ref(false)
+const detail = ref()
+
+const handleDetail = async (id) => {
+  const res = await orderDetail(id)
+  if (res.code === 0) {
+    detail.value = res.data
+    dialogVisible.value = true
+
+    console.log(detail.value)
+  }
+
+}
+
 
 onMounted(() => {
   getOrderList()
@@ -208,63 +321,174 @@ watch(searchForm.value, (newValue, oldValue) => {
 </script>
 <style lang="scss" scoped>
 .order {
-  text-align: left;}
-
-  .goodsInfo {
-    display: flex;
-    flex-direction: row;
-
-    .el-image__inner {
-      width: 60px;
-      height: 60px;
-    }
-
-    .left {
-      margin-left: 20px;
-
-      .goodsName {
-        white-space: nowrap;
-      }
-
-      .info {
-        display: block;
-        width: 40px;
-        line-height: 20px;
-        margin-top: 10px;
-        text-align: center;
-        border: 1px solid #F53F3F;
-        border-radius: 3px;
-        padding: 0 5px;
-
-        &.blue {
-          border: 1px solid blue;
-        }
-      }
-    }
-  }
-
-  .price {
-    text-align: center;
-
-    .price-title {
-      color: #F53F3F;
-    }
-  }
-
-  .demo-form-inline {
-    ::deep(.el-form-item__content .el-input) {
-      width: 100%;
-    }
-  }
-  </style>
-
-  <style scoped>
-.pagination{
-    margin-top: 20px;
+  text-align: left;
 }
-.operation{
-    color: #4060c7;
-    margin: 0px 5px;
-    cursor: pointer;
+
+.goodsInfo {
+  display: flex;
+  flex-direction: row;
+
+  .el-image__inner {
+    width: 60px;
+    height: 60px;
+  }
+
+  .left {
+    margin-left: 20px;
+
+    .goodsName {
+      white-space: nowrap;
+    }
+
+    .info {
+      display: block;
+      width: 40px;
+      line-height: 20px;
+      margin-top: 10px;
+      text-align: center;
+      border: 1px solid #F53F3F;
+      border-radius: 3px;
+      padding: 0 5px;
+
+      &.blue {
+        border: 1px solid blue;
+      }
+    }
+  }
+}
+
+.price {
+  text-align: center;
+
+  .price-title {
+    color: #F53F3F;
+  }
+}
+
+.demo-form-inline {
+  ::deep(.el-form-item__content .el-input) {
+    width: 100%;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.pagination {
+  margin-top: 20px;
+}
+
+.operation {
+  color: #4060c7;
+  margin: 0px 5px;
+  cursor: pointer;
+}
+
+.detail_dialog {
+  font-size: 16px;
+  font-weight: 500;
+  color: #101010;
+
+  .orderNumber {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px dashed #E6E6E6;
+    color: #101010;
+
+    .num {
+      color: #3D3D3D;
+    }
+  }
+
+  .orderStatus {
+    p {
+      padding: 0;
+      margin: 10px 0px;
+    }
+
+    .big {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  .order_status {
+    width: 98%;
+    background-color: #F6F6F6;
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+
+    .status_box {
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+
+      p {
+        padding: 0;
+        margin: 5px 0;
+      }
+    }
+
+    .yuan {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid #9E9E9E;
+      text-align: center;
+      color: #9E9E9E;
+    }
+
+    .color {
+      color: #025BFF;
+    }
+
+    .borderColor {
+      border: 1px solid #025BFF;
+      color: #025BFF;
+    }
+
+    .redColor {
+      border: 1px solid #f1300e;
+      color: #f1300e;
+    }
+
+    .line {
+      width: 200px;
+      height: 1px;
+      background-color: #9E9E9E;
+    }
+
+  }
+
+  .orderDetail {
+    width: 98%;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #E6E6E6;
+    padding: 10px;
+
+    .blod {
+      font-weight: 600;
+    }
+
+  }
+
+  .product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5px;
+
+    .product_img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+
 }
 </style>
