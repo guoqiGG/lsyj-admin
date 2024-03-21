@@ -63,7 +63,8 @@
     </el-card>
     <el-dialog v-model="editOrCreateDialogVisible" :title="isCreate ? '新增商品分类' : '编辑商品分类'" width="90%"
         @close="clearEditForm">
-        <el-form ref="categoryFormRef" :rules="rules" :model="prodForm" class="demo-form-inline" lable-width="100">
+        <el-form ref="categoryFormRef" :rules="rules" :model="prodForm" class="demo-form-inline" label-width="100px"
+            :label-position="right">
             <el-form-item label="商品分类" prop="categoryId">
                 <el-select v-model="prodForm.categoryId" placeholder="选择商品分类" clearable>
                     <el-option v-for="item in prodCategoryListData" :key="item.id" :label="item.name"
@@ -107,7 +108,7 @@
             </el-form-item>
             <!-- 规格 -->
             <el-form-item label="规格">
-                <div class="flex gap-2">
+                <div style="display: block;width:100%;">
                     <template v-for="item, index in prodForm.adminGoodsSkuInputVOS" :key="index">
                         <el-tag style="background:#FFF;color:#333;border:1px solid #f0f2f5;margin-right:10px;"
                             v-if="item.specificationName !== '默认'" closable :disable-transitions="false"
@@ -123,33 +124,34 @@
                     </el-button>
                 </div>
 
-                <el-table :data="prodForm.adminGoodsSkuInputVOS" style="width: 100%" max-height="250">
-                    <el-table-column label="规格" v-if="prodForm.adminGoodsSkuInputVOS[0].specificationName != '默认'">
+                <el-table :data="prodForm.adminGoodsSkuInputVOS" class="sku" border style="width:auto;margin-top:10px;">
+                    <el-table-column label="规格" v-if="prodForm.adminGoodsSkuInputVOS[0].specificationName != '默认'"
+                        width="150px">
                         <template #default="scope">
                             {{ scope.row.specificationName }}
                         </template>
                     </el-table-column>
-                    <el-table-column label="售价" align="center">
+                    <el-table-column label="售价" align="center" width="150">
                         <template #default="scope">
                             <el-input-number controls-position="right"
                                 v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].price" min="0" size="small"
-                                step="0.01"  />
+                                step="0.01" />
                         </template>
                     </el-table-column>
-                    <el-table-column label="库存" align="center">
+                    <el-table-column label="库存" align="center" width="150">
                         <template #default="scope">
                             <el-input-number controls-position="right"
                                 v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].stock" min="0" size="small" />
                         </template>
                     </el-table-column>
-                    <el-table-column label="注水销量" align="center">
+                    <el-table-column label="注水销量" align="center" width="150">
                         <template #default="scope">
                             <el-input-number controls-position="right"
                                 v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].virtuallyNum" min="0"
                                 size="small" />
                         </template>
                     </el-table-column>
-                    <el-table-column label="状态" align="center">
+                    <el-table-column label="状态" align="center" width="150">
                         <template #default="scope">
                             <el-select style="width:92%" placeholder="请选择"
                                 v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].status" size="small">
@@ -158,20 +160,20 @@
                             </el-select>
                         </template>
                     </el-table-column>
-                    <el-table-column label="限制类型" align="center">
+                    <el-table-column label="限制类型" align="center" width="150">
                         <template #default="scope">
                             <el-input-number controls-position="right"
                                 v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].limit_type" min="1" max="1"
                                 size="small" />
                         </template>
                     </el-table-column>
-                    <el-table-column label="限购数量" align="center">
+                    <el-table-column label="限购数量" align="center" width="150">
                         <template #default="scope">
                             <el-input-number controls-position="right"
                                 v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].limitBuy" min="0" size="small" />
                         </template>
                     </el-table-column>
-                    <el-table-column label="排序" align="center">
+                    <el-table-column label="排序" align="center" width="150">
                         <template #default="scope">
                             <el-input-number controls-position="right"
                                 v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].sort" min="0" size="small" />
@@ -247,11 +249,6 @@ const skuObj = ref({
     limitBuy: 0,
     sort: 0
 })
-
-
-if (prodForm.value.adminGoodsSkuInputVOS.length < 1) {
-    prodForm.value.adminGoodsSkuInputVOS.push(Object.assign({}, skuObj.value))
-}
 
 const inputValue = ref('')
 const categoryFormRef = ref()
@@ -400,6 +397,10 @@ const editOrCreateDialog = (e) => {
         prodForm.value.sort = e.row.sort
     } else { // 新增
         isCreate.value = true
+        // if (prodForm.value.adminGoodsSkuInputVOS.length < 1) {
+        prodForm.value.adminGoodsSkuInputVOS = []
+        prodForm.value.adminGoodsSkuInputVOS.push(Object.assign({}, skuObj.value))
+        // }
     }
 }
 
@@ -433,12 +434,12 @@ const save = async () => {
 
 // 清空表单数据
 const clearEditForm = () => {
-    prodForm.value = {
-        id: 0,
-        name: '',
-        url: '',
-        sort: 50
-    }
+    // prodForm.value = {
+    //     id: 0,
+    //     name: '',
+    //     url: '',
+    //     sort: 50
+    // }
 }
 
 
@@ -481,7 +482,7 @@ onMounted(() => {
 }
 </style>
 
-<style scoped>
+<style scoped lang="scss">
 .pagination {
     margin-top: 20px;
 }
@@ -493,7 +494,7 @@ onMounted(() => {
 }
 
 .footer {
-    padding-left: 50px;
+    padding-left: 0px;
 }
 
 :deep(.el-popconfirm .el-popconfirm__action span) {
