@@ -71,9 +71,10 @@
 
   </el-card>
   <el-card style="margin-top: 10px;">
-    <el-table v-loading="loading" :data="orderListData" style="width: 100%"  :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
+    <el-table v-loading="loading" :data="orderListData" style="width: 100%"
+      :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
       <!-- <el-table-column type="selection" width="55" /> -->
-      <el-table-column label="订单信息"  >
+      <el-table-column label="订单信息">
         <template #default="scope">
           <div class="order">
             <div>订单编号：{{ scope.row.orderId }}</div>
@@ -108,7 +109,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="团长" >
+      <el-table-column label="团长">
         <template #default="scope">
           <div class="leader">
             <div> 团长：{{ scope.row.leaderName }}</div>
@@ -117,19 +118,24 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="orderStatus" label="订单状态"  align="center">
-      <template #default="scope">
-            <div> {{  scope.row.orderStatus === 1000 ? '待付款' :  scope.row.orderStatus === 1001 ? '已支付' :  scope.row.orderStatus === 2001 ? '待收货' :  scope.row.orderStatus === 2002 ? '后台确认收货' :  scope.row.orderStatus === 3001 ? '用户点击确认收货' :  scope.row.orderStatus === 9000 ? '已取消' : scope.row.orderStatus === 8000 ? '错误': '' }}</div>
-        </template>
-      </el-table-column>
-     
-      <el-table-column prop="refundStatus" label="订单退款状态"  align="center">
-      <template #default="scope">
-            <div> {{  scope.row.refundStatus === 0 ? '未申请退款' :  scope.row.refundStatus === 1 ? '申请退款' :  scope.row.refundStatus === 2 ? '退款中' :  scope.row.refundStatus === 3 ? '退款失败' :  scope.row.refundStatus === 4 ? '退款成功' :  scope.row.orderStatus === 5 ? '后台手动退款成功' : '' }}</div>
+      <el-table-column prop="orderStatus" label="订单状态" align="center">
+        <template #default="scope">
+          <div> {{ scope.row.orderStatus === 1000 ? '待付款' : scope.row.orderStatus === 1001 ? '已支付' :
+      scope.row.orderStatus === 2001 ? '待收货' : scope.row.orderStatus === 2002 ? '后台确认收货' : scope.row.orderStatus
+        === 3001 ? '用户点击确认收货' : scope.row.orderStatus === 9000 ? '已取消' : scope.row.orderStatus === 8000 ? '错误' : ''
+            }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column label="支付单号" align="center" >
+      <el-table-column prop="refundStatus" label="订单退款状态" align="center">
+        <template #default="scope">
+          <div> {{ scope.row.refundStatus === 0 ? '未申请退款' : scope.row.refundStatus === 1 ? '申请退款' :
+      scope.row.refundStatus === 2 ? '退款中' : scope.row.refundStatus === 3 ? '退款失败' : scope.row.refundStatus === 4
+        ? '退款成功' : scope.row.orderStatus === 5 ? '后台手动退款成功' : '' }}</div>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="支付单号" align="center">
         <template #default="scope">
           <div class="leader">
             <div> {{ scope.row.payTransId }}</div>
@@ -158,7 +164,9 @@
       <div class="orderStatus">
         <!-- 订单状态:1000-待付款,1001-已支付(待发货),2001-待收货,2002-后台确认收货（已完成),3001-用户点击确认收货(已完成),9000-已取消,-8000-错误 -->
         <p class="big">
-          {{ detail.orderStatus === 1000 ? '待付款' : detail.orderStatus === 1001 ? '已支付' : detail.orderStatus === 2001 ? '待收货' : detail.orderStatus === 2002 ? '后台确认收货（已完成' : detail.orderStatus === 3001 ? '用户点击确认收货' : detail.orderStatus === 9000 ? '已取消' :detail.orderStatus === 8000 ? '错误' : '' }}
+          {{ detail.orderStatus === 1000 ? '待付款' : detail.orderStatus === 1001 ? '已支付' : detail.orderStatus === 2001 ?
+      '待收货' : detail.orderStatus === 2002 ? '后台确认收货（已完成' : detail.orderStatus === 3001 ? '用户点击确认收货' :
+        detail.orderStatus === 9000 ? '已取消' : detail.orderStatus === 8000 ? '错误' : '' }}
         </p>
         <!-- <p>订单已取消，商品交易失败</p> -->
       </div>
@@ -170,7 +178,8 @@
         </div>
         <p class="line"></p>
         <div class="status_box">
-          <p v-if="detail.orderStatus === 9000" class="yuan" :class="detail.orderStatus === 9000 ? 'redColor' : ''">2</p>
+          <p v-if="detail.orderStatus === 9000" class="yuan" :class="detail.orderStatus === 9000 ? 'redColor' : ''">2
+          </p>
           <p v-else class="yuan" :class="detail.orderStatus === 1001 ? 'borderColor' : ''">2</p>
           <p :class="detail.orderStatus === 1001 ? 'color' : ''">买家已付款</p>
           <p>{{ detail.statusPayedTime }}</p>
@@ -196,9 +205,11 @@
         </div>
         <div class="left">
           <p class="blod">收货人信息</p>
-          <p>配送方式:<span class="num">{{ detail.orderType===0?'快递':detail.orderType===1?'自提':'' }}</span></p>
-          <p>发货时间:<span class="num" v-if="detail.orderStatus>='2001' &&detail.orderStatus!='9000'&&detail.orderStatus!='8000'">{{ detail.orderGoods[0].updateTime }}</span></p>
-          <p>门店名称:<span class="num">{{detail.leaderAddress}}</span></p>
+          <p>配送方式:<span class="num">{{ detail.orderType === 0 ? '快递' : detail.orderType === 1 ? '自提' : '' }}</span></p>
+          <p>发货时间:<span class="num"
+              v-if="detail.orderStatus >= '2001' && detail.orderStatus != '9000' && detail.orderStatus != '8000'">{{
+      detail.statusDeliveringTime }}</span></p>
+          <p>门店名称:<span class="num">{{ detail.leaderAddress }}</span></p>
         </div>
         <div class="left">
           <p class="blod">付款信息</p>
@@ -219,29 +230,27 @@
           <img class="product_img" :src="detail.orderGoods[0].thumbail" alt="">
         </p>
         <p>
-          单价/规格:
-          <span>{{detail.orderGoods[0].salePrice}}</span>
-          <span style="margin: 0px 5px;">/</span>
+          单价
+          <span>{{ detail.orderGoods[0].salePrice }}</span>
+        </p>
+        <p>
+          数量：
           <span>{{ detail.orderGoods[0].number }}</span>
         </p>
         <p>
           优惠金额：
-          <!-- <span>detail.orderGoods[0].picAddr</span> -->
+          <span>{{ detail.couponAmt }}</span>
         </p>
         <p>
           总价：
-          <span>{{ detail.orderGoods[0].amount }}</span>
-        </p>
-        <p>
-          操作：
-          <span style="color: #025BFF;">后台发起退款</span>
+          <span>{{ detail.amount }}</span>
         </p>
 
       </div>
-      <div style="width: 100%; border-top: 1px dashed #E6E6E6 ;">
+      <!-- <div style="width: 100%; border-top: 1px dashed #E6E6E6 ;">
         <p style="font-weight: 600;">订单日志</p>
-        <!-- <p style="margin: 5px 0;padding: 0;">2024-03-20 10:36:36 洁儿妈 创建订单(成功)</p> -->
-      </div>
+        <p style="margin: 5px 0;padding: 0;">2024-03-20 10:36:36 洁儿妈 创建订单(成功)</p>
+      </div> -->
     </div>
 
   </el-dialog>
@@ -285,7 +294,7 @@ const tableHandleSizeChange = (e) => {
   pages.value.pageSize = e
 }
 const tableHandleChange = (e) => {
-  pages.value.pageNo = e   
+  pages.value.pageNo = e
   getOrderList()
 }
 const resetForm = () => {
@@ -300,13 +309,12 @@ const handleDetail = async (id) => {
   const res = await orderDetail(id)
   if (res.code === 0) {
     detail.value = res.data
-    dialogVisible.value = true
-
-    console.log(detail.value)
+    setTimeout(() => {
+      dialogVisible.value = true
+    }, 1000)
   }
 
 }
-
 
 onMounted(() => {
   getOrderList()
