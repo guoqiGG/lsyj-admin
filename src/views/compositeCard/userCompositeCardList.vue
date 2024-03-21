@@ -31,38 +31,38 @@
                     </el-form-item>
                 </el-col>
 
-                <!-- <el-col :span="6">
+                <el-col :span="6">
                     <el-form-item label="团长名称">
                         <el-input v-model="searchForm.leaderName" placeholder="请输入" clearable />
                     </el-form-item>
-                </el-col> -->
+                </el-col>
 
-                <!-- <el-col :span="6">
+                <el-col :span="6">
                     <el-form-item label="团长手机号">
                         <el-input v-model="searchForm.leaderMobile" placeholder="请输入" clearable />
                     </el-form-item>
-                </el-col> -->
+                </el-col>
                 <!-- <el-col :span="6">
                     <el-form-item label="团长ID">
                         <el-input v-model="searchForm.pUid" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col> -->
                 <!-- 合成卡获得开始时间 -->
-                <!-- <el-col :span="12">
+                <el-col :span="12">
                     <el-form-item label="合成卡获得时间 ">
-                        <el-date-picker v-model="searchForm.time1" type="datetimerange" start-placeholder="开始时间"
-                            end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd"
-                            time-format="A hh:mm:ss" value-format="YYYY-MM-DD h:m:s" />
+                        <el-date-picker v-model="searchForm.time1" type="daterange" start-placeholder="开始时间"
+                            end-placeholder="结束时间" format="YYYY-MM-DD" date-format="YYYY/MM/DD ddd"
+                            time-format="A hh:mm:ss" value-format="YYYY-MM-DD" />
                     </el-form-item>
-                </el-col> -->
+                </el-col>
                 <!--核销时间-->
-                <!-- <el-col :span="12">
+                <el-col :span="12">
                     <el-form-item label="核销时间 ">
                         <el-date-picker v-model="searchForm.time2" type="datetimerange" start-placeholder="开始时间"
                             end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd"
-                            time-format="A hh:mm:ss" value-format="YYYY-MM-DD h:m:s" />
+                            time-format="A hh:mm:ss" value-format="YYYY-MM-DD HH:mm:ss" />
                     </el-form-item>
-                </el-col> -->
+                </el-col>
 
                 <el-form-item>
                     <el-button type="primary" @click="getUserCompositeList">查询</el-button>
@@ -73,7 +73,7 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-table v-loading="loading" :data="userCompositeData" style="width: 100%">
+        <el-table v-loading="loading" :data="userCompositeData" style="width: 100%"  :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
             <el-table-column prop="name" label="用户名称" align="center" />
             <el-table-column prop="mobile" label="手机号" align="center" />
             <el-table-column prop="userId" label="用户ID" align="center" />

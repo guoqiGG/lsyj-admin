@@ -45,25 +45,26 @@
         <el-col :span="6">
           <el-form-item label="订单状态">
             <el-select style="width:92%" v-model="searchForm.orderStatus" placeholder="请选择" clearable>
-              <el-option label="待付款" value="1" />
-              <el-option label="待发货" value="2" />
-              <el-option label="待收货" value="1" />
-              <el-option label="后台确认收货(已完成)" value="2" />
-              <el-option label="用户确认收货(已完成)" value="1" />
-              <el-option label="已取消" value="2" />
-              <el-option label="错误" value="1" />
+              <el-option label="待付款" value="1000" />
+              <el-option label="待发货" value="1001" />
+              <el-option label="待收货" value="2001" />
+              <el-option label="后台确认收货(已完成)" value="2002" />
+              <el-option label="用户确认收货(已完成)" value="3001" />
+              <el-option label="已取消" value="9000" />
+              <el-option label="错误" value="8000" />
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item label="退款状态">
             <el-select style="width:92%" v-model="searchForm.refundStatus" placeholder="请选择" clearable>
-              <el-option label="未申请退款" value="1" />
-              <el-option label="申请退款" value="2" />
-              <el-option label="退款中" value="1" />
-              <el-option label="退款失败" value="2" />
-              <el-option label="退款成功" value="1" />
-              <el-option label="后台手动退款成功" value="2" />
+              <el-option label="未申请退款" value="0" />
+              <el-option label="申请退款" value="1" />
+              <el-option label="退款中" value="2" />
+              <el-option label="退款失败" value="3" />
+              <el-option label="退款成功" value="4" />
+              <el-option label="后台手动退款成功" value="5" />
+
             </el-select>
           </el-form-item>
         </el-col>
@@ -81,12 +82,12 @@
 
   </el-card>
   <el-card style="margin-top: 10px;">
-    <el-table v-loading="loading" :data="orderListData" style="width: 100%">
-      <el-table-column type="selection" width="55" />
-      <el-table-column label="订单信息">
+    <el-table v-loading="loading" :data="orderListData" style="width: 100%"  :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
+      <!-- <el-table-column type="selection" width="55" /> -->
+      <el-table-column label="订单信息"  >
         <template #default="scope">
           <div class="order">
-            <div>订单编号：{{ scope.row.orderNumber }}</div>
+            <div>订单编号：{{ scope.row.orderId }}</div>
             <div class="time">下单时间：{{ scope.row.statusPayedTime }}</div>
           </div>
         </template>
@@ -94,7 +95,7 @@
       <el-table-column label="商品信息">
         <template #default="scope">
           <div class="goodsInfo">
-            <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" lazy></el-image>
+            <el-image style="width: 60px;" :src="scope.row.thumbail" lazy></el-image>
             <div class="left">
               <div class="goodsName">{{ scope.row.goodsName }}</div>
               <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']">{{ scope.row.orderTypeStr }}</div>
@@ -110,7 +111,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="买家/收货人">
+      <el-table-column label="买家/收货人" align="center">
         <template #default="scope">
           <div class="buyer">
             <div>{{ scope.row.userName }}</div>
@@ -118,7 +119,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="团长">
+      <el-table-column label="团长" >
         <template #default="scope">
           <div class="leader">
             <div> 团长：{{ scope.row.leaderName }}</div>
@@ -127,9 +128,19 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="orderStatus" label="订单状态" />
-      <el-table-column prop="refundStatus" label="订单退款状态" />
-      <el-table-column label="支付单号">
+      <el-table-column prop="orderStatus" label="订单状态"  align="center">
+      <template #default="scope">
+            <div> {{  scope.row.orderStatus === 1000 ? '待付款' :  scope.row.orderStatus === 1001 ? '已支付' :  scope.row.orderStatus === 2001 ? '待收货' :  scope.row.orderStatus === 2002 ? '后台确认收货' :  scope.row.orderStatus === 3001 ? '用户点击确认收货' :  scope.row.orderStatus === 9000 ? '已取消' : scope.row.orderStatus === 8000 ? '错误': '' }}</div>
+        </template>
+      </el-table-column>
+     
+      <el-table-column prop="refundStatus" label="订单退款状态"  align="center">
+      <template #default="scope">
+            <div> {{  scope.row.refundStatus === 0 ? '未申请退款' :  scope.row.refundStatus === 1 ? '申请退款' :  scope.row.refundStatus === 2 ? '退款中' :  scope.row.refundStatus === 3 ? '退款失败' :  scope.row.refundStatus === 4 ? '退款成功' :  scope.row.orderStatus === 5 ? '后台手动退款成功' : '' }}</div>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="支付单号" align="center" >
         <template #default="scope">
           <div class="leader">
             <div> {{ scope.row.payTransId }}</div>
@@ -158,7 +169,7 @@
       <div class="orderStatus">
         <!-- 订单状态:1000-待付款,1001-已支付(待发货),2001-待收货,2002-后台确认收货（已完成),3001-用户点击确认收货(已完成),9000-已取消,-8000-错误 -->
         <p class="big">
-          {{ detail.orderStatus === 1000 ? '待付款' : detail.orderStatus === 1001 ? '已支付' : detail.orderStatus === 2001 ? '待收货' : detail.orderStatus === 2002 ? '已完成' : detail.orderStatus === 3001 ? '已完成' : detail.orderStatus === 9000 ? '已取消' : '' }}
+          {{ detail.orderStatus === 1000 ? '待付款' : detail.orderStatus === 1001 ? '已支付' : detail.orderStatus === 2001 ? '待收货' : detail.orderStatus === 2002 ? '后台确认收货（已完成' : detail.orderStatus === 3001 ? '用户点击确认收货' : detail.orderStatus === 9000 ? '已取消' :detail.orderStatus === 8000 ? '错误' : '' }}
         </p>
         <!-- <p>订单已取消，商品交易失败</p> -->
       </div>
@@ -286,11 +297,12 @@ const tableHandleSizeChange = (e) => {
   pages.value.pageSize = e
 }
 const tableHandleChange = (e) => {
-  pages.value.pageNo = e
+  pages.value.pageNo = e   
   getOrderList()
 }
 const resetForm = () => {
   searchForm.value = { ...searchParams }
+  getOrderList()
 }
 // 订单详情
 const dialogVisible = ref(false)

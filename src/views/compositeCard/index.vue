@@ -28,7 +28,7 @@
         <el-table :data="compositeData" :span-method="objectSpanMethod" border v-loading="loading" style="width: 100%"
             :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
             <el-table-column align="center" prop="parentName" label="合成卡名称" show-overflow-tooltip></el-table-column>
-            <!-- <el-table-column align="center" prop="parentName" label="需礼品卡数" show-overflow-tooltip></el-table-column> -->
+            <el-table-column align="center" prop="parentNumber" label="需礼品卡数" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="name" label="礼品卡名称" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="number" label="用户最大领取数量" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="total" label="礼品卡总数量" show-overflow-tooltip></el-table-column>
@@ -120,6 +120,7 @@ const geCompositeCardList = async () => {
             if (ie) {
                 ie.parentName = item.name
                 ie.parentId = item.id
+                ie.parentNumber = item.number
                 ids.push(ie.id)
                 ie.ruleIds = ids
                 compositeData.value.push(ie)
@@ -158,8 +159,13 @@ const objectSpanMethod = ({ row, column, rowIndex, columnIndex }) => {
     if (columnIndex === 0) {
         const rowSpan = rowSpanArr.value[rowIndex];
         return [rowSpan, 1];
+        
     }
-    if (columnIndex === 6) {
+    if (columnIndex === 1) {
+        const rowSpan = rowSpanArr.value[rowIndex];
+        return [rowSpan, 1];
+    }
+    if (columnIndex === 7) {
         const rowSpan = rowSpanArr.value[rowIndex];
         return [rowSpan, 1];
     }
@@ -243,7 +249,7 @@ const submitForm = () => {
 const handleEditor = (item) => {
     isEdit.value = true
     form.value.name = item.parentName
-    form.value.number = item.number
+    form.value.number = item.parentNumber
     form.value.ruleIds = item.ruleIds
     dialogVisible.value = true
 }

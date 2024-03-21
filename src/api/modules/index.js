@@ -243,10 +243,10 @@ export function userGiftList(query) {
   });
 }
 // 用户合成卡列表-page
-export function userCompositeList(query) {
+export function userCompositeList(data) {
   return service({
-    method: "get",
+    method: "POST",
     url: "/gift/rule/user/get/list",
-    params: query,
+    data: JSON.stringify(data),
   });
 }
