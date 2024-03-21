@@ -29,11 +29,6 @@
             <el-input v-model="searchForm.leaderMobile" placeholder="团长手机号" clearable />
           </el-form-item>
         </el-col>
-        <!-- <el-col :span="6">
-           <el-form-item label="商品名称">
-        <el-input v-model="searchForm.goodsName" placeholder="商品名称" clearable />
-      </el-form-item> 
-        </el-col> -->
         <el-col :span="6">
           <el-form-item label="订单类型">
             <el-select style="width:92%" v-model="searchForm.orderType" placeholder="请选择" clearable>
@@ -64,15 +59,9 @@
               <el-option label="退款失败" value="3" />
               <el-option label="退款成功" value="4" />
               <el-option label="后台手动退款成功" value="5" />
-
             </el-select>
           </el-form-item>
         </el-col>
-        <!-- <el-form-item label="时间">
-          <el-date-picker v-model="searchForm.time" type="datetimerange" range-separator="-" start-placeholder="开始时间"
-            end-placeholder="结束时间" />
-        </el-form-item> -->
-
         <el-form-item>
           <el-button type="primary" @click="getOrderList">查询</el-button>
           <el-button @click="resetForm()">重置</el-button>
@@ -163,8 +152,8 @@
   <el-dialog v-model="dialogVisible" title="订单详情" width="900px">
     <div class="detail_dialog">
       <div class="orderNumber">
-        <p>订单编号：<span class="num">{{ detail.orderNumber }}</span></p>
-        <p>下单时间：<span class="num">{{ detail.statusCreateTime }}</span></p>
+        <p>订单编号：<span class="num">{{ detail.payTransId }}</span></p>
+        <p>下单时间：<span class="num">{{ detail.statusPayedTime }}</span></p>
       </div>
       <div class="orderStatus">
         <!-- 订单状态:1000-待付款,1001-已支付(待发货),2001-待收货,2002-后台确认收货（已完成),3001-用户点击确认收货(已完成),9000-已取消,-8000-错误 -->
@@ -208,9 +197,8 @@
         <div class="left">
           <p class="blod">收货人信息</p>
           <p>配送方式:<span class="num">{{ detail.orderType===0?'快递':detail.orderType===1?'自提':'' }}</span></p>
-          <p>发货时间:<span class="num"></span></p>
+          <p>发货时间:<span class="num" v-if="detail.orderStatus>='2001' &&detail.orderStatus!='9000'&&detail.orderStatus!='8000'">{{ detail.orderGoods[0].updateTime }}</span></p>
           <p>门店名称:<span class="num">{{detail.leaderAddress}}</span></p>
-
         </div>
         <div class="left">
           <p class="blod">付款信息</p>
@@ -228,7 +216,7 @@
       </div>
       <div class="product">
         <p style="display: flex;justify-content: center;align-items: center;">商品：
-          <img class="product_img" :src=" detail.orderGoods[0].picAddr" alt="">
+          <img class="product_img" :src="detail.orderGoods[0].thumbail" alt="">
         </p>
         <p>
           单价/规格:
