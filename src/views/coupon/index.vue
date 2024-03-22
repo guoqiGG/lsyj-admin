@@ -109,17 +109,17 @@
             <el-form-item label="不可用商品" prop="productValue1" v-if="couponForm.type && couponForm.type?.includes(2)">
                 <el-select v-model="couponForm.productValue1" multiple value-key="id" placeholder="请选择不可用商品"
                     style="width: 240px">
-                    <el-option v-for="item in prodData" :key="item.id" :label="item.name" :value="item" />
+                    <el-option v-for="item in prodData" :key="item.id" :label="item.id + item.name" :value="item" />
                 </el-select>
             </el-form-item>
             <!-- 指定商品可用 -->
             <el-form-item label="可用商品" prop="productValue2" v-if="couponForm.type && couponForm.type?.includes(3)">
                 <el-select v-model="couponForm.productValue2" multiple value-key="id" placeholder="请选择可用商品"
-                    style="width: 240px">
-                    <el-option v-for="item in prodData" :key="item.id" :label="item.name" :value="item" />
+                    @change="change" style="width: 240px">
+                    <el-option v-for="item in prodData" :label="item.id + item.name" :key="item.id"
+                        :value="item"></el-option>
                 </el-select>
             </el-form-item>
-
 
             <!-- 不可用商品展示 -->
             <div style="margin-left: 25px;border-bottom: 2px dashed #E6E6E6" v-if="couponForm.productValue1">
@@ -203,6 +203,7 @@ const getProdCategoryList = async () => {
     })
     prodCategoryData.value = res.data.list
 }
+
 // 获取商品
 const prodData = ref([])
 const getProdList = async () => {
@@ -210,8 +211,12 @@ const getProdList = async () => {
         pageNo: 1,
         pageSize: 10000,
     })
-    prodData.value = res.data.list
-    console.log(prodData, 'prodData')
+    let aa= res.data.list
+    aa.forEach(e => {
+        e.label=e.name
+    });
+    prodData.value =aa
+
 }
 
 
@@ -229,8 +234,8 @@ const couponForm = ref({
     deadlineTime: null,//为2时 的有效期
     type: [],//类型 1指定分类不可用 2指定商品不可用  3指定商品可用
     sortValue: null,//为1时分类id
-    productValue1: [],// 为2时商品id
-    productValue2: [],// 为3时商品id
+    productValue1: null,// 为2时商品id
+    productValue2: null,// 为3时商品id
 })
 const options = [
     { label: '指定分类不可用', value: 1 },
@@ -250,6 +255,10 @@ const rules = reactive({
     productValue2: [{ required: true, message: '请选择可用商品', trigger: 'blur' }],
 
 })
+
+const change = (e) => {
+    console.log(e)
+}
 // 新增
 const add = () => {
     dialogVisible.value = true
@@ -270,13 +279,12 @@ const add = () => {
 // 新增弹框-保存按钮
 const submitForm = () => {
     formRef.value.validate(async (valid) => {
-        console.log(couponForm.value)
         if (valid) {
             const res = ref()
             let coupon = {
                 type: 1,
                 isDeleted: 0,
-                couponId:couponForm.value.couponId,
+                couponId: couponForm.value.couponId,
                 name: couponForm.value.name,
                 amount: couponForm.value.amount,
                 status: couponForm.value.status,
@@ -352,10 +360,10 @@ const handleEditor = (item) => {
     couponForm.value.deadlineType = item.deadlineType
     couponForm.value.deadlineDay = item.deadlineDay
     couponForm.value.deadlineTime = item.deadlineTime
-    couponForm.value.type=[]
-    couponForm.value.sortValue=[]
-    couponForm.value.productValue1=[]
-    couponForm.value.productValue2=[]
+    couponForm.value.type = []
+    couponForm.value.sortValue = []
+    couponForm.value.productValue1 = []
+    couponForm.value.productValue2 = []
 
     let num1 = 0
     let num2 = 0
@@ -366,11 +374,11 @@ const handleEditor = (item) => {
             num1 += 1
         }
         if (item.type === 2) {
-            couponForm.value.productValue1.push({id:Number(item.conditionValue),name:item.name,thumbail:item.thumbail})
+            couponForm.value.productValue1.push({ id: Number(item.conditionValue), name: item.name, thumbail: item.thumbail })
             num2 += 1
         }
         if (item.type === 3) {
-            couponForm.value.productValue2.push({id:Number(item.conditionValue),name:item.name,thumbail:item.thumbail})
+            couponForm.value.productValue2.push({ id: Number(item.conditionValue), name: item.name, thumbail: item.thumbail })
             num3 += 1
         }
     })
