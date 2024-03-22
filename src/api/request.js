@@ -4,7 +4,7 @@ import { tansParams, blobValidate } from "@/utils/ruoyi";
 
 const service = axios.create({
   timeout: 50000,
-  baseURL: '/api',
+  baseURL: "/api",
 });
 // Request interceptors
 service.interceptors.request.use(
@@ -30,10 +30,17 @@ service.interceptors.request.use(
 // Response interceptors
 service.interceptors.response.use(
   (response) => {
-    if (response.data.code !== 0) {
+    // if (response.data.code !== 0) {
+    //   ElMessage({
+    //     type: "error",
+    //     message: "服务器忙,请稍后再试~",
+    //   });
+    //   return;
+    // }
+    if (response.data.code == 500) {
       ElMessage({
         type: "error",
-        message: "服务器忙,请稍后再试~",
+        message: response.data.msg || "服务器忙,请稍后再试~",
       });
       return;
     }

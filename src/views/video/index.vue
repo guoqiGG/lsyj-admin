@@ -7,7 +7,7 @@
                         <el-input v-model="searchForm.total" placeholder="视频标题" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <!-- <el-col :span="6">
                     <el-form-item label="团长姓名">
                         <el-input v-model="searchForm.leaderName" placeholder="团长姓名" clearable />
                     </el-form-item>
@@ -16,7 +16,7 @@
                     <el-form-item label="团长号码">
                         <el-input v-model="searchForm.leaderMobile" placeholder="团长号码" clearable />
                     </el-form-item>
-                </el-col>
+                </el-col> -->
                 <el-col :span="6">
                     <el-form-item label="创建方式">
                         <el-select style="width:92%" v-model="searchForm.type" placeholder="请选择" clearable>
@@ -43,8 +43,8 @@
                 </template>
             </el-table-column>
 
-            <el-table-column prop="leaderName" label="团长" />
-            <el-table-column prop="leaderMobile" label="手机号" />
+            <!-- <el-table-column prop="leaderName" label="团长" />
+            <el-table-column prop="leaderMobile" label="手机号" /> -->
             <el-table-column prop="typeStr" label="创建方式" />
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">

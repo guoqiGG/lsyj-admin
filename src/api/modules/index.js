@@ -177,6 +177,34 @@ export function prodList(query) {
   });
 }
 
+
+// 商品新增
+export function prodAdd(query) {
+  return service({
+    method: "POST",
+    url: "/goods/add",
+    data: JSON.stringify(query),
+  });
+}
+
+// 根据id查询商品信息
+export function prodInfoById(query) {
+  return service({
+    method: "get",
+    url: "/goods/get/detail",
+    params: query,
+  });
+}
+
+// 商品删除与修改
+export function deleteProd(query) {
+  return service({
+    method: "POST",
+    url: "/goods/modify",
+    data: JSON.stringify(query),
+  });
+}
+
 // 优惠券列表
 export function couponList(query) {
   return service({

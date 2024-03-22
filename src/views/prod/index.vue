@@ -44,13 +44,13 @@
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="editOrCreateDialog(scope)" :icon="Edit">编辑</span>
-                    <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
+                    <!-- <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="deleteProdById(scope.row.id, 1)"
                         @cancel="cancelEvent">
                         <template #reference>
                             <span class="operation">删除</span>
                         </template>
-                    </el-popconfirm>
+                    </el-popconfirm> -->
                 </template>
             </el-table-column>
         </el-table>
@@ -87,8 +87,8 @@
             </el-form-item>
             <el-form-item label="商品类型" prop="goodsType">
                 <el-radio-group v-model="prodForm.goodsType">
-                    <el-radio border :label="0">普通</el-radio>
-                    <el-radio border :label="1">特殊</el-radio>
+                    <el-radio border label="0">普通</el-radio>
+                    <el-radio border label="1">特殊</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="商品简介" prop="description">
@@ -125,7 +125,7 @@
                 </div>
 
                 <el-table :data="prodForm.adminGoodsSkuInputVOS" class="sku" border style="width:auto;margin-top:10px;">
-                    <el-table-column label="规格" v-if="prodForm.adminGoodsSkuInputVOS[0].specificationName != '默认'"
+                    <el-table-column label="规格" v-if="prodForm.adminGoodsSkuInputVOS[0]?.specificationName != '默认'"
                         width="150px">
                         <template #default="scope">
                             {{ scope.row.specificationName }}
@@ -160,11 +160,10 @@
                             </el-select>
                         </template>
                     </el-table-column>
-                    <el-table-column label="限制类型" align="center" width="150">
+                    <el-table-column label="限制类型(默认0不限制)" align="center" width="150">
                         <template #default="scope">
                             <el-input-number controls-position="right"
-                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].limit_type" min="1" max="1"
-                                size="small" />
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].limit_type" size="small" />
                         </template>
                     </el-table-column>
                     <el-table-column label="限购数量" align="center" width="150">
@@ -199,7 +198,7 @@
 </template>
 <script setup>
 import { onMounted, ref, reactive, nextTick, isRef } from "vue";
-import { prodList, prodCategoryList, deleteProdCategory, prodCategoryAdd } from "@/api/modules";
+import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById } from "@/api/modules";
 import { ElMessage, ElInput } from "element-plus";
 import {
     CirclePlus
@@ -236,7 +235,6 @@ const prodForm = ref({
     //     couponNum: '',//发放数量
     //     rule: '' //发放规则  0一次发放 1按月发放
     // },
-
 })
 
 const skuObj = ref({
@@ -245,7 +243,7 @@ const skuObj = ref({
     stock: 0,
     virtuallyNum: 0,
     status: 1,
-    limit_type: 1,
+    limit_type: 0, // 0 不限购 1 限购 2今日限购
     limitBuy: 0,
     sort: 0
 })
@@ -317,7 +315,7 @@ const rules = reactive({
 const editOrCreateDialogVisible = ref(false)
 
 const getProdCategoryList = async () => {
-    const res = await prodList({
+    const res = await prodCategoryList({
         pageNo: 1,
         pageSize: 1000000,
     })
@@ -343,7 +341,7 @@ const resetForm = () => {
 }
 
 const deleteProdById = async (id, isDeleted) => {
-    const res = await deleteProdCategory({ id, isDeleted })
+    const res = await deleteProd({ goodsId:id, isDeleted })
     console.log(res)
     if (res.code === 0) {
         getProdList()
@@ -386,15 +384,23 @@ const beforeUpload = (file) => {
     return isLt2M && isOKType;
 }
 
-const editOrCreateDialog = (e) => {
+const editOrCreateDialog = async (e) => {
     editOrCreateDialogVisible.value = true
     if (e) { //编辑
-        console.log(e)
         isCreate.value = false
-        prodForm.value.id = e.row.id
-        prodForm.value.name = e.row.name
-        prodForm.value.url = e.row.url
-        prodForm.value.sort = e.row.sort
+        const res = await prodInfoById({ goodsId: e.row.id })
+        prodForm.value.id = res.data.id
+        prodForm.value.categoryId = res.data.categoryId
+        prodForm.value.goodsName = res.data.name
+        prodForm.value.goodsType = Number(res.data.goodsType)
+        prodForm.value.thumbail = res.data.thumbail
+        prodForm.value.goodsType = res.data.goodsType
+        prodForm.value.description = res.data.description
+        prodForm.value.sort = res.data.sort
+        prodForm.value.deliveryMode = res.data.deliveryMode
+        prodForm.value.adminSort = res.data.adminSort
+        prodForm.value.adminGoodsSkuInputVOS = res.data.adminGoodsSkuInputVOS
+        console.log(prodForm.value.goodsType)
     } else { // 新增
         isCreate.value = true
         // if (prodForm.value.adminGoodsSkuInputVOS.length < 1) {
@@ -414,13 +420,35 @@ const save = async () => {
     categoryFormRef.value.validate(async (valid) => {
         if (valid) {
             if (isCreate.value) {//新增提交
-                const res = await prodCategoryAdd({ name: prodForm.value.name, url: prodForm.value.url, sort: prodForm.value.sort })
+                const res = await prodAdd({
+                    categoryId: prodForm.value.categoryId,
+                    goodsName: prodForm.value.goodsName,
+                    goodsType: prodForm.value.goodsType,
+                    thumbail: prodForm.value.thumbail,
+                    description: prodForm.value.description,
+                    sort: prodForm.value.sort,
+                    deliveryMode: prodForm.value.deliveryMode,
+                    adminSort: prodForm.value.adminSort,
+                    adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS,
+                })
+                console.log(res)
                 if (res.code == 0) {
                     closeEditOrCreateDialog()
                     getProdList()
                 }
             } else { // 编辑提交
-                const res = await deleteProdCategory({ id: prodForm.value.id, name: prodForm.value.name, url: prodForm.value.url, sort: prodForm.value.sort })
+                const res = await deleteProd({
+                    goodsId: prodForm.value.id,
+                    categoryId: prodForm.value.categoryId,
+                    goodsName: prodForm.value.goodsName,
+                    goodsType: prodForm.value.goodsType,
+                    thumbail: prodForm.value.thumbail,
+                    description: prodForm.value.description,
+                    sort: prodForm.value.sort,
+                    deliveryMode: prodForm.value.deliveryMode,
+                    adminSort: prodForm.value.adminSort,
+                    adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS,
+                })
                 if (res.code == 0) {
                     closeEditOrCreateDialog()
                     getProdList()
@@ -434,12 +462,18 @@ const save = async () => {
 
 // 清空表单数据
 const clearEditForm = () => {
-    // prodForm.value = {
-    //     id: 0,
-    //     name: '',
-    //     url: '',
-    //     sort: 50
-    // }
+    prodForm.value = {
+        id: 0,
+        categoryId: '', //分类id
+        goodsName: '', // 商品名称
+        goodsType: 0,//订单类型
+        thumbail: '', //大图
+        description: '',//配送类型
+        sort: 0, //排序
+        deliveryMode: 1,//配送类别
+        adminSort: 0, //后台排序
+        adminGoodsSkuInputVOS: [], //商品详情相关
+    }
 }
 
 
