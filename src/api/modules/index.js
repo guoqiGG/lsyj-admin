@@ -213,6 +213,22 @@ export function couponList(query) {
     params: query,
   });
 }
+// 优惠券新增
+export function addCouponList(data) {
+  return service({
+    method: "POST",
+    url: "/coupon/add",
+    data,
+  });
+}
+// 优惠券修改
+export function updateCouponList(data) {
+  return service({
+    method: "POST",
+    url: "coupon/update",
+    data,
+  });
+}
 //礼品卡列表
 export function giftList(query) {
   return service({
