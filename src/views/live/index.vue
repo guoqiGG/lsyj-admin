@@ -40,7 +40,7 @@
         </el-table>
         <div class="pagination">
             <el-pagination background layout="total, sizes, prev, pager, next, jumper"
-                v-model:page-size="pages.pageSize" v-model:current-page="pages.current"
+                v-model:page-size="pages.pageSize" v-model:current-page="pages.pageNo"
                 :page-sizes="[10, 20, 50, 100, 200, 500]" :total="pages.total" @size-change="tableHandleSizeChange"
                 @current-change="tableHandleChange" />
         </div>

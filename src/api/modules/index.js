@@ -23,7 +23,7 @@ export function orderList(query) {
 export function orderDetail(query) {
   return service({
     method: "get",
-    url: `/order/get/detail?id=`+query,
+    url: `/order/get/detail?id=` + query,
     // params: query,
   });
 }
@@ -140,7 +140,6 @@ export function upload(query) {
   });
 }
 
-
 // 商品分类列表
 export function prodCategoryList(query) {
   return service({
@@ -176,7 +175,6 @@ export function prodList(query) {
     params: query,
   });
 }
-
 
 // 商品新增
 export function prodAdd(query) {
@@ -254,7 +252,7 @@ export function giftUpdate(data) {
   });
 }
 //合成卡列表
-export function compositeCardList( query) {
+export function compositeCardList(query) {
   return service({
     method: "POST",
     url: "/gift/rule/get/list",
@@ -294,3 +292,31 @@ export function userCompositeList(data) {
     data: JSON.stringify(data),
   });
 }
+// 用户优惠券列表
+export function userCouponList(query) {
+  return service({
+    method: "get",
+    url: "/user/coupon/get/list",
+    params: query,
+  });
+}
+
+// 用户送优惠券
+export function userCouponAdd(data) {
+  return service({
+    method: "POST",
+    url: "user/coupon/add",
+    data: JSON.stringify(data),
+  });
+}
+
+// 用户送礼品券
+export function userGiftAdd(data) {
+  return service({
+    method: "POST",
+    url: "gift/user/admin/add",
+    data: JSON.stringify(data),
+  });
+}
+
+
