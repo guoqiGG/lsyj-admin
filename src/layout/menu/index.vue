@@ -180,6 +180,23 @@ const menuList = ref([
       }
     ],
   },
+  {
+    title: "退款管理",
+    url: "/refund",
+    icon: "Checked",
+    children: [
+      {
+        title: "退款列表",
+        url: "/refundList",
+        icon: "Menu",
+      },
+      // {
+      //   title: "商品分类",
+      //   url: "/proCategoryList",
+      //   icon: "Menu",
+      // }
+    ],
+  },
 
 ]);
 

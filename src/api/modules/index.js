@@ -319,4 +319,21 @@ export function userGiftAdd(data) {
   });
 }
 
+// 退款列表
+export function refundList(data) {
+  return service({
+    method: "get",
+    url: "order/refund/get/list",
+    data: JSON.stringify(data),
+  });
+}
+// 退款审核
+export function refundAudit(data) {
+  return service({
+    method: "get",
+    url: "order/refund/audit",
+    data: JSON.stringify(data),
+  });
+}
+
 
