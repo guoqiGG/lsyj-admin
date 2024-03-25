@@ -115,7 +115,7 @@
             <!-- 指定商品可用 -->
             <el-form-item label="可用商品" prop="productValue2" v-if="couponForm.type && couponForm.type?.includes(3)">
                 <el-select v-model="couponForm.productValue2" multiple value-key="id" placeholder="请选择可用商品"
-                    @change="change" style="width: 240px">
+                   style="width: 240px">
                     <el-option v-for="item in prodData" :label="item.id + item.name" :key="item.id"
                         :value="item"></el-option>
                 </el-select>
@@ -256,9 +256,7 @@ const rules = reactive({
 
 })
 
-const change = (e) => {
-    console.log(e)
-}
+
 // 新增
 const add = () => {
     dialogVisible.value = true
@@ -328,8 +326,6 @@ const submitForm = () => {
                 coupon: coupon,
                 couponConstraintList: couponConstraintList
             }
-            // console.log(couponConstraintList, 'couponConstraintList')
-            // console.log(params, 'params')
 
             // 修改
             if (couponForm.value.id) {
