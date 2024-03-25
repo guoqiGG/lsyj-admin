@@ -168,33 +168,54 @@
       '待收货' : detail.orderStatus === 2002 ? '后台确认收货（已完成' : detail.orderStatus === 3001 ? '用户点击确认收货' :
         detail.orderStatus === 9000 ? '已取消' : detail.orderStatus === 8000 ? '错误' : '' }}
         </p>
-        <!-- <p>订单已取消，商品交易失败</p> -->
       </div>
       <div class="order_status">
         <div class="status_box">
-          <p class="yuan" :class="detail.orderStatus === 1000 ? 'borderColor' : ''">1</p>
-          <p :class="detail.orderStatus == 1000 ? 'color' : ''">提交订单</p>
-          <p :class="detail.orderStatus == 1000 ? 'color' : ''">{{ detail.statusCreateTime }}</p>
-        </div>
-        <p class="line"></p>
-        <div class="status_box">
-          <p v-if="detail.orderStatus === 9000" class="yuan" :class="detail.orderStatus === 9000 ? 'redColor' : ''">2
+          <p class="yuan" :class="detail.orderStatus >= 1000 && detail.orderStatus <= 9000 ? 'borderColor' : ''">1
           </p>
-          <p v-else class="yuan" :class="detail.orderStatus === 1001 ? 'borderColor' : ''">2</p>
-          <p :class="detail.orderStatus === 1001 ? 'color' : ''">买家已付款</p>
-          <p>{{ detail.statusPayedTime }}</p>
+          <p :class="detail.orderStatus >= 1000 && detail.orderStatus <= 9000 ? 'color' : ''">待付款</p>
+          <p :class="detail.orderStatus >= 1000 && detail.orderStatus <= 9000 ? 'color' : ''">{{
+      detail.statusCreateTime }}</p>
         </div>
-        <p class="line"></p>
-        <div class="status_box">
-          <p class="yuan" :class="detail.orderStatus === 2002 ? 'borderColor' : ''">3</p>
-          <p :class="detail.orderStatus === 2002 ? 'color' : ''">买家已自提</p>
-          <p>{{ detail.statusFinishedTime }}</p>
+        <p class="line"
+          :class="(detail.orderStatus >= 1001 && detail.orderStatus < 8000) || detail.orderStatus === 9000 ? 'bg_color' : ''">
+        </p>
+        <div class="status_box" v-if="detail.orderStatus === 9000" style=" color: #f1300e;">
+        <p class="yuan"
+          :class="detail.orderStatus === 9000 ? 'redColor' : ''">2
+          </p>
+          <p>已取消</p>
+          <p>{{
+      detail.statusPayedTime ||'暂无时间信息'}}</p>
         </div>
-        <p class="line"></p>
+        <div class="status_box" v-else>
+          <p class="yuan" :class="detail.orderStatus >= 1001 && detail.orderStatus < 8000 ? 'borderColor' : ''">2
+          </p>
+          <p :class="detail.orderStatus >= 1001 && detail.orderStatus < 8000 ? 'color' : ''">已支付</p>
+          <p :class="detail.orderStatus >= 1001 && detail.orderStatus < 8000 ? 'color' : ''">{{
+      detail.statusPayedTime||'暂无时间信息' }}</p>
+        </div>
+        <p class="line" :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'bg_color' : ''"></p>
         <div class="status_box">
-          <p class="yuan" :class="detail.orderStatus === 2002 || detail.orderStatus === 3001 ? 'borderColor' : ''">4</p>
-          <p :class="detail.orderStatus === 2002 || detail.orderStatus === 3001 ? 'color' : ''">买家已收货</p>
-          <p>{{ detail.statusFinishedTime }}</p>
+          <p class="yuan" :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'borderColor' : ''">3
+          </p>
+          <p :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'color' : ''">待收货</p>
+          <p :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'color' : ''">{{
+      detail.statusFinishedTime||'暂无时间信息' }}</p>
+        </div>
+        <p class="line"
+          :class="(detail.orderStatus >= 2002 || detail.orderStatus >= 3001) && detail.orderStatus < 8000 ? 'bg_color' : ''">
+        </p>
+        <div class="status_box">
+          <p class="yuan"
+            :class="(detail.orderStatus >= 2002 || detail.orderStatus >= 3001) && detail.orderStatus < 8000 ? 'borderColor' : ''">
+            4</p>
+          <p
+            :class="(detail.orderStatus >= 2002 || detail.orderStatus >= 3001) && detail.orderStatus < 8000 ? 'color' : ''">
+            已完成</p>
+          <p
+            :class="(detail.orderStatus >= 2002 || detail.orderStatus >= 3001) && detail.orderStatus < 8000 ? 'color' : ''">
+            {{ detail.statusFinishedTime ||'暂无时间信息'}}</p>
         </div>
       </div>
       <div class="orderDetail">
@@ -225,32 +246,20 @@
 
         </div>
       </div>
-      <div class="product">
-        <p style="display: flex;justify-content: center;align-items: center;">商品：
-          <img class="product_img" :src="detail.orderGoods[0].thumbail" alt="">
-        </p>
-        <p>
-          单价
-          <span>{{ detail.orderGoods[0].salePrice }}</span>
-        </p>
-        <p>
-          数量：
-          <span>{{ detail.orderGoods[0].number }}</span>
-        </p>
-        <p>
-          优惠金额：
-          <span>{{ detail.couponAmt }}</span>
-        </p>
-        <p>
-          总价：
-          <span>{{ detail.amount }}</span>
-        </p>
-
+      <div class="product" style="margin-top: 20px;">
+        <el-table :data="detail.orderGoods" style="width: 100%"
+          :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
+          <el-table-column prop="type" label="商品" align="center">
+            <template #default="scope">
+              <img style="width: 40px;height: 40px;margin: 0px 5px;" :src="scope.row.thumbail" alt="">
+            </template>
+          </el-table-column>
+          <el-table-column prop="salePrice" label="单价" align="center" />
+          <el-table-column prop="number" label="数量" align="center" />
+          <el-table-column prop="couponAmt" label="优惠金额" align="center" />
+          <el-table-column prop="amount" label="总价" align="center" />
+        </el-table>
       </div>
-      <!-- <div style="width: 100%; border-top: 1px dashed #E6E6E6 ;">
-        <p style="font-weight: 600;">订单日志</p>
-        <p style="margin: 5px 0;padding: 0;">2024-03-20 10:36:36 洁儿妈 创建订单(成功)</p>
-      </div> -->
     </div>
 
   </el-dialog>
@@ -423,7 +432,7 @@ watch(searchForm.value, (newValue, oldValue) => {
 
   .order_status {
     width: 98%;
-    background-color: #F6F6F6;
+    background-color: rgb(238, 241, 246);
     padding: 10px;
     margin: 10px 0;
     display: flex;
@@ -470,6 +479,11 @@ watch(searchForm.value, (newValue, oldValue) => {
       height: 1px;
       background-color: #9E9E9E;
     }
+
+    .bg_color {
+      background-color: #025BFF;
+    }
+
 
   }
 

@@ -290,36 +290,7 @@ const routes = [
       },
     ],
   },
-   // 退款管理
-   {
-    path: "/refund",
-    name: "refund",
-    component: Layout,
-    meta: {
-      name: "退款管理",
-    },
-    children: [
-      {
-        path: "/refundList",
-        name: "refundList",
-        component: () => import("../views/refund/index.vue"),
-        meta: {
-          requiresAuth: true,
-          name: "退款列表",
-        },
-      },
-      // // 退款管理
-      // {
-      //   path: "/proCategoryList",
-      //   name: "proCategoryList",
-      //   component: () => import("../views/refund/category.vue"),
-      //   meta: {
-      //     requiresAuth: true,
-      //     name: "商品分类",
-      //   },
-      // },
-    ],
-  },
+
 
   // {
   //   path: "/form",
