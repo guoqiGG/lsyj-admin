@@ -159,8 +159,8 @@
   <el-dialog v-model="dialogVisible" title="订单详情" width="900px">
     <div class="detail_dialog">
       <div class="orderNumber">
-        <p>订单编号：<span class="num">{{ detail.payTransId }}</span></p>
-        <p>下单时间：<span class="num">{{ detail.statusPayedTime }}</span></p>
+        <p>订单编号：<span class="num">{{ detail.orderNumber }}</span></p>
+        <p>下单时间：<span class="num" v-if="detail.statusPayedTime">{{ detail.statusPayedTime }}</span></p>
       </div>
       <div class="orderStatus">
         <!-- 订单状态:1000-待付款,1001-已支付(待发货),2001-待收货,2002-后台确认收货（已完成),3001-用户点击确认收货(已完成),9000-已取消,-8000-错误 -->
@@ -227,8 +227,8 @@
         <div class="left">
           <p class="blod">收货人信息</p>
           <p>配送方式:<span class="num">{{ detail.orderType === 0 ? '快递' : detail.orderType === 1 ? '自提' : '' }}</span></p>
-          <p>发货时间:<span class="num"
-              v-if="detail.orderStatus >= '2001' && detail.orderStatus != '9000' && detail.orderStatus != '8000'">{{
+          <p  v-if="detail.orderStatus >= '2001' && detail.orderStatus != '9000' && detail.orderStatus != '8000'">发货时间:<span class="num"
+              >{{
       detail.statusDeliveringTime }}</span></p>
           <p>门店名称:<span class="num">{{ detail.leaderAddress }}</span></p>
         </div>

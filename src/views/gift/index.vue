@@ -48,7 +48,7 @@
         </div>
     </el-card>
     <!-- 新增 -->
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑礼品卡' : '新增礼品卡'" width="600px" :close="clearEditForm">
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑礼品卡' : '新增礼品卡'" width="600px" :close="clearEditForm" :before-close="handleClose">
         <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" lable-width="100px">
             <el-form-item label="礼品卡名" prop="name">
                 <el-input v-model="form.name" placeholder="礼品卡名" clearable />
@@ -72,7 +72,7 @@
             </el-form-item>
             <el-form-item class="footer">
                 <el-button type="primary" @click="submitForm(formRef)">保存</el-button>
-                <el-button @click="dialogVisible = false">关闭</el-button>
+                <el-button @click="close(formRef)">关闭</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -150,7 +150,8 @@ var validateTime = (rule, value, callback) => {
 const rules = reactive({
     name: [{ required: true, message: '请输入礼品卡名', trigger: 'blur' }],
     number: [{ required: true, message: '请输入限制数量', trigger: 'blur' }],
-    total: [{ required: true, message: '请输入礼品卡总数', trigger: 'blur' },
+    total: 
+    [{ required: true, message: '请输入礼品卡总数', trigger: 'blur' },
     { validator: validateTotal, trigger: 'blur' }],
     type: [{ required: true, message: '请选择卡券类型', trigger: 'blur' }],
     time: [{ required: true, message: '时间不能为空', trigger: 'blur' },
@@ -167,11 +168,10 @@ const timeChange = (e) => {
 const add = () => {
     dialogVisible.value = true
     isEdit.value = false
-    form.value = {}
+    // form.value = {}
 }
 // 修改
 const editor = (scope) => {
-
     isEdit.value = true
     form.value = scope.row
     form.value.time = []
@@ -208,12 +208,24 @@ const submitForm = () => {
             if (res.value.code === 0) {
                 dialogVisible.value = false
                 getGiftList()
+                formRef.value.resetFields()
             }
         } else {
             return false;
         }
     });
+
 };
+const close = () => {
+    formRef.value.resetFields()
+    dialogVisible.value = false
+};
+const handleClose = () => {
+    formRef.value.resetFields()
+    dialogVisible.value = false
+};
+
+
 // 删除
 const handleDel = async (item) => {
     const res = await giftUpdate({ id: item.id, isDeleted: 1 })
