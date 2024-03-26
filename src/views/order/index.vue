@@ -144,7 +144,8 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="120" align="center">
         <template #default="scope">
-          <span class="operation" @click="handleDetail(scope.row.id)">查看详情</span>
+          <span v-loading.fullscreen.lock="fullscreenLoading" class="operation"
+            @click="handleDetail(scope.row.id)">查看详情</span>
         </template>
       </el-table-column>
     </el-table>
@@ -181,19 +182,18 @@
           :class="(detail.orderStatus >= 1001 && detail.orderStatus < 8000) || detail.orderStatus === 9000 ? 'bg_color' : ''">
         </p>
         <div class="status_box" v-if="detail.orderStatus === 9000" style=" color: #f1300e;">
-        <p class="yuan"
-          :class="detail.orderStatus === 9000 ? 'redColor' : ''">2
+          <p class="yuan" :class="detail.orderStatus === 9000 ? 'redColor' : ''">2
           </p>
           <p>已取消</p>
           <p>{{
-      detail.statusPayedTime ||'暂无时间信息'}}</p>
+      detail.statusPayedTime || '暂无时间信息' }}</p>
         </div>
         <div class="status_box" v-else>
           <p class="yuan" :class="detail.orderStatus >= 1001 && detail.orderStatus < 8000 ? 'borderColor' : ''">2
           </p>
           <p :class="detail.orderStatus >= 1001 && detail.orderStatus < 8000 ? 'color' : ''">已支付</p>
           <p :class="detail.orderStatus >= 1001 && detail.orderStatus < 8000 ? 'color' : ''">{{
-      detail.statusPayedTime||'暂无时间信息' }}</p>
+      detail.statusPayedTime || '暂无时间信息' }}</p>
         </div>
         <p class="line" :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'bg_color' : ''"></p>
         <div class="status_box">
@@ -201,7 +201,7 @@
           </p>
           <p :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'color' : ''">待收货</p>
           <p :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'color' : ''">{{
-      detail.statusFinishedTime||'暂无时间信息' }}</p>
+      detail.statusFinishedTime || '暂无时间信息' }}</p>
         </div>
         <p class="line"
           :class="(detail.orderStatus >= 2002 || detail.orderStatus >= 3001) && detail.orderStatus < 8000 ? 'bg_color' : ''">
@@ -215,7 +215,7 @@
             已完成</p>
           <p
             :class="(detail.orderStatus >= 2002 || detail.orderStatus >= 3001) && detail.orderStatus < 8000 ? 'color' : ''">
-            {{ detail.statusFinishedTime ||'暂无时间信息'}}</p>
+            {{ detail.statusFinishedTime || '暂无时间信息' }}</p>
         </div>
       </div>
       <div class="orderDetail">
@@ -313,14 +313,14 @@ const resetForm = () => {
 // 订单详情
 const dialogVisible = ref(false)
 const detail = ref()
-
+const fullscreenLoading = ref(false)
 const handleDetail = async (id) => {
+  fullscreenLoading.value = true
   const res = await orderDetail(id)
   if (res.code === 0) {
     detail.value = res.data
-    setTimeout(() => {
-      dialogVisible.value = true
-    }, 1000)
+    fullscreenLoading.value = false
+    dialogVisible.value = true
   }
 
 }
