@@ -60,10 +60,10 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="限制数量" prop="number">
-                <el-input type="number" v-model="form.number" placeholder="限制数量" clearable />
+                <el-input-number   controls-position="right"  v-model="form.number" placeholder="限制数量" clearable />
             </el-form-item>
             <el-form-item label="卡总数量" prop="total">
-                <el-input type="number" v-model="form.total" placeholder="卡总数量" clearable />
+                <el-input-number    controls-position="right" v-model="form.total" placeholder="卡总数量" clearable />
             </el-form-item>
             <el-form-item label="使用时间" prop="time">
                 <el-date-picker @change="timeChange" v-model="form.time" type="datetimerange" start-placeholder="开始时间"
@@ -72,7 +72,7 @@
             </el-form-item>
             <el-form-item class="footer">
                 <el-button type="primary" @click="submitForm(formRef)">保存</el-button>
-                <el-button @click="close(formRef)">关闭</el-button>
+                <el-button @click="dialogVisible=false">关闭</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -122,14 +122,14 @@ const dialogVisible = ref(false)
 const isEdit = ref(false)
 const formRef = ref(null);
 const form = ref({
-    id: '',
-    name: '',
-    number: '',
-    total: '',
-    type: '',
+    id: null,
+    name: null,
+    number: null,
+    total: null,
+    type: null,
     time: [],
-    startDate: '',
-    endDate: ''
+    startDate: null,
+    endDate:null
 })
 
 var validateTotal = (rule, value, callback) => {
