@@ -34,7 +34,7 @@ const couponRules = reactive({
 });
 const couponListData = ref([]);
 const getCouponList = async () => {
-    const res = await couponList({ pageNo: 1, pageSize: 1000000 });
+    const res = await couponList({ pageNo: 1, pageSize: 1000000,status:1 });
     couponListData.value = res.data.list;
 };
 const couponSave = async () => {
