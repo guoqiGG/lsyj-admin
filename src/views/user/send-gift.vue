@@ -55,5 +55,4 @@ const close = () => {
 defineExpose({
     getGiftList
 })
-
 </script>

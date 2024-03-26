@@ -50,7 +50,7 @@
                         <template #reference>
                             <span class="operation">删除</span>
                         </template>
-                    </el-popconfirm> -->
+    </el-popconfirm> -->
                 </template>
             </el-table-column>
         </el-table>
@@ -189,6 +189,24 @@
                 </el-table>
             </el-form-item>
             <!-- 规格 end -->
+
+            <el-form-item label="送优惠券" style="white-space: nowrap;">
+                <el-form-item label="优惠券">
+                    <el-select v-model="prodForm.goodsCoupon.couponId" placeholder="选择赠送的优惠券" clearable>
+                        <el-option v-for="item in couponListData" :key="item.id" :label="item.name" :value="item.id" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="数量">
+                    <el-input-number controls-position="right" v-model="prodForm.goodsCoupon.couponNum"
+                        placeholder="赠送数量" clearable />
+                </el-form-item>
+                <el-form-item label="发放规则">
+                    <el-radio-group v-model="prodForm.goodsCoupon.rule">
+                        <el-radio border :label="0">一次发放</el-radio>
+                        <el-radio border :label="1">按月发放</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-form-item>
             <el-form-item class="footer">
                 <el-button type="primary" @click="save">保存</el-button>
                 <el-button @click="closeEditOrCreateDialog">关闭</el-button>
@@ -198,7 +216,7 @@
 </template>
 <script setup>
 import { onMounted, ref, reactive, nextTick, isRef } from "vue";
-import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById } from "@/api/modules";
+import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList } from "@/api/modules";
 import { ElMessage, ElInput } from "element-plus";
 import {
     CirclePlus
@@ -230,11 +248,11 @@ const prodForm = ref({
     deliveryMode: 1,//配送类别
     adminSort: 0, //后台排序
     adminGoodsSkuInputVOS: [], //商品详情相关
-    // goodsCoupon: { // 发放优惠券相关
-    //     couponId: '', //优惠券id
-    //     couponNum: '',//发放数量
-    //     rule: '' //发放规则  0一次发放 1按月发放
-    // },
+    goodsCoupon: { // 发放优惠券相关
+        couponId: '', //优惠券id
+        couponNum: 0,//发放数量
+        rule: 0 //发放规则  0一次发放 1按月发放
+    },
 })
 
 const skuObj = ref({
@@ -340,13 +358,13 @@ const resetForm = () => {
     searchForm.value = { ...searchParams }
 }
 
-const deleteProdById = async (id, isDeleted) => {
-    const res = await deleteProd({ goodsId:id, isDeleted })
-    console.log(res)
-    if (res.code === 0) {
-        getProdList()
-    }
-}
+// const deleteProdById = async (id, isDeleted) => {
+//     const res = await deleteProd({ goodsId: id, isDeleted })
+//     console.log(res)
+//     if (res.code === 0) {
+//         getProdList()
+//     }
+// }
 
 const handleSuccess = (response, file, fileList) => {
     prodForm.value.thumbail = response
@@ -400,6 +418,7 @@ const editOrCreateDialog = async (e) => {
         prodForm.value.deliveryMode = res.data.deliveryMode
         prodForm.value.adminSort = res.data.adminSort
         prodForm.value.adminGoodsSkuInputVOS = res.data.adminGoodsSkuInputVOS
+        prodForm.value.goodsCoupon = res.data.goodsCoupon ? res.data.goodsCoupon : { couponId: '', couponNum: 0, rule: 0 }
         console.log(prodForm.value.goodsType)
     } else { // 新增
         isCreate.value = true
@@ -430,6 +449,7 @@ const save = async () => {
                     deliveryMode: prodForm.value.deliveryMode,
                     adminSort: prodForm.value.adminSort,
                     adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS,
+                    goodsCoupon: prodForm.value.goodsCoupon
                 })
                 console.log(res)
                 if (res.code == 0) {
@@ -448,6 +468,7 @@ const save = async () => {
                     deliveryMode: prodForm.value.deliveryMode,
                     adminSort: prodForm.value.adminSort,
                     adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS,
+                    goodsCoupon: prodForm.value.goodsCoupon
                 })
                 if (res.code == 0) {
                     closeEditOrCreateDialog()
@@ -473,14 +494,22 @@ const clearEditForm = () => {
         deliveryMode: 1,//配送类别
         adminSort: 0, //后台排序
         adminGoodsSkuInputVOS: [], //商品详情相关
+        goodsCoupon: {
+            couponId: '', couponNum: 0, rule: 0
+        }
     }
 }
 
-
+const couponListData = ref([])
+const getCouponList = async () => {
+    const res = await couponList({ pageSize: 10000000, pageNo: 1, status: 1 })
+    couponListData.value = res.data.list
+}
 
 onMounted(() => {
     getProdCategoryList()
     getProdList()
+    getCouponList()
 })
 
 </script>

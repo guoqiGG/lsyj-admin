@@ -290,7 +290,6 @@ defineExpose({
     getOrderList
 })
 </script>
-
 <style lang="scss" scoped>
 .info {
     display: block;
