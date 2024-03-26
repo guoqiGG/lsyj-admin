@@ -48,7 +48,7 @@
         </div>
     </el-card>
     <!-- 新增 -->
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑礼品卡' : '新增礼品卡'" width="600px" :close="clearEditForm" :before-close="handleClose">
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑礼品卡' : '新增礼品卡'" width="600px" :close="clearEditForm" >
         <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" lable-width="100px">
             <el-form-item label="礼品卡名" prop="name">
                 <el-input v-model="form.name" placeholder="礼品卡名" clearable />
@@ -168,7 +168,7 @@ const timeChange = (e) => {
 const add = () => {
     dialogVisible.value = true
     isEdit.value = false
-    // form.value = {}
+    form.value = {}
 }
 // 修改
 const editor = (scope) => {
@@ -208,7 +208,6 @@ const submitForm = () => {
             if (res.value.code === 0) {
                 dialogVisible.value = false
                 getGiftList()
-                formRef.value.resetFields()
             }
         } else {
             return false;
@@ -216,14 +215,7 @@ const submitForm = () => {
     });
 
 };
-const close = () => {
-    formRef.value.resetFields()
-    dialogVisible.value = false
-};
-const handleClose = () => {
-    formRef.value.resetFields()
-    dialogVisible.value = false
-};
+
 
 
 // 删除
