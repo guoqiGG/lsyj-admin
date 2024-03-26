@@ -128,6 +128,7 @@ const tableHandleChange = (e) => {
 
 const resetForm = () => {
     searchForm.value = { ...searchParams }
+    getUserList()
 }
 
 const editOrCreateDialog = (scope) => {

@@ -41,8 +41,8 @@
                 <el-col :span="6">
                     <el-form-item label="团长类型">
                         <el-select style="width:92%" v-model="searchForm.type" placeholder="请选择" clearable>
-                            <el-option label="无店" value="0" />
-                            <el-option label="有店" value="1" />
+                            <el-option label="有店" value="0" />
+                            <el-option label="无店" value="1" />
                         </el-select>
                     </el-form-item>
                 </el-col>
@@ -133,6 +133,7 @@ const tableHandleChange = (e) => {
 }
 const resetForm = () => {
     searchForm.value = { ...searchParams }
+    getApplyLeaderList()
 }
 
 const auditLeader= async(id,status)=>{

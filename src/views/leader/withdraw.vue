@@ -163,6 +163,8 @@ const tableHandleChange = (e) => {
 }
 const resetForm = () => {
     searchForm.value = { ...searchParams }
+    getLeaderWithdrawList()
+
 }
 
 const closeLeaderWithdrawApproveDialog = () => {

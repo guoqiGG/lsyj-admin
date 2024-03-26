@@ -88,6 +88,7 @@ const tableHandleChange = (e) => {
 }
 const resetForm = () => {
     searchForm.value = { ...searchParams }
+    getLiveList()
 }
 onMounted(() => {
     getLiveList()
