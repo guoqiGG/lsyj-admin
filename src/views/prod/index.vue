@@ -75,9 +75,10 @@
                 <el-input v-model="prodForm.goodsName" placeholder="商品名称" clearable />
             </el-form-item>
             <el-form-item label="商品图片" prop="thumbail">
-                <el-upload :limit="1" accept="image/*" v-model:file-list="fileList" class="image-uploader"
-                    :show-file-list="false" :action="BaseUrl + '/upload/oss'" :headers="{ Authorization: token }"
-                    :on-success="handleSuccess" :on-error="handleError" :before-upload="beforeUpload">
+                <el-upload ref="uploadRef" :limit="1" accept="image/*" v-model:file-list="fileList"
+                    class="image-uploader" :show-file-list="false" :action="BaseUrl + '/upload/oss'"
+                    :headers="{ Authorization: token }" :on-success="handleSuccess" :on-error="handleError"
+                    :before-upload="beforeUpload">
                     <el-image class="avatar" v-if="prodForm.thumbail" controls="controls"
                         :src="prodForm.thumbail"></el-image>
                     <el-icon v-else class="image-uploader-icon">
@@ -85,12 +86,12 @@
                     </el-icon>
                 </el-upload>
             </el-form-item>
-            <el-form-item label="商品类型" prop="goodsType">
+            <!-- <el-form-item label="商品类型" prop="goodsType">
                 <el-radio-group v-model="prodForm.goodsType">
-                    <el-radio border label="0">普通</el-radio>
-                    <el-radio border label="1">特殊</el-radio>
+                    <el-radio border :label="0">普通</el-radio>
+                    <el-radio border :label="1">特殊</el-radio>
                 </el-radio-group>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="商品简介" prop="description">
                 <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面，长度不超过100个字符" clearable />
             </el-form-item>
@@ -135,6 +136,13 @@
                         <template #default="scope">
                             <el-input-number controls-position="right"
                                 v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].price" min="0" size="small"
+                                step="0.01" />
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="原价" align="center" width="150">
+                        <template #default="scope">
+                            <el-input-number controls-position="right"
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].factoryPrice" min="0" size="small"
                                 step="0.01" />
                         </template>
                     </el-table-column>
@@ -190,7 +198,7 @@
             </el-form-item>
             <!-- 规格 end -->
 
-            <!-- <el-form-item label="送优惠券" style="white-space: nowrap;">
+            <el-form-item label="送优惠券" style="white-space: nowrap;">
                 <el-form-item label="优惠券">
                     <el-select v-model="prodForm.goodsCoupon.couponId" placeholder="选择赠送的优惠券" clearable>
                         <el-option v-for="item in couponListData" :key="item.id" :label="item.name" :value="item.id" />
@@ -206,7 +214,7 @@
                         <el-radio border :label="1">按月发放</el-radio>
                     </el-radio-group>
                 </el-form-item>
-            </el-form-item> -->
+            </el-form-item>
             <el-form-item class="footer">
                 <el-button type="primary" @click="save">保存</el-button>
                 <el-button @click="closeEditOrCreateDialog">关闭</el-button>
@@ -241,22 +249,23 @@ const prodForm = ref({
     id: 0,
     categoryId: '', //分类id
     goodsName: '', // 商品名称
-    goodsType: 0,//订单类型
+    goodsType: 0,//商品类型
     thumbail: '', //大图
     description: '',//配送类型
     sort: 0, //排序
     deliveryMode: 1,//配送类别
     adminSort: 0, //后台排序
     adminGoodsSkuInputVOS: [], //商品详情相关
-    // goodsCoupon: { // 发放优惠券相关
-    //     couponId: '', //优惠券id
-    //     couponNum: 0,//发放数量
-    //     rule: 0 //发放规则  0一次发放 1按月发放
-    // },
+    goodsCoupon: { // 发放优惠券相关
+        couponId: '', //优惠券id
+        couponNum: 0,//发放数量
+        rule: 0 //发放规则  0一次发放 1按月发放
+    },
 })
 
 const skuObj = ref({
     price: 0,
+    factoryPrice: 0,
     specificationName: '默认',
     stock: 0,
     virtuallyNum: 0,
@@ -303,7 +312,6 @@ const handleInputConfirm = () => {
             return
         }
     }
-
 }
 
 const rules = reactive({
@@ -316,9 +324,9 @@ const rules = reactive({
     thumbail: [
         { required: true, message: '请选择上传图片', trigger: 'blur' },
     ],
-    goodsType: [
-        { required: true, message: '请选择商品类型', trigger: 'blur' },
-    ],
+    // goodsType: [
+    //     { required: true, message: '请选择商品类型', trigger: 'blur' },
+    // ],
     sort: [
         { required: true, message: '请输入排序', trigger: 'blur' },
     ],
@@ -366,7 +374,11 @@ const resetForm = () => {
 //     }
 // }
 
+const uploadRef = ref(null)
+
+
 const handleSuccess = (response, file, fileList) => {
+    uploadRef.value.clearFiles();
     prodForm.value.thumbail = response
     ElMessage({
         showClose: false,
@@ -374,13 +386,19 @@ const handleSuccess = (response, file, fileList) => {
         type: 'success',
     })
 }
+
 const handleError = (err, file, fileList) => {
+    uploadRef.value.clearFiles();
     ElMessage({
         showClose: false,
         message: '上传失败',
         type: 'danger'
     })
 }
+const handleRemove = (uploadFile, uploadFiles) => {
+    console.log(uploadFile, uploadFiles)
+}
+
 
 const beforeUpload = (file) => {
     const fileName = file.name;
@@ -399,6 +417,7 @@ const beforeUpload = (file) => {
     if (!isLt2M) {
         this.$message.error('图片大小不能超过 2MB!');
     }
+    uploadRef.value.clearFiles();
     return isLt2M && isOKType;
 }
 
@@ -410,7 +429,7 @@ const editOrCreateDialog = async (e) => {
         prodForm.value.id = res.data.id
         prodForm.value.categoryId = res.data.categoryId
         prodForm.value.goodsName = res.data.name
-        prodForm.value.goodsType = Number(res.data.goodsType)
+        prodForm.value.goodsType = res.data.goodsType ? Number(res.data.goodsType) : 0
         prodForm.value.thumbail = res.data.thumbail
         prodForm.value.goodsType = res.data.goodsType
         prodForm.value.description = res.data.description
@@ -418,14 +437,17 @@ const editOrCreateDialog = async (e) => {
         prodForm.value.deliveryMode = res.data.deliveryMode
         prodForm.value.adminSort = res.data.adminSort
         prodForm.value.adminGoodsSkuInputVOS = res.data.adminGoodsSkuInputVOS
-        // prodForm.value.goodsCoupon = res.data.goodsCoupon ? res.data.goodsCoupon : { couponId: '', couponNum: 0, rule: 0 }
-        console.log(prodForm.value.goodsType)
+        if (res.data.goodsCouponActivity) {
+            prodForm.value.goodsCoupon.couponId = res.data.goodsCouponActivity.couponId
+            prodForm.value.goodsCoupon.couponNum = res.data.goodsCouponActivity.couponNum
+            prodForm.value.goodsCoupon.rule = res.data.goodsCouponActivity.rule
+        } else {
+            prodForm.value.goodsCoupon = { couponId: '', couponNum: 0, rule: 0 }
+        }
     } else { // 新增
         isCreate.value = true
-        // if (prodForm.value.adminGoodsSkuInputVOS.length < 1) {
         prodForm.value.adminGoodsSkuInputVOS = []
         prodForm.value.adminGoodsSkuInputVOS.push(Object.assign({}, skuObj.value))
-        // }
     }
 }
 
@@ -438,8 +460,25 @@ const save = async () => {
     console.log(prodForm.value)
     categoryFormRef.value.validate(async (valid) => {
         if (valid) {
+            if (prodForm.value.goodsCoupon.couponId && !prodForm.value.goodsCoupon.couponNum) {
+                ElMessage({
+                    showClose: false,
+                    message: '请输入优惠券数量',
+                    type: 'error',
+                })
+                return
+            }
+            if (!prodForm.value.goodsCoupon.couponId && prodForm.value.goodsCoupon.couponNum) {
+                ElMessage({
+                    showClose: false,
+                    message: '请选择优惠券',
+                    type: 'error',
+                })
+                return
+            }
+
             if (isCreate.value) {//新增提交
-                const res = await prodAdd({
+                let params = {
                     categoryId: prodForm.value.categoryId,
                     goodsName: prodForm.value.goodsName,
                     goodsType: prodForm.value.goodsType,
@@ -448,16 +487,20 @@ const save = async () => {
                     sort: prodForm.value.sort,
                     deliveryMode: prodForm.value.deliveryMode,
                     adminSort: prodForm.value.adminSort,
-                    adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS,
-                    // goodsCoupon: prodForm.value.goodsCoupon
-                })
-                console.log(res)
-                if (res.code == 0) {
+                    adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS
+                }
+                if (prodForm.value.goodsCoupon.couponId || prodForm.value.goodsCoupon.couponNum) {
+                    params.goodsCoupon = prodForm.value.goodsCoupon
+                }
+                const res = await prodAdd({ ...params })
+
+                if (res?.code == 0) {
+                    console.log(1)
                     closeEditOrCreateDialog()
                     getProdList()
                 }
             } else { // 编辑提交
-                const res = await deleteProd({
+                let params = {
                     goodsId: prodForm.value.id,
                     categoryId: prodForm.value.categoryId,
                     goodsName: prodForm.value.goodsName,
@@ -468,9 +511,12 @@ const save = async () => {
                     deliveryMode: prodForm.value.deliveryMode,
                     adminSort: prodForm.value.adminSort,
                     adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS,
-                    // goodsCoupon: prodForm.value.goodsCoupon
-                })
-                if (res.code == 0) {
+                }
+                if (prodForm.value.goodsCoupon.couponId || prodForm.value.goodsCoupon.couponNum) {
+                    params.goodsCoupon = prodForm.value.goodsCoupon
+                }
+                const res = await deleteProd({ ...params })
+                if (res?.code == 0) {
                     closeEditOrCreateDialog()
                     getProdList()
                 }
@@ -494,9 +540,9 @@ const clearEditForm = () => {
         deliveryMode: 1,//配送类别
         adminSort: 0, //后台排序
         adminGoodsSkuInputVOS: [], //商品详情相关
-        // goodsCoupon: {
-        //     couponId: '', couponNum: 0, rule: 0
-        // }
+        goodsCoupon: {
+            couponId: '', couponNum: 0, rule: 0
+        }
     }
 }
 
