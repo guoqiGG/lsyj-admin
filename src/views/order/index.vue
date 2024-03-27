@@ -319,6 +319,7 @@ const handleDetail = async (id) => {
   const res = await orderDetail(id)
   if (res.code === 0) {
     detail.value = res.data
+    detail.value.orderGoods[0].couponAmt=detail.value.couponAmt
     fullscreenLoading.value = false
     dialogVisible.value = true
   }

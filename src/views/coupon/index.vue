@@ -282,6 +282,7 @@ const submitForm = () => {
             let coupon = {
                 type: 1,
                 isDeleted: 0,
+                id: couponForm.value.couponId,
                 couponId: couponForm.value.couponId,
                 name: couponForm.value.name,
                 amount: couponForm.value.amount,
@@ -321,17 +322,22 @@ const submitForm = () => {
                     couponConstraintList.push(obj)
                 })
             }
+   
+            couponConstraintList.id=couponForm.value.couponId
+            console.log(couponConstraintList,'couponConstraintList')
+            // console.log(coupon,'coupon')
             // 传递参数
             let params = {
                 coupon: coupon,
-                couponConstraintList: couponConstraintList
+                couponConstraintList:[...couponConstraintList] 
             }
 
             // 修改
-            if (couponForm.value.id) {
+            if (couponForm.value.couponId) {
+                params.couponConstraintList.id=couponForm.value.couponId
                 res.value = await updateCouponList(JSON.stringify(params))
             } else {
-                // 新增
+                //新增
                 res.value = await addCouponList(JSON.stringify(params))
             }
             if (res.value.code == 0) {
