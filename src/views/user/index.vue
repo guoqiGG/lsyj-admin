@@ -22,13 +22,21 @@
                         <el-input v-model="searchForm.leaderMobile" placeholder="团长手机" clearable />
                     </el-form-item>
                 </el-col>
+                <el-col :span="8">
+                    <el-form-item label="所属团长">
+                        <el-select v-model="searchForm.puid" filterable placeholder="请选择所属团长" style="width: 240px">
+                            <el-option v-for="item in options" :key="item.id" :label="item.leaderName"
+                                :value="item.id" />
+                        </el-select>
+                    </el-form-item>
+                </el-col>
                 <el-form-item>
                     <el-button type="primary" @click="getUserList">查询</el-button>
                     <el-button @click="resetForm()">重置</el-button>
                 </el-form-item>
+
             </el-row>
         </el-form>
-
     </el-card>
     <el-card style="margin-top: 10px;">
         <el-table v-loading="loading" :data="userListData" style="width: 100%">
@@ -52,7 +60,7 @@
             </el-table-column>
             <el-table-column prop="levelName" label="用户等级" />
             <el-table-column prop="regTime" label="注册时间" />
-            <el-table-column prop="createTime" label="创建时间" />
+            <!-- <el-table-column prop="createTime" label="创建时间" /> -->
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="editOrCreateDialog(scope)" :icon="Edit">编辑</span>
@@ -67,17 +75,23 @@
         </div>
     </el-card>
     <!-- 修改用户信息 -->
-    <edit-user-info ref="editUserInfoRef" :editOrCreateDialogVisible="editOrCreateDialogVisible" :userInfo="userInfo" :active="active" @closeDialog="closeDialog"></edit-user-info>
-
-
-
-
+    <edit-user-info ref="editUserInfoRef" :editOrCreateDialogVisible="editOrCreateDialogVisible" :userInfo="userInfo"
+        :active="active" @closeDialog="closeDialog"></edit-user-info>
 </template>
 <script setup>
 import EditUserInfo from './edit-user-info.vue'
 
 import { onMounted, ref, reactive } from "vue";
-import { userList } from "../../api/modules";
+import { userList, leaderList } from "../../api/modules";
+
+const options = ref()
+const getLeaderList = async () => {
+    const res = await leaderList({
+        pageNo: 1,
+        pageSize: 10000,
+    })
+    options.value = res.data.list
+}
 const searchParams = {
     name: '',
     mobile: '',
@@ -107,7 +121,7 @@ const editOrCreateDialogVisible = ref(false)
 
 let userListData = ref([])
 const active = ref('1') // tab 1购物明细 2礼品卡明细 3合成卡明细 4优惠券明细
-const editUserInfoRef=ref(null)
+const editUserInfoRef = ref(null)
 
 
 const getUserList = async () => {
@@ -150,6 +164,7 @@ const closeDialog = () => {
 }
 
 onMounted(() => {
+    getLeaderList()
     getUserList()
 })
 </script>
