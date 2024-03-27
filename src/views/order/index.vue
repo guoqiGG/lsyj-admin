@@ -144,7 +144,8 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="120" align="center">
         <template #default="scope">
-          <span class="operation" @click="handleDetail(scope.row.id)">查看详情</span>
+          <span v-loading.fullscreen.lock="fullscreenLoading" class="operation"
+            @click="handleDetail(scope.row.id)">查看详情</span>
         </template>
       </el-table-column>
     </el-table>
@@ -158,8 +159,8 @@
   <el-dialog v-model="dialogVisible" title="订单详情" width="900px">
     <div class="detail_dialog">
       <div class="orderNumber">
-        <p>订单编号：<span class="num">{{ detail.payTransId }}</span></p>
-        <p>下单时间：<span class="num">{{ detail.statusPayedTime }}</span></p>
+        <p>订单编号：<span class="num">{{ detail.orderNumber }}</span></p>
+        <p>下单时间：<span class="num" v-if="detail.statusPayedTime">{{ detail.statusPayedTime }}</span></p>
       </div>
       <div class="orderStatus">
         <!-- 订单状态:1000-待付款,1001-已支付(待发货),2001-待收货,2002-后台确认收货（已完成),3001-用户点击确认收货(已完成),9000-已取消,-8000-错误 -->
@@ -181,19 +182,18 @@
           :class="(detail.orderStatus >= 1001 && detail.orderStatus < 8000) || detail.orderStatus === 9000 ? 'bg_color' : ''">
         </p>
         <div class="status_box" v-if="detail.orderStatus === 9000" style=" color: #f1300e;">
-        <p class="yuan"
-          :class="detail.orderStatus === 9000 ? 'redColor' : ''">2
+          <p class="yuan" :class="detail.orderStatus === 9000 ? 'redColor' : ''">2
           </p>
           <p>已取消</p>
           <p>{{
-      detail.statusPayedTime ||'暂无时间信息'}}</p>
+      detail.statusPayedTime || '暂无时间信息' }}</p>
         </div>
         <div class="status_box" v-else>
           <p class="yuan" :class="detail.orderStatus >= 1001 && detail.orderStatus < 8000 ? 'borderColor' : ''">2
           </p>
           <p :class="detail.orderStatus >= 1001 && detail.orderStatus < 8000 ? 'color' : ''">已支付</p>
           <p :class="detail.orderStatus >= 1001 && detail.orderStatus < 8000 ? 'color' : ''">{{
-      detail.statusPayedTime||'暂无时间信息' }}</p>
+      detail.statusPayedTime || '暂无时间信息' }}</p>
         </div>
         <p class="line" :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'bg_color' : ''"></p>
         <div class="status_box">
@@ -201,7 +201,7 @@
           </p>
           <p :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'color' : ''">待收货</p>
           <p :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'color' : ''">{{
-      detail.statusFinishedTime||'暂无时间信息' }}</p>
+      detail.statusFinishedTime || '暂无时间信息' }}</p>
         </div>
         <p class="line"
           :class="(detail.orderStatus >= 2002 || detail.orderStatus >= 3001) && detail.orderStatus < 8000 ? 'bg_color' : ''">
@@ -215,7 +215,7 @@
             已完成</p>
           <p
             :class="(detail.orderStatus >= 2002 || detail.orderStatus >= 3001) && detail.orderStatus < 8000 ? 'color' : ''">
-            {{ detail.statusFinishedTime ||'暂无时间信息'}}</p>
+            {{ detail.statusFinishedTime || '暂无时间信息' }}</p>
         </div>
       </div>
       <div class="orderDetail">
@@ -227,8 +227,8 @@
         <div class="left">
           <p class="blod">收货人信息</p>
           <p>配送方式:<span class="num">{{ detail.orderType === 0 ? '快递' : detail.orderType === 1 ? '自提' : '' }}</span></p>
-          <p>发货时间:<span class="num"
-              v-if="detail.orderStatus >= '2001' && detail.orderStatus != '9000' && detail.orderStatus != '8000'">{{
+          <p  v-if="detail.orderStatus >= '2001' && detail.orderStatus != '9000' && detail.orderStatus != '8000'">发货时间:<span class="num"
+              >{{
       detail.statusDeliveringTime }}</span></p>
           <p>门店名称:<span class="num">{{ detail.leaderAddress }}</span></p>
         </div>
@@ -313,14 +313,15 @@ const resetForm = () => {
 // 订单详情
 const dialogVisible = ref(false)
 const detail = ref()
-
+const fullscreenLoading = ref(false)
 const handleDetail = async (id) => {
+  fullscreenLoading.value = true
   const res = await orderDetail(id)
   if (res.code === 0) {
     detail.value = res.data
-    setTimeout(() => {
-      dialogVisible.value = true
-    }, 1000)
+    detail.value.orderGoods[0].couponAmt=detail.value.couponAmt
+    fullscreenLoading.value = false
+    dialogVisible.value = true
   }
 
 }

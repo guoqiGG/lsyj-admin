@@ -146,6 +146,7 @@ const tableHandleChange = (e) => {
 }
 const resetForm = () => {
     searchForm.value = { ...searchParams }
+    getVideoList()
 }
 
 const deleteVideoById = async (id, isDeleted) => {

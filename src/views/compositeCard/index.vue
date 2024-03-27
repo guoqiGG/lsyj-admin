@@ -218,6 +218,7 @@ const submitForm = () => {
                 name: form.value.name,
                 number: form.value.number,
                 ruleIds: "",
+                id: form.value.id,
             }
             form.value.ruleIds.map((item, index) => {
                 if (index < form.value.ruleIds.length) {
@@ -251,6 +252,7 @@ const handleEditor = (item) => {
     form.value.name = item.parentName
     form.value.number = item.parentNumber
     form.value.ruleIds = item.ruleIds
+    form.value.id = item.parentId
     dialogVisible.value = true
 }
 // 删除

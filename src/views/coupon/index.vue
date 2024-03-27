@@ -109,14 +109,14 @@
             <el-form-item label="不可用商品" prop="productValue1" v-if="couponForm.type && couponForm.type?.includes(2)">
                 <el-select v-model="couponForm.productValue1" multiple value-key="id" placeholder="请选择不可用商品"
                     style="width: 240px">
-                    <el-option v-for="item in prodData" :key="item.id" :label="item.id + item.name" :value="item" />
+                    <el-option v-for="item in prodData" :key="item.id" :label="item.name" :value="item" />
                 </el-select>
             </el-form-item>
             <!-- 指定商品可用 -->
             <el-form-item label="可用商品" prop="productValue2" v-if="couponForm.type && couponForm.type?.includes(3)">
                 <el-select v-model="couponForm.productValue2" multiple value-key="id" placeholder="请选择可用商品"
                    style="width: 240px">
-                    <el-option v-for="item in prodData" :label="item.id + item.name" :key="item.id"
+                    <el-option v-for="item in prodData" :label="item.name" :key="item.id"
                         :value="item"></el-option>
                 </el-select>
             </el-form-item>
@@ -216,7 +216,7 @@ const getProdList = async () => {
         e.label=e.name
     });
     prodData.value =aa
-
+    console.log( prodData.value,' prodData.value')
 }
 
 
@@ -282,6 +282,7 @@ const submitForm = () => {
             let coupon = {
                 type: 1,
                 isDeleted: 0,
+                id: couponForm.value.couponId,
                 couponId: couponForm.value.couponId,
                 name: couponForm.value.name,
                 amount: couponForm.value.amount,
@@ -321,17 +322,22 @@ const submitForm = () => {
                     couponConstraintList.push(obj)
                 })
             }
+   
+            couponConstraintList.id=couponForm.value.couponId
+            console.log(couponConstraintList,'couponConstraintList')
+            // console.log(coupon,'coupon')
             // 传递参数
             let params = {
                 coupon: coupon,
-                couponConstraintList: couponConstraintList
+                couponConstraintList:[...couponConstraintList] 
             }
 
             // 修改
-            if (couponForm.value.id) {
+            if (couponForm.value.couponId) {
+                params.couponConstraintList.id=couponForm.value.couponId
                 res.value = await updateCouponList(JSON.stringify(params))
             } else {
-                // 新增
+                //新增
                 res.value = await addCouponList(JSON.stringify(params))
             }
             if (res.value.code == 0) {
@@ -370,11 +376,11 @@ const handleEditor = (item) => {
             num1 += 1
         }
         if (item.type === 2) {
-            couponForm.value.productValue1.push({ id: Number(item.conditionValue), name: item.name, thumbail: item.thumbail })
+            couponForm.value.productValue1.push({ id: Number(item.conditionValue), name: item.goodsName,  label: item.goodsName,thumbail: item.thumbail })
             num2 += 1
         }
         if (item.type === 3) {
-            couponForm.value.productValue2.push({ id: Number(item.conditionValue), name: item.name, thumbail: item.thumbail })
+            couponForm.value.productValue2.push({ id: Number(item.conditionValue), name: item.goodsName,label: item.goodsName, thumbail: item.thumbail })
             num3 += 1
         }
     })
@@ -387,6 +393,7 @@ const handleEditor = (item) => {
     if (num3 > 0) {
         couponForm.value.type.push(3)
     }
+    console.log(couponForm,'couponForm')
     dialogVisible.value = true
 }
 // 删除

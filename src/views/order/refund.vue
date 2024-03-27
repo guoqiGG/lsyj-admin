@@ -97,7 +97,8 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
-                    <span class="operation" @click="handleDetail(scope.row)">退款详情</span>
+                    <span v-loading.fullscreen.lock="fullscreenLoading" class="operation"
+                        @click="handleDetail(scope.row)">退款详情</span>
                     <span class="operation" @click="handleClick(scope.row, 1)">通过</span>
                     <span class="operation" @click="handleClick(scope.row, 2)">拒绝</span>
                 </template>
@@ -246,8 +247,7 @@ import { refundList, refundAudit, orderDetail } from "../../api/modules";
 import {
     CirclePlus
 } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus';
-import dayjs from "dayjs";
+import { ElMessage, } from 'element-plus';
 const loading = ref(false)
 const searchForm = ref({
     userName: null,//用户名称
@@ -290,16 +290,15 @@ const resetForm = () => {
 // 订单详情
 const dialogVisible = ref(false)
 const detail = ref()
-
+const fullscreenLoading = ref(false)
 const handleDetail = async (item) => {
+    fullscreenLoading.value = true
     const res = await orderDetail(item.orderId)
     if (res.code === 0) {
         detail.value = res.data
-        setTimeout(() => {
-            dialogVisible.value = true
-        }, 1000)
+        fullscreenLoading.value = false
+        dialogVisible.value = true
     }
-
 }
 const dialogAuditing = ref(false)
 const formRef = ref(null);
@@ -314,8 +313,8 @@ const rules = reactive({
 // 通过or拒绝
 const handleClick = async (item, type) => {
     if (type === 2) {
-        form.value={}
-        form.value.id=item.id
+        form.value = {}
+        form.value.id = item.id
         dialogAuditing.value = true
     } else if (type === 1) {
         const res = await refundAudit({
