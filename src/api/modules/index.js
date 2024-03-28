@@ -335,5 +335,14 @@ export function refundAudit(query) {
     params: query,
   });
 }
+// 批量退款
+export function batchRefund(query) {
+  return service({
+    method: "get",
+    url: "order/refund/audit/batch",
+    params: query,
+  });
+}
+
 
 

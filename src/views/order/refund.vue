@@ -58,18 +58,21 @@
         </el-form>
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-button  :icon="Download" style="margin-bottom: 20px"  >导出</el-button>
-        <el-table v-loading="loading" :data="refundData" style="width: 100%"
-            :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
+        <el-button type="primary" style="margin-bottom: 20px" :disabled="isDisabled"
+            @click="hamdleBatchRefund">批量退款</el-button>
+        <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
+        <el-table v-loading="loading" :data="refundData" style="width: 100%" ref="multipleTableRef"
+            :header-cell-style="{ background: '#eef1f6', color: '#606266' }" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="55" />
             <el-table-column prop="userName" label="用户名称" align="center" />
             <el-table-column prop="userMobile" label="用户手机号" align="center" />
             <el-table-column prop="leaderName" label="团长名称" align="center" />
             <el-table-column prop="leaderMobile" label="团长手机号" align="center" />
 
             <el-table-column prop="orderGoodsList[0].title" label="商品名称" align="center" />
-            <el-table-column prop="orderGoodsList[0].picAddr" label="商品图片" align="center">
+            <el-table-column prop="orderGoodsList[0].thumbail" label="商品图片" align="center">
                 <template #default="scope">
-                    <img style="width: 60px;height: 60px;" :src="scope.row.orderGoodsList[0].picAddr" alt="">
+                    <img style="width: 60px;height: 60px;" :src="scope.row.orderGoodsList[0].thumbail" alt="">
                 </template>
             </el-table-column>
             <el-table-column prop="orderNumber" label="订单号" align="center" />
@@ -232,8 +235,8 @@
     <!-- 拒绝退款弹框 -->
     <el-dialog v-model="dialogAuditing" title="审核" width="500px" :close="clearEditForm">
         <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" lable-width="100px">
-            <el-form-item label="退款备注" prop="remark">
-                <el-input v-model="form.remark" placeholder="退款备注" clearable />
+            <el-form-item label="拒绝原因" prop="remark">
+                <el-input v-model="form.remark" placeholder="拒绝原因" clearable />
             </el-form-item>
             <el-form-item class="footer">
                 <el-button type="primary" @click="submitForm(formRef)">保存</el-button>
@@ -241,13 +244,28 @@
             </el-form-item>
         </el-form>
     </el-dialog>
+    <!-- 批量审核弹框 -->
+    <el-dialog v-model="dialogBatchAuditing" title="批量审核" width="500px" center>
+        <span v-for="(item, index) in multipleSelection" :key="index" style="margin: 0 10px; ">
+            {{ item.userName }}
+        </span>
+        <template #footer>
+            <div class="dialog-footer">
+                <el-button @click="submitBatchForm(2)">拒绝</el-button>
+                <el-button type="primary" @click="submitBatchForm (1)">
+                    同意
+                </el-button>
+            </div>
+        </template>
+    </el-dialog>
 </template>
 <script setup>
 import { onMounted, ref, reactive } from "vue";
-import { refundList, refundAudit, orderDetail } from "../../api/modules";
+import { refundList, refundAudit, orderDetail, batchRefund } from "../../api/modules";
 import {
-   Download
+    Download,
 } from '@element-plus/icons-vue'
+import { ElMessage, ElMessageBox } from 'element-plus';
 const loading = ref(false)
 const searchForm = ref({
     userName: null,//用户名称
@@ -286,6 +304,51 @@ const resetForm = () => {
     searchForm.value = {}
     getRefundList()
 }
+// 全选
+const multipleTableRef = ref()
+const isDisabled = ref(true)
+const multipleSelection = ref([])
+const handleSelectionChange = (val) => {
+    multipleSelection.value = val
+    if (multipleSelection.value && multipleSelection.value.length > 0) {
+        isDisabled.value = false
+    }
+}
+// 批量退款
+const dialogBatchAuditing = ref(false)
+const hamdleBatchRefund = () => {
+    if (multipleSelection.value && multipleSelection.value.length > 0) {
+        dialogBatchAuditing.value = true
+    }
+}
+const submitBatchForm = async (e) => {
+    let ids = []
+    multipleSelection.value.map(item => {
+        if (item.id) {
+            ids.push(item.id)
+        }
+    })
+    let obj = {
+        auditStatus: 1,//1:通过 2:拒绝
+        ids,
+    }
+    if (e === 2) {
+        obj.auditStatus = 2
+    }
+    const res = await batchRefund(obj)
+    if (res.code === 0) {
+        ElMessage.success('审核成功');
+    } else {
+        ElMessage.error(res.msg);
+    }
+    dialogBatchAuditing.value = false
+    isDisabled.value = true
+    multipleTableRef.value.clearSelection()
+    getRefundList()
+
+
+
+};
 
 // 订单详情
 const dialogVisible = ref(false)
@@ -321,6 +384,7 @@ const handleClick = async (item, type) => {
             id: item.id,
             auditStatus: 1,//1:通过 2:拒绝
         })
+        console.log(res, 'res===')
         if (res.code === 0) {
             ElMessage.success('审核通过');
             getRefundList()

@@ -65,16 +65,23 @@
         <el-form-item>
           <el-button type="primary" @click="getOrderList">查询</el-button>
           <el-button @click="resetForm()">重置</el-button>
+          <el-button :icon="Upload" type="primary" @click="hamdleUploadSend">批量上传发货</el-button>
+          <el-button :icon="Upload" type="primary" @click="hamdleUploadReceive">批量上传收货</el-button>
+          <el-button :icon="Download">下载表格模板</el-button>
         </el-form-item>
       </el-row>
     </el-form>
 
   </el-card>
   <el-card style="margin-top: 10px;">
-    <el-button  :icon="Download" style="margin-bottom: 20px"  >导出</el-button>
-    <el-table v-loading="loading" :data="orderListData" style="width: 100%"
-      :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
-      <!-- <el-table-column type="selection" width="55" /> -->
+    <el-button type="primary" style="margin-bottom: 20px" :disabled="isDisabled"
+      @click="hamdleBatchSend">批量发货</el-button>
+    <el-button type="primary" style="margin-bottom: 20px" :disabled="isDisabled"
+      @click="hamdleBatchReceive">批量收货</el-button>
+    <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
+    <el-table v-loading="loading" :data="orderListData" style="width: 100%" ref="multipleTableRef"
+      :header-cell-style="{ background: '#eef1f6', color: '#606266' }" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" />
       <el-table-column label="订单信息">
         <template #default="scope">
           <div class="order">
@@ -143,8 +150,12 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="120" align="center">
+      <el-table-column fixed="right" label="操作" width="180" align="center">
         <template #default="scope">
+          <span  class="operation" v-if="scope.row.orderStatus === 1001"
+            @click="handleDetail(scope.row.id)">发货</span>
+            <span  class="operation" v-if="scope.row.orderStatus === 2001"
+            @click="handleDetail(scope.row.id)">收货</span>
           <span v-loading.fullscreen.lock="fullscreenLoading" class="operation"
             @click="handleDetail(scope.row.id)">查看详情</span>
         </template>
@@ -228,8 +239,8 @@
         <div class="left">
           <p class="blod">收货人信息</p>
           <p>配送方式:<span class="num">{{ detail.orderType === 0 ? '快递' : detail.orderType === 1 ? '自提' : '' }}</span></p>
-          <p  v-if="detail.orderStatus >= '2001' && detail.orderStatus != '9000' && detail.orderStatus != '8000'">发货时间:<span class="num"
-              >{{
+          <p v-if="detail.orderStatus >= '2001' && detail.orderStatus != '9000' && detail.orderStatus != '8000'">
+            发货时间:<span class="num">{{
       detail.statusDeliveringTime }}</span></p>
           <p>门店名称:<span class="num">{{ detail.leaderAddress }}</span></p>
         </div>
@@ -271,7 +282,7 @@ import { onMounted, ref, watch } from "vue";
 import { orderList, orderDetail } from "../../api/modules";
 import dayjs from "dayjs";
 import {
-   Download
+  Download, Upload
 } from '@element-plus/icons-vue'
 const searchParams = {
   orderNumber: '',
@@ -314,6 +325,42 @@ const resetForm = () => {
   searchForm.value = { ...searchParams }
   getOrderList()
 }
+// 全选
+const isDisabled = ref(true)
+const multipleTableRef = ref()
+const multipleSelection = ref([])
+const handleSelectionChange = (val) => {
+  multipleSelection.value = val
+  if (multipleSelection.value && multipleSelection.value.length > 0) {
+    isDisabled.value = false
+  }
+}
+// 批量发货
+const hamdleBatchSend = () => {
+  if (multipleSelection.value && multipleSelection.value.length > 0) {
+    isDisabled.value = true
+    multipleTableRef.value.clearSelection()
+    getOrderList()
+  }
+}
+// 批量收货
+const hamdleBatchReceive = () => {
+  if (multipleSelection.value && multipleSelection.value.length > 0) {
+    isDisabled.value = true
+    multipleTableRef.value.clearSelection()
+    getOrderList()
+  }
+}
+// 批量上传发货
+const hamdleUploadSend = () => {
+  getOrderList()
+}
+// 批量上传收货
+const hamdleUploadReceive = () => {
+  getOrderList()
+}
+
+
 // 订单详情
 const dialogVisible = ref(false)
 const detail = ref()
@@ -323,7 +370,7 @@ const handleDetail = async (id) => {
   const res = await orderDetail(id)
   if (res.code === 0) {
     detail.value = res.data
-    detail.value.orderGoods[0].couponAmt=detail.value.couponAmt
+    detail.value.orderGoods[0].couponAmt = detail.value.couponAmt
     fullscreenLoading.value = false
     dialogVisible.value = true
   }
