@@ -25,6 +25,8 @@
     </el-card>
     <el-card style="margin-top: 10px;">
         <el-button type="primary" :icon="CirclePlus" class="add" @click="add()">新增</el-button>
+        <el-button  :icon="Download" class="add" >导出</el-button>
+
         <el-table :data="compositeData" :span-method="objectSpanMethod" border v-loading="loading" style="width: 100%"
             :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
             <el-table-column align="center" prop="parentName" label="合成卡名称" show-overflow-tooltip></el-table-column>
@@ -80,7 +82,7 @@
 import { onMounted, ref, reactive } from "vue";
 import { compositeCardList, compositeCardAdd, compositeCardUpdate, giftList } from "../../api/modules";
 import {
-    CirclePlus
+    CirclePlus,Download
 } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus';
 const loading = ref(false)

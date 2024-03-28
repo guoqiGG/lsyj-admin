@@ -12,11 +12,6 @@
                         <el-input v-model="searchForm.mobile" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col>
-                <!-- <el-col :span="6">
-                    <el-form-item label="用户ID">
-                        <el-input v-model="searchForm.userId" placeholder="请输入" clearable />
-                    </el-form-item>
-                </el-col> -->
                 <el-col :span="6">
                     <el-form-item label="礼品卡名称">
                         <el-input v-model="searchForm.giftName" placeholder="请输入" clearable />
@@ -48,6 +43,7 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
+        <el-button  :icon="Download" style="margin-bottom: 20px"  >导出</el-button>
         <el-table v-loading="loading" :data="userGiftListData" style="width: 100%"  :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
             <el-table-column prop="name" label="用户名称" align="center" />
             <el-table-column prop="mobile" label="手机号" align="center" />
@@ -75,6 +71,9 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { userGiftList} from "../../api/modules";
+import {
+   Download
+} from '@element-plus/icons-vue'
 const searchParams = {
     name: null,//用户名称
     mobile: null,

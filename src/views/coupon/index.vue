@@ -166,6 +166,7 @@ import {
 import { ElMessage } from 'element-plus';
 const searchParams = {
     name: null,
+    puid:null,
     status: null,//优惠券状态  1上架 2下架
 }
 const loading = ref(false)

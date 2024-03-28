@@ -23,6 +23,7 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
+    <el-button  :icon="Download"   >导出</el-button>
         <el-table v-loading="loading" :data="leaderListData" style="width: 100%">
             <el-table-column prop="leaderName" label="团长姓名" />
             <el-table-column prop="leaderMobile" label="团长手机" />
@@ -74,6 +75,9 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { leaderList, updateLeaderInfo } from "../../api/modules";
+import {
+   Download
+} from '@element-plus/icons-vue'
 import dayjs from "dayjs";
 const searchParams = {
     leaderName: '',

@@ -71,6 +71,7 @@
 
   </el-card>
   <el-card style="margin-top: 10px;">
+    <el-button  :icon="Download" style="margin-bottom: 20px"  >导出</el-button>
     <el-table v-loading="loading" :data="orderListData" style="width: 100%"
       :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
       <!-- <el-table-column type="selection" width="55" /> -->
@@ -269,6 +270,9 @@
 import { onMounted, ref, watch } from "vue";
 import { orderList, orderDetail } from "../../api/modules";
 import dayjs from "dayjs";
+import {
+   Download
+} from '@element-plus/icons-vue'
 const searchParams = {
   orderNumber: '',
   userName: '',

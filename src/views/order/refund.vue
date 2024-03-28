@@ -58,6 +58,7 @@
         </el-form>
     </el-card>
     <el-card style="margin-top: 10px;">
+        <el-button  :icon="Download" style="margin-bottom: 20px"  >导出</el-button>
         <el-table v-loading="loading" :data="refundData" style="width: 100%"
             :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
             <el-table-column prop="userName" label="用户名称" align="center" />
@@ -245,9 +246,8 @@
 import { onMounted, ref, reactive } from "vue";
 import { refundList, refundAudit, orderDetail } from "../../api/modules";
 import {
-    CirclePlus
+   Download
 } from '@element-plus/icons-vue'
-import { ElMessage, } from 'element-plus';
 const loading = ref(false)
 const searchForm = ref({
     userName: null,//用户名称
