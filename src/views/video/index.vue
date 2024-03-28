@@ -73,7 +73,7 @@
                 <el-input v-model="videoForm.total" placeholder="视频标题" clearable />
             </el-form-item>
             <el-form-item label="视频内容" prop="video">
-                <el-upload :limit="1" accept="video/*" v-model:file-list="fileList" class="video-uploader"
+                <el-upload  accept="video/*" v-model:file-list="fileList" class="video-uploader"
                     :show-file-list="false" :action="BaseUrl + '/upload/oss'" :headers="{ Authorization: token }"
                     :on-success="handleSuccess" :on-error="handleError" :before-upload="beforeUpload">
                     <video class="avatar" v-if="videoForm.video" controls="controls" :src="videoForm.video"></video>

@@ -55,7 +55,7 @@
                 <el-input v-model="categoryForm.name" placeholder="标题" clearable />
             </el-form-item>
             <el-form-item label="图片" prop="url">
-                <el-upload :limit="1" accept="image/*" v-model:file-list="fileList" class="image-uploader"
+                <el-upload  accept="image/*" v-model:file-list="fileList" class="image-uploader"
                     :show-file-list="false" :action="BaseUrl + '/upload/oss'" :headers="{ Authorization: token }"
                     :on-success="handleSuccess" :on-error="handleError" :before-upload="beforeUpload">
                     <el-image class="avatar" v-if="categoryForm.url" controls="controls"

@@ -75,10 +75,9 @@
                 <el-input v-model="prodForm.goodsName" placeholder="商品名称" clearable />
             </el-form-item>
             <el-form-item label="商品图片" prop="thumbail">
-                <el-upload ref="uploadRef" :limit="1" accept="image/*" v-model:file-list="fileList"
-                    class="image-uploader" :show-file-list="false" :action="BaseUrl + '/upload/oss'"
-                    :headers="{ Authorization: token }" :on-success="handleSuccess" :on-error="handleError"
-                    :before-upload="beforeUpload">
+                <el-upload ref="uploadRef" accept="image/*" v-model:file-list="fileList" class="image-uploader"
+                    :show-file-list="false" :action="BaseUrl + '/upload/oss'" :headers="{ Authorization: token }"
+                    :on-success="handleSuccess" :on-error="handleError" :before-upload="beforeUpload">
                     <el-image class="avatar" v-if="prodForm.thumbail" controls="controls"
                         :src="prodForm.thumbail"></el-image>
                     <el-icon v-else class="image-uploader-icon">
@@ -378,27 +377,24 @@ const uploadRef = ref(null)
 
 
 const handleSuccess = (response, file, fileList) => {
-    uploadRef.value.clearFiles();
-    prodForm.value.thumbail = response
-    ElMessage({
-        showClose: false,
-        message: '上传成功',
-        type: 'success',
+    nextTick(() => {
+        prodForm.value.thumbail = response
+        ElMessage({
+            showClose: false,
+            message: '上传成功',
+            type: 'success',
+        })
+        uploadRef.value.clearFiles();
     })
 }
 
 const handleError = (err, file, fileList) => {
-    uploadRef.value.clearFiles();
     ElMessage({
         showClose: false,
         message: '上传失败',
         type: 'danger'
     })
 }
-const handleRemove = (uploadFile, uploadFiles) => {
-    console.log(uploadFile, uploadFiles)
-}
-
 
 const beforeUpload = (file) => {
     const fileName = file.name;
@@ -417,7 +413,6 @@ const beforeUpload = (file) => {
     if (!isLt2M) {
         this.$message.error('图片大小不能超过 2MB!');
     }
-    uploadRef.value.clearFiles();
     return isLt2M && isOKType;
 }
 
