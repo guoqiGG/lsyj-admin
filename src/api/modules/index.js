@@ -27,6 +27,22 @@ export function orderDetail(query) {
     // params: query,
   });
 }
+// 订单批量发货
+export function orderBatchSend(data) {
+  return service({
+    method: "POST",
+    url: "upload/order/delivery/list",
+    data,
+  });
+}
+// 订单批量收货
+export function orderBatchReceive(data) {
+  return service({
+    method: "POST",
+    url: "upload/order/take/delivery/list",
+    data,
+  });
+}
 // 团长列表
 export function leaderList(query) {
   return service({
