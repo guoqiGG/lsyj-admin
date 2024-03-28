@@ -310,6 +310,8 @@ const handleInputConfirm = () => {
             inputValue.value = ''
             return
         }
+    }else{
+        inputVisible.value = false
     }
 }
 
@@ -416,6 +418,7 @@ const beforeUpload = (file) => {
     return isLt2M && isOKType;
 }
 
+const goodsCouponActivity = ref({})
 const editOrCreateDialog = async (e) => {
     editOrCreateDialogVisible.value = true
     if (e) { //编辑
@@ -432,12 +435,16 @@ const editOrCreateDialog = async (e) => {
         prodForm.value.deliveryMode = res.data.deliveryMode
         prodForm.value.adminSort = res.data.adminSort
         prodForm.value.adminGoodsSkuInputVOS = res.data.adminGoodsSkuInputVOS
+
         if (res.data.goodsCouponActivity) {
+            goodsCouponActivity.value = res.data.goodsCouponActivity
             prodForm.value.goodsCoupon.couponId = res.data.goodsCouponActivity.couponId
             prodForm.value.goodsCoupon.couponNum = res.data.goodsCouponActivity.couponNum
             prodForm.value.goodsCoupon.rule = res.data.goodsCouponActivity.rule
+            prodForm.value.goodsCoupon.id = res.data.goodsCouponActivity.id
+            prodForm.value.goodsCoupon.goodsId = res.data.goodsCouponActivity.goodsId
         } else {
-            prodForm.value.goodsCoupon = { couponId: '', couponNum: 0, rule: 0 }
+            prodForm.value.goodsCoupon = { id: 0, goodsId: '', couponId: '', couponNum: 0, rule: 0 }
         }
     } else { // 新增
         isCreate.value = true
@@ -448,11 +455,11 @@ const editOrCreateDialog = async (e) => {
 
 const closeEditOrCreateDialog = () => {
     editOrCreateDialogVisible.value = false
+    goodsCouponActivity.value = {}
     clearEditForm()
 }
 
 const save = async () => {
-    console.log(prodForm.value)
     categoryFormRef.value.validate(async (valid) => {
         if (valid) {
             if (prodForm.value.goodsCoupon.couponId && !prodForm.value.goodsCoupon.couponNum) {
@@ -471,7 +478,6 @@ const save = async () => {
                 })
                 return
             }
-
             if (isCreate.value) {//新增提交
                 let params = {
                     categoryId: prodForm.value.categoryId,
@@ -507,14 +513,42 @@ const save = async () => {
                     adminSort: prodForm.value.adminSort,
                     adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS,
                 }
-                if (prodForm.value.goodsCoupon.couponId || prodForm.value.goodsCoupon.couponNum) {
-                    params.goodsCoupon = prodForm.value.goodsCoupon
+                // 单独添加优惠券参数  
+                if (!goodsCouponActivity.value?.id) { // 之前商品未添加优惠券 
+                    if (prodForm.value.goodsCoupon.couponId || prodForm.value.goodsCoupon.couponNum) { // 新添加
+                        params.goodsCoupon = {
+                            couponId: prodForm.value.goodsCoupon.couponId,
+                            couponNum: prodForm.value.goodsCoupon.couponNum,
+                            rule: prodForm.value.goodsCoupon.rule,
+                            isDeleted: 0
+                        }
+                    }
+                } else { // 添加过 
+                    if (!prodForm.value.goodsCoupon.couponId && !prodForm.value.goodsCoupon.couponNum) { // 删除
+                        params.goodsCoupon = {
+                            id: goodsCouponActivity.value.id,
+                            goodsId: goodsCouponActivity.value.goodsId,
+                            isDeleted: 1
+                        }
+                    } else { //修改
+                        params.goodsCoupon = {
+                            id: prodForm.value.goodsCoupon.id,
+                            couponId: prodForm.value.goodsCoupon.couponId,
+                            couponNum: prodForm.value.goodsCoupon.couponNum,
+                            goodsId: prodForm.value.goodsCoupon.goodsId,
+                            rule: prodForm.value.goodsCoupon.rule,
+                            isDeleted: 0
+                        }
+                    }
                 }
+
                 const res = await deleteProd({ ...params })
                 if (res?.code == 0) {
+                    
                     closeEditOrCreateDialog()
                     getProdList()
                 }
+
             }
         } else {
             return false
