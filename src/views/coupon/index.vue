@@ -2,12 +2,12 @@
     <el-card>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="优惠券名">
                         <el-input v-model="searchForm.name" placeholder="优惠券名" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="优惠券状态">
                         <el-select style="width:92%" v-model="searchForm.status" placeholder="请选择" clearable>
                             <el-option label="上架" value="1" />

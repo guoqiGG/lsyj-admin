@@ -4,42 +4,42 @@
 
     <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
       <el-row>
-        <el-col :span="4">
+        <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="订单编号">
             <el-input v-model="searchForm.orderNumber" placeholder="订单编号" clearable />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="用户名称">
             <el-input v-model="searchForm.userName" placeholder="用户名称" clearable />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="用户号码">
             <el-input v-model="searchForm.userMobile" placeholder="用户手机号" clearable />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="团长名称">
             <el-input v-model="searchForm.leaderName" placeholder="团长名称" clearable />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="团长号码">
             <el-input v-model="searchForm.leaderMobile" placeholder="团长手机号" clearable />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="订单类型">
-            <el-select style="width:92%" v-model="searchForm.orderType" placeholder="请选择" clearable>
+            <el-select v-model="searchForm.orderType" placeholder="请选择" clearable>
               <el-option label="自提" value="1" />
               <el-option label="快递" value="2" />
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="订单状态">
-            <el-select style="width:92%" v-model="searchForm.orderStatus" placeholder="请选择" clearable>
+            <el-select v-model="searchForm.orderStatus" placeholder="请选择" clearable>
               <el-option label="待付款" value="1000" />
               <el-option label="待发货" value="1001" />
               <el-option label="待收货" value="2001" />
@@ -50,9 +50,9 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="退款状态">
-            <el-select style="width:92%" v-model="searchForm.refundStatus" placeholder="请选择" clearable>
+            <el-select v-model="searchForm.refundStatus" placeholder="请选择" clearable>
               <el-option label="未申请退款" value="0" />
               <el-option label="申请退款" value="1" />
               <el-option label="退款中" value="2" />
@@ -66,26 +66,24 @@
           <el-button type="primary" @click="getOrderList">查询</el-button>
           <el-button @click="resetForm()">重置</el-button>
         </el-form-item>
-       
+
 
       </el-row>
       <el-row>
         <el-form-item>
           <el-upload style="margin: 0px 20px 0px 0px;" v-model:file-list="fileList" class="upload-demo"
             :show-file-list="false" :action="BaseUrl + '/upload/order/delivery'" :headers="{ Authorization: token }"
-            :multiple="false"  :on-success="handleSuccess" :on-error="handleError"
-          >
+            :multiple="false" :on-success="handleSuccess" :on-error="handleError">
             <el-button :icon="Upload" type="primary">批量上传发货</el-button>
           </el-upload>
           <el-button :icon="Download" @click="hamdleDownload('send')">下载批量发货模板</el-button>
           <el-upload style="margin: 0px 20px 0px 20px;" v-model:file-list="fileList" class="upload-demo"
-            :show-file-list="false" :action="BaseUrl + '/upload/order/take/delivery'" :headers="{ Authorization: token }"
-            :multiple="false"  :on-success="handleSuccess2" :on-error="handleError2"
-          >
+            :show-file-list="false" :action="BaseUrl + '/upload/order/take/delivery'"
+            :headers="{ Authorization: token }" :multiple="false" :on-success="handleSuccess2" :on-error="handleError2">
             <el-button :icon="Upload" type="primary">批量上传收货</el-button>
           </el-upload>
           <el-button :icon="Download" @click="hamdleDownload('receive')">下载批量收货模板</el-button>
-          
+
         </el-form-item>
       </el-row>
 
@@ -298,7 +296,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { orderList, orderDetail, orderBatchSend,orderBatchReceive } from "../../api/modules";
+import { orderList, orderDetail, orderBatchSend, orderBatchReceive } from "../../api/modules";
 import dayjs from "dayjs";
 import {
   Download, Upload
@@ -354,7 +352,7 @@ const handleSelectionChange = (val) => {
   multipleSelection.value = val
   if (multipleSelection.value && multipleSelection.value.length > 0) {
     isDisabled.value = false
-  }else{
+  } else {
     isDisabled.value = true
   }
 }
@@ -380,7 +378,7 @@ const hamdleBatchSend = async (e, type) => {
 
 }
 // 批量收货
-const hamdleBatchReceive = async(e, type) => {
+const hamdleBatchReceive = async (e, type) => {
   let orderIds = []
   if (type === 'single') {// 单个收货
     orderIds.push(e)
@@ -403,7 +401,7 @@ const hamdleBatchReceive = async(e, type) => {
 const handleSuccess = (response, file, fileList) => {
   if (response.code === 0) {
     ElMessage.success('上传成功');
-  }else{
+  } else {
     ElMessage.error(response.msg);
   }
   getOrderList()
@@ -417,7 +415,7 @@ const handleError = (err, file, fileList) => {
 const handleSuccess2 = (response, file, fileList) => {
   if (response.code === 0) {
     ElMessage.success('上传成功');
-  }else{
+  } else {
     ElMessage.error(response.msg);
   }
   getOrderList()
@@ -428,11 +426,11 @@ const handleError2 = (err, file, fileList) => {
 }
 // 下载模板
 const hamdleDownload = (type) => {
-  let url 
-  if(type==='send'){
+  let url
+  if (type === 'send') {
     url = 'https://qingchuntai2.oss-cn-beijing.aliyuncs.com/2024/02/20/%E6%89%B9%E9%87%8F%E5%8F%91%E8%B4%A7.xlsx'
-  }else{
-    url ='https://qingchuntai2.oss-cn-beijing.aliyuncs.com/2024/02/20/%E6%89%B9%E9%87%8F%E6%94%B6%E8%B4%A7%E6%93%8D%E4%BD%9C%E8%A1%A8.xlsx'
+  } else {
+    url = 'https://qingchuntai2.oss-cn-beijing.aliyuncs.com/2024/02/20/%E6%89%B9%E9%87%8F%E6%94%B6%E8%B4%A7%E6%93%8D%E4%BD%9C%E8%A1%A8.xlsx'
   }
   window.location.href = url
 }

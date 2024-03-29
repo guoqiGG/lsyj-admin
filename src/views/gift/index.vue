@@ -2,7 +2,7 @@
     <el-card>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="礼品卡名">
                         <el-input v-model="searchForm.name" placeholder="礼品卡名" clearable />
                     </el-form-item>

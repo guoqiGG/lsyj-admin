@@ -2,27 +2,27 @@
     <el-card>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="用户名称">
                         <el-input v-model="searchForm.userName" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="用户手机号">
                         <el-input v-model="searchForm.userMobile" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col>
-                <!-- <el-col :span="6">
+                <!-- <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="用户ID">
                         <el-input v-model="searchForm.userId" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col> -->
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="合成卡名称">
                         <el-input v-model="searchForm.giftRuleName" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="核销状态">
                         <el-select style="width:92%" v-model="searchForm.status" placeholder="请选择" clearable>
                             <el-option label="未核销" value="0" />
@@ -31,24 +31,24 @@
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长名称">
                         <el-input v-model="searchForm.leaderName" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长手机号">
                         <el-input v-model="searchForm.leaderMobile" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col>
-                <!-- <el-col :span="6">
+                <!-- <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长ID">
                         <el-input v-model="searchForm.pUid" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col> -->
                 <!-- 合成卡获得开始时间 -->
-                <el-col :span="12">
+                <el-col :lg="12" :md="12" :sm="24">
                     <el-form-item label="合成卡获得时间 ">
                         <el-date-picker v-model="searchForm.time1" type="daterange" start-placeholder="开始时间"
                             end-placeholder="结束时间" format="YYYY-MM-DD" date-format="YYYY/MM/DD ddd"
@@ -56,7 +56,7 @@
                     </el-form-item>
                 </el-col>
                 <!--核销时间-->
-                <el-col :span="12">
+                <el-col :lg="12" :md="12" :sm="24">
                     <el-form-item label="核销时间 ">
                         <el-date-picker v-model="searchForm.time2" type="datetimerange" start-placeholder="开始时间"
                             end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd"

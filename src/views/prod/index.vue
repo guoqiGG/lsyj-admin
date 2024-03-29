@@ -2,12 +2,12 @@
     <el-card>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="6">
+                <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="商品名称">
                         <el-input v-model="searchForm.name" placeholder="商品名称" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="商品分类">
                         <el-select v-model="searchForm.categoryId" placeholder="商品分类" style="width: 90%" clearable>
                             <el-option v-for="item in prodCategoryListData" :key="item.id" :label="item.name"

@@ -2,22 +2,22 @@
     <el-card>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="用户名称">
                         <el-input v-model="searchForm.name" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="用户手机号">
                         <el-input v-model="searchForm.mobile" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="礼品卡名称">
                         <el-input v-model="searchForm.giftName" placeholder="请输入" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="礼品卡状态">
                         <el-select style="width:92%" v-model="searchForm.status" placeholder="请选择" clearable>
                             <el-option label="未合成" value="0" />
@@ -26,7 +26,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="礼品卡来源">
                         <el-select style="width:92%" v-model="searchForm.type" placeholder="请选择" clearable>
                             <el-option label="系统发放 " value="0" />

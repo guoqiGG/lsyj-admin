@@ -4,9 +4,9 @@
 
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="直播间状态">
-                        <el-select style="width:92%" v-model="searchForm.status" placeholder="请选择" clearable>
+                        <el-select  v-model="searchForm.status" placeholder="请选择" clearable>
                             <el-option label="直播中" value="101" />
                             <el-option label="未开始" value="102" />
                             <el-option label="已结束" value="103" />

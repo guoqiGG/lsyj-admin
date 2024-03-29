@@ -2,12 +2,12 @@
     <el-card>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="合成卡名">
                         <el-input v-model="searchForm.name" placeholder="合成卡名" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="12">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="时间筛选">
                         <el-date-picker v-model="searchForm.time" type="datetimerange" start-placeholder="开始时间"
                             end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd"

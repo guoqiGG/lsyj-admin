@@ -2,34 +2,34 @@
     <el-card>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="4">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="用户名称">
                         <el-input v-model="searchForm.userName" placeholder="用户名称" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
-                    <el-form-item label="用户手机号">
+                <el-col :lg="6" :md="8" :sm="12">
+                    <el-form-item label="用户手机">
                         <el-input v-model="searchForm.userMobile" placeholder="用户手机号" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长名称">
                         <el-input v-model="searchForm.leaderName" placeholder="团长名称" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
-                    <el-form-item label="团长手机号">
+                <el-col :lg="6" :md="8" :sm="12">
+                    <el-form-item label="团长手机">
                         <el-input v-model="searchForm.leaderMobile" placeholder="团长手机号" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="商品名称">
                         <el-input v-model="searchForm.goodsName" placeholder="商品名称" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="退款状态">
-                        <el-select style="width:92%" v-model="searchForm.refundStatus" placeholder="请选择" clearable>
+                        <el-select v-model="searchForm.refundStatus" placeholder="请选择" clearable>
                             <el-option label="申请中" value="1" />
                             <el-option label="已退款" value="2" />
                             <el-option label="已拒绝" value="3" />
@@ -37,14 +37,14 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
-                    <el-form-item label="订单号">
-                        <el-input v-model="searchForm.orderNumber" placeholder="订单号" clearable />
+                <el-col :lg="6" :md="8" :sm="12">
+                    <el-form-item label="订单编号">
+                        <el-input v-model="searchForm.orderNumber" placeholder="订单编号" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="订单类型">
-                        <el-select style="width:92%" v-model="searchForm.orderType" placeholder="请选择" clearable>
+                        <el-select v-model="searchForm.orderType" placeholder="请选择" clearable>
                             <el-option label="配送单" value="1" />
                             <el-option label="自提单" value="2" />
                         </el-select>
@@ -56,17 +56,17 @@
                 </el-form-item>
             </el-row>
             <el-row>
-        <el-form-item>
-            <el-upload style="margin: 0px 20px 0px 0px;" v-model:file-list="fileList" class="upload-demo"
-            :show-file-list="false" :action="BaseUrl + '/upload/order/refund/success'" :headers="{ Authorization: token }"
-            :multiple="false"  :on-success="handleSuccess" :on-error="handleError"
-          >
-            <el-button :icon="Upload" type="primary">批量上传退款</el-button>
-          </el-upload>
-          <el-button :icon="Download" @click="hamdleDownload()">下载批量退款模板</el-button>
-          
-        </el-form-item>
-      </el-row>
+                <el-form-item>
+                    <el-upload style="margin: 0px 20px 0px 0px;" v-model:file-list="fileList" class="upload-demo"
+                        :show-file-list="false" :action="BaseUrl + '/upload/order/refund/success'"
+                        :headers="{ Authorization: token }" :multiple="false" :on-success="handleSuccess"
+                        :on-error="handleError">
+                        <el-button :icon="Upload" type="primary">批量上传退款</el-button>
+                    </el-upload>
+                    <el-button :icon="Download" @click="hamdleDownload()">下载批量退款模板</el-button>
+
+                </el-form-item>
+            </el-row>
         </el-form>
     </el-card>
     <el-card style="margin-top: 10px;">
@@ -275,7 +275,7 @@
 import { onMounted, ref, reactive } from "vue";
 import { refundList, refundAudit, orderDetail, batchRefund } from "../../api/modules";
 import {
-    Download,Upload
+    Download, Upload
 } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus';
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
@@ -362,22 +362,22 @@ const submitBatchForm = async (e) => {
 };
 // 批量上传退款
 const handleSuccess = (response, file, fileList) => {
-  if (response.code === 0) {
-    ElMessage.success('退款成功');
-  }else{
-    ElMessage.error(response.msg);
-  }
-  getRefundList()
+    if (response.code === 0) {
+        ElMessage.success('退款成功');
+    } else {
+        ElMessage.error(response.msg);
+    }
+    getRefundList()
 
 }
 const handleError = (err, file, fileList) => {
-  ElMessage.error('上传失败');
+    ElMessage.error('上传失败');
 
 }
 // 下载模板
 const hamdleDownload = () => {
-    let url  = 'https://qingchuntai2.oss-cn-beijing.aliyuncs.com/2024/02/20/%E9%80%80%E6%AC%BE%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9C%E8%A1%A8.xlsx'
-  window.location.href = url
+    let url = 'https://qingchuntai2.oss-cn-beijing.aliyuncs.com/2024/02/20/%E9%80%80%E6%AC%BE%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9C%E8%A1%A8.xlsx'
+    window.location.href = url
 }
 
 // 订单详情

@@ -4,12 +4,12 @@
 
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长姓名">
                         <el-input v-model="searchForm.leaderName" placeholder="团长姓名" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长号码">
                         <el-input v-model="searchForm.leaderMobile" placeholder="团长号码" clearable />
                     </el-form-item>

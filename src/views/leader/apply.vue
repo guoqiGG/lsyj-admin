@@ -4,32 +4,32 @@
 
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长姓名">
                         <el-input v-model="searchForm.leaderName" placeholder="团长姓名" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长号码">
                         <el-input v-model="searchForm.leaderMobile" placeholder="团长号码" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="用户姓名">
                         <el-input v-model="searchForm.userName" placeholder="用户姓名" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="用户号码">
                         <el-input v-model="searchForm.userMobile" placeholder="用户号码" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="门店名称">
                         <el-input v-model="searchForm.remark" placeholder="门店名称" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="审核状态">
                         <el-select style="width:92%" v-model="searchForm.status" placeholder="请选择" clearable>
                             <el-option label="待审核" value="0" />
@@ -38,7 +38,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长类型">
                         <el-select style="width:92%" v-model="searchForm.type" placeholder="请选择" clearable>
                             <el-option label="有店" value="0" />

@@ -2,27 +2,27 @@
     <el-card>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
-                <el-col :span="6">
+                <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="用户昵称">
                         <el-input v-model="searchForm.name" placeholder="用户昵称" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="用户手机">
                         <el-input v-model="searchForm.mobile" placeholder="用户手机" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="团长名称">
                         <el-input v-model="searchForm.leaderName" placeholder="团长名称" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="团长手机">
                         <el-input v-model="searchForm.leaderMobile" placeholder="团长手机" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="所属团长">
                         <el-select v-model="searchForm.puid" filterable placeholder="请选择所属团长" style="width: 90%">
                             <el-option v-for="item in options" :key="item.id" :label="item.leaderName"
