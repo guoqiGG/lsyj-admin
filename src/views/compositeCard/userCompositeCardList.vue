@@ -73,15 +73,17 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-button  :icon="Download" style="margin-bottom: 20px"  >导出</el-button>
-        <el-table v-loading="loading" :data="userCompositeData" style="width: 100%"  :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+        <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
+        <el-table v-loading="loading" :data="userCompositeData" style="width: 100%"
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="用户名称" align="center" />
             <el-table-column prop="mobile" label="手机号" align="center" />
             <el-table-column prop="userId" label="用户ID" align="center" />
             <el-table-column prop="giftRuleName" label="合成卡名称" align="center" />
             <el-table-column prop="status" label="核销状态" align="center">
                 <template #default="scope">
-                    {{ scope.row.status == 0 ? '未核销' : scope.row.status == 1 ? '已核销' : scope.row.status == 1 ? '已过期' : ''
+                    {{ scope.row.status == 0 ? '未核销' : scope.row.status == 1 ? '已核销' : scope.row.status == 1 ? '已过期' :
+            ''
                     }}
                 </template>
             </el-table-column>
@@ -103,8 +105,10 @@
 import { onMounted, ref } from "vue";
 import { userCompositeList } from "../../api/modules";
 import {
-   Download
+    Download
 } from '@element-plus/icons-vue'
+import { useRoute } from "vue-router";
+const route = useRoute()
 const searchParams = {
     userName: null,//用户名称
     userMobile: null,
@@ -164,6 +168,9 @@ const resetForm = () => {
     getUserCompositeList()
 }
 onMounted(() => {
+    if (route.query.userId) {
+        searchForm.value.userId = route.query.userId
+    }
     getUserCompositeList()
 })
 </script>

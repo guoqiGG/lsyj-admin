@@ -48,9 +48,16 @@
                 </template>
             </el-table-column>
             <el-table-column prop="mobile" label="用户手机" />
-            <el-table-column label="团长" align="center">
+            <el-table-column label="团长">
                 <template #default="scope">
-                    {{ scope.row.leaderName ? scope.row.leaderName + ':' + scope.row.leaderMobile : '无' }}
+                    
+                    <div class="leader" v-if=" scope.row.leaderName&&scope.row.leaderMobile">
+                        <div> 团长：{{ scope.row.leaderName }}</div>
+                        <div> 手机：{{ scope.row.leaderMobile }}</div>
+                        <div> 门店：{{ scope.row.leaderStore }}</div>
+                        <div> 地址：{{ scope.row.address }}</div>
+                      </div>
+                      <div v-else>无</div>
                 </template>
             </el-table-column>
             <el-table-column label="用户类型" align="center">
@@ -159,7 +166,6 @@ const editOrCreateDialog = (scope) => {
     userInfo.value.leaderMobile = scope.row.leaderMobile
     userInfo.value.levelName = scope.row.levelName
     userInfo.value.regTime = scope.row.regTime
-    editUserInfoRef.value.getOrderList()
 }
 
 const closeDialog = () => {

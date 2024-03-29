@@ -307,8 +307,8 @@
           <el-table-column prop="settleAmount" label="结算佣金" align="center" />
           <el-table-column prop="status" label="结算状态" align="center">
             <template #default="scope">
-              <span>{{ scope.row.status === 0 ? '未结算' : scope.row.status === 1 ? '已结算' : scope.row.status === 2 ? '已退回'
-      : '' }}</span>
+              <span>{{ scope.row.status === 0 ? '未结算' : scope.row.status === 1 ? '已结算' : scope.row.status === 2 ?
+      '已退回' : '' }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="settleType" label="结算类型" align="center">
@@ -321,7 +321,6 @@
         </el-table>
       </div>
     </div>
-
   </el-dialog>
 
 </template>
@@ -333,6 +332,9 @@ import {
   Download, Upload
 } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { useRoute } from "vue-router";
+const route = useRoute()
+
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const pUidOptions = ref()
 const getLeaderList = async () => {
@@ -494,9 +496,14 @@ const handleDetail = async (id) => {
 
 onMounted(() => {
   getLeaderList()
+  if (route.query.userId) {
+    searchForm.value.userId = route.query.userId
+  }
+  if (route.query.orderId) {
+    searchForm.value.orderNumber = route.query.orderId
+  }
   getOrderList()
 })
-
 watch(searchForm.value, (newValue, oldValue) => {
   searchForm.value.startTime = dayjs(newValue.time[0]).format('YYYY-MM-DD hh:mm:ss')
   searchForm.value.endTime = dayjs(newValue.time[1]).format('YYYY-MM-DD hh:mm:ss')

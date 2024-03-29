@@ -195,6 +195,16 @@ const routes = [
           name: "优惠券列表",
         },
       },
+      // 用户优惠券列表
+      {
+        path: "/userCouponList",
+        name: "userCouponList",
+        component: () => import("../views/coupon/userCoupon.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "用户优惠券列表",
+        },
+      }
     ],
   },
   // 礼品卡列表

@@ -126,6 +126,11 @@ const menuList = ref([
         title: "优惠券",
         url: "/couponList",
         icon: "Menu",
+      },
+      {
+        title: "用户优惠券列表",
+        url: "/userCouponList",
+        icon: "Menu",
       }
     ],
   },

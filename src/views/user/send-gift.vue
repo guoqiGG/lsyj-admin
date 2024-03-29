@@ -3,12 +3,12 @@
         <el-form ref="giftFormRef" :rules="giftRules" :model="giftForm" class="demo-form-inline" label-width="100px"
             :label-position="right">
             <el-form-item label="礼品卡" prop="giftId">
-                <el-select v-model="giftForm.giftId" placeholder="请选择礼品卡" clearable filterable>
+                <el-select v-model="giftForm.giftId" placeholder="请选择礼品卡" clearable filterable style="width: 200px;">
                     <el-option v-for="item in giftListData" :label="item.name" :value="item.id" />
                 </el-select>
             </el-form-item>
             <el-form-item label="赠送数量" prop="num">
-                <el-input-number v-model="giftForm.num" placeholder="赠送数量" controls-position="right" clearable
+                <el-input-number v-model="giftForm.num" placeholder="赠送数量" controls-position="right" clearable style="width: 200px;"
                     min="1" />
             </el-form-item>
             <el-form-item class="footer">

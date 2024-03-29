@@ -43,20 +43,22 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-button  :icon="Download" style="margin-bottom: 20px"  >导出</el-button>
-        <el-table v-loading="loading" :data="userGiftListData" style="width: 100%"  :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+        <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
+        <el-table v-loading="loading" :data="userGiftListData" style="width: 100%"
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="用户名称" align="center" />
             <el-table-column prop="mobile" label="手机号" align="center" />
             <el-table-column prop="id" label="用户ID" align="center" />
             <el-table-column prop="giftName" label="礼品卡名称" align="center" />
             <el-table-column prop="status" label="礼品卡状态" align="center">
                 <template #default="scope">
-                    {{ scope.row.status == 0 ? '未合成' :scope.row.status == 1 ? '已合成' : scope.row.status == 1 ? '已过期' : '' }}
+                    {{ scope.row.status == 0 ? '未合成' : scope.row.status == 1 ? '已合成' : scope.row.status == 1 ? '已过期' : ''
+                    }}
                 </template>
             </el-table-column>
             <el-table-column prop="type" label="礼品卡来源" align="center">
                 <template #default="scope">
-                    {{ scope.row.type == 0 ? '系统发放' :scope.row.type == 1 ?'后台赠送': '' }}
+                    {{ scope.row.type == 0 ? '系统发放' : scope.row.type == 1 ? '后台赠送' : '' }}
                 </template>
             </el-table-column>
         </el-table>
@@ -70,17 +72,19 @@
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
-import { userGiftList} from "../../api/modules";
+import { userGiftList } from "../../api/modules";
 import {
-   Download
+    Download
 } from '@element-plus/icons-vue'
+import { useRoute } from "vue-router";
+const route = useRoute()
 const searchParams = {
     name: null,//用户名称
     mobile: null,
     // userId:null,
-    status:null,//0未合成 1已合成 2已过期
-    type:null,//0系统发放 1 后台赠送的
-    giftName:null,//礼品卡名称
+    status: null,//0未合成 1已合成 2已过期
+    type: null,//0系统发放 1 后台赠送的
+    giftName: null,//礼品卡名称
 
 }
 const loading = ref(false)
@@ -112,16 +116,19 @@ const resetForm = () => {
     getUserGiftList()
 }
 onMounted(() => {
+    if (route.query.userId) {
+        searchForm.value.userId = route.query.userId
+    }
     getUserGiftList()
 })
 </script>
 <style lang="scss" scoped>
-.pagination{
+.pagination {
     margin-top: 20px;
 }
-.operation{
+
+.operation {
     color: #4060c7;
     margin: 0px 5px;
 }
-
 </style>
