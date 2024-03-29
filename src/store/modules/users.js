@@ -13,7 +13,7 @@ export default {
   namespaced: true,
   state: {
     UserInfo: {},
-    token: sessionStorage.getItem("token") || "",
+    token: localStorage.getItem("token") || "",
     isCollapse: false,
     themeConfig: {
       primary: "#4060c7",
@@ -71,8 +71,8 @@ export default {
         LoginInfo(userInfo)
           .then((res) => {
             console.log(res)
-            sessionStorage.setItem("token", res.data.token);
-            sessionStorage.setItem("UserInfo", JSON.stringify(res.data.data));
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("UserInfo", JSON.stringify(res.data.data));
             commit("setToken", res.data.token);
             commit("setUserInfo",res.data.data);
             router.replace("/");

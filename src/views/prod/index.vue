@@ -230,7 +230,7 @@ import {
 } from '@element-plus/icons-vue'
 import { Debounce } from '@/utils/debounce'
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
-const token = sessionStorage.getItem('token')
+const token = localStorage.getItem('token')
 const searchParams = {
     name: '',
     categoryId: ''

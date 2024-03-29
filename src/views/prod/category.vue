@@ -83,7 +83,7 @@ import {
     CirclePlus
 } from '@element-plus/icons-vue'
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
-const token = sessionStorage.getItem('token')
+const token = localStorage.getItem('token')
 const searchParams = {
     name: ''
 }

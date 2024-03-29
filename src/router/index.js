@@ -9,7 +9,7 @@ NProgress.configure({
 const writeNames = ["/login"];
 router.beforeEach((to, from, next) => {
   NProgress.start();
-  if (sessionStorage.getItem("token")) {
+  if (localStorage.getItem("token")) {
     if (to.path === "/login") {
       next("/");
     }

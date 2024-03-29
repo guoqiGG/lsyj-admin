@@ -31,7 +31,7 @@ const handleClick = () => {
 }
 
 const gotoLogin = () => {
-  sessionStorage.removeItem('token')
+  localStorage.removeItem('token')
   router.push('/login')
 }
 </script>
