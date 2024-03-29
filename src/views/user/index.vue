@@ -55,7 +55,7 @@
             </el-table-column>
             <el-table-column label="用户类型" align="center">
                 <template #default="scope">
-                    <div :class="['info', scope.row.type == 0 ? 'blue' : '']">{{ scope.row.type == 0 ? '普通用户' : '团长' }}
+                    <div>{{ scope.row.type == 0 ? '普通用户' : '团长' }}
                     </div>
                 </template>
             </el-table-column>
