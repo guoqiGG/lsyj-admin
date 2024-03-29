@@ -40,7 +40,7 @@
     </el-card>
     <el-card style="margin-top: 10px;">
     <el-button  :icon="Download" style="margin-bottom: 20px"  >导出</el-button>
-        <el-table v-loading="loading" :data="userListData" style="width: 100%">
+        <el-table v-loading="loading" :data="userListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="用户昵称"></el-table-column>
             <el-table-column prop="avatar" label="头像">
                 <template #default="scope">

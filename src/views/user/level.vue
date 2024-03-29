@@ -1,6 +1,6 @@
 <template>
     <el-card>
-        <el-table v-loading="loading" :data="userLevelListData" style="width: 100%">
+        <el-table v-loading="loading" :data="userLevelListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="levelName" label="等级" />
             <el-table-column prop="levelAmount" label="所需金额" align="center" />
             <el-table-column label="等级边框" align="center">

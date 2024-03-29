@@ -27,7 +27,7 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-table v-loading="loading" :data="liveListData" style="width: 100%">
+        <el-table v-loading="loading" :data="liveListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="roomId" label="房间号" />
             <el-table-column prop="name" label="直播间标题" />
             <el-table-column prop="anchorName" label="主播" />

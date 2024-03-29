@@ -17,7 +17,7 @@
     <el-card style="margin-top: 10px;">
         <el-button type="primary" :icon="CirclePlus" class="add" @click="add()">新增</el-button>
         <el-table v-loading="loading" :data="giftListData" style="width: 100%"
-            :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
+        :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="礼品卡名" align="center" />
             <el-table-column prop="number" label="限制数量" align="center" />
             <el-table-column prop="total" label="礼品卡总数" align="center" />

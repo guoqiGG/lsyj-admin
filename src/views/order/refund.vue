@@ -74,7 +74,7 @@
             @click="hamdleBatchRefund">批量退款</el-button>
         <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
         <el-table v-loading="loading" :data="refundData" style="width: 100%" ref="multipleTableRef"
-            :header-cell-style="{ background: '#eef1f6', color: '#606266' }" @selection-change="handleSelectionChange">
+        :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55" />
             <el-table-column prop="userName" label="用户名称" align="center" />
             <el-table-column prop="userMobile" label="用户手机号" align="center" />

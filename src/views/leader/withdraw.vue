@@ -41,7 +41,7 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-table v-loading="loading" :data="leaderWithdrawListData" style="width: 100%">
+        <el-table v-loading="loading" :data="leaderWithdrawListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="leaderName" label="团长姓名" />
             <el-table-column prop="leaderMobile" label="团长手机" />
             <el-table-column prop="withrawingAmt" label="申请金额" />

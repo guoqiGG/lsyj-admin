@@ -17,7 +17,7 @@
 
     <el-card style="margin-top: 10px;">
         <el-button tag="div" :icon="CirclePlus" type="primary" @click="editOrCreateDialog()">新增</el-button>
-        <el-table v-loading="loading" :data="prodCategoryListData" style="width: 100%;margin-top:10px;">
+        <el-table v-loading="loading" :data="prodCategoryListData" style="width: 100%;margin-top:10px;" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="id" label="ID" />
             <el-table-column prop="name" label="名称" align="center" />
             <el-table-column label="图片" align="center">

@@ -28,7 +28,7 @@
         <el-button  :icon="Download" class="add" >导出</el-button>
 
         <el-table :data="compositeData" :span-method="objectSpanMethod" border v-loading="loading" style="width: 100%"
-            :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
+        :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column align="center" prop="parentName" label="合成卡名称" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="parentNumber" label="需礼品卡数" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="name" label="礼品卡名称" show-overflow-tooltip></el-table-column>

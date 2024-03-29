@@ -97,7 +97,7 @@
       @click="hamdleBatchReceive">批量收货</el-button>
     <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
     <el-table v-loading="loading" :data="orderListData" style="width: 100%" ref="multipleTableRef"
-      :header-cell-style="{ background: '#eef1f6', color: '#606266' }" @selection-change="handleSelectionChange">
+    :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
       <el-table-column label="订单信息">
         <template #default="scope">

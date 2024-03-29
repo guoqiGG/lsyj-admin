@@ -44,7 +44,7 @@
     </el-card>
     <el-card style="margin-top: 10px;">
         <el-button  :icon="Download" style="margin-bottom: 20px"  >导出</el-button>
-        <el-table v-loading="loading" :data="userGiftListData" style="width: 100%"  :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
+        <el-table v-loading="loading" :data="userGiftListData" style="width: 100%"  :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="用户名称" align="center" />
             <el-table-column prop="mobile" label="手机号" align="center" />
             <el-table-column prop="id" label="用户ID" align="center" />

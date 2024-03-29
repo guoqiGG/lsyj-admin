@@ -34,7 +34,7 @@
     </el-card>
     <el-card style="margin-top: 10px;">
         <el-button tag="div" :icon="CirclePlus" type="primary" @click="editOrCreateDialog()">新增</el-button>
-        <el-table v-loading="loading" :data="videoListData" style="width: 100%;margin-top:10px;">
+        <el-table v-loading="loading" :data="videoListData" style="width: 100%;margin-top:10px;" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="id" label="ID" />
             <el-table-column prop="total" label="视频标题" />
             <el-table-column label="视频">
