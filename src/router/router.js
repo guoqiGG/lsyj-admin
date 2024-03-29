@@ -216,6 +216,16 @@ const routes = [
           name: "礼品卡列表",
         },
       },
+       // 用户礼品卡列表
+       {
+        path: "/userGiftCardList",
+        name: "userGiftCardList",
+        component: () => import("../views/compositeCard/userGiftCardList.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "用户礼品卡",
+        },
+      },
     ],
   },
   // 合成卡列表
@@ -237,16 +247,7 @@ const routes = [
           name: "合成卡列表",
         },
       },
-      // 用户礼品卡列表
-      {
-        path: "/userGiftCardList",
-        name: "userGiftCardList",
-        component: () => import("../views/compositeCard/userGiftCardList.vue"),
-        meta: {
-          requiresAuth: true,
-          name: "用户礼品卡",
-        },
-      },
+     
       // 用户合成卡列表
       {
         path: "/userCompositeCardList",
