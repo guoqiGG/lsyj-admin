@@ -228,6 +228,7 @@ import { ElMessage, ElInput } from "element-plus";
 import {
     CirclePlus
 } from '@element-plus/icons-vue'
+import { Debounce } from '@/utils/debounce'
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const token = sessionStorage.getItem('token')
 const searchParams = {
@@ -310,7 +311,7 @@ const handleInputConfirm = () => {
             inputValue.value = ''
             return
         }
-    }else{
+    } else {
         inputVisible.value = false
     }
 }
@@ -444,7 +445,7 @@ const editOrCreateDialog = async (e) => {
             prodForm.value.goodsCoupon.id = res.data.goodsCouponActivity.id
             prodForm.value.goodsCoupon.goodsId = res.data.goodsCouponActivity.goodsId
         } else {
-            prodForm.value.goodsCoupon = { id: 0, goodsId: '', couponId: '', couponNum: 0, rule: 0 }
+            prodForm.value.goodsCoupon = { couponId: '', couponNum: 0, rule: 0 }
         }
     } else { // 新增
         isCreate.value = true
@@ -459,7 +460,7 @@ const closeEditOrCreateDialog = () => {
     clearEditForm()
 }
 
-const save = async () => {
+const save = Debounce(async () => {
     categoryFormRef.value.validate(async (valid) => {
         if (valid) {
             if (prodForm.value.goodsCoupon.couponId && !prodForm.value.goodsCoupon.couponNum) {
@@ -544,7 +545,7 @@ const save = async () => {
 
                 const res = await deleteProd({ ...params })
                 if (res?.code == 0) {
-                    
+
                     closeEditOrCreateDialog()
                     getProdList()
                 }
@@ -554,7 +555,7 @@ const save = async () => {
             return false
         }
     })
-}
+}, 1000)
 
 // 清空表单数据
 const clearEditForm = () => {
