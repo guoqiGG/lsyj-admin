@@ -24,7 +24,7 @@
                 </el-col>
                 <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="所属团长">
-                        <el-select v-model="searchForm.puid" filterable placeholder="请选择所属团长" style="width: 90%">
+                        <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%">
                             <el-option v-for="item in options" :key="item.id" :label="item.leaderName"
                                 :value="item.id" />
                         </el-select>

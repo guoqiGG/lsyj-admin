@@ -62,6 +62,13 @@
             </el-select>
           </el-form-item>
         </el-col>
+        <el-col :lg="6" :md="8" :sm="12">
+          <el-form-item label="所属团长">
+            <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%">
+              <el-option v-for="item in pUidOptions" :key="item.id" :label="item.leaderName" :value="item.id" />
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-form-item>
           <el-button type="primary" @click="getOrderList">查询</el-button>
           <el-button @click="resetForm()">重置</el-button>
@@ -91,13 +98,13 @@
 
   </el-card>
   <el-card style="margin-top: 10px;">
-    <el-button type="primary" style="margin-bottom: 20px" :disabled="isDisabled"
-      @click="hamdleBatchSend">批量发货</el-button>
-    <el-button type="primary" style="margin-bottom: 20px" :disabled="isDisabled"
-      @click="hamdleBatchReceive">批量收货</el-button>
+    <el-button type="primary" :class="!isDisabled ? 'button-class' : 'button_false'" style="margin-bottom: 20px;"
+      :disabled="isDisabled" @click="hamdleBatchSend">批量发货</el-button>
+    <el-button type="primary" :class="!isDisabled ? 'button-class' : 'button_false'" style="margin-bottom: 20px;"
+      :disabled="isDisabled" @click="hamdleBatchReceive">批量收货</el-button>
     <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
     <el-table v-loading="loading" :data="orderListData" style="width: 100%" ref="multipleTableRef"
-    :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
+      :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
       <el-table-column label="订单信息">
         <template #default="scope">
@@ -275,8 +282,10 @@
 
         </div>
       </div>
-      <p style="color: #101010;font-size: 16px;font-weight: 600;" v-if="detail.orderGoods&&detail.orderGoods.length>0">商品明细</p>
-      <div class="product" style="margin-top: 20px;" v-if="detail.orderGoods&&detail.orderGoods.length>0">
+      <p style="color: #101010;font-size: 16px;font-weight: 600;"
+        v-if="detail.orderGoods && detail.orderGoods.length > 0">
+        商品明细</p>
+      <div class="product" style="margin-top: 20px;" v-if="detail.orderGoods && detail.orderGoods.length > 0">
         <el-table :data="detail.orderGoods" style="width: 100%"
           :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
           <el-table-column prop="type" label="商品" align="center">
@@ -290,19 +299,21 @@
           <el-table-column prop="amount" label="总价" align="center" />
         </el-table>
       </div>
-      <p style="color: #101010;font-size: 16px;font-weight: 600;" v-if="detail.orderSettlePuts&&detail.orderSettlePuts.length>0">结算佣金</p>
-      <div class="product" style="margin-top: 20px;" v-if="detail.orderSettlePuts&&detail.orderSettlePuts.length>0">
+      <p style="color: #101010;font-size: 16px;font-weight: 600;"
+        v-if="detail.orderSettlePuts && detail.orderSettlePuts.length > 0">结算佣金</p>
+      <div class="product" style="margin-top: 20px;" v-if="detail.orderSettlePuts && detail.orderSettlePuts.length > 0">
         <el-table :data="detail.orderSettlePuts" style="width: 100%"
           :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
           <el-table-column prop="settleAmount" label="结算佣金" align="center" />
           <el-table-column prop="status" label="结算状态" align="center">
             <template #default="scope">
-             <span>{{scope.row.status===0?'未结算':scope.row.status===1?'已结算': scope.row.status===2?'已退回': '' }}</span>
+              <span>{{ scope.row.status === 0 ? '未结算' : scope.row.status === 1 ? '已结算' : scope.row.status === 2 ? '已退回'
+      : '' }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="settleType" label="结算类型" align="center">
             <template #default="scope">
-             <span>{{scope.row.settleType===1?'邀请购买':scope.row.settleType===2?'团长自购': '' }}</span>
+              <span>{{ scope.row.settleType === 1 ? '邀请购买' :scope.row.settleType===2?'团长自购': '' }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="updateTime" label="更新时间" align="center" />
@@ -316,15 +327,24 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { orderList, orderDetail, orderBatchSend, orderBatchReceive } from "../../api/modules";
+import { orderList, orderDetail, orderBatchSend, orderBatchReceive, leaderList } from "../../api/modules";
 import dayjs from "dayjs";
 import {
   Download, Upload
 } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus';
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
+const pUidOptions = ref()
+const getLeaderList = async () => {
+  const res = await leaderList({
+    pageNo: 1,
+    pageSize: 10000,
+  })
+  pUidOptions.value = res.data.list
+}
 const searchParams = {
   orderNumber: '',
+  pUid: null,
   userName: '',
   leaderName: '',
   leaderMobile: '',
@@ -473,6 +493,7 @@ const handleDetail = async (id) => {
 }
 
 onMounted(() => {
+  getLeaderList()
   getOrderList()
 })
 
@@ -537,6 +558,17 @@ watch(searchForm.value, (newValue, oldValue) => {
 </style>
 
 <style lang="scss" scoped>
+.button-class {
+  color: #ffffff;
+  background-color: #155bd4;
+  border-color: #155bd4;
+}
+
+.button_false {
+  background-color: #ffffff;
+  color: #155bd4;
+}
+
 .pagination {
   margin-top: 20px;
 }
@@ -641,9 +673,10 @@ watch(searchForm.value, (newValue, oldValue) => {
     justify-content: space-between;
     border: 1px solid #E6E6E6;
     padding: 10px;
-    .left{
+
+    .left {
       width: 25%;
-      
+
     }
 
     .blod {

@@ -70,7 +70,7 @@
         </el-form>
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-button type="primary" style="margin-bottom: 20px" :disabled="isDisabled"
+        <el-button type="primary" :class="!isDisabled ? 'button-class' : 'button_false'" style="margin-bottom: 20px" :disabled="isDisabled"
             @click="hamdleBatchRefund">批量退款</el-button>
         <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
         <el-table v-loading="loading" :data="refundData" style="width: 100%" ref="multipleTableRef"
@@ -455,6 +455,18 @@ onMounted(() => {
 
 </script>
 <style lang="scss" scoped>
+.button-class {
+  color: #ffffff;
+  background-color: #155bd4;
+  border-color: #155bd4;
+}
+
+.button_false {
+  background-color: #ffffff;
+  color: #155bd4;
+
+
+}
 .add {
     margin-bottom: 20px;
 }
