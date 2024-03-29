@@ -137,7 +137,6 @@ const resetForm = () => {
 
 const deleteVideoById = async (id, isDeleted) => {
     const res = await deleteProdCategory({ id, isDeleted })
-    console.log(res)
     if (res.code === 0) {
         getProdCategoryList()
     }
@@ -182,7 +181,6 @@ const beforeUpload = (file) => {
 const editOrCreateDialog = (e) => {
     editOrCreateDialogVisible.value = true
     if (e) { //编辑
-        console.log(e)
         isCreate.value = false
         categoryForm.value.id = e.row.id
         categoryForm.value.name = e.row.name
@@ -222,7 +220,6 @@ const save = async () => {
 
 // 清空表单数据
 const clearEditForm = () => {
-    console.log(1)
     categoryForm.value = {
         id: 0,
         name: '',

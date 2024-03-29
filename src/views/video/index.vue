@@ -151,7 +151,6 @@ const resetForm = () => {
 
 const deleteVideoById = async (id, isDeleted) => {
     const res = await deleteVideo({ id, isDeleted })
-    console.log(res)
     if (res.code === 0) {
         getVideoList()
     }
@@ -189,7 +188,6 @@ const beforeUpload = (file) => {
 const editOrCreateDialog = (e) => {
     editOrCreateDialogVisible.value = true
     if (e) { //编辑
-        console.log(e)
         isCreate.value = false
         videoForm.value.id = e.row.id
         videoForm.value.total = e.row.total

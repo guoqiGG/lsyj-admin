@@ -38,14 +38,12 @@ export default {
       }
       for (let i = 0; i < state.tabsMenuList.length; i++) {
         let ele = state.tabsMenuList[i]
-        console.log(ele)
         if (ele == item) {
           state.tabsMenuList[i - 1].checked = true
           state.tabsMenuList.splice(i, 1)
           return router.push(state.tabsMenuList[i - 1].url)
         }
       }
-      console.log(state.tabsMenuList)
     }
   },
 

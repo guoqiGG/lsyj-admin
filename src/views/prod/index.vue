@@ -43,7 +43,8 @@
             <el-table-column prop="createTime" label="创建时间" />
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
-                    <span class="operation" @click="editOrCreateDialog(scope)" :icon="Edit">编辑</span>
+                    <span class="operation" @click="copy(scope.row.id)">小程序链接</span>
+                    <span class="operation" @click="editOrCreateDialog(scope)">编辑</span>
                     <!-- <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="deleteProdById(scope.row.id, 1)"
                         @cancel="cancelEvent">
@@ -497,7 +498,6 @@ const save = Debounce(async () => {
                 const res = await prodAdd({ ...params })
 
                 if (res?.code == 0) {
-                    console.log(1)
                     closeEditOrCreateDialog()
                     getProdList()
                 }
@@ -580,6 +580,30 @@ const couponListData = ref([])
 const getCouponList = async () => {
     const res = await couponList({ pageSize: 10000000, pageNo: 1, status: 1 })
     couponListData.value = res.data.list
+}
+
+// 复制小程序商品链接
+const copy = (id) => {
+    const textarea = document.createElement('textarea')
+    textarea.value = 'pages/package-prod/pages/prod/prod?prodId=' + id
+    document.body.appendChild(textarea)
+    textarea.select()
+    textarea.setSelectionRange(0, textarea.value.length)
+    const success = document.execCommand('copy')
+    document.body.removeChild(textarea)
+    if (success) {
+        ElMessage({
+            message: '复制成功',
+            type: 'success',
+            duration: 1000
+        })
+    } else {
+        ElMessage({
+            message: '复制失败',
+            type: 'error',
+            duration: 1000
+        })
+    }
 }
 
 onMounted(() => {

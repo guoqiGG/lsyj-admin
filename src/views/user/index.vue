@@ -163,7 +163,6 @@ const editOrCreateDialog = (scope) => {
 }
 
 const closeDialog = () => {
-    console.log(1)
     editOrCreateDialogVisible.value = false
 }
 
