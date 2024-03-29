@@ -57,7 +57,7 @@ const menuList = ref([
   {
     title: "团长管理",
     url: "/leader",
-    icon: "Checked",
+    icon: "Avatar",
     children: [
       {
         title: "团长列表",
@@ -79,7 +79,7 @@ const menuList = ref([
   {
     title: "用户管理",
     url: "/user",
-    icon: "Checked",
+    icon: "UserFilled",
     children: [
       {
         title: "用户列表",
@@ -96,7 +96,7 @@ const menuList = ref([
   {
     title: "直播管理",
     url: "/live",
-    icon: "Checked",
+    icon: "VideoCameraFilled",
     children: [
       {
         title: "直播间列表",
@@ -108,7 +108,7 @@ const menuList = ref([
   {
     title: "视频管理",
     url: "/video",
-    icon: "Checked",
+    icon: "VideoCamera",
     children: [
       {
         title: "视频列表",
@@ -120,7 +120,7 @@ const menuList = ref([
   {
     title: "优惠券管理",
     url: "/coupon",
-    icon: "Checked",
+    icon: "Postcard",
     children: [
       {
         title: "优惠券",
@@ -132,7 +132,7 @@ const menuList = ref([
   {
     title: "礼品卡管理",
     url: "/gift",
-    icon: "Checked",
+    icon: "Postcard",
     children: [
       {
         title: "礼品卡",
@@ -144,7 +144,7 @@ const menuList = ref([
   {
     title: "合成卡管理",
     url: "/compositeCard",
-    icon: "Checked",
+    icon: "Postcard",
     children: [
       {
         title: "合成卡",
@@ -166,7 +166,7 @@ const menuList = ref([
   {
     title: "商品管理",
     url: "/prod",
-    icon: "Checked",
+    icon: "Shop",
     children: [
       {
         title: "商品列表",
