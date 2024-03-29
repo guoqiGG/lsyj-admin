@@ -275,7 +275,8 @@
 
         </div>
       </div>
-      <div class="product" style="margin-top: 20px;">
+      <p style="color: #101010;font-size: 16px;font-weight: 600;" v-if="detail.orderGoods&&detail.orderGoods.length>0">商品明细</p>
+      <div class="product" style="margin-top: 20px;" v-if="detail.orderGoods&&detail.orderGoods.length>0">
         <el-table :data="detail.orderGoods" style="width: 100%"
           :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
           <el-table-column prop="type" label="商品" align="center">
@@ -287,6 +288,25 @@
           <el-table-column prop="number" label="数量" align="center" />
           <el-table-column prop="couponAmt" label="优惠金额" align="center" />
           <el-table-column prop="amount" label="总价" align="center" />
+        </el-table>
+      </div>
+      <p style="color: #101010;font-size: 16px;font-weight: 600;" v-if="detail.orderSettlePuts&&detail.orderSettlePuts.length>0">结算佣金</p>
+      <div class="product" style="margin-top: 20px;" v-if="detail.orderSettlePuts&&detail.orderSettlePuts.length>0">
+        <el-table :data="detail.orderSettlePuts" style="width: 100%"
+          :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
+          <el-table-column prop="settleAmount" label="结算佣金" align="center" />
+          <el-table-column prop="status" label="结算状态" align="center">
+            <template #default="scope">
+             <span>{{scope.row.status===0?'未结算':scope.row.status===1?'已结算': scope.row.status===2?'已退回': '' }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="settleType" label="结算类型" align="center">
+            <template #default="scope">
+             <span>{{scope.row.settleType===1?'邀请购买':scope.row.settleType===2?'团长自购': '' }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="updateTime" label="更新时间" align="center" />
+          <el-table-column prop="remark" label="备注" align="center" />
         </el-table>
       </div>
     </div>
@@ -531,6 +551,7 @@ watch(searchForm.value, (newValue, oldValue) => {
   font-size: 16px;
   font-weight: 500;
   color: #101010;
+  margin-top: -20px;
 
   .orderNumber {
     display: flex;
@@ -620,6 +641,10 @@ watch(searchForm.value, (newValue, oldValue) => {
     justify-content: space-between;
     border: 1px solid #E6E6E6;
     padding: 10px;
+    .left{
+      width: 25%;
+      
+    }
 
     .blod {
       font-weight: 600;

@@ -120,9 +120,12 @@
                         :value="item"></el-option>
                 </el-select>
             </el-form-item>
-
+            <!-- 满多少可用 -->
+            <el-form-item label="满足金额" prop="fullAmount" v-if="couponForm.type && couponForm.type?.includes(4)">
+                <el-input type="number" v-model.number="couponForm.fullAmount" placeholder="请输入满足金额" clearable />
+            </el-form-item>
             <!-- 不可用商品展示 -->
-            <div style="margin-left: 25px;border-bottom: 2px dashed #E6E6E6" v-if="couponForm.productValue1">
+            <div style="margin-left: 25px;border-bottom: 2px dashed #E6E6E6" v-if="couponForm.productValue1&&couponForm.productValue1.length>0">
                 <p style="margin: 5px 0px;">不可用商品</p>
                 <div style="display: flex;flex-wrap: wrap;">
                     <div class="m-4" style="width: 80px;margin: 0px 10px 10px 0px;text-align: center"
@@ -135,7 +138,7 @@
                 </div>
             </div>
             <!-- 可用商品展示 -->
-            <div style="margin-left: 25px;" v-if="couponForm.productValue2">
+            <div style="margin-left: 25px;" v-if="couponForm.productValue2&&couponForm.productValue2.length>0">
                 <p style="margin: 5px 0px;">可用商品</p>
                 <div style="display: flex;flex-wrap: wrap;">
                     <div class="m-4" style="width: 80px;margin: 0px 10px 10px 0px;text-align: center"
@@ -217,7 +220,6 @@ const getProdList = async () => {
         e.label=e.name
     });
     prodData.value =aa
-    console.log( prodData.value,' prodData.value')
 }
 
 
@@ -229,6 +231,7 @@ const couponForm = ref({
     id: null,
     name: null,
     amount: null,//优惠金额
+    fullAmount:null,//满足金额
     status: 1,//1上架 2下架
     deadlineType: 1,//1领取后 2固定时间
     deadlineDay: null,//为1时 领取后几天生效
@@ -241,11 +244,14 @@ const couponForm = ref({
 const options = [
     { label: '指定分类不可用', value: 1 },
     { label: '指定商品不可用', value: 2 },
-    { label: '指定商品可用', value: 3 }
+    { label: '指定商品可用', value: 3 },
+    { label: '满多少可用', value: 4 }
+
 ]
 const rules = reactive({
     name: [{ required: true, message: '请输入优惠券名称', trigger: 'blur' }],
     amount: [{ required: true, message: '请输入优惠金额', trigger: 'blur' }],
+    fullAmount: [{ required: true, message: '请输入满足金额', trigger: 'blur' }],
     status: [{ required: true, message: '请选择投放状态', trigger: 'blur' }],
     deadlineType: [{ required: true, message: '请选择生效类型', trigger: 'blur' }],
     deadlineDay: [{ required: true, message: '请输入生效天数', trigger: 'blur' }],
@@ -265,6 +271,7 @@ const add = () => {
     couponForm.value = {
         name: '',
         amount: null,
+        fullAmount: null,
         status: 1,
         deadlineType: 1,//1领取后 2固定时间
         deadlineDay: null,
@@ -287,6 +294,7 @@ const submitForm = () => {
                 couponId: couponForm.value.couponId,
                 name: couponForm.value.name,
                 amount: couponForm.value.amount,
+                // fullAmount: couponForm.value.fullAmount,
                 status: couponForm.value.status,
                 deadlineType: couponForm.value.deadlineType,
                 deadlineDay: couponForm.value.deadlineDay,
@@ -323,16 +331,24 @@ const submitForm = () => {
                     couponConstraintList.push(obj)
                 })
             }
+            //  4满多少可用
+            if (couponForm.value.type?.includes(4)) {
+                    let obj = {
+                        type: 4,
+                        conditionValue:couponForm.value.fullAmount,
+                    }
+                   couponConstraintList.push(obj)
+               
+            }
    
             couponConstraintList.id=couponForm.value.couponId
             console.log(couponConstraintList,'couponConstraintList')
-            // console.log(coupon,'coupon')
             // 传递参数
             let params = {
                 coupon: coupon,
                 couponConstraintList:[...couponConstraintList] 
             }
-
+            console.log(params,'params')
             // 修改
             if (couponForm.value.couponId) {
                 params.couponConstraintList.id=couponForm.value.couponId
@@ -371,6 +387,9 @@ const handleEditor = (item) => {
     let num1 = 0
     let num2 = 0
     let num3 = 0
+    let num4 = 0
+    couponForm.value.fullAmount = item.fullAmount
+
     item.couponConstraintList.map((item, index) => {
         if (item.type === 1) {
             couponForm.value.sortValue.push(Number(item.conditionValue))
@@ -384,6 +403,10 @@ const handleEditor = (item) => {
             couponForm.value.productValue2.push({ id: Number(item.conditionValue), name: item.goodsName,label: item.goodsName, thumbail: item.thumbail })
             num3 += 1
         }
+        if (item.type === 4) {
+            couponForm.value.fullAmount=item.conditionValue
+            num4 += 1
+        }
     })
     if (num1 > 0) {
         couponForm.value.type.push(1)
@@ -393,6 +416,9 @@ const handleEditor = (item) => {
     }
     if (num3 > 0) {
         couponForm.value.type.push(3)
+    }
+    if (num4 > 0) {
+        couponForm.value.type.push(4)
     }
     console.log(couponForm,'couponForm')
     dialogVisible.value = true
