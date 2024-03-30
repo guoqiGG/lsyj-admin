@@ -126,6 +126,7 @@ const getProdCategoryList = async () => {
 }
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getProdCategoryList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e
@@ -133,6 +134,7 @@ const tableHandleChange = (e) => {
 }
 const resetForm = () => {
     searchForm.value = { ...searchParams }
+    getProdCategoryList()
 }
 
 const deleteVideoById = async (id, isDeleted) => {

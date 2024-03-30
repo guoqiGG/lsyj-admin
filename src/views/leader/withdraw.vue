@@ -156,6 +156,7 @@ const getLeaderWithdrawList = async () => {
 
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getLeaderWithdrawList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e

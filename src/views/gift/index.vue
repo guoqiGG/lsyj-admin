@@ -106,6 +106,7 @@ const getGiftList = async () => {
 // 分页
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getGiftList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e

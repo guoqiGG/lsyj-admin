@@ -139,6 +139,7 @@ const getVideoList = async () => {
 }
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getVideoList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e

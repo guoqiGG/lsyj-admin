@@ -81,6 +81,7 @@ const getLiveList = async () => {
 }
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getLiveList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e

@@ -1,7 +1,5 @@
 <template>
-
   <el-card>
-
     <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
       <el-row>
         <el-col :lg="6" :md="8" :sm="12">
@@ -66,6 +64,14 @@
           <el-form-item label="所属团长">
             <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%">
               <el-option v-for="item in pUidOptions" :key="item.id" :label="item.leaderName" :value="item.id" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :lg="6" :md="8" :sm="12">
+          <el-form-item label="商品名称">
+            <el-select v-model="searchForm.goodsId" filterable remote reserve-keyword placeholder="请输入商品名称"
+              remote-show-suffix :remote-method="getProdListByName" clearable>
+              <el-option v-for="item in prodListData" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -326,7 +332,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { orderList, orderDetail, orderBatchSend, orderBatchReceive, leaderList } from "../../api/modules";
+import { prodList, orderList, orderDetail, orderBatchSend, orderBatchReceive, leaderList } from "../../api/modules";
 import dayjs from "dayjs";
 import {
   Download, Upload
@@ -357,7 +363,9 @@ const searchParams = {
   refundStatus: '',
   startTime: '',
   endTime: '',
-  time: ''
+  time: '',
+  userId: '',
+  goodsId: ''
 }
 const loading = ref(false)
 const searchForm = ref({ ...searchParams })
@@ -377,6 +385,7 @@ const getOrderList = async () => {
 
 const tableHandleSizeChange = (e) => {
   pages.value.pageSize = e
+  getOrderList()
 }
 const tableHandleChange = (e) => {
   pages.value.pageNo = e
@@ -494,6 +503,18 @@ const handleDetail = async (id) => {
 
 }
 
+const prodListData = ref([])
+
+const getProdListByName = async (query) => {
+  const res = await prodList({ name: query, pageNo: 1, pageSize: 100000000 })
+  prodListData.value = res.data.list
+}
+
+const getProdList = async () => {
+  const res = await prodList({ pageNo: 1, pageSize: 10 })
+  prodListData.value = res.data.list
+}
+
 onMounted(() => {
   getLeaderList()
   if (route.query.userId) {
@@ -503,6 +524,7 @@ onMounted(() => {
     searchForm.value.orderNumber = route.query.orderId
   }
   getOrderList()
+  getProdList()
 })
 watch(searchForm.value, (newValue, oldValue) => {
   searchForm.value.startTime = dayjs(newValue.time[0]).format('YYYY-MM-DD hh:mm:ss')

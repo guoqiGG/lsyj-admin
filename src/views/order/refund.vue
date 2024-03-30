@@ -22,11 +22,11 @@
                         <el-input v-model="searchForm.leaderMobile" placeholder="团长手机号" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :lg="6" :md="8" :sm="12">
+                <!-- <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="商品名称">
                         <el-input v-model="searchForm.goodsName" placeholder="商品名称" clearable />
                     </el-form-item>
-                </el-col>
+                </el-col> -->
                 <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="退款状态">
                         <el-select v-model="searchForm.refundStatus" placeholder="请选择" clearable>
@@ -50,6 +50,15 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
+                <el-col :lg="6" :md="8" :sm="12">
+                    <el-form-item label="商品名称">
+                        <el-select v-model="searchForm.goodsId" filterable remote reserve-keyword placeholder="请输入商品名称"
+                            remote-show-suffix :remote-method="getProdListByName" clearable>
+                            <el-option v-for="item in prodListData" :key="item.id" :label="item.name"
+                                :value="item.id" />
+                        </el-select>
+                    </el-form-item>
+                </el-col>
                 <el-form-item>
                     <el-button type="primary" @click="getRefundList">查询</el-button>
                     <el-button @click="resetForm()">重置</el-button>
@@ -70,11 +79,11 @@
         </el-form>
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-button type="primary" :class="!isDisabled ? 'button-class' : 'button_false'" style="margin-bottom: 20px" :disabled="isDisabled"
-            @click="hamdleBatchRefund">批量退款</el-button>
+        <el-button type="primary" :class="!isDisabled ? 'button-class' : 'button_false'" style="margin-bottom: 20px"
+            :disabled="isDisabled" @click="hamdleBatchRefund">批量退款</el-button>
         <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
         <el-table v-loading="loading" :data="refundData" style="width: 100%" ref="multipleTableRef"
-        :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55" />
             <el-table-column prop="userName" label="用户名称" align="center" />
             <el-table-column prop="userMobile" label="用户手机号" align="center" />
@@ -273,7 +282,7 @@
 </template>
 <script setup>
 import { onMounted, ref, reactive } from "vue";
-import { refundList, refundAudit, orderDetail, batchRefund } from "../../api/modules";
+import { prodList, refundList, refundAudit, orderDetail, batchRefund } from "../../api/modules";
 import {
     Download, Upload
 } from '@element-plus/icons-vue'
@@ -289,6 +298,7 @@ const searchForm = ref({
     refundStatus: null,//退款状态
     orderNumber: null,//订单号
     orderType: null,//订单类型
+    goodsId: null
 })
 const pages = ref({
     pageNo: 1,
@@ -307,6 +317,7 @@ const getRefundList = async () => {
 // 分页
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getRefundList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e
@@ -446,27 +457,39 @@ const submitForm = () => {
     });
 };
 
+const prodListData = ref([])
 
+const getProdListByName = async (query) => {
+    const res = await prodList({ name: query, pageNo: 1, pageSize: 100000000 })
+    prodListData.value = res.data.list
+}
+
+const getProdList = async () => {
+    const res = await prodList({ pageNo: 1, pageSize: 10 })
+    prodListData.value = res.data.list
+}
 
 onMounted(() => {
     getRefundList()
+    getProdList()
 })
 
 
 </script>
 <style lang="scss" scoped>
 .button-class {
-  color: #ffffff;
-  background-color: #155bd4;
-  border-color: #155bd4;
+    color: #ffffff;
+    background-color: #155bd4;
+    border-color: #155bd4;
 }
 
 .button_false {
-  background-color: #ffffff;
-  color: #155bd4;
+    background-color: #ffffff;
+    color: #155bd4;
 
 
 }
+
 .add {
     margin-bottom: 20px;
 }

@@ -360,6 +360,7 @@ const getProdList = async () => {
 }
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getProdList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e
@@ -367,6 +368,7 @@ const tableHandleChange = (e) => {
 }
 const resetForm = () => {
     searchForm.value = { ...searchParams }
+    getProdList()
 }
 
 // const deleteProdById = async (id, isDeleted) => {

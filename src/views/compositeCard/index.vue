@@ -175,6 +175,7 @@ const objectSpanMethod = ({ row, column, rowIndex, columnIndex }) => {
 // 分页
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    geCompositeCardList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e

@@ -158,6 +158,7 @@ const getUserCompositeList = async () => {
 
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getUserCompositeList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e

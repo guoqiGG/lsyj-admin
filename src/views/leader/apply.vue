@@ -126,6 +126,7 @@ const getApplyLeaderList = async () => {
 
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getApplyLeaderList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e

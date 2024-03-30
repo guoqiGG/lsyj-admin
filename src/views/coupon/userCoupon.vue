@@ -135,6 +135,7 @@ const getUserCouponList = async () => {
 }
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getUserCouponList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e

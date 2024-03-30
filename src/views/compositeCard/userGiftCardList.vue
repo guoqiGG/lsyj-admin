@@ -52,7 +52,8 @@
             <el-table-column prop="giftName" label="礼品卡名称" align="center" />
             <el-table-column prop="status" label="礼品卡状态" align="center">
                 <template #default="scope">
-                    {{ scope.row.status == 0 ? '未合成' : scope.row.status == 1 ? '已合成' : scope.row.status == 1 ? '已过期' : ''
+                    {{ scope.row.status == 0 ? '未合成' : scope.row.status == 1 ? '已合成' : scope.row.status == 1 ? '已过期' :
+            ''
                     }}
                 </template>
             </el-table-column>
@@ -106,6 +107,7 @@ const getUserGiftList = async () => {
 
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
+    getUserGiftList()
 }
 const tableHandleChange = (e) => {
     pages.value.pageNo = e
