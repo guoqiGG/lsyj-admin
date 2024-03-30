@@ -79,9 +79,9 @@
         </el-form>
     </el-card>
     <el-card style="margin-top: 10px;">
+        <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
         <el-button type="primary" :class="!isDisabled ? 'button-class' : 'button_false'" style="margin-bottom: 20px"
             :disabled="isDisabled" @click="hamdleBatchRefund">批量退款</el-button>
-        <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
         <el-table v-loading="loading" :data="refundData" style="width: 100%" ref="multipleTableRef"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55" />
@@ -282,7 +282,7 @@
 </template>
 <script setup>
 import { onMounted, ref, reactive } from "vue";
-import { prodList, refundList, refundAudit, orderDetail, batchRefund } from "../../api/modules";
+import { prodList, refundList, refundAudit, orderDetail, batchRefund, exportRefundOrder } from "../../api/modules";
 import {
     Download, Upload
 } from '@element-plus/icons-vue'
@@ -467,6 +467,45 @@ const getProdListByName = async (query) => {
 const getProdList = async () => {
     const res = await prodList({ pageNo: 1, pageSize: 10 })
     prodListData.value = res.data.list
+}
+
+const exportExcel = async () => {
+    loading.value = true
+    const res = await exportRefundOrder({
+        userName: searchForm.value.userName,//用户名称
+        userMobile: searchForm.value.userMobile,
+        leaderName: searchForm.value.leaderName,//团长名称
+        leaderMobile: searchForm.value.leaderMobile,
+        goodsName: searchForm.value.goodsName,//商品名称
+        refundStatus: searchForm.value.refundStatus,//退款状态
+        orderNumber: searchForm.value.orderNumber,//订单号
+        orderType: searchForm.value.orderType,//订单类型
+        goodsId: searchForm.value.goodsId
+    })
+    console.log(111, res)
+    loading.value = false
+    var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
+    // 读取文件内容
+    // try {
+    //     const TEXT = await(new Response(blob)).text()
+    //     const result = JSON.parse(TEXT)
+    //     console.log(result)
+    // } catch (error) {
+    //     console.log(error)
+    // }
+    const fileName = '退款订单信息表'
+    const elink = document.createElement('a')
+    if ('download' in elink) { // 非IE下载
+        elink.download = fileName
+        elink.style.display = 'none'
+        elink.href = URL.createObjectURL(blob)
+        document.body.appendChild(elink)
+        elink.click()
+        URL.revokeObjectURL(elink.href) // 释放URL 对象
+        document.body.removeChild(elink)
+    } else { // IE10+下载
+        navigator.msSaveBlob(blob, fileName)
+    }
 }
 
 onMounted(() => {

@@ -23,7 +23,7 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-    <el-button  :icon="Download"   >导出</el-button>
+        <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
         <el-table v-loading="loading" :data="leaderListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="leaderName" label="团长姓名" />
             <el-table-column prop="leaderMobile" label="团长手机" />
@@ -74,7 +74,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { leaderList, updateLeaderInfo } from "../../api/modules";
+import { leaderList, updateLeaderInfo,exportLeader} from "../../api/modules";
 import {
    Download
 } from '@element-plus/icons-vue'
@@ -155,6 +155,38 @@ const clearEditForm = () => {
         leaderStore: '',
         address: '',
         commissionRate: ''
+    }
+}
+
+const exportExcel =  async() => {
+    loading.value = true
+    const res =await exportLeader({
+        leaderName: searchForm.value.leaderName,
+        leaderMobile: searchForm.value.leaderMobile
+    })
+    console.log(111,res)
+    loading.value = false
+    var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
+    // 读取文件内容
+    // try {
+    //     const TEXT = await(new Response(blob)).text()
+    //     const result = JSON.parse(TEXT)
+    //     console.log(result)
+    // } catch (error) {
+    //     console.log(error)
+    // }
+    const fileName = '团长信息表'
+    const elink = document.createElement('a')
+    if ('download' in elink) { // 非IE下载
+        elink.download = fileName
+        elink.style.display = 'none'
+        elink.href = URL.createObjectURL(blob)
+        document.body.appendChild(elink)
+        elink.click()
+        URL.revokeObjectURL(elink.href) // 释放URL 对象
+        document.body.removeChild(elink)
+    } else { // IE10+下载
+        navigator.msSaveBlob(blob, fileName)
     }
 }
 

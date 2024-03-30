@@ -108,7 +108,7 @@
       :disabled="isDisabled" @click="hamdleBatchSend">批量发货</el-button>
     <el-button type="primary" :class="!isDisabled ? 'button-class' : 'button_false'" style="margin-bottom: 20px;"
       :disabled="isDisabled" @click="hamdleBatchReceive">批量收货</el-button>
-    <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
+    <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
     <el-table v-loading="loading" :data="orderListData" style="width: 100%" ref="multipleTableRef"
       :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
@@ -332,7 +332,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { prodList, orderList, orderDetail, orderBatchSend, orderBatchReceive, leaderList } from "../../api/modules";
+import { prodList, orderList, orderDetail, orderBatchSend, orderBatchReceive, leaderList, exportOrder } from "../../api/modules";
 import dayjs from "dayjs";
 import {
   Download, Upload
@@ -513,6 +513,51 @@ const getProdListByName = async (query) => {
 const getProdList = async () => {
   const res = await prodList({ pageNo: 1, pageSize: 10 })
   prodListData.value = res.data.list
+}
+
+const exportExcel = async () => {
+  loading.value = true
+  const res = await exportOrder({
+    orderNumber: searchForm.value.orderNumber,
+    pUid: searchForm.value.pUid,
+    userName: searchForm.value.userName,
+    leaderName: searchForm.value.leaderName,
+    leaderMobile: searchForm.value.leaderMobile,
+    userMobile: searchForm.value.userMobile,
+    goodsName: searchForm.value.goodsName,
+    orderType: searchForm.value.orderType,
+    orderStatus: searchForm.value.orderStatus,
+    refundStatus: searchForm.value.refundStatus,
+    // startTime: searchForm.value.startTime,
+    // endTime: searchForm.value.endTime,
+    // time: searchForm.value.time,
+    userId: searchForm.value.userId,
+    goodsId: searchForm.value.goodsId
+  })
+  console.log(111, res)
+  loading.value = false
+  var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
+  // 读取文件内容
+  // try {
+  //     const TEXT = await(new Response(blob)).text()
+  //     const result = JSON.parse(TEXT)
+  //     console.log(result)
+  // } catch (error) {
+  //     console.log(error)
+  // }
+  const fileName = '订单信息表'
+  const elink = document.createElement('a')
+  if ('download' in elink) { // 非IE下载
+    elink.download = fileName
+    elink.style.display = 'none'
+    elink.href = URL.createObjectURL(blob)
+    document.body.appendChild(elink)
+    elink.click()
+    URL.revokeObjectURL(elink.href) // 释放URL 对象
+    document.body.removeChild(elink)
+  } else { // IE10+下载
+    navigator.msSaveBlob(blob, fileName)
+  }
 }
 
 onMounted(() => {

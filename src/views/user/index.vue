@@ -24,9 +24,17 @@
                 </el-col>
                 <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="所属团长">
-                        <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%">
+                        <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%" clearable>
                             <el-option v-for="item in options" :key="item.id" :label="item.leaderName"
                                 :value="item.id" />
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :lg="6" :md="12" :sm="12">
+                    <el-form-item label="用户类型">
+                        <el-select v-model="searchForm.type"  placeholder="请选择用户类型" style="width: 90%" clearable>
+                            <el-option label="普通用户" value="0" />
+                            <el-option label="团长" value="1" />
                         </el-select>
                     </el-form-item>
                 </el-col>
@@ -39,8 +47,9 @@
         </el-form>
     </el-card>
     <el-card style="margin-top: 10px;">
-    <el-button  :icon="Download" style="margin-bottom: 20px"  >导出</el-button>
-        <el-table v-loading="loading" :data="userListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+        <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
+        <el-table v-loading="loading" :data="userListData" style="width: 100%"
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="用户昵称"></el-table-column>
             <el-table-column prop="avatar" label="头像">
                 <template #default="scope">
@@ -50,14 +59,14 @@
             <el-table-column prop="mobile" label="用户手机" />
             <el-table-column label="团长">
                 <template #default="scope">
-                    
-                    <div class="leader" v-if=" scope.row.leaderName&&scope.row.leaderMobile">
+
+                    <div class="leader" v-if="scope.row.leaderName && scope.row.leaderMobile">
                         <div> 团长：{{ scope.row.leaderName }}</div>
                         <div> 手机：{{ scope.row.leaderMobile }}</div>
                         <div> 门店：{{ scope.row.leaderStore }}</div>
                         <div> 地址：{{ scope.row.address }}</div>
-                      </div>
-                      <div v-else>无</div>
+                    </div>
+                    <div v-else>无</div>
                 </template>
             </el-table-column>
             <el-table-column label="用户类型" align="center">
@@ -90,9 +99,9 @@
 import EditUserInfo from './edit-user-info.vue'
 
 import { onMounted, ref, reactive } from "vue";
-import { userList, leaderList } from "../../api/modules";
+import { userList, leaderList, exportUser } from "../../api/modules";
 import {
-   Download
+    Download
 } from '@element-plus/icons-vue'
 
 const options = ref()
@@ -109,6 +118,7 @@ const searchParams = {
     type: '', // 0 普通团长 1 团长
     leaderName: '',
     leaderMobile: '',
+    pUid: ''
 }
 const loading = ref(false)
 const searchForm = ref({ ...searchParams })
@@ -172,6 +182,43 @@ const editOrCreateDialog = (scope) => {
 const closeDialog = () => {
     editOrCreateDialogVisible.value = false
 }
+
+const exportExcel =  async() => {
+    loading.value = true
+    const res =await exportUser({
+        name: searchForm.value.name,
+        mobile: searchForm.value.mobile,
+        type: searchForm.value.type,
+        leaderName: searchForm.value.leaderName,
+        leaderMobile: searchForm.value.leaderMobile,
+        pUid: searchForm.value.pUid
+    })
+    console.log(111,res)
+    loading.value = false
+    var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
+    // 读取文件内容
+    // try {
+    //     const TEXT = await(new Response(blob)).text()
+    //     const result = JSON.parse(TEXT)
+    //     console.log(result)
+    // } catch (error) {
+    //     console.log(error)
+    // }
+    const fileName = '用户信息表'
+    const elink = document.createElement('a')
+    if ('download' in elink) { // 非IE下载
+        elink.download = fileName
+        elink.style.display = 'none'
+        elink.href = URL.createObjectURL(blob)
+        document.body.appendChild(elink)
+        elink.click()
+        URL.revokeObjectURL(elink.href) // 释放URL 对象
+        document.body.removeChild(elink)
+    } else { // IE10+下载
+        navigator.msSaveBlob(blob, fileName)
+    }
+}
+
 
 onMounted(() => {
     getLeaderList()

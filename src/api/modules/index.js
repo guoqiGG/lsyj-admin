@@ -340,7 +340,7 @@ export function refundList(query) {
   return service({
     method: "get",
     url: "order/refund/get/list",
-    params:query,
+    params: query,
   });
 }
 // 退款审核
@@ -359,6 +359,57 @@ export function batchRefund(query) {
     params: query,
   });
 }
-
-
-
+// 导出用户
+export function exportUser(data) {
+  return service({
+    method: "POST",
+    url: "export/user",
+    data: JSON.stringify(data),
+    responseType: "blob",
+  });
+}
+// 团长导出
+export function exportLeader(data) {
+  return service({
+    method: "POST",
+    url: "export/leader/user",
+    data: JSON.stringify(data),
+    responseType: "blob",
+  });
+}
+// 退款订单导出
+export function exportRefundOrder(data) {
+  return service({
+    method: "POST",
+    url: "export/order/refund",
+    data: JSON.stringify(data),
+    responseType: "blob",
+  });
+}
+// 订单导出
+export function exportOrder(data) {
+  return service({
+    method: "POST",
+    url: "export/order",
+    data: JSON.stringify(data),
+    responseType: "blob",
+  });
+}
+// 用户礼品卡导出
+export function exportUserGift(data) {
+  return service({
+    method: "POST",
+    url: "export/user/gift",
+    data: JSON.stringify(data),
+    responseType: "blob",
+  });
+}
+// 用户合成卡导出
+export function exportUserGiftRule(data) {
+  return service({
+    method: "POST",
+    url: "export/user/gift/rule",
+    data: JSON.stringify(data),
+    responseType: "blob",
+  });
+}

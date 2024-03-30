@@ -43,7 +43,7 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
+        <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
         <el-table v-loading="loading" :data="userGiftListData" style="width: 100%"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="用户名称" align="center" />
@@ -73,7 +73,7 @@
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
-import { userGiftList } from "../../api/modules";
+import { userGiftList, exportUserGift } from "../../api/modules";
 import {
     Download
 } from '@element-plus/icons-vue'
@@ -82,7 +82,7 @@ const route = useRoute()
 const searchParams = {
     name: null,//用户名称
     mobile: null,
-    // userId:null,
+    userId: null,
     status: null,//0未合成 1已合成 2已过期
     type: null,//0系统发放 1 后台赠送的
     giftName: null,//礼品卡名称
@@ -116,6 +116,42 @@ const tableHandleChange = (e) => {
 const resetForm = () => {
     searchForm.value = { ...searchParams }
     getUserGiftList()
+}
+
+const exportExcel = async () => {
+    loading.value = true
+    const res = await exportUserGift({
+        name: searchForm.value.name,
+        mobile: searchForm.value.mobile,
+        userId: searchForm.value.userId,
+        status: searchForm.value.status,
+        type: searchForm.value.type,
+        giftName: searchForm.value.giftName,
+    })
+    console.log(111, res)
+    loading.value = false
+    var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
+    // 读取文件内容
+    // try {
+    //     const TEXT = await(new Response(blob)).text()
+    //     const result = JSON.parse(TEXT)
+    //     console.log(result)
+    // } catch (error) {
+    //     console.log(error)
+    // }
+    const fileName = '用户礼品卡表'
+    const elink = document.createElement('a')
+    if ('download' in elink) { // 非IE下载
+        elink.download = fileName
+        elink.style.display = 'none'
+        elink.href = URL.createObjectURL(blob)
+        document.body.appendChild(elink)
+        elink.click()
+        URL.revokeObjectURL(elink.href) // 释放URL 对象
+        document.body.removeChild(elink)
+    } else { // IE10+下载
+        navigator.msSaveBlob(blob, fileName)
+    }
 }
 onMounted(() => {
     if (route.query.userId) {

@@ -73,7 +73,7 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
+        <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
         <el-table v-loading="loading" :data="userCompositeData" style="width: 100%"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="用户名称" align="center" />
@@ -103,7 +103,7 @@
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
-import { userCompositeList } from "../../api/modules";
+import { userCompositeList, exportUserGiftRule } from "../../api/modules";
 import {
     Download
 } from '@element-plus/icons-vue'
@@ -112,7 +112,7 @@ const route = useRoute()
 const searchParams = {
     userName: null,//用户名称
     userMobile: null,
-    // userId: null,
+    userId: null,
     giftRuleName: null,//合成卡名称
     status: null,//0未核销 1已核销
     leaderName: null,//团长名称
@@ -168,6 +168,49 @@ const resetForm = () => {
     searchForm.value = { ...searchParams }
     getUserCompositeList()
 }
+
+const exportExcel = async () => {
+    loading.value = true
+    const res = await exportUserGiftRule({
+        userName: searchForm.value.userName,
+        userMobile: searchForm.value.userMobile,
+        userId: searchForm.value.userId,
+        giftRuleName: searchForm.value.giftRuleName,
+        status: searchForm.value.status,
+        leaderName: searchForm.value.leaderName,
+        leaderMobile: searchForm.value.leaderMobile,
+        // pUid: searchForm.value.pUid,
+        startDate: searchForm.value.startDate,
+        endDate: searchForm.value.endDate,
+        cancelStartDate: searchForm.value.cancelStartDate,
+        cancelEndDate: searchForm.value.cancelEndDate
+    })
+    console.log(111, res)
+    loading.value = false
+    var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
+    // 读取文件内容
+    // try {
+    //     const TEXT = await(new Response(blob)).text()
+    //     const result = JSON.parse(TEXT)
+    //     console.log(result)
+    // } catch (error) {
+    //     console.log(error)
+    // }
+    const fileName = '用户合成卡表'
+    const elink = document.createElement('a')
+    if ('download' in elink) { // 非IE下载
+        elink.download = fileName
+        elink.style.display = 'none'
+        elink.href = URL.createObjectURL(blob)
+        document.body.appendChild(elink)
+        elink.click()
+        URL.revokeObjectURL(elink.href) // 释放URL 对象
+        document.body.removeChild(elink)
+    } else { // IE10+下载
+        navigator.msSaveBlob(blob, fileName)
+    }
+}
+
 onMounted(() => {
     if (route.query.userId) {
         searchForm.value.userId = route.query.userId
