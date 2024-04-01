@@ -18,6 +18,7 @@
                 <el-form-item>
                     <el-button type="primary" @click="getProdList">查询</el-button>
                     <el-button @click="resetForm()">重置</el-button>
+                    <el-button @click="showGoodsInfoDialog">商品销售信息导出</el-button>
                 </el-form-item>
             </el-row>
         </el-form>
@@ -25,7 +26,8 @@
 
     <el-card style="margin-top: 10px;">
         <el-button tag="div" :icon="CirclePlus" type="primary" @click="editOrCreateDialog()">新增</el-button>
-        <el-table v-loading="loading" :data="prodListData" style="width: 100%;margin-top:10px;" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+        <el-table v-loading="loading" :data="prodListData" style="width: 100%;margin-top:10px;"
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="id" label="ID" />
             <el-table-column prop="name" label="名称" align="center" />
             <el-table-column label="图片" align="center">
@@ -86,12 +88,6 @@
                     </el-icon>
                 </el-upload>
             </el-form-item>
-            <!-- <el-form-item label="商品类型" prop="goodsType">
-                <el-radio-group v-model="prodForm.goodsType">
-                    <el-radio border :label="0">普通</el-radio>
-                    <el-radio border :label="1">特殊</el-radio>
-                </el-radio-group>
-            </el-form-item> -->
             <el-form-item label="商品简介" prop="description">
                 <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面，长度不超过100个字符" clearable />
             </el-form-item>
@@ -221,10 +217,44 @@
             </el-form-item>
         </el-form>
     </el-dialog>
+    <el-dialog v-model="goodsSaleInfoDialogVisible" title="商品销售信息导出" @close="closeGoodsInfoDialog">
+        <el-form :inline="true" :model="queryForm" class="demo-form-inline" label-width="80px">
+            <el-row>
+                <el-col :lg="12" :md="12" :sm="12">
+                    <el-form-item label="商品名称">
+                        <el-select v-model="queryForm.goodsId" filterable remote reserve-keyword placeholder="请输入商品名称"
+                            remote-show-suffix :remote-method="getProdListExportByName" clearable>
+                            <el-option v-for="item in prodListExportData" :key="item.id" :label="item.name"
+                                :value="item.id" />
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :lg="12" :md="12" :sm="12">
+                    <el-form-item label="团长名称">
+                        <el-select v-model="queryForm.pUid" filterable remote reserve-keyword placeholder="请输入团长名称"
+                            remote-show-suffix :remote-method="getLeaderListExportByName" clearable>
+                            <el-option v-for="item in leaderListExportData" :key="item.puid" :label="item.leaderName"
+                                :value="item.puid" />
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :lg="12" :md="12" :sm="12">
+                    <el-form-item label="日期">
+                        <el-date-picker v-model="queryForm.date" type="date" format="YYYY-MM-DD"
+                            value-format="YYYY-MM-DD" placeholder="日期"  style="width: 90%;"/>
+                    </el-form-item>
+                </el-col>
+                <el-form-item style="padding-left: 80px;">
+                    <el-button @click="exportExcel">导出</el-button>
+                    <el-button @click="resetQueryForm()">重置</el-button>
+                </el-form-item>
+            </el-row>
+        </el-form>
+    </el-dialog>
 </template>
 <script setup>
-import { onMounted, ref, reactive, nextTick, isRef } from "vue";
-import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList } from "@/api/modules";
+import { onMounted, ref, reactive, nextTick } from "vue";
+import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList, exportGoods, leaderList } from "@/api/modules";
 import { ElMessage, ElInput } from "element-plus";
 import {
     CirclePlus
@@ -358,6 +388,7 @@ const getProdList = async () => {
     prodListData.value = res.data.list
     total.value = res.data.total
 }
+
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e
     getProdList()
@@ -605,6 +636,75 @@ const copy = (id) => {
             type: 'error',
             duration: 1000
         })
+    }
+}
+
+const goodsSaleInfoDialogVisible = ref(false)
+const showGoodsInfoDialog = () => {
+    goodsSaleInfoDialogVisible.value = true
+    getProdListExport()
+    getLeaderListExport()
+}
+const closeGoodsInfoDialog = () => {
+    goodsSaleInfoDialogVisible.value = false
+    resetQueryForm()
+}
+const queryForm = ref({
+    goodsId: null,
+    pUid: null,
+    date: null
+})
+
+const prodListExportData = ref([])
+const getProdListExportByName = async (query) => {
+    const res = await prodList({ name: query, pageNo: 1, pageSize: 100000000 })
+    prodListExportData.value = res.data.list
+}
+
+const getProdListExport = async () => {
+    const res = await prodList({ pageNo: 1, pageSize: 10 })
+    prodListExportData.value = res.data.list
+}
+
+const leaderListExportData = ref([])
+const getLeaderListExportByName = async (query) => {
+    const res = await leaderList({ leaderName: query, pageNo: 1, pageSize: 100000000 })
+    leaderListExportData.value = res.data.list
+}
+
+const getLeaderListExport = async () => {
+    const res = await leaderList({ pageNo: 1, pageSize: 10 })
+    leaderListExportData.value = res.data.list
+}
+
+const resetQueryForm = () => {
+    queryForm.value = {
+        goodsId: null,
+        pUid: null,
+        date: null
+    }
+}
+const exportExcel = async () => {
+    loading.value = true
+    const res = await exportGoods({
+        goodsId: queryForm.value.goodsId,
+        pUid: queryForm.value.pUid,
+        date: queryForm.value.date,
+    })
+    loading.value = false
+    var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
+    const fileName = '商品销售信息表'
+    const elink = document.createElement('a')
+    if ('download' in elink) { // 非IE下载
+        elink.download = fileName
+        elink.style.display = 'none'
+        elink.href = URL.createObjectURL(blob)
+        document.body.appendChild(elink)
+        elink.click()
+        URL.revokeObjectURL(elink.href) // 释放URL 对象
+        document.body.removeChild(elink)
+    } else { // IE10+下载
+        navigator.msSaveBlob(blob, fileName)
     }
 }
 

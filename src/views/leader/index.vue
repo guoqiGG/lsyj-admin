@@ -1,7 +1,5 @@
 <template>
-
     <el-card>
-
         <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
             <el-row>
                 <el-col :lg="6" :md="8" :sm="12">
@@ -24,7 +22,8 @@
     </el-card>
     <el-card style="margin-top: 10px;">
         <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
-        <el-table v-loading="loading" :data="leaderListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+        <el-table v-loading="loading" :data="leaderListData" style="width: 100%"
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="leaderName" label="团长姓名" />
             <el-table-column prop="leaderMobile" label="团长手机" />
             <el-table-column prop="leaderStore" label="门店名称" />
@@ -74,9 +73,9 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { leaderList, updateLeaderInfo,exportLeader} from "../../api/modules";
+import { leaderList, updateLeaderInfo, exportLeader } from "../../api/modules";
 import {
-   Download
+    Download
 } from '@element-plus/icons-vue'
 import dayjs from "dayjs";
 const searchParams = {
@@ -158,23 +157,11 @@ const clearEditForm = () => {
     }
 }
 
-const exportExcel =  async() => {
+const exportExcel = async () => {
     loading.value = true
-    const res =await exportLeader({
-        leaderName: searchForm.value.leaderName,
-        leaderMobile: searchForm.value.leaderMobile
-    })
-    console.log(111,res)
+    const res = await exportLeader()
     loading.value = false
     var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
-    // 读取文件内容
-    // try {
-    //     const TEXT = await(new Response(blob)).text()
-    //     const result = JSON.parse(TEXT)
-    //     console.log(result)
-    // } catch (error) {
-    //     console.log(error)
-    // }
     const fileName = '团长信息表'
     const elink = document.createElement('a')
     if ('download' in elink) { // 非IE下载
@@ -196,10 +183,11 @@ onMounted(() => {
 })
 </script>
 <style scoped>
-.pagination{
+.pagination {
     margin-top: 20px;
 }
-.operation{
+
+.operation {
     color: #4060c7;
     margin: 0px 5px;
     cursor: pointer;

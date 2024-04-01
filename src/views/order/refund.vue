@@ -482,17 +482,8 @@ const exportExcel = async () => {
         orderType: searchForm.value.orderType,//订单类型
         goodsId: searchForm.value.goodsId
     })
-    console.log(111, res)
     loading.value = false
     var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
-    // 读取文件内容
-    // try {
-    //     const TEXT = await(new Response(blob)).text()
-    //     const result = JSON.parse(TEXT)
-    //     console.log(result)
-    // } catch (error) {
-    //     console.log(error)
-    // }
     const fileName = '退款订单信息表'
     const elink = document.createElement('a')
     if ('download' in elink) { // 非IE下载

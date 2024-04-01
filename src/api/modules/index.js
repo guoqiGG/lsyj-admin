@@ -413,3 +413,12 @@ export function exportUserGiftRule(data) {
     responseType: "blob",
   });
 }
+// 商品导出
+export function exportGoods(data) {
+  return service({
+    method: "POST",
+    url: "export/goods/date",
+    data: JSON.stringify(data),
+    responseType: "blob",
+  });
+}

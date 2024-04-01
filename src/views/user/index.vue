@@ -22,17 +22,18 @@
                         <el-input v-model="searchForm.leaderMobile" placeholder="团长手机" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :lg="6" :md="12" :sm="12">
+                <!-- <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="所属团长">
-                        <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%" clearable>
+                        <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%"
+                            clearable>
                             <el-option v-for="item in options" :key="item.id" :label="item.leaderName"
                                 :value="item.id" />
                         </el-select>
                     </el-form-item>
-                </el-col>
+                </el-col> -->
                 <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="用户类型">
-                        <el-select v-model="searchForm.type"  placeholder="请选择用户类型" style="width: 90%" clearable>
+                        <el-select v-model="searchForm.type" placeholder="请选择用户类型" style="width: 90%" clearable>
                             <el-option label="普通用户" value="0" />
                             <el-option label="团长" value="1" />
                         </el-select>
@@ -118,7 +119,7 @@ const searchParams = {
     type: '', // 0 普通团长 1 团长
     leaderName: '',
     leaderMobile: '',
-    pUid: ''
+    // pUid: ''
 }
 const loading = ref(false)
 const searchForm = ref({ ...searchParams })
@@ -183,27 +184,18 @@ const closeDialog = () => {
     editOrCreateDialogVisible.value = false
 }
 
-const exportExcel =  async() => {
+const exportExcel = async () => {
     loading.value = true
-    const res =await exportUser({
+    const res = await exportUser({
         name: searchForm.value.name,
         mobile: searchForm.value.mobile,
         type: searchForm.value.type,
         leaderName: searchForm.value.leaderName,
         leaderMobile: searchForm.value.leaderMobile,
-        pUid: searchForm.value.pUid
+        // pUid: searchForm.value.pUid
     })
-    console.log(111,res)
     loading.value = false
     var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
-    // 读取文件内容
-    // try {
-    //     const TEXT = await(new Response(blob)).text()
-    //     const result = JSON.parse(TEXT)
-    //     console.log(result)
-    // } catch (error) {
-    //     console.log(error)
-    // }
     const fileName = '用户信息表'
     const elink = document.createElement('a')
     if ('download' in elink) { // 非IE下载

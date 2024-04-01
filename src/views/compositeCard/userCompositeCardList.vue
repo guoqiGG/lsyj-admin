@@ -185,17 +185,8 @@ const exportExcel = async () => {
         cancelStartDate: searchForm.value.cancelStartDate,
         cancelEndDate: searchForm.value.cancelEndDate
     })
-    console.log(111, res)
     loading.value = false
     var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
-    // 读取文件内容
-    // try {
-    //     const TEXT = await(new Response(blob)).text()
-    //     const result = JSON.parse(TEXT)
-    //     console.log(result)
-    // } catch (error) {
-    //     console.log(error)
-    // }
     const fileName = '用户合成卡表'
     const elink = document.createElement('a')
     if ('download' in elink) { // 非IE下载
