@@ -62,7 +62,7 @@
                 <el-input v-model="leaderForm.address" placeholder="门店地址" clearable />
             </el-form-item>
             <el-form-item label="佣金比例">
-                <el-input-number v-model="leaderForm.commissionRate" placeholder="佣金比例" clearable />
+                <el-input-number v-model="leaderForm.commissionRate" min="0" max="1" step="0.1" placeholder="佣金比例" clearable />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="save">保存</el-button>

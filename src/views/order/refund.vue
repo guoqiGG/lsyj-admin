@@ -213,7 +213,7 @@
                 </div>
                 <div class="left">
                     <p class="blod">收货人信息</p>
-                    <p>配送方式:<span class="num">{{ detail.orderType === 0 ? '快递' : detail.orderType === 1 ? '自提' : ''
+                    <p>配送方式:<span class="num">{{ detail.orderType === 1 ? '快递' : detail.orderType === 2 ? '自提' : ''
                             }}</span></p>
                     <p>发货时间:<span class="num"
                             v-if="detail.orderStatus >= '2001' && detail.orderStatus != '9000' && detail.orderStatus != '8000'">{{

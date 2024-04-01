@@ -55,7 +55,8 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-table v-loading="loading" :data="applyLeaderListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+        <el-table v-loading="loading" :data="applyLeaderListData" style="width: 100%"
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="leaderName" label="团长姓名" />
             <el-table-column prop="leaderMobile" label="团长手机" />
             <el-table-column prop="remark" label="门店名称" />
@@ -78,12 +79,10 @@
             </el-table-column>
 
 
-            <el-table-column fixed="right"  label="操作" align="center" width="180">
+            <el-table-column fixed="right" label="操作" align="center" width="180">
                 <template #default="scope">
-                    <span v-if="scope.row.status == 0" class="operation" 
-                        @click="auditLeader(scope.row.id, 1)">同意</span>
-                    <span v-if="scope.row.status == 0" class="operation" 
-                        @click="auditLeader(scope.row.id, 1)">拒绝</span>
+                    <span v-if="scope.row.status == 0" class="operation" @click="auditLeader(scope.row.id, 1)">同意</span>
+                    <span v-if="scope.row.status == 0" class="operation" @click="auditLeader(scope.row.id, 2)">拒绝</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -137,8 +136,8 @@ const resetForm = () => {
     getApplyLeaderList()
 }
 
-const auditLeader= async(id,status)=>{
-    const res = await auditApplyleader({id,status})
+const auditLeader = async (id, status) => {
+    const res = await auditApplyleader({ id, status })
     if (res.code === 0) {
         getApplyLeaderList()
     }
@@ -164,10 +163,12 @@ onMounted(() => {
         border: 1px solid blue;
     }
 }
-.pagination{
+
+.pagination {
     margin-top: 20px;
 }
-.operation{
+
+.operation {
     color: #4060c7;
     margin: 0px 5px;
     cursor: pointer;

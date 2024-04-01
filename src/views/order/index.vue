@@ -120,6 +120,13 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column label="支付单号" align="center">
+        <template #default="scope">
+          <div class="leader">
+            <div> {{ scope.row.payTransId }}</div>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="商品信息">
         <template #default="scope">
           <div class="goodsInfo">
@@ -170,14 +177,6 @@
           <div> {{ scope.row.refundStatus === 0 ? '未申请退款' : scope.row.refundStatus === 1 ? '申请退款' :
       scope.row.refundStatus === 2 ? '退款中' : scope.row.refundStatus === 3 ? '退款失败' : scope.row.refundStatus === 4
         ? '退款成功' : scope.row.orderStatus === 5 ? '后台手动退款成功' : '' }}</div>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="支付单号" align="center">
-        <template #default="scope">
-          <div class="leader">
-            <div> {{ scope.row.payTransId }}</div>
-          </div>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="180" align="center">
@@ -268,7 +267,7 @@
         </div>
         <div class="left">
           <p class="blod">收货人信息</p>
-          <p>配送方式:<span class="num">{{ detail.orderType === 0 ? '快递' : detail.orderType === 1 ? '自提' : '' }}</span></p>
+          <p>配送方式:<span class="num">{{ detail.orderType === 1 ? '快递' : detail.orderType === 2 ? '自提' : '' }}</span></p>
           <p v-if="detail.orderStatus >= '2001' && detail.orderStatus != '9000' && detail.orderStatus != '8000'">
             发货时间:<span class="num">{{
       detail.statusDeliveringTime }}</span></p>
