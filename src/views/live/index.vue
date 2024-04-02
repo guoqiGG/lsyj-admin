@@ -28,15 +28,15 @@
     </el-card>
     <el-card style="margin-top: 10px;">
         <el-table v-loading="loading" :data="liveListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
-            <el-table-column prop="roomId" label="房间号" />
-            <el-table-column prop="name" label="直播间标题" />
-            <el-table-column prop="anchorName" label="主播" />
-            <el-table-column label="直播间状态">
+            <el-table-column prop="roomId" label="房间号" width="100" align="center"/>
+            <el-table-column prop="name" label="直播间标题" width="300" align="center"/>
+            <el-table-column prop="anchorName" label="主播" width="200" align="center"/>
+            <el-table-column label="直播间状态" align="center">
                 <template #default="scope">
                     {{ liveStatusCom[scope.row.liveStatus] }}
                 </template>
             </el-table-column>
-            <el-table-column prop="createTime" label="创建时间" />
+            <el-table-column prop="createTime" label="创建时间" width="400" align="center"/>
         </el-table>
         <div class="pagination">
             <el-pagination background layout="total, sizes, prev, pager, next, jumper"

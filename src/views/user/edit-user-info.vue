@@ -1,20 +1,20 @@
 <template>
-    <el-dialog v-model="editOrCreateDialogVisible" title="编辑" width="70%" @close="close">
+    <el-dialog v-model="editOrCreateDialogVisible" title="编辑" width="800px" @close="close">
         <el-divider class="divider" content-position="left">用户信息</el-divider>
         <div class="userInfo">
             <el-image :src="userInfo.avatar" style="width: 80px; border-radius: 10px"></el-image>
-            <div class="info">
+            <div class="infos">
                 <div>用户昵称：{{ userInfo.name }}</div>
                 <div>用户手机：{{ userInfo.mobile }}</div>
                 <div>注册时间：{{ userInfo.regTime }}</div>
                 <div>会员等级：{{ userInfo.levelName }}</div>
             </div>
 
-            <div class="info">
+            <div class="infos">
                 <div>团长姓名：{{ userInfo.leaderName || "null" }}</div>
                 <div>团长手机：{{ userInfo.leaderMobile || "null" }}</div>
             </div>
-            <div class="info" style="display: flex; flex-deriction: row; align-items: center">
+            <div class="infos" style="display: flex;  align-items: center">
                 <el-button type="primary" @click="openCouponDialog">送优惠券</el-button>
                 <el-button style="margin-left: 10px" type="primary" @click="openGiftDialog">送礼品券</el-button>
             </div>
@@ -110,7 +110,7 @@ const toUserCoupon = (userId) => {
 }
 </script>
 <style lang="scss" scoped>
-.info {
+.infos {
     display: block;
     width: auto;
     line-height: 20px;
@@ -129,7 +129,7 @@ const toUserCoupon = (userId) => {
     flex-direction: row;
     align-items: center;
 
-    .info {
+    .infos {
         margin-left: 50px;
         font-size: 12px;
         text-align: left;

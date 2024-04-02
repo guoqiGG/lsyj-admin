@@ -1,5 +1,5 @@
 <template>
-  <template v-for="subItem in menuList" :key="subItem.path">
+  <template  v-for="subItem in menuList" :key="subItem.path">
     <el-menu-item v-if="!subItem.children" :index="subItem.url" :route="subItem.url">
       <el-icon>
         <component :is="subItem.icon"></component>

@@ -1,5 +1,5 @@
 <template>
-    <el-dialog v-model="giftDialogVisible" title="送礼品券" width="70%" @close="close">
+    <el-dialog v-model="giftDialogVisible" title="送礼品券" width="500px" @close="close">
         <el-form ref="giftFormRef" :rules="giftRules" :model="giftForm" class="demo-form-inline" label-width="100px"
             :label-position="right">
             <el-form-item label="礼品卡" prop="giftId">

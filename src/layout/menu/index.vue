@@ -38,6 +38,23 @@ const menuList = ref([
     icon: "HomeFilled",
   },
   {
+    title: "商品管理",
+    url: "/prod",
+    icon: "Shop",
+    children: [
+      {
+        title: "商品列表",
+        url: "/prodList",
+        icon: "Menu",
+      },
+      {
+        title: "商品分类",
+        url: "/proCategoryList",
+        icon: "Menu",
+      }
+    ],
+  },
+  {
     title: "订单管理",
     url: "/order",
     icon: "Checked",
@@ -94,30 +111,6 @@ const menuList = ref([
     ],
   },
   {
-    title: "直播管理",
-    url: "/live",
-    icon: "VideoCameraFilled",
-    children: [
-      {
-        title: "直播间列表",
-        url: "/liveList",
-        icon: "Menu",
-      }
-    ],
-  },
-  {
-    title: "视频管理",
-    url: "/video",
-    icon: "VideoCamera",
-    children: [
-      {
-        title: "视频列表",
-        url: "/videoList",
-        icon: "Menu",
-      }
-    ],
-  },
-  {
     title: "优惠券管理",
     url: "/coupon",
     icon: "Postcard",
@@ -161,7 +154,7 @@ const menuList = ref([
         url: "/compositeCardList",
         icon: "Menu",
       },
-    
+
       {
         title: "用户合成卡",
         url: "/userCompositeCardList",
@@ -170,24 +163,29 @@ const menuList = ref([
     ],
   },
   {
-    title: "商品管理",
-    url: "/prod",
-    icon: "Shop",
+    title: "直播管理",
+    url: "/live",
+    icon: "VideoCameraFilled",
     children: [
       {
-        title: "商品列表",
-        url: "/prodList",
-        icon: "Menu",
-      },
-      {
-        title: "商品分类",
-        url: "/proCategoryList",
+        title: "直播间列表",
+        url: "/liveList",
         icon: "Menu",
       }
     ],
   },
-
-
+  {
+    title: "视频管理",
+    url: "/video",
+    icon: "VideoCamera",
+    children: [
+      {
+        title: "视频列表",
+        url: "/videoList",
+        icon: "Menu",
+      }
+    ],
+  },
 ]);
 
 const handleOpen = (key, keyPath) => {

@@ -85,30 +85,39 @@
         <el-table v-loading="loading" :data="refundData" style="width: 100%" ref="multipleTableRef"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55" />
-            <el-table-column prop="userName" label="用户名称" align="center" />
-            <el-table-column prop="userMobile" label="用户手机号" align="center" />
-            <el-table-column prop="leaderName" label="团长名称" align="center" />
-            <el-table-column prop="leaderMobile" label="团长手机号" align="center" />
-
-            <el-table-column prop="orderGoodsList[0].title" label="商品名称" align="center" />
-            <el-table-column prop="orderGoodsList[0].thumbail" label="商品图片" align="center">
+            <el-table-column label="商品信息" width="250">
                 <template #default="scope">
-                    <img style="width: 60px;height: 60px;" :src="scope.row.orderGoodsList[0].thumbail" alt="">
+                    <div style="display: flex;flex-direction: row;">
+                        <el-image style="width: 60px;height:60px;border-radius:5px;" :src="scope.row.orderGoodsList[0].thumbail" alt=""/>
+                        <div style="margin-left: 20px;width:150px;">{{ scope.row.orderGoodsList[0].title }}</div>
+                    </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="orderNumber" label="订单号" align="center" />
-            <el-table-column prop="orderType" label="订单类型" align="center">
+            <el-table-column prop="orderNumber" label="订单号" align="center" width="170" />
+            <el-table-column label="买家信息" width="180">
                 <template #default="scope">
-                    {{ scope.row.orderType == 1 ? '配送单' : scope.row.refundStatus == 2 ? '自提单' : '' }}
+                    <div>昵称：{{ scope.row.userName }}</div>
+                    <div>手机：{{ scope.row.userMobile }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column label="团长信息" width="180">
+                <template #default="scope">
+                    <div>姓名：{{ scope.row.leaderName }}</div>
+                    <div>手机：{{ scope.row.leaderMobile }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column prop="orderType" label="订单类型" align="center" width="80">
+                <template #default="scope">
+                    {{ scope.row.orderType == 1 ? '快递' : scope.row.refundStatus == 2 ? '自提' : '' }}
                 </template>
             </el-table-column>
             <el-table-column prop="refundAmount" label="申请金额" align="center" />
-            <el-table-column prop="realRefundAmount" label="审批退款金额" align="center" />
-            <el-table-column prop="refundStatus" label="退款状态" align="center">
+            <el-table-column prop="realRefundAmount" label="退款金额" align="center" />
+            <el-table-column prop="refundStatus" label="退款状态" align="center" width="120">
                 <template #default="scope">
                     {{ scope.row.refundStatus == 1 ? '申请中' : scope.row.refundStatus == 2 ? '已退款' :
             scope.row.refundStatus
-                == 3 ? '已拒绝' : scope.row.refundStatus == 4 ? '后台手动退款成功' : '' }}
+                == 3 ? '已拒绝' : scope.row.refundStatus == 4 ? '后台退款成功' : '' }}
                 </template>
             </el-table-column>
 

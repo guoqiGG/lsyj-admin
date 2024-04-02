@@ -1,10 +1,35 @@
 <template>
-  <div id="main" style="width: 100%; height: 100%"></div>
+  <el-form :inline="true" :model="searchForm" class="demo-form-inline" size="small">
+    <el-form-item>
+      <el-date-picker v-model="searchForm.date" type="datetimerange" start-placeholder="开始时间" end-placeholder="结束时间"
+        format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" default-time />
+    </el-form-item>
+  </el-form>
+  <div id="main" style="width: 100%; height: 100%">
+  </div>
 </template>
 
 <script setup name="GMVnearly">
 import * as echarts from 'echarts'
-import { onMounted } from 'vue'
+import dayjs from 'dayjs'
+
+import { onMounted, ref, watch } from 'vue'
+import { homeLeaderTopSales10 } from '../../../api/modules'
+const searchForm = ref({
+  date: null,
+  startDate: null,
+  endDate: null
+})
+
+const getHomeLeaderTopSales10 = async () => {
+  let startDate = dayjs(new Date(new Date().toLocaleDateString().getTime() - 24 * 60 * 60 * 1000)).format('YYYY-MM-DD HH:mm:ss')
+  let endDate = dayjs(new Date(new Date().toLocaleDateString().getTime())).format('YYYY-MM-DD HH:mm:ss')
+  console.log(startDate, endDate)
+  const res = await homeLeaderTopSales10({
+    startDate: searchForm.value.startDate,
+    endDate: searchForm.value.endDate
+  })
+}
 
 const getEcharts = () => {
   var chartDom = document.getElementById('main')
@@ -19,7 +44,7 @@ const getEcharts = () => {
       },
     },
     title: {
-      text: '出入库情况',
+      text: '团长前十销量',
       top: '8px',
       left: '10px',
 
@@ -167,6 +192,14 @@ const getEcharts = () => {
 onMounted(() => {
   setTimeout(() => {
     getEcharts()
+    getHomeLeaderTopSales10()
   }, 1000)
 })
+
+watch(searchForm.value, (newValue, oldValue) => {
+  console.log(newValue, oldValue)
+  searchForm.value.startDate = dayjs(newValue.date[0]).format('YYYY-MM-DD hh:mm:ss')
+  searchForm.value.endDate = dayjs(newValue.date[1]).format('YYYY-MM-DD hh:mm:ss')
+}
+  , { deep: true })
 </script>

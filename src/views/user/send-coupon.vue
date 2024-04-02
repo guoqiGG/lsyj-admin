@@ -1,5 +1,5 @@
 <template>
-    <el-dialog v-model="couponDialogVisible" title="送优惠券" width="70%" @close="close">
+    <el-dialog v-model="couponDialogVisible" title="送优惠券" width="500px" @close="close">
         <el-form ref="couponFormRef" :rules="couponRules" :model="couponForm" class="demo-form-inline"
             label-width="100px" :label-position="right">
             <el-form-item label="优惠券" prop="couponId">

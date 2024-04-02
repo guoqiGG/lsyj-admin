@@ -57,20 +57,20 @@
     <el-card style="margin-top: 10px;">
         <el-table v-loading="loading" :data="applyLeaderListData" style="width: 100%"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
-            <el-table-column prop="leaderName" label="团长姓名" />
-            <el-table-column prop="leaderMobile" label="团长手机" />
-            <el-table-column prop="remark" label="门店名称" />
-            <el-table-column prop="address" label="门店地址" />
-            <el-table-column prop="userName" label="用户姓名" />
-            <el-table-column prop="userMobile" label="用户手机" />
+            <el-table-column prop="leaderName" label="团长姓名"  align="center" width="100"/>
+            <el-table-column prop="leaderMobile" label="团长手机" align="center" width="120"/>
+            <el-table-column prop="remark" label="门店名称"  width="200"/>
+            <el-table-column prop="address" label="门店地址"  width="300"/>
+            <el-table-column prop="userName" label="用户姓名"  width="200"/>
+            <el-table-column prop="userMobile" label="用户手机" align="center" width="120"/>
 
-            <el-table-column label="类型">
-                <template #default="scope">
-                    <div :class="['info', scope.row.address ? 'blue' : '']">{{ scope.row.address ? '有店' : '无店' }}</div>
+            <el-table-column label="类型" align="center" width="200">
+                <template #default="scope" >
+                    <div :class="['info', scope.row.address ? 'blue' : '']" style="margin:0 auto;">{{ scope.row.address ? '有店' : '无店' }}</div>
                 </template>
             </el-table-column>
 
-            <el-table-column label="审核状态">
+            <el-table-column label="审核状态" align="center">
                 <template #default="scope">
                     <el-tag v-if="scope.row.status == 0" type="info">待审核</el-tag>
                     <el-tag v-if="scope.row.status == 1" type="success">审核通过</el-tag>

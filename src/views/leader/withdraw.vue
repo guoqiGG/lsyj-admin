@@ -41,24 +41,26 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-table v-loading="loading" :data="leaderWithdrawListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
-            <el-table-column prop="leaderName" label="团长姓名" />
-            <el-table-column prop="leaderMobile" label="团长手机" />
-            <el-table-column prop="withrawingAmt" label="申请金额" />
-            <el-table-column prop="remark" label="申请备注" />
-            <el-table-column prop="deductAmt" label="同意后扣除的金额" />
-            <el-table-column prop="createTime" label="申请时间" />
-            <el-table-column label="审核状态">
+        <el-table v-loading="loading" :data="leaderWithdrawListData" style="width: 100%"
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+            <el-table-column prop="leaderName" label="团长姓名" width="150" align="center"/>
+            <el-table-column prop="leaderMobile" label="团长手机" width="150" align="center"/>
+            <el-table-column prop="withrawingAmt" label="申请金额" width="120" align="center"/>
+            <el-table-column prop="remark" label="申请备注" width="250" align="center"/>
+            <el-table-column prop="deductAmt" label="扣除金额" align="center"/>
+            <el-table-column prop="createTime" label="申请时间" align="center"/>
+            <el-table-column label="审核状态" width="150" align="center">
                 <template #default="scope">
                     <el-tag v-if="scope.row.status == 0" type="info">待审核</el-tag>
                     <el-tag v-if="scope.row.status == 1" type="success">同意</el-tag>
                     <el-tag v-if="scope.row.status == 2" type="danger">拒绝</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column prop="examineRemarks" label="审批备注" />
+            <el-table-column prop="examineRemarks" label="审批备注" width="300" align="center"/>
             <el-table-column fixed="right" label="操作" width="120" align="center">
                 <template #default="scope">
-                    <span v-if="scope.row.status == 0" class="operation" @click="openLeaderWithdrawApproveDialog(scope)">审批</span>
+                    <span v-if="scope.row.status == 0" class="operation"
+                        @click="openLeaderWithdrawApproveDialog(scope)">审批</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -216,7 +218,7 @@ onMounted(() => {
 //     , { deep: true })
 </script>
 <style lang="scss" scoped>
-.applyInfo{
+.applyInfo {
     font-size: 16px;
     color: #010101;
 }
@@ -243,16 +245,17 @@ onMounted(() => {
     padding-left: 70px;
 }
 
-::deep(.el-dialog__header){
+::deep(.el-dialog__header) {
     text-align: center;
 }
 </style>
 
 <style scoped>
-.pagination{
+.pagination {
     margin-top: 20px;
 }
-.operation{
+
+.operation {
     color: #4060c7;
     margin: 0px 5px;
     cursor: pointer;

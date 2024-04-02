@@ -18,15 +18,15 @@
     <el-card style="margin-top: 10px;">
         <el-button tag="div" :icon="CirclePlus" type="primary" @click="editOrCreateDialog()">新增</el-button>
         <el-table v-loading="loading" :data="prodCategoryListData" style="width: 100%;margin-top:10px;" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
-            <el-table-column prop="id" label="ID" />
+            <el-table-column prop="id" label="ID"  width="100"  align="center"/>
             <el-table-column prop="name" label="名称" align="center" />
-            <el-table-column label="图片" align="center">
+            <el-table-column label="图片" align="center" width="350">
                 <template #default="scope">
-                    <el-image :src="scope.row.url" fit="cover" />
+                    <el-image style="width: 300px;height:100px;border-radius: 10px;" :src="scope.row.url" fit="cover" />
                 </template>
             </el-table-column>
             <el-table-column prop="sort" label="排序" align="center" />
-            <el-table-column prop="createTime" label="创建时间" />
+            <el-table-column prop="createTime" label="创建时间"  width="250" align="center"/>
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="editOrCreateDialog(scope)" :icon="Edit">编辑</span>

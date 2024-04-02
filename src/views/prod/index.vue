@@ -28,11 +28,12 @@
         <el-button tag="div" :icon="CirclePlus" type="primary" @click="editOrCreateDialog()">新增</el-button>
         <el-table v-loading="loading" :data="prodListData" style="width: 100%;margin-top:10px;"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
-            <el-table-column prop="id" label="ID" />
-            <el-table-column prop="name" label="名称" align="center" />
-            <el-table-column label="图片" align="center">
+            <el-table-column prop="id" label="ID" align="center" width="100" />
+            <el-table-column prop="name" label="名称" align="center" width="150" />
+            <el-table-column label="图片" align="center" width="100">
                 <template #default="scope">
-                    <el-image :src="scope.row.thumbail" fit="cover" />
+                    <el-image style="width: 60px;height:60px;border-radius:5px;" :src="scope.row.thumbail"
+                        fit="cover" />
                 </template>
             </el-table-column>
             <el-table-column prop="sort" label="排序" align="center" />
@@ -42,10 +43,10 @@
             <el-table-column prop="totalNum" label="总销量" align="center" />
             <el-table-column prop="goodsType" label="商品类型" align="center" />
             <el-table-column prop="code" label="code" align="center" />
-            <el-table-column prop="createTime" label="创建时间" />
+            <el-table-column prop="createTime" label="创建时间" width="170" align="center" />
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
-                    <span class="operation" @click="copy(scope.row.id)">小程序链接</span>
+                    <!-- <span class="operation" @click="copy(scope.row.id)">小程序链接</span> -->
                     <span class="operation" @click="editOrCreateDialog(scope)">编辑</span>
                     <!-- <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="deleteProdById(scope.row.id, 1)"
@@ -164,10 +165,13 @@
                             </el-select>
                         </template>
                     </el-table-column>
-                    <el-table-column label="限制类型(默认0不限制)" align="center" width="150">
+                    <el-table-column label="限制类型" align="center" width="150">
                         <template #default="scope">
-                            <el-input-number controls-position="right"
-                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].limit_type" size="small" />
+                            <el-select style="width:92%" placeholder="请选择"
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].limit_type" size="small">
+                                <el-option label="不限制" :value="0" />
+                                <el-option label="限制" :value="1" />
+                            </el-select>
                         </template>
                     </el-table-column>
                     <el-table-column label="限购数量" align="center" width="150">
@@ -241,7 +245,7 @@
                 <el-col :lg="12" :md="12" :sm="12">
                     <el-form-item label="日期">
                         <el-date-picker v-model="queryForm.date" type="date" format="YYYY-MM-DD"
-                            value-format="YYYY-MM-DD" placeholder="日期"  style="width: 90%;"/>
+                            value-format="YYYY-MM-DD" placeholder="日期" style="width: 90%;" />
                     </el-form-item>
                 </el-col>
                 <el-form-item style="padding-left: 80px;">

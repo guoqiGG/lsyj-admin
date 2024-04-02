@@ -19,8 +19,8 @@ export default {
       primary: "#4060c7",
       tabColor: "#FFFFFF",
       footColor: "#606266",
-      backgroundColor: "#FFFFFF",
-      textColor: "#00000099",
+      backgroundColor: "#2f4056",
+      textColor: "#FFFFFF",
       istags: true,
     },
   },
@@ -47,11 +47,11 @@ export default {
     },
     setThemeConfigMenuColor(state, primary) {
       if (primary) {
+        state.themeConfig.backgroundColor = "#2f4056";
+        state.themeConfig.textColor = "#ffffff";
+      } else {
         state.themeConfig.backgroundColor = "#FFFFFF";
         state.themeConfig.textColor = "#00000099";
-      } else {
-        state.themeConfig.backgroundColor = "#1d2129";
-        state.themeConfig.textColor = "#bdbdc0";
       }
     },
     setThemeConfigchangeTags(state, primary) {

@@ -62,8 +62,8 @@
         </el-col>
         <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="所属团长">
-            <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%">
-              <el-option v-for="item in pUidOptions" :key="item.id" :label="item.leaderName" :value="item.id" />
+            <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%" clearable>
+              <el-option v-for="item in pUidOptions" :key="item.puid" :label="item.leaderName" :value="item.puid" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -75,12 +75,17 @@
             </el-select>
           </el-form-item>
         </el-col>
+
+        <el-col :lg="12" :md="12" :sm="24">
+          <el-form-item label="时间 ">
+            <el-date-picker v-model="searchForm.time" type="daterange" start-placeholder="开始时间" end-placeholder="结束时间"
+              format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" default-time />
+          </el-form-item>
+        </el-col>
         <el-form-item>
           <el-button type="primary" @click="getOrderList">查询</el-button>
           <el-button @click="resetForm()">重置</el-button>
         </el-form-item>
-
-
       </el-row>
       <el-row>
         <el-form-item>
@@ -96,7 +101,6 @@
             <el-button :icon="Upload" type="primary">批量上传收货</el-button>
           </el-upload>
           <el-button :icon="Download" @click="hamdleDownload('receive')">下载批量收货模板</el-button>
-
         </el-form-item>
       </el-row>
 
@@ -110,9 +114,9 @@
       :disabled="isDisabled" @click="hamdleBatchReceive">批量收货</el-button>
     <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
     <el-table v-loading="loading" :data="orderListData" style="width: 100%" ref="multipleTableRef"
-      :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" />
-      <el-table-column label="订单信息">
+      :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange" border>
+      <el-table-column type="selection" width="55"  align="center"/>
+      <el-table-column label="订单信息" width="235">
         <template #default="scope">
           <div class="order">
             <div>订单编号：{{ scope.row.orderId }}</div>
@@ -120,25 +124,25 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="支付单号" align="center">
+      <el-table-column label="支付单号" align="center" width="200">
         <template #default="scope">
           <div class="leader">
             <div> {{ scope.row.payTransId }}</div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="商品信息">
+      <el-table-column label="商品信息" width="250">
         <template #default="scope">
           <div class="goodsInfo">
-            <el-image style="width: 60px;" :src="scope.row.thumbail" lazy></el-image>
-            <div class="left">
-              <div class="goodsName">{{ scope.row.goodsName }}</div>
+            <el-image style="width: 60px;height:60px;border-radius:5px;" :src="scope.row.thumbail" lazy></el-image>
+            <div class="left" style="width:130px;">
+              <div class="goodsName" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ scope.row.goodsName }}2131313213</div>
               <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']">{{ scope.row.orderTypeStr }}</div>
             </div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="单价(元)/数量" align="center">
+      <el-table-column label="单价(元)/数量" align="center" width="100">
         <template #default="scope">
           <div class="price">
             <div class="price-title">{{ scope.row.amount }}</div>
@@ -146,7 +150,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="买家/收货人" align="center">
+      <el-table-column label="买家/收货人" align="center" width="150">
         <template #default="scope">
           <div class="buyer">
             <div>{{ scope.row.userName }}</div>
@@ -154,7 +158,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="团长">
+      <el-table-column label="团长" width="200">
         <template #default="scope">
           <div class="leader">
             <div> 团长：{{ scope.row.leaderName }}</div>
@@ -163,16 +167,16 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="orderStatus" label="订单状态" align="center">
+      <el-table-column prop="orderStatus" label="订单状态" align="center" width="120">
         <template #default="scope">
           <div> {{ scope.row.orderStatus === 1000 ? '待付款' : scope.row.orderStatus === 1001 ? '已支付' :
       scope.row.orderStatus === 2001 ? '待收货' : scope.row.orderStatus === 2002 ? '后台确认收货' : scope.row.orderStatus
-        === 3001 ? '用户点击确认收货' : scope.row.orderStatus === 9000 ? '已取消' : scope.row.orderStatus === 8000 ? '错误' : ''
+        === 3001 ? '用户确认收货' : scope.row.orderStatus === 9000 ? '已取消' : scope.row.orderStatus === 8000 ? '错误' : ''
             }}</div>
         </template>
       </el-table-column>
 
-      <el-table-column prop="refundStatus" label="订单退款状态" align="center">
+      <el-table-column prop="refundStatus" label="订单退款状态" align="center" width="120">
         <template #default="scope">
           <div> {{ scope.row.refundStatus === 0 ? '未申请退款' : scope.row.refundStatus === 1 ? '申请退款' :
       scope.row.refundStatus === 2 ? '退款中' : scope.row.refundStatus === 3 ? '退款失败' : scope.row.refundStatus === 4
@@ -192,7 +196,7 @@
     </el-table>
     <div class="pagination">
       <el-pagination background layout="total, sizes, prev, pager, next, jumper" v-model:page-size="pages.pageSize"
-        v-model:current-page="pages.pageNo" :page-sizes="[10, 20, 50, 100, 200, 500]" :total="pages.total"
+        v-model:current-page="pages.pageNo" :page-sizes="[10, 20, 50, 100, 200, 500]" :total="total"
         @size-change="tableHandleSizeChange" @current-change="tableHandleChange" />
     </div>
   </el-card>
@@ -350,36 +354,54 @@ const getLeaderList = async () => {
   pUidOptions.value = res.data.list
 }
 const searchParams = {
-  orderNumber: '',
+  orderNumber: null,
   pUid: null,
-  userName: '',
-  leaderName: '',
-  leaderMobile: '',
-  userMobile: '',
-  goodsName: '',
-  orderType: '',
-  orderStatus: '',
-  refundStatus: '',
-  startTime: '',
-  endTime: '',
-  time: '',
-  userId: '',
-  goodsId: ''
+  userName: null,
+  leaderName: null,
+  leaderMobile: null,
+  userMobile: null,
+  goodsName: null,
+  orderType: null,
+  orderStatus: null,
+  refundStatus: null,
+  startDate: null,
+  endDate: null,
+  time: null,
+  userId: null,
+  goodsId: null
 }
+
 const loading = ref(false)
 const searchForm = ref({ ...searchParams })
 const pages = ref({
   pageNo: 1,
   pageSize: 20,
-  total: 0
+
 })
+const total = ref(0)
 let orderListData = ref([])
 const getOrderList = async () => {
   loading.value = true
-  const res = await orderList({ ...searchForm.value, ...pages.value })
+  const res = await orderList({
+    orderNumber: searchForm.value.orderNumber,
+    pUid: searchForm.value.pUid,
+    userName: searchForm.value.userName,
+    leaderName: searchForm.value.leaderName,
+    leaderMobile: searchForm.value.leaderMobile,
+    userMobile: searchForm.value.userMobile,
+    goodsName: searchForm.value.goodsName,
+    orderType: searchForm.value.orderType,
+    orderStatus: searchForm.value.orderStatus,
+    refundStatus: searchForm.value.refundStatus,
+    startDate: searchForm.value.startDate,
+    endDate: searchForm.value.endDate,
+    userId: searchForm.value.userId,
+    goodsId: searchForm.value.goodsId
+    , ...pages.value
+  })
   loading.value = false
   orderListData.value = res.data.list
-  pages.value.total = res.data.total
+  total.value = res.data.total
 }
 
 const tableHandleSizeChange = (e) => {
@@ -527,9 +549,8 @@ const exportExcel = async () => {
     orderType: searchForm.value.orderType,
     orderStatus: searchForm.value.orderStatus,
     refundStatus: searchForm.value.refundStatus,
-    // startTime: searchForm.value.startTime,
-    // endTime: searchForm.value.endTime,
-    // time: searchForm.value.time,
+    startDate: searchForm.value.startDate,
+    endDate: searchForm.value.endDate,
     userId: searchForm.value.userId,
     goodsId: searchForm.value.goodsId
   })
@@ -562,8 +583,9 @@ onMounted(() => {
   getProdList()
 })
 watch(searchForm.value, (newValue, oldValue) => {
-  searchForm.value.startTime = dayjs(newValue.time[0]).format('YYYY-MM-DD hh:mm:ss')
-  searchForm.value.endTime = dayjs(newValue.time[1]).format('YYYY-MM-DD hh:mm:ss')
+  console.log(newValue, oldValue)
+  searchForm.value.startDate = dayjs(newValue.time[0]).format('YYYY-MM-DD hh:mm:ss')
+  searchForm.value.endDate = dayjs(newValue.time[1]).format('YYYY-MM-DD hh:mm:ss')
 }
   , { deep: true })
 

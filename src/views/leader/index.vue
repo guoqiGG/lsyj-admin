@@ -24,15 +24,15 @@
         <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
         <el-table v-loading="loading" :data="leaderListData" style="width: 100%"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
-            <el-table-column prop="leaderName" label="团长姓名" />
-            <el-table-column prop="leaderMobile" label="团长手机" />
-            <el-table-column prop="leaderStore" label="门店名称" />
-            <el-table-column prop="address" label="门店地址" />
-            <el-table-column prop="commissionRate" label="佣金比例" />
-            <el-table-column prop="countUser" label="下级用户数" />
-            <el-table-column prop="totalIncome" label="总收益" />
-            <el-table-column prop="balance" label="当前余额" />
-            <el-table-column prop="withrawingAmt" label="正在提余额" />
+            <el-table-column prop="leaderName" label="团长姓名" align="center" width="80" />
+            <el-table-column prop="leaderMobile" label="团长手机" align="center" width="120" />
+            <el-table-column prop="leaderStore" label="门店名称" width="220" />
+            <el-table-column prop="address" label="门店地址" width="300" />
+            <el-table-column prop="commissionRate" label="佣金比例(0-1)" align="center" width="120" />
+            <el-table-column prop="countUser" label="用户数" align="center" />
+            <el-table-column prop="totalIncome" label="总收益" align="center" />
+            <el-table-column prop="balance" label="当前余额" align="center" />
+            <el-table-column prop="withrawingAmt" label="正在提余额" align="center" width="100" />
             <el-table-column fixed="right" label="操作" width="120" align="center">
                 <template #default="scope">
                     <span class="operation" @click="openUpdateUserInfoDialog(scope)">修改团长信息</span>
@@ -62,7 +62,8 @@
                 <el-input v-model="leaderForm.address" placeholder="门店地址" clearable />
             </el-form-item>
             <el-form-item label="佣金比例">
-                <el-input-number v-model="leaderForm.commissionRate" min="0" max="1" step="0.1" placeholder="佣金比例" clearable />
+                <el-input-number v-model="leaderForm.commissionRate" min="0" max="1" step="0.1" placeholder="佣金比例"
+                    clearable />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="save">保存</el-button>

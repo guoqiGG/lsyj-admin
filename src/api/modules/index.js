@@ -14,9 +14,9 @@ export function LoginInfo(query) {
 // 订单列表
 export function orderList(query) {
   return service({
-    method: "get",
+    method: "post",
     url: "/order/get/list",
-    params: query,
+    data: JSON.stringify(query),
   });
 }
 // 订单详情
@@ -420,5 +420,14 @@ export function exportGoods(data) {
     url: "export/goods/date",
     data: JSON.stringify(data),
     responseType: "blob",
+  });
+}
+
+// 首页团长前十销量查询
+export function homeLeaderTopSales10(data) {
+  return service({
+    method: "POST",
+    url: "admin/get/day/order/leader/top",
+    data: JSON.stringify(data),
   });
 }
