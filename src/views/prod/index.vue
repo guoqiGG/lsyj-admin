@@ -65,7 +65,7 @@
                 @current-change="tableHandleChange" />
         </div>
     </el-card>
-    <el-dialog v-model="editOrCreateDialogVisible" :title="isCreate ? '新增商品分类' : '编辑商品分类'" width="90%"
+    <el-dialog v-model="editOrCreateDialogVisible" :title="isCreate ? '新增商品分类' : '编辑商品分类'" width="60%"
         @close="clearEditForm">
         <el-form ref="categoryFormRef" :rules="rules" :model="prodForm" class="demo-form-inline" label-width="100px"
             :label-position="right">
@@ -104,6 +104,26 @@
             <el-form-item label="后台排序" prop="adminSort">
                 <el-input-number controls-position="right" v-model="prodForm.adminSort" placeholder="后台排序" clearable />
             </el-form-item>
+            <el-form-item label="单个优惠券使用金额" prop="couponAmt">
+                <el-input-number controls-position="right" v-model="prodForm.couponAmt" placeholder="请输入金额" clearable />
+            </el-form-item>
+            <el-form-item label="是否可用券" prop="isCoupon">
+                <el-radio-group v-model="prodForm.isCoupon">
+                    <el-radio border :label="0">可用</el-radio>
+                    <el-radio border :label="1">不可用</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="团长特殊佣金" prop="specialCommission">
+                <el-input-number controls-position="right" v-model="prodForm.specialCommission" placeholder="请输入佣金比例" clearable />
+            </el-form-item>
+            <el-form-item label="团长可见" prop="groupLeader">
+                <el-select v-model="prodForm.groupLeader" placeholder="请选择团长" clearable>
+                    <el-option v-for="item in leaderListExportData" :key="item.puid" :label="item.leaderName"
+                        :value="item.puid" />
+                </el-select>
+            </el-form-item>
+           
+           
             <!-- 规格 -->
             <el-form-item label="规格">
                 <div style="display: block;width:100%;">
@@ -280,6 +300,7 @@ const pages = ref({
 const total = ref(0)
 let prodListData = ref([])
 let prodCategoryListData = ref([])
+
 const prodForm = ref({
     id: 0,
     categoryId: '', //分类id
@@ -290,6 +311,12 @@ const prodForm = ref({
     sort: 0, //排序
     deliveryMode: 1,//配送类别
     adminSort: 0, //后台排序
+
+    couponAmt: 0, //单个优惠券使用金额
+    isCoupon: 0, //是否可用券
+    specialCommission:null,//团长特殊佣金
+    groupLeader:null,//团长可见
+
     adminGoodsSkuInputVOS: [], //商品详情相关
     goodsCoupon: { // 发放优惠券相关
         couponId: '', //优惠券id
@@ -473,6 +500,12 @@ const editOrCreateDialog = async (e) => {
         prodForm.value.sort = res.data.sort
         prodForm.value.deliveryMode = res.data.deliveryMode
         prodForm.value.adminSort = res.data.adminSort
+
+        prodForm.value.couponAmt = res.data.couponAmt//单个优惠券使用金额
+        prodForm.value.isCoupon = res.data.isCoupon//是否可用券
+        prodForm.value.specialCommission = res.data.specialCommission//团长特殊佣金
+        prodForm.value.groupLeader = res.data.groupLeader//团长可见
+
         prodForm.value.adminGoodsSkuInputVOS = res.data.adminGoodsSkuInputVOS
 
         if (res.data.goodsCouponActivity) {
@@ -527,6 +560,12 @@ const save = Debounce(async () => {
                     sort: prodForm.value.sort,
                     deliveryMode: prodForm.value.deliveryMode,
                     adminSort: prodForm.value.adminSort,
+
+                    couponAmt: prodForm.value.couponAmt,//单个优惠券使用金额
+                    isCoupon: prodForm.value.isCoupon,//是否可用券
+                    specialCommission: prodForm.value.specialCommission,//团长特殊佣金
+                    groupLeader: prodForm.value.groupLeader,//团长可见
+
                     adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS
                 }
                 if (prodForm.value.goodsCoupon.couponId || prodForm.value.goodsCoupon.couponNum) {
@@ -549,6 +588,12 @@ const save = Debounce(async () => {
                     sort: prodForm.value.sort,
                     deliveryMode: prodForm.value.deliveryMode,
                     adminSort: prodForm.value.adminSort,
+
+                    couponAmt: prodForm.value.couponAmt,//单个优惠券使用金额
+                    isCoupon: prodForm.value.isCoupon,//是否可用券
+                    specialCommission: prodForm.value.specialCommission,//团长特殊佣金
+                    groupLeader: prodForm.value.groupLeader,//团长可见
+
                     adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS,
                 }
                 // 单独添加优惠券参数  
@@ -716,6 +761,7 @@ onMounted(() => {
     getProdCategoryList()
     getProdList()
     getCouponList()
+    getLeaderListExportByName()
 })
 
 </script>

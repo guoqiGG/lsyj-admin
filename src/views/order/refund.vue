@@ -72,7 +72,7 @@
                         :on-error="handleError">
                         <el-button :icon="Upload" type="primary">批量上传退款</el-button>
                     </el-upload>
-                    <el-button :icon="Download" @click="hamdleDownload()">下载批量退款模板</el-button>
+                    <el-button :icon="Download" @click="handleDownload()">下载批量退款模板</el-button>
 
                 </el-form-item>
             </el-row>
@@ -395,7 +395,7 @@ const handleError = (err, file, fileList) => {
 
 }
 // 下载模板
-const hamdleDownload = () => {
+const handleDownload = () => {
     let url = 'https://qingchuntai2.oss-cn-beijing.aliyuncs.com/2024/02/20/%E9%80%80%E6%AC%BE%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9C%E8%A1%A8.xlsx'
     window.location.href = url
 }
