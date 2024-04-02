@@ -79,7 +79,7 @@
         <el-col :lg="12" :md="12" :sm="24">
           <el-form-item label="时间 ">
             <el-date-picker v-model="searchForm.time" type="daterange" start-placeholder="开始时间" end-placeholder="结束时间"
-              format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" default-time />
+              format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss" default-time />
           </el-form-item>
         </el-col>
         <el-form-item>
@@ -584,8 +584,8 @@ onMounted(() => {
 })
 watch(searchForm.value, (newValue, oldValue) => {
   console.log(newValue, oldValue)
-  searchForm.value.startDate = dayjs(newValue.time[0]).format('YYYY-MM-DD hh:mm:ss')
-  searchForm.value.endDate = dayjs(newValue.time[1]).format('YYYY-MM-DD hh:mm:ss')
+  searchForm.value.startDate = dayjs(newValue.time[0]).format('YYYY-MM-DD HH:mm:ss')
+  searchForm.value.endDate = dayjs(newValue.time[1]).format('YYYY-MM-DD HH:mm:ss')
 }
   , { deep: true })
 

@@ -1,33 +1,34 @@
 <template>
-  <el-form :inline="true" :model="searchForm" class="demo-form-inline" size="small">
-    <el-form-item>
-      <el-date-picker v-model="searchForm.date" type="datetimerange" start-placeholder="开始时间" end-placeholder="结束时间"
-        format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" default-time />
-    </el-form-item>
-  </el-form>
-  <div id="main" style="width: 100%; height: 100%">
+  <div class="con">
+    <div class="top">
+      <div class="top-title">订单</div>
+      <el-date-picker @change="getHomeGoodsTopSales10" v-model="searchForm.date" type="daterange"
+        start-placeholder="开始时间" end-placeholder="结束时间" format="YYYY-MM-DD" value-format="YYYY-MM-DD" default-time />
+    </div>
+
+    <div id="main" style="width: 100%; height: 250px">
+    </div>
   </div>
 </template>
 
-<script setup name="GMVnearly">
+<script setup name="leaderTopSales10">
 import * as echarts from 'echarts'
 import dayjs from 'dayjs'
 
 import { onMounted, ref, watch } from 'vue'
 import { homeLeaderTopSales10 } from '../../../api/modules'
 const searchForm = ref({
-  date: null,
-  startDate: null,
-  endDate: null
+  date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')],
+  startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
+  endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
 })
 
 const getHomeLeaderTopSales10 = async () => {
-  let startDate = dayjs(new Date(new Date().toLocaleDateString().getTime() - 24 * 60 * 60 * 1000)).format('YYYY-MM-DD HH:mm:ss')
-  let endDate = dayjs(new Date(new Date().toLocaleDateString().getTime())).format('YYYY-MM-DD HH:mm:ss')
-  console.log(startDate, endDate)
+  let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
+  let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
   const res = await homeLeaderTopSales10({
-    startDate: searchForm.value.startDate,
-    endDate: searchForm.value.endDate
+    startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
+    endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
   })
 }
 
@@ -43,20 +44,20 @@ const getEcharts = () => {
         type: 'shadow',
       },
     },
-    title: {
-      text: '团长前十销量',
-      top: '8px',
-      left: '10px',
+    // title: {
+    //   text: '订单数据',
+    //   top: '8px',
+    //   left: '10px',
 
-      bottom: '8px',
-      textStyle: {
-        color: '#191e24',
-        fontSize: '14',
-      },
-    },
+    //   bottom: '8px',
+    //   textStyle: {
+    //     color: '#191e24',
+    //     fontSize: '14',
+    //   },
+    // },
     legend: {
       // 图例
-      data: ['出库', '入库'],
+      data: ['订单数量', '金额'],
       top: 8,
       right: 16, // 修改位置
       icon: 'circle', //原型
@@ -78,18 +79,13 @@ const getEcharts = () => {
         type: 'category',
         axisTick: { show: false },
         data: [
-          '1月',
-          '2月',
-          '3月',
-          '4月',
-          '5月',
-          '6月',
-          '7月',
-          '8月',
-          '9月',
-          '10月',
-          '11月',
-          '12月',
+          '3月27日',
+          '3月28日',
+          '3月28日',
+          '3月29日',
+          '3月30日',
+          '3月31日',
+          '4月1日',
         ],
         axisLine: {
           // 轴线的颜色以及宽度
@@ -141,7 +137,7 @@ const getEcharts = () => {
     ],
     series: [
       {
-        name: '出库',
+        name: '订单数量',
         type: 'bar',
         barWidth: 10, // 柱图宽度
         barGap: '30%',
@@ -149,7 +145,7 @@ const getEcharts = () => {
         emphasis: {
           focus: 'series',
         },
-        data: [320, 332, 401, 334, 390, 320, 332, 301, 334, 390, 320, 332],
+        data: [320, 332, 401, 334, 390, 320, 332],
         // ↓ 这里可以改变渐变色的方向
         color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
           {
@@ -163,14 +159,14 @@ const getEcharts = () => {
         ]),
       },
       {
-        name: '入库',
+        name: '金额',
         type: 'bar',
         barWidth: 10, // 柱图宽度
         // label: labelOption,
         emphasis: {
           focus: 'series',
         },
-        data: [220, 182, 191, 234, 290, 220, 182, 191, 234, 290, 220, 182],
+        data: [220, 182, 191, 234, 290, 220, 182],
         color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
           {
             offset: 0,
@@ -192,14 +188,40 @@ const getEcharts = () => {
 onMounted(() => {
   setTimeout(() => {
     getEcharts()
-    getHomeLeaderTopSales10()
   }, 1000)
 })
 
 watch(searchForm.value, (newValue, oldValue) => {
-  console.log(newValue, oldValue)
-  searchForm.value.startDate = dayjs(newValue.date[0]).format('YYYY-MM-DD hh:mm:ss')
-  searchForm.value.endDate = dayjs(newValue.date[1]).format('YYYY-MM-DD hh:mm:ss')
+  searchForm.value.startDate = dayjs(newValue.date[0]).format('YYYY-MM-DD')
+  searchForm.value.endDate = dayjs(newValue.date[1]).format('YYYY-MM-DD')
 }
   , { deep: true })
 </script>
+<style lang="scss" scoped>
+.con {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .top-title {
+    font-size: 16px;
+    flex: 1;
+  }
+
+  .el-date-picker{
+    flex: 1;
+  }
+
+  :deep(.el-range-editor) {
+    &.el-input__inner{
+      width: 200px;
+    }
+  }
+}
+</style>

@@ -431,3 +431,30 @@ export function homeLeaderTopSales10(data) {
     data: JSON.stringify(data),
   });
 }
+
+// 首页商品前十销量查询
+export function homeGoodsTopSales10(data) {
+  return service({
+    method: "POST",
+    url: "admin/get/day/goods/top",
+    data: JSON.stringify(data),
+  });
+}
+// 首页订单树状图
+export function homeOrder(data) {
+  return service({
+    method: "POST",
+    url: "admin/get/day/order",
+    data: JSON.stringify(data),
+  });
+}
+// 首页查询某个时间段内订单
+export function homeOrderTime(data) {
+  return service({
+    method: "POST",
+    url: "admin/get/day/order",
+    data: JSON.stringify(data),
+  });
+}
+
+
