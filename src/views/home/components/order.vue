@@ -59,7 +59,6 @@ const getHomeOrder = async () => {
     })
     dataList.value = dataLists
     date.value = dates
-    console.log(dataList.value,date.value)
     getEcharts()
   } catch (error) {
   }

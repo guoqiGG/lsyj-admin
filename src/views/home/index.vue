@@ -1,122 +1,89 @@
 <template>
-  <el-row class="data-lists">
-    <div class="flx-row">
-      <div class="top">
-        <div class="top-title">某段时间内商品销量</div>
-        <el-date-picker @change="getHomeOrderTimeData" v-model="searchForm.date" type="date"
-         placeholder="日期" format="YYYY-MM-DD"  />
-      </div>
+  <el-row>
+    <div class="order-all-num white-basic">
+      <el-col :span="24">
+        <div class="top">
+          <div class="top-title">某段时间内商品销量</div>
+          <el-date-picker style="margin-left: 20px;" @change="getHomeOrderTimeData" v-model="searchForm.date"
+            type="date" placeholder="日期" format="YYYY-MM-DD" />
+        </div>
+      </el-col>
+      <el-col :span="24" style="margin-top: 10px;">
+        <div class="row-bg">
+          <div class="num-item-box">
+            <div class="wait-payment-num order-num-item">
+              <div class="item-box">
+                <div class="words">商品数量</div>
+                <div class="number"><span class="text">{{ dataList.goodsNumber }}</span></div>
+              </div>
+              <div class="item-img">
+                <img src="~@/assets/wait-payment-num.png">
+              </div>
+            </div>
+          </div>
+          
+          <div class="num-item-box">
+            <div class="wait-receiving-goods-num order-num-item">
+              <div class="item-box">
+                <div class="words">商品总金额</div>
+                <div class="number"><span class="text">{{ dataList.goodsTotalAmount }}</span></div>
+              </div>
+              <div class="item-img">
+                <img src="~@/assets/wait-receiving-goods-num.png">
+              </div>
+            </div>
+          </div>
+          <div class="num-item-box">
+            <div class="wait-delivery-num order-num-item">
+              <div class="item-box">
+                <div class="words">优惠过后的商品金额</div>
+                <div class="number"><span class="text">{{ dataList.goodsPreferentialAmount }}</span></div>
+              </div>
+              <div class="item-img">
+                <img src="~@/assets/wait-delivery-num.png">
+              </div>
+            </div>
+          </div>
+          <div class="num-item-box">
+            <div class="wait-evaluate-num order-num-item">
+              <div class="item-box">
+                <div class="words">订单金额</div>
+                <div class="number"><span class="text">{{ dataList.orderAmount }}</span></div>
+              </div>
+              <div class="item-img">
+                <img src="~@/assets/wait-evaluate-num.png">
+              </div>
+            </div>
+          </div>
+          <div class="num-item-box">
+            <div class="wait-after-sales-num order-num-item">
+              <div class="item-box">
+                <div class="words">订单数量</div>
+                <div class="number"><span class="text">{{ dataList.orderNumber }}</span></div>
+              </div>
+              <div class="item-img">
+                <img src="~@/assets/wait-after-sales-num.png">
+              </div>
+            </div>
+          </div>
+        </div>
+      </el-col>
     </div>
-    
   </el-row>
-  <el-row class="dataLayer">
+  <el-row class="dataLayer" style="margin-top: 10px;">
     <el-col :span="24">
       <div class="flx-row">
-        <div class="datalayer-echarts"  :class="{ shake: disabled }">
+        <div class="datalayer-echarts" :class="{ shake: disabled }">
           <order></order>
         </div>
-        <div class="datalayer-echarts"  :class="{ shakeRight: disabled }">
+        <div class="datalayer-echarts" :class="{ shakeRight: disabled }">
           <GoodsAmount></GoodsAmount>
         </div>
       </div>
     </el-col>
-    <!-- <el-col :span="6">
-      <div class="data-item-three" :class="{ shakeRight: disabled }">
-        <div class="tit">常用功能</div>
-        <div class="content">
-          <div class="item">
-            <div class="item-data flx-row">
-              <div class="tit">
-                <el-icon>
-                  <Histogram />
-                </el-icon>订单列表
-              </div>
-              <el-icon class="icon">
-                <ArrowRight />
-              </el-icon>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-data flx-row">
-              <div class="tit">
-                <el-icon>
-                  <Avatar />
-                </el-icon>用户列表
-              </div>
-              <el-icon class="icon">
-                <ArrowRight />
-              </el-icon>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-data">
-              <div class="tit">
-                <el-icon>
-                  <HomeFilled />
-                </el-icon>首页配置
-              </div>
-              <el-icon class="icon">
-                <ArrowRight />
-              </el-icon>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-data">
-              <div class="tit">
-                <el-icon>
-                  <PictureFilled />
-                </el-icon>主题配置
-              </div>
-              <el-icon class="icon">
-                <ArrowRight />
-              </el-icon>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-data">
-              <div class="tit">
-                <el-icon>
-                  <Menu />
-                </el-icon>活动管理
-              </div>
-              <el-icon class="icon">
-                <ArrowRight />
-              </el-icon>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-data">
-              <div class="tit">
-                <el-icon>
-                  <Tools />
-                </el-icon>退款申请
-              </div>
-              <el-icon class="icon">
-                <ArrowRight />
-              </el-icon>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="notice">
-        <div class="notice-news">
-          <img src="../../assets/homebg.jpeg" alt="" />
-          <div class="txt one-cut-txt">
-            查看更多查看更多查看更多查看更查看更多查看更多查看更多查看更
-          </div>
-        </div>
-      </div>
-      <div class="data-item-three" :class="{ shakeRight: disabled }">
-        <div class="tit">公告栏</div>
-        <div class="notice-lists">
-          <div class="item one-cut-txt" v-for="item in notList" :key="item.id">
-            <span class="type">通知</span> {{ item.text }}
-          </div>
-        </div>
-      </div>
-    </el-col> -->
+
     <el-col :span="24">
-      <div class="flx-row">
+      <div class="flx-row" style=" align-items: flex-start;">
         <div class="datalayer-echarts" :class="{ shake: disabled }">
           <LeaderTopSales10></LeaderTopSales10>
         </div>
@@ -124,52 +91,6 @@
           <GoodsTopSales10></GoodsTopSales10>
         </div>
       </div>
-      <!-- <div class="table-data" :class="{ shake: disabled }">
-        <div class="tit">主题页列表</div>
-        <div class="table-box">
-          <el-table :data="tableData" :header-cell-style="{
-      background: '#FAFBFDFF',
-      fontWeight: '400',
-      fontSize: '14px',
-      padding: '0',
-      fontHeight: '36px',
-      height: '36px',
-    }" :row-style="{
-      fontWeight: '400',
-      fontSize: '14px',
-      padding: '0',
-      fontHeight: '44px',
-      height: '44px',
-    }">
-            <el-table-column v-for="item in options" :key="item.type" :prop="item.props" :label="item.label"
-              :width="item.width" :align="item.align" show-overflow-tooltip :fixed="item.fixed">
-              <template v-slot:default="scope" v-if="item.props === 'type'">
-                <span class="type" v-if="scope.row[item.props] == true">外部链接</span>
-                <span class="type error-type" v-if="scope.row[item.props] == false">内部链接</span>
-              </template>
-              <template v-slot:default="scope" v-if="item.props === 'state'">
-                <span v-if="scope.row[item.props] == true">
-                  <i class="state"></i>已上线</span>
-                <span v-if="scope.row[item.props] == false">
-                  <i class="state error-state"></i>已下线</span>
-              </template>
-              <template v-slot:default="scope" v-if="item.props === 'actions'">
-                <el-icon class="icon-edit" @click="editorClick(scope.row)">
-                  <Edit />
-                </el-icon>
-                <el-popconfirm confirm-button-text="确认" cancel-button-text="取消" :icon="InfoFilled" icon-color="#626AEF"
-                  title="确认删除该主题?" @confirm="DeleteItem(index)">
-                  <template #reference>
-                    <el-icon class="icon-dele">
-                      <Delete />
-                    </el-icon>
-                  </template>
-                </el-popconfirm>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </div> -->
     </el-col>
 
   </el-row>
@@ -181,37 +102,44 @@ import LeaderTopSales10 from './components/leaderTopSales10.vue'
 import GoodsTopSales10 from './components/goodsTopSales10.vue'
 import GoodsAmount from './components/goodsAmount.vue'
 import Order from './components/order.vue'
-import {homeOrderTime} from '../../api/modules'
+import { homeOrderTime } from '../../api/modules'
 import { options } from './options.js'
+import dayjs from 'dayjs'
 const tableData = ref([])
 const notList = ref([])
 const disabled = ref(false)
 
-const searchForm=ref({
-  date:null
+const searchForm = ref({
+  date: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
 })
-const dataList=ref(null)
+const dataList = ref({})
 const DeleteItem = (index) => {
   tableData.value.splice(index, 1)
 }
-const getHomeOrderTimeData= async()=>{
-  const res= await homeOrderTime()
-  console.log(res)
+const getHomeOrderTimeData = async () => {
+  const res = await homeOrderTime({
+    date: searchForm.value.date
+  })
   dataList.value=res.data
-} 
+  dataList.value = {
+    goodsNumber: res.data?.goodsNumber ? res.data?.goodsNumber : 0,
+    goodsPreferentialAmount: res.data?.goodsPreferentialAmount ? res.data?.goodsPreferentialAmount : 0,
+    goodsTotalAmount: res.data?.goodsTotalAmount ? res.data?.goodsTotalAmount : 0,
+    orderAmount: res.data?.orderAmount ? res.data?.orderAmount : 0,
+    orderNumber: res.data?.orderNumber ? res.data?.orderNumber : 0,
+  }
+  }
+  const initData = () => {
+    getHomeOrderTimeData()
+  }
 
-
-const initData = () => {
-  getHomeOrderTimeData()
-}
-
-onMounted(() => {
-  initData()
-  disabled.value = true
-  setTimeout(() => {
-    disabled.value = false
-  }, 1500)
-})
+  onMounted(() => {
+    initData()
+    disabled.value = true
+    setTimeout(() => {
+      disabled.value = false
+    }, 1500)
+  })
 </script>
 
 <style lang="scss" scoped>
@@ -228,16 +156,13 @@ onMounted(() => {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   .top-title {
     font-size: 16px;
-    flex: 1;
   }
 
-  .el-date-picker {
-    flex: 1;
-  }
+  .el-date-picker {}
 
   :deep(.el-range-editor) {
     &.el-input__inner {
@@ -245,5 +170,169 @@ onMounted(() => {
     }
   }
 }
-</style>
 
+// 订单栏项
+.order-all-num {
+
+  // display: flex;
+  // justify-content: space-between;
+  .row-bg {
+    display: flex;
+
+    .col-box {
+      display: flex;
+      justify-content: space-between;
+      height: 120px;
+
+    }
+
+    .num-item-box {
+      position: relative;
+      width: calc(20% - 20px);
+      flex: 1;
+      padding-right: 20px;
+      box-sizing: border-box;
+    }
+
+    .num-item-box:last-child {
+      padding-right: 0;
+    }
+
+    .col-box:first-child {
+
+      // margin-right: 20px;
+      .num-item-box {
+        padding-right: 20px;
+        box-sizing: border-box;
+      }
+    }
+
+    .col-box:last-child {
+      .num-item-box:not(:last-child) {
+        padding-right: 20px;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  // 基本信息样式
+  .order-num-item {
+    // width: calc((100% - 73px) * 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-radius: 4px;
+
+    // &:hover {
+    //   .item-img {
+    //     img {
+    //       position: absolute;
+    //       top: -10px;
+    //     }
+    //   }
+    // }
+    .item-box {
+      position: absolute;
+      z-index: 1;
+      left: 30px;
+
+      .words {
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+      }
+
+      .number {
+        width: 160px;
+        word-break: break-all;
+        font-size: 26px;
+        font-family: Microsoft YaHei;
+        font-weight: bold;
+        color: #fff;
+        margin-top: 10px;
+
+        .text {
+          padding-right: 20px;
+        }
+
+        // .ratio{
+        //   font-size: 12px;
+        //   font-weight: 400;
+        //   color: #FFFFFF;
+        //   opacity: 0.7;
+        // }
+      }
+
+      // .ratio{
+      //   font-size: 12px;
+      //   font-weight: 400;
+      //   color: #FFFFFF;
+      //   opacity: 0.7;
+      // }
+      .seq {
+        display: flex
+      }
+
+      .up {
+        color: #3DD598;
+      }
+
+      .up-icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin: 0 12px 0 4px;
+        background: url('~@/assets/ic-arrow-narrow-up.png')
+      }
+
+      .down {
+        color: #F0142F;
+      }
+
+      .down-icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin: 0 12px 0 4px;
+        background: url('~@/assets/ic-arrow-narrow-down.png')
+      }
+
+      .compare {
+        font-size: 14px;
+      }
+    }
+
+    .item-img {
+      position: relative;
+      display: block;
+      width: 100%;
+
+      // transition: .35s;
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+// 白色背景 标题样式
+.white-basic {
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+
+  .title-basic {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    line-height: 24px;
+    color: #333333;
+    opacity: 1;
+  }
+}
+</style>

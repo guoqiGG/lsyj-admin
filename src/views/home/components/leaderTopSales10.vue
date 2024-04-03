@@ -36,7 +36,7 @@ const getHomeLeaderTopSales10 = async () => {
     startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
     endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
   })
-  dataList.value=res.data.dayPutVOS
+  dataList.value=res.data.dayLeaderVOS
   loading.value=false
   } catch (error) {
     loading.value=false
