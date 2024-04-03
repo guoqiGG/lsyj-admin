@@ -288,7 +288,7 @@ import '@wangeditor/editor/dist/css/style.css' // 引入 css
 // import { onBeforeUnmount, ref, shallowRef } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { onMounted, ref, reactive, nextTick, onBeforeUnmount, shallowRef } from "vue";
-import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList, exportGoods, leaderList } from "@/api/modules";
+import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList, exportGoods, leaderList, upload } from "@/api/modules";
 import { ElMessage, ElInput } from "element-plus";
 import {
     CirclePlus
@@ -314,36 +314,22 @@ const editorConfig = {
             headers: { Authorization: token },
             "tenant-id": "1",
             fieldName: "file",
-            // 自定义上传
-            async customUpload(res, insertFn) {
-                console.log(res, 'res')
-                const formData =new FormData();
-                formData.append("file",file,file?.name);
-                formData.append("scene","avatar");
-                // 上传接口
-                const res =await upload(formData);
-                // 最后插入图片
-                insertFn(res.data.url,'','')
+            uploadImgShowBase64:true,
+            async customUpload(file, insertFn) {                  // JS 语法
+                console.log(file)
+                const reader=new FileReader()
+                reader.onloadend=function(){
+                    const binaryData = reader.result;
+                    const formData = new FormData(); 
+                    formData.append('image', file);
+                    const res = upload({file:formData})
+              
+
+                }
+                reader.readAsDataURL(file);
+
+                // insertFn(url, alt, href)
             }
-            // allowedFileTypes: [],
-            // // 上传前的回调
-            // onBeforeUpload(file) {
-            //     console.log("上传前的回调", file);
-            //     // return file;
-            // },
-            // // 上传成功
-            // onSuccess(file, res) {
-            //     console.log(` 上传成功`, res);
-            // },
-            // // 单个文件上传失败
-            // onFailed(file, res) {
-            //     console.log(` 上传失败`, res);
-            // },
-            // // 上传错误，或者触发 timeout 超时
-            // onError(file, err, res) {
-            //     console.log(`传出错`, err);
-            //     console.log(`上传出错`, res);
-            // }, 
         },
     }
 }

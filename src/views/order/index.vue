@@ -114,15 +114,9 @@
       :disabled="isDisabled" @click="hamdleBatchReceive">批量收货</el-button>
     <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
     <el-table v-loading="loading" :data="orderListData" style="width: 100%" ref="multipleTableRef"
-<<<<<<< Updated upstream
       :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange" border>
-      <el-table-column type="selection" width="55"  align="center"/>
+      <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="订单信息" width="235">
-=======
-      :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" />
-      <el-table-column label="订单信息">
->>>>>>> Stashed changes
         <template #default="scope">
           <div class="order">
             <div>订单编号：{{ scope.row.orderId }}</div>
@@ -142,7 +136,8 @@
           <div class="goodsInfo">
             <el-image style="width: 60px;height:60px;border-radius:5px;" :src="scope.row.thumbail" lazy></el-image>
             <div class="left" style="width:130px;">
-              <div class="goodsName" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ scope.row.goodsName }}2131313213</div>
+              <div class="goodsName" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{
+      scope.row.goodsName }}2131313213</div>
               <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']">{{ scope.row.orderTypeStr }}</div>
             </div>
           </div>
@@ -297,12 +292,8 @@
 
         </div>
       </div>
-<<<<<<< Updated upstream
       <p style="color: #101010;font-size: 16px;font-weight: 600;"
         v-if="detail.orderGoods && detail.orderGoods.length > 0">
-=======
-      <p style="color: #101010;font-size: 16px;font-weight: 600;" v-if="detail.orderGoods && detail.orderGoods.length > 0">
->>>>>>> Stashed changes
         商品明细</p>
       <div class="product" style="margin-top: 20px;" v-if="detail.orderGoods && detail.orderGoods.length > 0">
         <el-table :data="detail.orderGoods" style="width: 100%"
@@ -326,12 +317,13 @@
           <el-table-column prop="settleAmount" label="结算佣金" align="center" />
           <el-table-column prop="status" label="结算状态" align="center">
             <template #default="scope">
-<<<<<<< Updated upstream
-              <span>{{ scope.row.status === 0 ? '未结算' : scope.row.status === 1 ? '已结算' : scope.row.status === 2 ?
+              <<<<<<< Updated upstream <span>{{ scope.row.status === 0 ? '未结算' : scope.row.status === 1 ? '已结算' :
+      scope.row.status === 2 ?
+        '已退回' : '' }}</span>
+                =======
+                <span>{{ scope.row.status === 0 ? '未结算' : scope.row.status === 1 ? '已结算' : scope.row.status === 2 ?
       '已退回' : '' }}</span>
-=======
-              <span>{{ scope.row.status === 0 ? '未结算' : scope.row.status === 1 ? '已结算' : scope.row.status === 2 ? '已退回' : '' }}</span>
->>>>>>> Stashed changes
+                >>>>>>> Stashed changes
             </template>
           </el-table-column>
           <el-table-column prop="settleType" label="结算类型" align="center">
@@ -537,20 +529,7 @@ const handleDetail = async (id) => {
   }
 
 }
-
-<<<<<<< Updated upstream
 const prodListData = ref([])
-=======
-onMounted(() => {
-  if (route.query.userId) {
-    searchForm.value.userId = route.query.userId
-  }
-  if(route.query.orderId){
-    searchForm.value.orderNumber=route.query.orderId
-  }
-  getOrderList()
-})
->>>>>>> Stashed changes
 
 const getProdListByName = async (query) => {
   const res = await prodList({ name: query, pageNo: 1, pageSize: 100000000 })
