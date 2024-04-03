@@ -300,36 +300,36 @@ const routes = [
       },
     ],
   },
-    // 设置
-    {
-      path: "/setup",
-      name: "setup",
-      component: Layout,
-      meta: {
-        name: "设置管理",
+  // 设置
+  {
+    path: "/setup",
+    name: "setup",
+    component: Layout,
+    meta: {
+      name: "设置管理",
+    },
+    children: [
+      // 设置管理
+      {
+        path: "/adminList",
+        name: "adminList",
+        component: () => import("../views/setup/adminList.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "管理员列表",
+        },
       },
-      children: [
-        // 设置管理
-        {
-          path: "/adminList",
-          name: "adminList",
-          component: () => import("../views/setup/adminList.vue"),
-          meta: {
-            requiresAuth: true,
-            name: "管理员列表",
-          },
+      {
+        path: "/roleList",
+        name: "roleList",
+        component: () => import("../views/setup/roleList.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "角色列表",
         },
-        {
-          path: "/roleList",
-          name: "roleList",
-          component: () => import("../views/setup/roleList.vue"),
-          meta: {
-            requiresAuth: true,
-            name: "角色列表",
-          },
-        },
-      ],
-    }
+      },
+    ],
+  },
   // {
   //   path: "/form",
   //   name: "form",

@@ -73,11 +73,7 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
-<<<<<<< Updated upstream
         <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
-=======
-        <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
->>>>>>> Stashed changes
         <el-table v-loading="loading" :data="userCompositeData" style="width: 100%"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="用户名称" align="center" />
@@ -126,7 +122,6 @@ const searchParams = {
     endDate: null,//合成卡获得结束时间
     cancelStartDate: null,//核销开始时间
     cancelEndDate: null,//核销结束时间
-
     time1: [],
     time2: [],
 }
@@ -205,7 +200,6 @@ const exportExcel = async () => {
         navigator.msSaveBlob(blob, fileName)
     }
 }
-
 onMounted(() => {
     if (route.query.userId) {
         searchForm.value.userId = route.query.userId
@@ -217,7 +211,6 @@ onMounted(() => {
 .pagination {
     margin-top: 20px;
 }
-
 .operation {
     color: #4060c7;
     margin: 0px 5px;

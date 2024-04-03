@@ -1,7 +1,7 @@
 <template>
   <div class="con">
     <div class="top">
-      <div class="top-title">订单</div>
+      <div class="top-title">订单数量</div>
       <el-date-picker @change="getHomeOrder" v-model="searchForm.date" type="daterange" start-placeholder="开始时间"
         end-placeholder="结束时间" format="YYYY-MM-DD" value-format="YYYY-MM-DD" default-time />
     </div>
@@ -26,38 +26,41 @@ const dataList = ref([])
 const getHomeOrder = async () => {
   let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 6 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
   let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
+
   try {
     const res = await homeOrder({
       startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
       endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
     })
-    let data = res.data
+    let data = res.data.dayLeaderVOS
     data.forEach((e) => {
       e.date = e.date.split(' ')[0]
     })
+
     // 获取选择范围内的日期数量(简称天数)
     let day = (new Date(searchForm.value.endDate).getTime() - new Date(searchForm.value.startDate).getTime()) / (24 * 60 * 60 * 1000) + 1
-    let date = [] //日期数组
+    let dates = [] //日期数组
     for (let i = 0; i < day; i++) {
       if (i == 0) {
-        date.push(searchForm.value.startDate)
+        dates.push(searchForm.value.startDate)
       } else {
-        date.push(dayjs(new Date(searchForm.value.startDate).getTime() + i * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'))
+        dates.push(dayjs(new Date(searchForm.value.startDate).getTime() + i * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'))
       }
     }
-    let dataList = []
-    date.forEach((e, i) => {
+
+    let dataLists = []
+    dates.forEach((e, i) => {
+      dataLists[i] = 0
       data.forEach((d) => {
         if (e == d.date) {
-          dataList[i] = d.orderNumber
-        } else {
-          dataList[i] = { orderNumber: 0 }
+          dataLists[i] = d.orderNumber
         }
       })
     })
-    dataList.value = dataList
-    date.value = date
-    console.log(date.value, dataList.value)
+    dataList.value = dataLists
+    date.value = dates
+    console.log(dataList.value,date.value)
+    getEcharts()
   } catch (error) {
   }
 }
@@ -65,7 +68,6 @@ const getHomeOrder = async () => {
 const getEcharts = () => {
   var chartDom = document.getElementById('main')
   var myChart = echarts.init(chartDom)
-
   const option = {
     tooltip: {
       //鼠标悬停时显示对应数据
@@ -108,7 +110,7 @@ const getEcharts = () => {
       {
         type: 'category',
         axisTick: { show: false },
-        data: date.value,
+        data: [...date.value],
         axisLine: {
           // 轴线的颜色以及宽度
           lineStyle: {
@@ -134,7 +136,7 @@ const getEcharts = () => {
     yAxis: [
       {
         min: 0, // 最小值
-        max: 500, //最大值
+        max: 5000, //最大值
         // splitNumber: 3, //划分3格
         type: 'value',
         axisLine: {
@@ -167,7 +169,7 @@ const getEcharts = () => {
         emphasis: {
           focus: 'series',
         },
-        data: dataList.value,
+        data: [...dataList.value],
         // ↓ 这里可以改变渐变色的方向
         color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
           {

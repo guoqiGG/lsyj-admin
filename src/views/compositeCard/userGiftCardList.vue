@@ -40,7 +40,6 @@
                 </el-form-item>
             </el-row>
         </el-form>
-
     </el-card>
     <el-card style="margin-top: 10px;">
         <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
@@ -155,7 +154,6 @@ onMounted(() => {
 .pagination {
     margin-top: 20px;
 }
-
 .operation {
     color: #4060c7;
     margin: 0px 5px;
