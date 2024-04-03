@@ -38,9 +38,7 @@
             </el-table-column>
             <el-table-column prop="sort" label="排序" align="center" />
             <el-table-column prop="adminSort" label="后台排序" align="center" />
-            <!-- <el-table-column prop="categoryName" label="分类" align="center" /> -->
             <el-table-column prop="categoryName" label="分类" align="center" />
-
             <!-- <el-table-column prop="dayNum" label="今日销量" align="center" /> -->
             <el-table-column prop="totalNum" label="总销量" align="center" />
             <el-table-column prop="goodsType" label="商品类型" align="center" />
