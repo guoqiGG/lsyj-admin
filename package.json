@@ -12,7 +12,7 @@
     "@element-plus/icons-vue": "^1.1.4",
     "@hellowuxin/mindmap": "^2.1.4",
     "@kangc/v-md-editor": "^2.3.15",
-    "@wangeditor/editor": "^5.1.14",
+    "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^0.27.2",
     "dayjs": "^1.11.10",

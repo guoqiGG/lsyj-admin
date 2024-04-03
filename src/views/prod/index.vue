@@ -90,7 +90,13 @@
                 </el-upload>
             </el-form-item>
             <el-form-item label="商品简介" prop="description">
-                <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面，长度不超过100个字符" clearable />
+                <div style="border: 1px solid #ccc;background-color: plum">
+                    <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig"
+                        :mode="'default'" />
+                    <Editor style="height: 200px; overflow-y: hidden;" v-model="valueHtml" :defaultConfig="editorConfig"
+                        :mode="'default'" @onCreated="handleCreated" />
+                </div>
+                <!-- <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面,长度不超过100个字符" clearable /> -->
             </el-form-item>
             <el-form-item label="默认排序" prop="sort">
                 <el-input-number controls-position="right" v-model="prodForm.sort" placeholder="排序" clearable />
@@ -114,7 +120,8 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="团长特殊佣金" prop="specialCommission">
-                <el-input-number controls-position="right" v-model="prodForm.specialCommission" placeholder="请输入佣金比例" clearable />
+                <el-input-number controls-position="right" v-model="prodForm.specialCommission" placeholder="请输入佣金比例"
+                    clearable />
             </el-form-item>
             <el-form-item label="团长可见" prop="groupLeader">
                 <el-select v-model="prodForm.groupLeader" placeholder="请选择团长" clearable>
@@ -122,8 +129,8 @@
                         :value="item.puid" />
                 </el-select>
             </el-form-item>
-           
-           
+
+
             <!-- 规格 -->
             <el-form-item label="规格">
                 <div style="display: block;width:100%;">
@@ -277,7 +284,10 @@
     </el-dialog>
 </template>
 <script setup>
-import { onMounted, ref, reactive, nextTick } from "vue";
+import '@wangeditor/editor/dist/css/style.css' // 引入 css
+// import { onBeforeUnmount, ref, shallowRef } from 'vue'
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+import { onMounted, ref, reactive, nextTick, onBeforeUnmount, shallowRef } from "vue";
 import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList, exportGoods, leaderList } from "@/api/modules";
 import { ElMessage, ElInput } from "element-plus";
 import {
@@ -286,6 +296,70 @@ import {
 import { Debounce } from '@/utils/debounce'
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const token = localStorage.getItem('token')
+// 编辑器
+// 编辑器实例，必须用 shallowRef
+const editorRef = shallowRef()
+// 内容 HTML
+const valueHtml = ref('')
+// 工具栏配置项
+// const toolbarConfig = {}
+const toolbarConfig = {
+    excludeKeys: ["insertLink", "viewImageLink", "insertVideo", "emotion", "fullScreen", "codeBlock", "todo"] //排除不需要的菜单
+}
+const editorConfig = {
+    placeholder: '请输入内容...',
+    MENU_CONF: {
+        uploadImage: {
+            server: BaseUrl + '/upload/oss',
+            headers: { Authorization: token },
+            "tenant-id": "1",
+            fieldName: "file",
+            // 自定义上传
+            async customUpload(res, insertFn) {
+                console.log(res, 'res')
+                const formData =new FormData();
+                formData.append("file",file,file?.name);
+                formData.append("scene","avatar");
+                // 上传接口
+                const res =await upload(formData);
+                // 最后插入图片
+                insertFn(res.data.url,'','')
+            }
+            // allowedFileTypes: [],
+            // // 上传前的回调
+            // onBeforeUpload(file) {
+            //     console.log("上传前的回调", file);
+            //     // return file;
+            // },
+            // // 上传成功
+            // onSuccess(file, res) {
+            //     console.log(` 上传成功`, res);
+            // },
+            // // 单个文件上传失败
+            // onFailed(file, res) {
+            //     console.log(` 上传失败`, res);
+            // },
+            // // 上传错误，或者触发 timeout 超时
+            // onError(file, err, res) {
+            //     console.log(`传出错`, err);
+            //     console.log(`上传出错`, res);
+            // }, 
+        },
+    }
+}
+
+// 组件销毁时，也及时销毁编辑器
+onBeforeUnmount(() => {
+    const editor = editorRef.value
+    if (editor == null) return
+    editor.destroy()
+})
+
+const handleCreated = (editor) => {
+    editorRef.value = editor // 记录 editor 实例，重要！
+}
+
+
 const searchParams = {
     name: '',
     categoryId: ''
@@ -314,8 +388,8 @@ const prodForm = ref({
 
     couponAmt: 0, //单个优惠券使用金额
     isCoupon: 0, //是否可用券
-    specialCommission:null,//团长特殊佣金
-    groupLeader:null,//团长可见
+    specialCommission: null,//团长特殊佣金
+    groupLeader: null,//团长可见
 
     adminGoodsSkuInputVOS: [], //商品详情相关
     goodsCoupon: { // 发放优惠券相关
@@ -765,6 +839,8 @@ onMounted(() => {
 })
 
 </script>
+
+
 
 <style scoped>
 .image-uploader .avatar {
