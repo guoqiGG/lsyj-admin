@@ -93,13 +93,13 @@
                 </el-upload>
             </el-form-item>
             <el-form-item label="商品简介" prop="description">
-                <div style="border: 1px solid #ccc;background-color: plum">
+                <!-- <div style="border: 1px solid #ccc;background-color: plum">
                     <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig"
                         :mode="'default'" />
                     <Editor style="height: 200px; overflow-y: hidden;" v-model="valueHtml" :defaultConfig="editorConfig"
                         :mode="'default'" @onCreated="handleCreated" />
-                </div>
-                <!-- <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面,长度不超过100个字符" clearable /> -->
+                </div> -->
+                <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面,长度不超过100个字符" clearable />
             </el-form-item>
             <el-form-item label="开始时间" prop="startTime">
                 <el-date-picker v-model="prodForm.startTime" type="datetime" format="YYYY-MM-DD HH:mm:ss"
@@ -326,7 +326,7 @@ const editorConfig = {
             "tenant-id": "1",
             fieldName: "file",
             uploadImgShowBase64: true,
-            async customUpload(file, insertFn) {                  // JS 语法
+            async customUpload(file, insertFn) { 
                 console.log(file)
                 const reader = new FileReader()
                 reader.onloadend = function () {
@@ -334,12 +334,8 @@ const editorConfig = {
                     const formData = new FormData();
                     formData.append('image', file);
                     const res = upload({ file: formData })
-
-
                 }
                 reader.readAsDataURL(file);
-
-                // insertFn(url, alt, href)
             }
         },
     }
@@ -354,8 +350,8 @@ onBeforeUnmount(() => {
 
 const handleCreated = (editor) => {
     editorRef.value = editor // 记录 editor 实例，重要！
+    console.log(editor,'editor========')
 }
-
 
 const searchParams = {
     name: '',
@@ -604,6 +600,7 @@ const closeEditOrCreateDialog = () => {
 }
 
 const save = Debounce(async () => {
+    console.log(valueHtml.value,'valueHtml')
     categoryFormRef.value.validate(async (valid) => {
         if (valid) {
             if (prodForm.value.goodsCoupon.couponId && !prodForm.value.goodsCoupon.couponNum) {

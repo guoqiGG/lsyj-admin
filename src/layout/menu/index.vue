@@ -185,6 +185,23 @@ const menuList = ref([
         icon: "Menu",
       }
     ],
+  },
+  {
+    title: "设置管理",
+    url: "/setup",
+    icon: "VideoCamera",
+    children: [
+      {
+        title: "管理员列表",
+        url: "/adminList",
+        icon: "Menu",
+      },
+      {
+        title: "角色列表",
+        url: "/roleList",
+        icon: "Menu",
+      }
+    ],
   }
 ]);
 

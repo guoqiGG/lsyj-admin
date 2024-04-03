@@ -456,5 +456,29 @@ export function homeOrderTime(data) {
     data: JSON.stringify(data),
   });
 }
+// 管理员列表
+export function adminList(data) {
+  return service({
+    method: "POST",
+    url: "admin/get/list",
+    data: JSON.stringify(data),
+  });
+}
+// 管理员新增
+export function addAdminList(data) {
+  return service({
+    method: "POST",
+    url: "admin/add",
+    data: JSON.stringify(data),
+  });
+}
 
+// 角色列表
+export function roleList(data) {
+  return service({
+    method: "POST",
+    url: "admin/get/rule/list",
+    data: JSON.stringify(data),
+  });
+}
 
