@@ -38,12 +38,17 @@
             </el-table-column>
             <el-table-column prop="sort" label="排序" align="center" />
             <el-table-column prop="adminSort" label="后台排序" align="center" />
+            <!-- <el-table-column prop="categoryName" label="分类" align="center" /> -->
             <el-table-column prop="categoryName" label="分类" align="center" />
-            <el-table-column prop="dayNum" label="今日销量" align="center" />
+
+            <!-- <el-table-column prop="dayNum" label="今日销量" align="center" /> -->
             <el-table-column prop="totalNum" label="总销量" align="center" />
             <el-table-column prop="goodsType" label="商品类型" align="center" />
             <el-table-column prop="code" label="code" align="center" />
             <el-table-column prop="createTime" label="创建时间" width="170" align="center" />
+            <el-table-column prop="startTime" label="活动开始时间" width="170" align="center" />
+            <el-table-column prop="endTime" label="活动结束时间" width="170" align="center" />
+
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <!-- <span class="operation" @click="copy(scope.row.id)">小程序链接</span> -->
@@ -97,6 +102,14 @@
                         :mode="'default'" @onCreated="handleCreated" />
                 </div>
                 <!-- <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面,长度不超过100个字符" clearable /> -->
+            </el-form-item>
+            <el-form-item label="开始时间" prop="startTime">
+                <el-date-picker v-model="prodForm.startTime" type="datetime" format="YYYY-MM-DD HH:mm:ss"
+                    value-format="YYYY-MM-DD HH:mm:ss" placeholder="开始时间" />
+            </el-form-item>
+            <el-form-item label="结束时间" prop="endTime">
+                <el-date-picker v-model="prodForm.endTime" type="datetime" format="YYYY-MM-DD HH:mm:ss"
+                    value-format="YYYY-MM-DD HH:mm:ss" placeholder="结束时间" />
             </el-form-item>
             <el-form-item label="默认排序" prop="sort">
                 <el-input-number controls-position="right" v-model="prodForm.sort" placeholder="排序" clearable />
@@ -314,16 +327,16 @@ const editorConfig = {
             headers: { Authorization: token },
             "tenant-id": "1",
             fieldName: "file",
-            uploadImgShowBase64:true,
+            uploadImgShowBase64: true,
             async customUpload(file, insertFn) {                  // JS 语法
                 console.log(file)
-                const reader=new FileReader()
-                reader.onloadend=function(){
+                const reader = new FileReader()
+                reader.onloadend = function () {
                     const binaryData = reader.result;
-                    const formData = new FormData(); 
+                    const formData = new FormData();
                     formData.append('image', file);
-                    const res = upload({file:formData})
-              
+                    const res = upload({ file: formData })
+
 
                 }
                 reader.readAsDataURL(file);
@@ -367,16 +380,16 @@ const prodForm = ref({
     goodsName: '', // 商品名称
     goodsType: 0,//商品类型
     thumbail: '', //大图
+    startTime: null,//开始时间
+    endTime: null,//结束时间
     description: '',//配送类型
     sort: 0, //排序
     deliveryMode: 1,//配送类别
     adminSort: 0, //后台排序
-
     couponAmt: 0, //单个优惠券使用金额
     isCoupon: 0, //是否可用券
     specialCommission: null,//团长特殊佣金
     groupLeader: null,//团长可见
-
     adminGoodsSkuInputVOS: [], //商品详情相关
     goodsCoupon: { // 发放优惠券相关
         couponId: '', //优惠券id
@@ -567,7 +580,8 @@ const editOrCreateDialog = async (e) => {
         prodForm.value.groupLeader = res.data.groupLeader//团长可见
 
         prodForm.value.adminGoodsSkuInputVOS = res.data.adminGoodsSkuInputVOS
-
+        prodForm.value.startTime= res.data.startTime
+        prodForm.value.endTime= res.data.endTime
         if (res.data.goodsCouponActivity) {
             goodsCouponActivity.value = res.data.goodsCouponActivity
             prodForm.value.goodsCoupon.couponId = res.data.goodsCouponActivity.couponId
@@ -620,13 +634,13 @@ const save = Debounce(async () => {
                     sort: prodForm.value.sort,
                     deliveryMode: prodForm.value.deliveryMode,
                     adminSort: prodForm.value.adminSort,
-
                     couponAmt: prodForm.value.couponAmt,//单个优惠券使用金额
                     isCoupon: prodForm.value.isCoupon,//是否可用券
                     specialCommission: prodForm.value.specialCommission,//团长特殊佣金
                     groupLeader: prodForm.value.groupLeader,//团长可见
-
-                    adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS
+                    adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS,
+                    startTime: prodForm.value.startTime,
+                    endTime: prodForm.value.endTime,
                 }
                 if (prodForm.value.goodsCoupon.couponId || prodForm.value.goodsCoupon.couponNum) {
                     params.goodsCoupon = prodForm.value.goodsCoupon
@@ -648,13 +662,13 @@ const save = Debounce(async () => {
                     sort: prodForm.value.sort,
                     deliveryMode: prodForm.value.deliveryMode,
                     adminSort: prodForm.value.adminSort,
-
                     couponAmt: prodForm.value.couponAmt,//单个优惠券使用金额
                     isCoupon: prodForm.value.isCoupon,//是否可用券
                     specialCommission: prodForm.value.specialCommission,//团长特殊佣金
                     groupLeader: prodForm.value.groupLeader,//团长可见
-
                     adminGoodsSkuInputVOS: prodForm.value.adminGoodsSkuInputVOS,
+                    startTime: prodForm.value.startTime,
+                    endTime: prodForm.value.endTime,
                 }
                 // 单独添加优惠券参数  
                 if (!goodsCouponActivity.value?.id) { // 之前商品未添加优惠券 
