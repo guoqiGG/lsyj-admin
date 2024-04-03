@@ -23,7 +23,6 @@
 <script setup>
 defineProps(['menuList'])
 </script>
-
 <style scoped>
 .icons {
   width: 24px;

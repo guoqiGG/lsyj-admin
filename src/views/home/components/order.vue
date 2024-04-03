@@ -2,10 +2,9 @@
   <div class="con">
     <div class="top">
       <div class="top-title">订单</div>
-      <el-date-picker @change="getHomeGoodsTopSales10" v-model="searchForm.date" type="daterange"
-        start-placeholder="开始时间" end-placeholder="结束时间" format="YYYY-MM-DD" value-format="YYYY-MM-DD" default-time />
+      <el-date-picker @change="getHomeOrder" v-model="searchForm.date" type="daterange" start-placeholder="开始时间"
+        end-placeholder="结束时间" format="YYYY-MM-DD" value-format="YYYY-MM-DD" default-time />
     </div>
-
     <div id="main" style="width: 100%; height: 250px">
     </div>
   </div>
@@ -16,20 +15,51 @@ import * as echarts from 'echarts'
 import dayjs from 'dayjs'
 
 import { onMounted, ref, watch } from 'vue'
-import { homeLeaderTopSales10 } from '../../../api/modules'
+import { homeOrder } from '../../../api/modules'
 const searchForm = ref({
-  date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')],
-  startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
+  date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 6 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')],
+  startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 6 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
   endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
 })
-
-const getHomeLeaderTopSales10 = async () => {
-  let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
+const date = ref([])
+const dataList = ref([])
+const getHomeOrder = async () => {
+  let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 6 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
   let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
-  const res = await homeLeaderTopSales10({
-    startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
-    endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
-  })
+  try {
+    const res = await homeOrder({
+      startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
+      endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
+    })
+    let data = res.data
+    data.forEach((e) => {
+      e.date = e.date.split(' ')[0]
+    })
+    // 获取选择范围内的日期数量(简称天数)
+    let day = (new Date(searchForm.value.endDate).getTime() - new Date(searchForm.value.startDate).getTime()) / (24 * 60 * 60 * 1000) + 1
+    let date = [] //日期数组
+    for (let i = 0; i < day; i++) {
+      if (i == 0) {
+        date.push(searchForm.value.startDate)
+      } else {
+        date.push(dayjs(new Date(searchForm.value.startDate).getTime() + i * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'))
+      }
+    }
+    let dataList = []
+    date.forEach((e, i) => {
+      data.forEach((d) => {
+        if (e == d.date) {
+          dataList[i] = d.orderNumber
+        } else {
+          dataList[i] = { orderNumber: 0 }
+        }
+      })
+    })
+    dataList.value = dataList
+    date.value = date
+    console.log(date.value, dataList.value)
+  } catch (error) {
+  }
 }
 
 const getEcharts = () => {
@@ -57,7 +87,7 @@ const getEcharts = () => {
     // },
     legend: {
       // 图例
-      data: ['订单数量', '金额'],
+      data: ['订单数量'],
       top: 8,
       right: 16, // 修改位置
       icon: 'circle', //原型
@@ -78,15 +108,7 @@ const getEcharts = () => {
       {
         type: 'category',
         axisTick: { show: false },
-        data: [
-          '3月27日',
-          '3月28日',
-          '3月28日',
-          '3月29日',
-          '3月30日',
-          '3月31日',
-          '4月1日',
-        ],
+        data: date.value,
         axisLine: {
           // 轴线的颜色以及宽度
           lineStyle: {
@@ -145,36 +167,12 @@ const getEcharts = () => {
         emphasis: {
           focus: 'series',
         },
-        data: [320, 332, 401, 334, 390, 320, 332],
+        data: dataList.value,
         // ↓ 这里可以改变渐变色的方向
         color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
           {
             offset: 0,
             color: '#6E48E6',
-          },
-          {
-            offset: 1,
-            color: '#3AA6FA ',
-          },
-        ]),
-      },
-      {
-        name: '金额',
-        type: 'bar',
-        barWidth: 10, // 柱图宽度
-        // label: labelOption,
-        emphasis: {
-          focus: 'series',
-        },
-        data: [220, 182, 191, 234, 290, 220, 182],
-        color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-          {
-            offset: 0,
-            color: '#9DDD92',
-          },
-          {
-            offset: 1,
-            color: '#10BFAA',
           },
         ]),
       },
@@ -186,6 +184,7 @@ const getEcharts = () => {
   }
 }
 onMounted(() => {
+  getHomeOrder()
   setTimeout(() => {
     getEcharts()
   }, 1000)
@@ -214,12 +213,12 @@ watch(searchForm.value, (newValue, oldValue) => {
     flex: 1;
   }
 
-  .el-date-picker{
+  .el-date-picker {
     flex: 1;
   }
 
   :deep(.el-range-editor) {
-    &.el-input__inner{
+    &.el-input__inner {
       width: 200px;
     }
   }

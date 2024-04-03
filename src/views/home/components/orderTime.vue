@@ -2,12 +2,12 @@
   <div class="con">
     <div class="top">
       <div class="top-title">订单</div>
-      <el-date-picker @change="getHomeGoodsTopSales10" v-model="searchForm.date" type="daterange"
+      <el-date-picker @change="getHomeOrderTime" v-model="searchForm.date" type="daterange"
         start-placeholder="开始时间" end-placeholder="结束时间" format="YYYY-MM-DD" value-format="YYYY-MM-DD" default-time />
     </div>
     <div id="linenearly" style="width: 100%; height: 250px"></div>
   </div>
-  
+
 </template>
 
 <script setup name="GMVnearly">
@@ -15,20 +15,23 @@ import * as echarts from 'echarts'
 import dayjs from 'dayjs'
 
 import { onMounted, ref, watch } from 'vue'
-import { homeLeaderTopSales10 } from '../../../api/modules'
+import { homeOrderTime } from '../../../api/modules'
 const searchForm = ref({
   date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')],
   startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
   endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
 })
 
-const getHomeLeaderTopSales10 = async () => {
+const getHomeOrderTime = async () => {
   let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
   let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
-  const res = await homeLeaderTopSales10({
-    startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
-    endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
-  })
+  try {
+    const res = await homeOrderTime({
+      startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
+      endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
+    })
+  } catch (error) {
+  }
 }
 
 const getEcharts = () => {
@@ -43,7 +46,7 @@ const getEcharts = () => {
         type: 'shadow',
       },
     },
-    color: ['#87A2E8FF', '#74CCCCFF','#73c0de','#3ba272','#409eff'],
+    color: ['#87A2E8FF', '#74CCCCFF', '#73c0de', '#3ba272', '#409eff'],
     // title: {
     //   text: '近一年的DAU/DNU',
     //   top: '8px',
@@ -56,7 +59,7 @@ const getEcharts = () => {
     // },
     legend: {
       // 图例
-      data: ['订单数量', '商品数量','订单金额','商品总金额','优惠后商品金额'],
+      data: ['订单数量', '商品数量', '订单金额', '商品总金额', '优惠后商品金额'],
       top: 8,
       right: 16, // 修改位置
       icon: 'circle', //原型
@@ -192,6 +195,7 @@ const getEcharts = () => {
   }
 }
 onMounted(() => {
+  getHomeOrderTime()
   setTimeout(() => {
     getEcharts()
   }, 1000)
@@ -214,12 +218,12 @@ onMounted(() => {
     flex: 1;
   }
 
-  .el-date-picker{
+  .el-date-picker {
     flex: 1;
   }
 
   :deep(.el-range-editor) {
-    &.el-input__inner{
+    &.el-input__inner {
       width: 200px;
     }
   }

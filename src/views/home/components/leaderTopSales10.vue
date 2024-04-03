@@ -25,28 +25,23 @@ const searchForm = ref({
   startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
   endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
 })
-
-const dataList = ref([
-  { leaderName: 'xxx1', leaderStore: 'xxx门店1', orderNumber: 200, amount: 18000 },
-  { leaderName: 'xxx2', leaderStore: 'xxx门店2', orderNumber: 200, amount: 18000 },
-  { leaderName: 'xxx3', leaderStore: 'xxx门店3', orderNumber: 200, amount: 18000 },
-  { leaderName: 'xxx4', leaderStore: 'xxx门店4', orderNumber: 200, amount: 18000 },
-  { leaderName: 'xxx5', leaderStore: 'xxx门店5', orderNumber: 200, amount: 18000 },
-  { leaderName: 'xxx5', leaderStore: 'xxx门店5', orderNumber: 200, amount: 18000 },
-  { leaderName: 'xxx5', leaderStore: 'xxx门店5', orderNumber: 200, amount: 18000 },
-  { leaderName: 'xxx5', leaderStore: 'xxx门店5', orderNumber: 200, amount: 18000 },
-  { leaderName: 'xxx5', leaderStore: 'xxx门店5', orderNumber: 200, amount: 18000 },
-  { leaderName: 'xxx5', leaderStore: 'xxx门店5', orderNumber: 200, amount: 18000 },
-])
+const loading=ref(false)
+const dataList = ref([])
 const getHomeLeaderTopSales10 = async () => {
   let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
   let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
-  // const res = await homeLeaderTopSales10({
-  //   startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
-  //   endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
-  // })
+  loading.value=true
+  try {
+    const res = await homeLeaderTopSales10({
+    startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
+    endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
+  })
+  dataList.value=res.data
+  loading.value=false
+  } catch (error) {
+    loading.value=false
+  }
 }
-
 
 onMounted(() => {
   getHomeLeaderTopSales10()

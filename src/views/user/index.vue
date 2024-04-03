@@ -57,16 +57,29 @@
                     <el-image style="width: 60px;height:60px;border-radius:5px;" :src="scope.row.avatar" lazy></el-image>
                 </template>
             </el-table-column>
+<<<<<<< Updated upstream
             <el-table-column prop="mobile" label="用户手机" width="150" align="center"/>
             <el-table-column label="团长" width="300">
                 <template #default="scope">
                     <div class="leader" v-if="scope.row.leaderName && scope.row.leaderMobile">
+=======
+            <el-table-column prop="mobile" label="用户手机" />
+            <el-table-column label="团长">
+                <template #default="scope">
+                    
+                    <div class="leader" v-if=" scope.row.leaderName&&scope.row.leaderMobile">
+>>>>>>> Stashed changes
                         <div> 团长：{{ scope.row.leaderName }}</div>
                         <div> 手机：{{ scope.row.leaderMobile }}</div>
                         <div> 门店：{{ scope.row.leaderStore }}</div>
                         <div> 地址：{{ scope.row.address }}</div>
+<<<<<<< Updated upstream
                     </div>
                     <div v-else>无</div>
+=======
+                      </div>
+                      <div v-else>无</div>
+>>>>>>> Stashed changes
                 </template>
             </el-table-column>
             <el-table-column label="用户类型" align="center" >

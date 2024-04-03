@@ -452,7 +452,7 @@ export function homeOrder(data) {
 export function homeOrderTime(data) {
   return service({
     method: "POST",
-    url: "admin/get/day/order",
+    url: "admin/get/yesterday",
     data: JSON.stringify(data),
   });
 }

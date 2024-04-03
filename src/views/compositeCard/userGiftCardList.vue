@@ -43,7 +43,11 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
+<<<<<<< Updated upstream
         <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
+=======
+        <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
+>>>>>>> Stashed changes
         <el-table v-loading="loading" :data="userGiftListData" style="width: 100%"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="用户名称" align="center" />
@@ -52,8 +56,12 @@
             <el-table-column prop="giftName" label="礼品卡名称" align="center" />
             <el-table-column prop="status" label="礼品卡状态" align="center">
                 <template #default="scope">
+<<<<<<< Updated upstream
                     {{ scope.row.status == 0 ? '未合成' : scope.row.status == 1 ? '已合成' : scope.row.status == 1 ? '已过期' :
             ''
+=======
+                    {{ scope.row.status == 0 ? '未合成' : scope.row.status == 1 ? '已合成' : scope.row.status == 1 ? '已过期' : ''
+>>>>>>> Stashed changes
                     }}
                 </template>
             </el-table-column>
@@ -73,7 +81,11 @@
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
+<<<<<<< Updated upstream
 import { userGiftList, exportUserGift } from "../../api/modules";
+=======
+import { userGiftList } from "../../api/modules";
+>>>>>>> Stashed changes
 import {
     Download
 } from '@element-plus/icons-vue'
@@ -82,7 +94,11 @@ const route = useRoute()
 const searchParams = {
     name: null,//用户名称
     mobile: null,
+<<<<<<< Updated upstream
     userId: null,
+=======
+    // userId:null,
+>>>>>>> Stashed changes
     status: null,//0未合成 1已合成 2已过期
     type: null,//0系统发放 1 后台赠送的
     giftName: null,//礼品卡名称

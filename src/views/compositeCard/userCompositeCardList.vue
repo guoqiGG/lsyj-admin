@@ -73,7 +73,11 @@
 
     </el-card>
     <el-card style="margin-top: 10px;">
+<<<<<<< Updated upstream
         <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
+=======
+        <el-button :icon="Download" style="margin-bottom: 20px">导出</el-button>
+>>>>>>> Stashed changes
         <el-table v-loading="loading" :data="userCompositeData" style="width: 100%"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="用户名称" align="center" />

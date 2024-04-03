@@ -300,6 +300,134 @@ const routes = [
       },
     ],
   },
+<<<<<<< Updated upstream
+=======
+  // 优惠券列表
+  {
+    path: "/coupon",
+    name: "coupon",
+    component: Layout,
+    meta: {
+      name: "优惠券管理",
+    },
+    children: [
+      // 优惠券列表
+      {
+        path: "/couponList",
+        name: "couponList",
+        component: () => import("../views/coupon/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "优惠券列表",
+        },
+      },
+      // 用户优惠券列表
+      {
+        path: "/userCouponList",
+        name: "userCouponList",
+        component: () => import("../views/coupon/userCoupon.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "用户优惠券列表",
+        },
+      }
+    ],
+  },
+  // 礼品卡列表
+  {
+    path: "/gift",
+    name: "gift",
+    component: Layout,
+    meta: {
+      name: "礼品卡管理",
+    },
+    children: [
+      // 礼品卡列表
+      {
+        path: "/giftList",
+        name: "giftList",
+        component: () => import("../views/gift/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "礼品卡列表",
+        },
+      },
+    ],
+  },
+  // 合成卡列表
+  {
+    path: "/compositeCard",
+    name: "compositeCard",
+    component: Layout,
+    meta: {
+      name: "合成卡管理",
+    },
+    children: [
+      // 合成卡列表
+      {
+        path: "/compositeCardList",
+        name: "compositeCardList",
+        component: () => import("../views/compositeCard/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "合成卡列表",
+        },
+      },
+      // 用户礼品卡列表
+      {
+        path: "/userGiftCardList",
+        name: "userGiftCardList",
+        component: () => import("../views/compositeCard/userGiftCardList.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "用户礼品卡",
+        },
+      },
+      // 用户合成卡列表
+      {
+        path: "/userCompositeCardList",
+        name: "userCompositeCardList",
+        component: () =>
+          import("../views/compositeCard/userCompositeCardList.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "用户合成卡",
+        },
+      },
+    ],
+  },
+  // 商品管理
+  {
+    path: "/prod",
+    name: "prod",
+    component: Layout,
+    meta: {
+      name: "商品管理",
+    },
+    children: [
+      {
+        path: "/prodList",
+        name: "prodList",
+        component: () => import("../views/prod/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "商品列表",
+        },
+      },
+      // 商品分类列表
+      {
+        path: "/proCategoryList",
+        name: "proCategoryList",
+        component: () => import("../views/prod/category.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "商品分类",
+        },
+      },
+    ],
+  },
+
+>>>>>>> Stashed changes
 
   // {
   //   path: "/form",

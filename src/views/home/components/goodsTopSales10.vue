@@ -20,33 +20,31 @@ import dayjs from 'dayjs'
 
 import { onMounted, ref, watch } from 'vue'
 import { homeGoodsTopSales10 } from '../../../api/modules'
+import { Loading } from 'element-plus/es/components/loading/src/service';
 const searchForm = ref({
   date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')],
   startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
   endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
 })
-
-const dataList = ref([
-  { goodsName: 'xxx1商品', goodsPreferentialAmount: 100000, goodsTotalAmount: 200000, goodsNumber: 180 },
-  { goodsName: 'xxx1商品', goodsPreferentialAmount: 100000, goodsTotalAmount: 200000, goodsNumber: 180 },
-  { goodsName: 'xxx1商品', goodsPreferentialAmount: 100000, goodsTotalAmount: 200000, goodsNumber: 180 },
-  { goodsName: 'xxx1商品', goodsPreferentialAmount: 100000, goodsTotalAmount: 200000, goodsNumber: 180 },
-  { goodsName: 'xxx1商品', goodsPreferentialAmount: 100000, goodsTotalAmount: 200000, goodsNumber: 180 },
-  { goodsName: 'xxx1商品', goodsPreferentialAmount: 100000, goodsTotalAmount: 200000, goodsNumber: 180 },
-  { goodsName: 'xxx1商品', goodsPreferentialAmount: 100000, goodsTotalAmount: 200000, goodsNumber: 180 },
-  { goodsName: 'xxx1商品', goodsPreferentialAmount: 100000, goodsTotalAmount: 200000, goodsNumber: 180 },
-  { goodsName: 'xxx1商品', goodsPreferentialAmount: 100000, goodsTotalAmount: 200000, goodsNumber: 180 },
-  { goodsName: 'xxx1商品', goodsPreferentialAmount: 100000, goodsTotalAmount: 200000, goodsNumber: 180 }
-])
+const loading = ref(false)
+const dataList = ref([])
 const getHomeGoodsTopSales10 = async () => {
   let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
   let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
-  // const res = await homeGoodsTopSales10({
-  //   startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
-  //   endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
-  // })
-}
+  loading.value = true
+  try {
+    const res = await homeGoodsTopSales10({
+      startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
+      endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
+    })
+    dataList.value = res.data
+    loading.value = false
+  } catch (error) {
+    loading.value = false
+  }
 
+
+}
 
 onMounted(() => {
   getHomeGoodsTopSales10()
@@ -76,12 +74,12 @@ watch(searchForm.value, (newValue, oldValue) => {
     flex: 1;
   }
 
-  .el-date-picker{
+  .el-date-picker {
     flex: 1;
   }
 
   :deep(.el-range-editor) {
-    &.el-input__inner{
+    &.el-input__inner {
       width: 200px;
     }
   }
