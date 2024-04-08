@@ -39,10 +39,13 @@
             <el-table-column prop="sort" label="排序" align="center" />
             <el-table-column prop="adminSort" label="后台排序" align="center" />
             <el-table-column prop="categoryName" label="分类" align="center" />
-            <!-- <el-table-column prop="dayNum" label="今日销量" align="center" /> -->
+            <el-table-column prop="dayNum" label="今日销量" align="center" />
             <el-table-column prop="totalNum" label="总销量" align="center" />
-            <el-table-column prop="goodsType" label="商品类型" align="center" />
-            <el-table-column prop="code" label="code" align="center" />
+            <el-table-column prop="amount" label="售价" align="center" />
+            <el-table-column prop="leaderName" label="可售团长名称" align="center" width="170" />
+            <el-table-column prop="totalNum" label="总销量" align="center" />
+            <!-- <el-table-column prop="goodsType" label="商品类型" align="center" /> -->
+            <!-- <el-table-column prop="code" label="code" align="center" /> -->
             <el-table-column prop="createTime" label="创建时间" width="170" align="center" />
             <el-table-column prop="startTime" label="活动开始时间" width="170" align="center" />
             <el-table-column prop="endTime" label="活动结束时间" width="170" align="center" />
