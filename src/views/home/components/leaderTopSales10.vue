@@ -21,25 +21,25 @@ import dayjs from 'dayjs'
 import { onMounted, ref, watch } from 'vue'
 import { homeLeaderTopSales10 } from '../../../api/modules'
 const searchForm = ref({
-  date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')],
+  date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD')],
   startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
-  endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
+  endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
 })
-const loading=ref(false)
+const loading = ref(false)
 const dataList = ref([])
 const getHomeLeaderTopSales10 = async () => {
   let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
-  let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
-  loading.value=true
+  let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
+  loading.value = true
   try {
     const res = await homeLeaderTopSales10({
-    startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
-    endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
-  })
-  dataList.value=res.data.dayLeaderVOS
-  loading.value=false
+      startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,
+      endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
+    })
+    dataList.value = res.data.dayLeaderVOS
+    loading.value = false
   } catch (error) {
-    loading.value=false
+    loading.value = false
   }
 }
 
@@ -71,12 +71,12 @@ watch(searchForm.value, (newValue, oldValue) => {
     flex: 1;
   }
 
-  .el-date-picker{
+  .el-date-picker {
     flex: 1;
   }
 
   :deep(.el-range-editor) {
-    &.el-input__inner{
+    &.el-input__inner {
       width: 200px;
     }
   }

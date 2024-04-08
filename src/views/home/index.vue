@@ -8,91 +8,87 @@
             type="date" placeholder="日期" format="YYYY-MM-DD" />
         </div>
       </el-col>
-      <el-col :span="24" style="margin-top: 10px;">
-        <div class="row-bg">
-          <div class="num-item-box">
-            <div class="wait-payment-num order-num-item">
-              <div class="item-box">
-                <div class="words">商品数量</div>
-                <div class="number"><span class="text">{{ dataList.goodsNumber }}</span></div>
-              </div>
-              <div class="item-img">
-                <img src="~@/assets/wait-payment-num.png">
-              </div>
+      <div class="row-bg" style="margin-top: 10px;">
+        <div class="num-item-box">
+          <div class="wait-payment-num order-num-item">
+            <div class="item-box">
+              <div class="words">商品数量</div>
+              <div class="number"><span class="text">{{ dataList.goodsNumber || 0 }}</span></div>
             </div>
-          </div>
-          
-          <div class="num-item-box">
-            <div class="wait-receiving-goods-num order-num-item">
-              <div class="item-box">
-                <div class="words">商品总金额</div>
-                <div class="number"><span class="text">{{ dataList.goodsTotalAmount }}</span></div>
-              </div>
-              <div class="item-img">
-                <img src="~@/assets/wait-receiving-goods-num.png">
-              </div>
-            </div>
-          </div>
-          <div class="num-item-box">
-            <div class="wait-delivery-num order-num-item">
-              <div class="item-box">
-                <div class="words">优惠过后的商品金额</div>
-                <div class="number"><span class="text">{{ dataList.goodsPreferentialAmount }}</span></div>
-              </div>
-              <div class="item-img">
-                <img src="~@/assets/wait-delivery-num.png">
-              </div>
-            </div>
-          </div>
-          <div class="num-item-box">
-            <div class="wait-evaluate-num order-num-item">
-              <div class="item-box">
-                <div class="words">订单金额</div>
-                <div class="number"><span class="text">{{ dataList.orderAmount }}</span></div>
-              </div>
-              <div class="item-img">
-                <img src="~@/assets/wait-evaluate-num.png">
-              </div>
-            </div>
-          </div>
-          <div class="num-item-box">
-            <div class="wait-after-sales-num order-num-item">
-              <div class="item-box">
-                <div class="words">订单数量</div>
-                <div class="number"><span class="text">{{ dataList.orderNumber }}</span></div>
-              </div>
-              <div class="item-img">
-                <img src="~@/assets/wait-after-sales-num.png">
-              </div>
+            <div class="item-img">
+              <img src="~@/assets/wait-payment-num.png">
             </div>
           </div>
         </div>
-      </el-col>
+
+        <div class="num-item-box">
+          <div class="wait-receiving-goods-num order-num-item">
+            <div class="item-box">
+              <div class="words">商品总金额</div>
+              <div class="number"><span class="text">{{ dataList.goodsTotalAmount || 0 }}</span></div>
+            </div>
+            <div class="item-img">
+              <img src="~@/assets/wait-receiving-goods-num.png">
+            </div>
+          </div>
+        </div>
+        <div class="num-item-box">
+          <div class="wait-delivery-num order-num-item">
+            <div class="item-box">
+              <div class="words">优惠过后的商品金额</div>
+              <div class="number"><span class="text">{{ dataList.goodsPreferentialAmount || 0 }}</span></div>
+            </div>
+            <div class="item-img">
+              <img src="~@/assets/wait-delivery-num.png">
+            </div>
+          </div>
+        </div>
+        <div class="num-item-box">
+          <div class="wait-evaluate-num order-num-item">
+            <div class="item-box">
+              <div class="words">订单金额</div>
+              <div class="number"><span class="text">{{ dataList.orderAmount || 0 }}</span></div>
+            </div>
+            <div class="item-img">
+              <img src="~@/assets/wait-evaluate-num.png">
+            </div>
+          </div>
+        </div>
+        <div class="num-item-box">
+          <div class="wait-after-sales-num order-num-item">
+            <div class="item-box">
+              <div class="words">订单数量</div>
+              <div class="number"><span class="text">{{ dataList.orderNumber || 0 }}</span></div>
+            </div>
+            <div class="item-img">
+              <img src="~@/assets/wait-after-sales-num.png">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </el-row>
   <el-row class="dataLayer" style="margin-top: 10px;">
-    <el-col :span="24">
-      <div class="flx-row">
-        <div class="datalayer-echarts" :class="{ shake: disabled }">
-          <order></order>
-        </div>
-        <div class="datalayer-echarts" :class="{ shakeRight: disabled }">
-          <GoodsAmount></GoodsAmount>
-        </div>
+    <el-col :lg="12" :md="12" :sm="24">
+      <div class="datalayer-echarts" :class="{ shake: disabled }">
+        <order></order>
       </div>
     </el-col>
-
-    <el-col :span="24">
-      <div class="flx-row" style=" align-items: flex-start;">
-        <div class="datalayer-echarts" :class="{ shake: disabled }">
-          <LeaderTopSales10></LeaderTopSales10>
-        </div>
-        <div class="datalayer-echarts" :class="{ shakeRight: disabled }">
-          <GoodsTopSales10></GoodsTopSales10>
-        </div>
+    <el-col :lg="12" :md="12" :sm="24">
+      <div class="datalayer-echarts" :class="{ shakeRight: disabled }">
+        <GoodsAmount></GoodsAmount>
       </div>
     </el-col>
-
+    <el-col :lg="12" :md="12" :sm="24">
+      <div class="datalayer-echarts" :class="{ shake: disabled }">
+        <LeaderTopSales10></LeaderTopSales10>
+      </div>
+    </el-col>
+    <el-col :lg="12" :md="12" :sm="24">
+      <div class="datalayer-echarts" :class="{ shakeRight: disabled }">
+        <GoodsTopSales10></GoodsTopSales10>
+      </div>
+    </el-col>
   </el-row>
 </template>
 
@@ -120,7 +116,7 @@ const getHomeOrderTimeData = async () => {
   const res = await homeOrderTime({
     date: searchForm.value.date
   })
-  dataList.value=res.data
+  dataList.value = res.data
   dataList.value = {
     goodsNumber: res.data?.goodsNumber ? res.data?.goodsNumber : 0,
     goodsPreferentialAmount: res.data?.goodsPreferentialAmount ? res.data?.goodsPreferentialAmount : 0,
@@ -128,18 +124,18 @@ const getHomeOrderTimeData = async () => {
     orderAmount: res.data?.orderAmount ? res.data?.orderAmount : 0,
     orderNumber: res.data?.orderNumber ? res.data?.orderNumber : 0,
   }
-  }
-  const initData = () => {
-    getHomeOrderTimeData()
-  }
+}
+const initData = () => {
+  getHomeOrderTimeData()
+}
 
-  onMounted(() => {
-    initData()
-    disabled.value = true
-    setTimeout(() => {
-      disabled.value = false
-    }, 1500)
-  })
+onMounted(() => {
+  initData()
+  disabled.value = true
+  setTimeout(() => {
+    disabled.value = false
+  }, 1500)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -173,22 +169,13 @@ const getHomeOrderTimeData = async () => {
 
 // 订单栏项
 .order-all-num {
+  width: 100%;
 
-  // display: flex;
-  // justify-content: space-between;
   .row-bg {
+    width: 100%;
     display: flex;
-
-    .col-box {
-      display: flex;
-      justify-content: space-between;
-      height: 120px;
-
-    }
-
     .num-item-box {
       position: relative;
-      width: calc(20% - 20px);
       flex: 1;
       padding-right: 20px;
       box-sizing: border-box;
@@ -197,42 +184,16 @@ const getHomeOrderTimeData = async () => {
     .num-item-box:last-child {
       padding-right: 0;
     }
-
-    .col-box:first-child {
-
-      // margin-right: 20px;
-      .num-item-box {
-        padding-right: 20px;
-        box-sizing: border-box;
-      }
-    }
-
-    .col-box:last-child {
-      .num-item-box:not(:last-child) {
-        padding-right: 20px;
-        box-sizing: border-box;
-      }
-    }
   }
 
   // 基本信息样式
   .order-num-item {
-    // width: calc((100% - 73px) * 0.2);
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
     box-sizing: border-box;
     border-radius: 4px;
-
-    // &:hover {
-    //   .item-img {
-    //     img {
-    //       position: absolute;
-    //       top: -10px;
-    //     }
-    //   }
-    // }
     .item-box {
       position: absolute;
       z-index: 1;
@@ -307,7 +268,9 @@ const getHomeOrderTimeData = async () => {
     .item-img {
       position: relative;
       display: block;
+      margin-top: 10px;
       width: 100%;
+      height: 150px;
 
       // transition: .35s;
       img {
