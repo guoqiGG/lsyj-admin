@@ -306,7 +306,7 @@ const routes = [
     name: "setup",
     component: Layout,
     meta: {
-      name: "设置管理",
+      name: "系统设置",
     },
     children: [
       // 设置管理

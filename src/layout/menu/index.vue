@@ -31,7 +31,8 @@ const router = useRouter()
 const activeMenu = computed(() => {
   return route.path;
 });
-const menuList = ref([
+
+const menuList2 = ref([
   {
     title: "首页",
     url: "/home",
@@ -187,7 +188,7 @@ const menuList = ref([
     ],
   },
   {
-    title: "设置管理",
+    title: "系统设置",
     url: "/setup",
     icon: "VideoCamera",
     children: [
@@ -204,7 +205,14 @@ const menuList = ref([
     ],
   }
 ]);
-
+const routerList = JSON.parse(localStorage.getItem("routerList"))
+const menuList=ref([])
+if(routerList&&routerList.length>0){
+  menuList.value=[...routerList]
+}else{
+  menuList.value=[...menuList2.value]
+}
+// localStorage.setItem("routerList", JSON.stringify(res.data));
 const handleOpen = (key, keyPath) => {
   console.log(key, keyPath);
 };
@@ -212,6 +220,8 @@ const handleClose = (key, keyPath) => {
   console.log(key, keyPath);
 };
 const themeConfig = store.getters.themeConfig;
+
+
 </script>
 
 <style scoped lang="scss">

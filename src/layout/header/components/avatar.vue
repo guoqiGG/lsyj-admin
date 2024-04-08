@@ -2,11 +2,15 @@
   <el-dropdown placement="bottom">
     <div class="flx-center">
       <div class="avatar">
-        <img src="../../../assets/images/avart.jpg" alt="avatar" />
+        <img src="../../../assets/touxiang.png" alt="avatar" />
       </div>
       <span class="username" :style="{ color: themeConfig.footColor }"
-        >{{userInfo.name}}</span
+        >{{userInfo}}</span
       >
+      <!-- <span class="username" :style="{ color: themeConfig.footColor }"
+        >{{userInfo.name}}</span
+      > -->
+
     </div>
     <template #dropdown>
       <el-dropdown-menu>

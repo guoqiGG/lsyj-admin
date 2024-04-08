@@ -472,6 +472,14 @@ export function addAdminList(data) {
     data: JSON.stringify(data),
   });
 }
+// 管理员禁用
+export function adminUpdate(data) {
+  return service({
+    method: "POST",
+    url: "admin/update",
+    data: JSON.stringify(data),
+  });
+}
 
 // 角色列表
 export function roleList(data) {
@@ -481,5 +489,33 @@ export function roleList(data) {
     data: JSON.stringify(data),
   });
 }
+
+// 角色新增列表
+export function roleAdd(data) {
+  return service({
+    method: "POST",
+    url: "admin/add/rule",
+    data: JSON.stringify(data),
+  });
+}
+// 角色删除
+export function roleDel(data) {
+  return service({
+    method: "POST",
+    url: "admin/update/rule",
+    data: JSON.stringify(data),
+  });
+}
+
+// 角色权限列表
+export function authorityList() {
+  return service({
+    method: "POST",
+    url: "admin/get/authority/list",
+    data:{},
+  });
+}
+
+
 
 

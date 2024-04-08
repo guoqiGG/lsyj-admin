@@ -70,11 +70,13 @@ export default {
       return new Promise((resolve, reject) => {
         LoginInfo(userInfo)
           .then((res) => {
-            console.log(res)
+            console.log( res,' res')
             localStorage.setItem("token", res.data.token);
-            localStorage.setItem("UserInfo", JSON.stringify(res.data.data));
+            localStorage.setItem("UserInfo", JSON.stringify(res.data.name));
+            localStorage.setItem("routerList", JSON.stringify(res.data.adminAuthorityPutVOLiveInputVO));
             commit("setToken", res.data.token);
-            commit("setUserInfo",res.data.data);
+            commit("setUserInfo",res.data.name);
+            commit("routerList",res.data.adminAuthorityPutVOLiveInputVO);
             router.replace("/");
             ElMessage({
               message: "登录成功",
