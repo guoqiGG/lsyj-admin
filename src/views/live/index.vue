@@ -6,7 +6,7 @@
             <el-row>
                 <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="直播间状态">
-                        <el-select  v-model="searchForm.status" placeholder="请选择" clearable>
+                        <el-select v-model="searchForm.status" placeholder="请选择" clearable>
                             <el-option label="直播中" value="101" />
                             <el-option label="未开始" value="102" />
                             <el-option label="已结束" value="103" />
@@ -23,20 +23,24 @@
                     <el-button @click="resetForm()">重置</el-button>
                 </el-form-item>
             </el-row>
+            <el-row>
+                <el-button type="primary" @click="creatRoom()">创建直播间</el-button>
+            </el-row>
         </el-form>
 
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-table v-loading="loading" :data="liveListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
-            <el-table-column prop="roomId" label="房间号" width="100" align="center"/>
-            <el-table-column prop="name" label="直播间标题" width="300" align="center"/>
-            <el-table-column prop="anchorName" label="主播" width="200" align="center"/>
+        <el-table v-loading="loading" :data="liveListData" style="width: 100%"
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+            <el-table-column prop="roomId" label="房间号" width="100" align="center" />
+            <el-table-column prop="name" label="直播间标题" width="300" align="center" />
+            <el-table-column prop="anchorName" label="主播" width="200" align="center" />
             <el-table-column label="直播间状态" align="center">
                 <template #default="scope">
                     {{ liveStatusCom[scope.row.liveStatus] }}
                 </template>
             </el-table-column>
-            <el-table-column prop="createTime" label="创建时间" width="400" align="center"/>
+            <el-table-column prop="createTime" label="创建时间" width="400" align="center" />
         </el-table>
         <div class="pagination">
             <el-pagination background layout="total, sizes, prev, pager, next, jumper"
@@ -90,6 +94,11 @@ const tableHandleChange = (e) => {
 const resetForm = () => {
     searchForm.value = { ...searchParams }
     getLiveList()
+}
+// 创建直播间
+const creatRoom = () => {
+    // let url = 'https://qingchuntai2.oss-cn-beijing.aliyuncs.com/2024/02/20/%E6%89%B9%E9%87%8F%E5%8F%91%E8%B4%A7.xlsx'
+    // window.location.href = url
 }
 onMounted(() => {
     getLiveList()

@@ -334,6 +334,19 @@
           <el-table-column prop="remark" label="备注" align="center" />
         </el-table>
       </div>
+
+
+      <p style="color: #101010;font-size: 16px;font-weight: 600;"
+        v-if="detail.coupons && detail.coupons.length > 0">优惠券信息</p>
+      <div class="product" style="margin-top: 20px;" v-if="detail.coupons && detail.coupons.length > 0">
+        <el-table :data="detail.coupons" style="width: 100%"
+          :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
+          <el-table-column prop="name" label="优惠券名称" align="center" />
+          <el-table-column prop="amount" label="优惠券金额" align="center"/>
+          <el-table-column prop="createTime" label="创建时间" align="center"/>
+          <el-table-column prop="updateTime" label="更新时间" align="center" />
+        </el-table>
+      </div>
     </div>
   </el-dialog>
 

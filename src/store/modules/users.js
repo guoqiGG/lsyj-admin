@@ -62,7 +62,6 @@ export default {
       }
     },
   },
-
   actions: {
     login({
       commit

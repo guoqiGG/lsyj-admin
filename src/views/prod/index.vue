@@ -63,7 +63,7 @@
         <div class="pagination">
             <el-pagination background layout="total, sizes, prev, pager, next, jumper"
                 v-model:page-size="pages.pageSize" v-model:current-page="pages.pageNo"
-                :page-sizes="[10, 20, 50, 100, 200, 500]" :total="total" @size-change="tableHandleSizeChange"
+                :page-sizes="[5,10, 20, 50, 100, 200, 500]" :total="total" @size-change="tableHandleSizeChange"
                 @current-change="tableHandleChange" />
         </div>
     </el-card>
@@ -361,7 +361,7 @@ const loading = ref(false)
 const searchForm = ref({ ...searchParams })
 const pages = ref({
     pageNo: 1,
-    pageSize: 20,
+    pageSize: 5,
 })
 const total = ref(0)
 let prodListData = ref([])
