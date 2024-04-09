@@ -37,22 +37,18 @@
                 </template>
             </el-table-column>
             <el-table-column prop="sort" label="排序" align="center" />
-            <el-table-column prop="adminSort" label="后台排序" align="center" />
-            <el-table-column prop="categoryName" label="分类" align="center" />
+            <!-- <el-table-column prop="adminSort" label="后台排序" align="center" /> -->
+            <!-- <el-table-column prop="categoryName" label="分类" align="center" /> -->
             <el-table-column prop="dayNum" label="今日销量" align="center" />
             <el-table-column prop="totalNum" label="总销量" align="center" />
             <el-table-column prop="amount" label="售价" align="center" />
             <el-table-column prop="leaderName" label="可售团长名称" align="center" width="170" />
-            <el-table-column prop="totalNum" label="总销量" align="center" />
             <!-- <el-table-column prop="goodsType" label="商品类型" align="center" /> -->
-            <!-- <el-table-column prop="code" label="code" align="center" /> -->
             <el-table-column prop="createTime" label="创建时间" width="170" align="center" />
-            <el-table-column prop="startTime" label="活动开始时间" width="170" align="center" />
-            <el-table-column prop="endTime" label="活动结束时间" width="170" align="center" />
-
+            <el-table-column prop="startTime" label="开始时间" width="170" align="center" />
+            <el-table-column prop="endTime" label="结束时间" width="170" align="center" />
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
-                    <!-- <span class="operation" @click="copy(scope.row.id)">小程序链接</span> -->
                     <span class="operation" @click="editOrCreateDialog(scope)">编辑</span>
                     <!-- <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="deleteProdById(scope.row.id, 1)"
