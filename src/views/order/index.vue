@@ -418,6 +418,7 @@ const getOrderList = async () => {
     , ...pages.value
   })
   loading.value = false
+  console.log(res,'res============>')
   orderListData.value = res.data.list
   total.value = res.data.total
 }
@@ -602,9 +603,11 @@ onMounted(() => {
 })
 
 watch(searchForm.value, (newValue, oldValue) => {
-  console.log(newValue, oldValue)
+  // console.log(newValue, oldValue)
+if(newValue.time&&newValue.time[0]){
   searchForm.value.startDate = dayjs(newValue.time[0]).format('YYYY-MM-DD HH:mm:ss')
   searchForm.value.endDate = dayjs(newValue.time[1]).format('YYYY-MM-DD HH:mm:ss')
+}
 }
   , { deep: true })
 
