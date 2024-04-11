@@ -191,6 +191,8 @@
         <template #default="scope">
           <span class="operation" v-if="scope.row.orderStatus === 1001"
             @click="hamdleBatchSend(scope.row.orderId, 'single')">发货</span>
+            <span class="operation" v-if="scope.row.payStatus === 1"
+            @click="hamdleRefund(scope.row.orderId, 'single')">退款</span>
           <span class="operation" v-if="scope.row.orderStatus === 2001"
             @click="hamdleBatchReceive(scope.row.orderId, 'single')">收货</span>
           <span v-loading.fullscreen.lock="fullscreenLoading" class="operation"
@@ -353,7 +355,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { prodList, orderList, orderDetail, orderBatchSend, orderBatchReceive, leaderList, exportOrder } from "../../api/modules";
+import { prodList, orderList, orderDetail, orderBatchSend, orderBatchReceive, leaderList, exportOrder ,orderRefund} from "../../api/modules";
 import dayjs from "dayjs";
 import {
   Download, Upload
@@ -446,6 +448,17 @@ const handleSelectionChange = (val) => {
   } else {
     isDisabled.value = true
   }
+}
+//退款 
+const hamdleRefund = async (orderNumber) => {
+  const res = await orderRefund(orderNumber)
+  if (res.code === 0) {
+    ElMessage.success('退款 成功');
+    getOrderList()
+  } else {
+    ElMessage.error(res.msg);
+  }
+
 }
 // 批量发货
 const hamdleBatchSend = async (e, type) => {
