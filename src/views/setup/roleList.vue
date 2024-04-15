@@ -136,7 +136,7 @@ const submitForm = () => {
 
 // 删除
 const handleDel = async (item) => {
-    const res = await roleDel({ id: item.id, token:localStorage.getItem('token'), })
+    const res = await roleDel({ id: item.id, token:localStorage.getItem('token'),adminId:localStorage.getItem('UserID') })
     if (res.code === 0) {
         ElMessage.success('删除成功');
         getRoleList()

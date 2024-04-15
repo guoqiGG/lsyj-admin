@@ -218,6 +218,14 @@ export function deleteProd(query) {
     data: JSON.stringify(query),
   });
 }
+// 商品上下架  
+export function goodsDisplay(query) {
+  return service({
+    method: "POST",
+    url: "/goods/display",
+    data: JSON.stringify(query),
+  });
+}
 
 // 优惠券列表
 export function couponList(query) {

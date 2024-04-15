@@ -154,7 +154,7 @@ const submitForm = () => {
 
 // 禁用
 const switchChange = async (item) => {
-    const res = await adminUpdate({ id: item.id, token:localStorage.getItem('token'),isDeleted:item.isDeleted })
+    const res = await adminUpdate({ id: item.id, token:localStorage.getItem('token'),isDeleted:item.isDeleted,adminId:localStorage.getItem('UserID') })
     if (res.code === 0) {
         ElMessage.success('修改成功');
         getAdminList()

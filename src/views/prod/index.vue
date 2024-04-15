@@ -42,6 +42,11 @@
             <el-table-column prop="dayNum" label="今日销量" align="center" />
             <el-table-column prop="totalNum" label="总销量" align="center" />
             <el-table-column prop="amount" label="售价" align="center" />
+            <el-table-column prop="status" label="商品状态" align="center">
+                <template #default="scope">
+                    <span class="operation" >{{scope.row.status===0?'下架':scope.row.status===1?'上架':''}}</span>
+                </template>
+            </el-table-column>
             <!-- <el-table-column prop="leaderName" label="可售团长名称" align="center" width="170" /> -->
             <!-- <el-table-column prop="goodsType" label="商品类型" align="center" /> -->
             <el-table-column prop="createTime" label="创建时间" width="170" align="center" />
@@ -50,6 +55,7 @@
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="editOrCreateDialog(scope)">编辑</span>
+                   <p> <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="switchChange(scope.row)"/></p>
                     <!-- <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="deleteProdById(scope.row.id, 1)"
                         @cancel="cancelEvent">
@@ -298,7 +304,7 @@ import '@wangeditor/editor/dist/css/style.css' // 引入 css
 // import { onBeforeUnmount, ref, shallowRef } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { onMounted, ref, reactive, nextTick, onBeforeUnmount, shallowRef } from "vue";
-import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList, exportGoods, leaderList, upload } from "@/api/modules";
+import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList, exportGoods, leaderList, upload,goodsDisplay } from "@/api/modules";
 import { ElMessage, ElInput } from "element-plus";
 import {
     CirclePlus
@@ -825,6 +831,17 @@ const exportExcel = async () => {
     }
 }
 
+// 商品上下架    goodsId display 0-下架 1-上架
+const switchChange = async (item) => {
+    const res = await goodsDisplay({ goodsId: item.id, display:item.status,token:localStorage.getItem('token'),adminId:localStorage.getItem('UserID') })
+    if (res.code === 0) {
+        ElMessage.success('商品状态修改成功');
+        getProdList()
+    } else {
+        ElMessage.error(res.msg);
+        return false;
+    }
+}
 onMounted(() => {
     getProdCategoryList()
     getProdList()

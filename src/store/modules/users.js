@@ -72,9 +72,11 @@ export default {
             console.log( res,' res')
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("UserInfo", JSON.stringify(res.data.name));
+            localStorage.setItem("UserID", JSON.stringify(res.data.id));
             localStorage.setItem("routerList", JSON.stringify(res.data.adminAuthorityPutVOLiveInputVO));
             commit("setToken", res.data.token);
             commit("setUserInfo",res.data.name);
+            commit("setUserId",res.data.id);
             commit("routerList",res.data.adminAuthorityPutVOLiveInputVO);
             router.replace("/");
             ElMessage({
