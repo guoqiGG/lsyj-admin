@@ -28,7 +28,7 @@
             <el-table-column prop="leaderMobile" label="团长手机" align="center" width="120" />
             <el-table-column prop="leaderStore" label="门店名称" width="220" />
             <el-table-column prop="address" label="门店地址" width="300" />
-            <el-table-column prop="commissionRate" label="佣金比例(0-1)" align="center" width="120" />
+            <el-table-column prop="commissionRate" label="佣金比例(0-100)" align="center" width="140" />
             <el-table-column prop="countUser" label="用户数" align="center" />
             <el-table-column prop="totalIncome" label="总收益" align="center" />
             <el-table-column prop="balance" label="当前余额" align="center" />
@@ -62,7 +62,7 @@
                 <el-input v-model="leaderForm.address" placeholder="门店地址" clearable />
             </el-form-item>
             <el-form-item label="佣金比例">
-                <el-input-number v-model="leaderForm.commissionRate" min="0" max="1" step="0.1" placeholder="佣金比例"
+                <el-input-number v-model="leaderForm.commissionRate" min="0" max="100" step="1" placeholder="佣金比例"
                     clearable />
             </el-form-item>
             <el-form-item>
@@ -160,7 +160,7 @@ const clearEditForm = () => {
 
 const exportExcel = async () => {
     loading.value = true
-    const res = await exportLeader()
+    const res = await exportLeader({})
     loading.value = false
     var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
     const fileName = '团长信息表'

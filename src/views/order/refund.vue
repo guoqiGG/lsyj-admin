@@ -133,8 +133,8 @@
                 <template #default="scope">
                     <span v-loading.fullscreen.lock="fullscreenLoading" class="operation"
                         @click="handleDetail(scope.row)">退款详情</span>
-                    <span class="operation" @click="handleClick(scope.row, 1)">通过</span>
-                    <span class="operation" @click="handleClick(scope.row, 2)">拒绝</span>
+                    <span class="operation" @click="handleClick(scope.row, 1)" v-if="scope.row.refundStatus===1">通过</span>
+                    <span class="operation" @click="handleClick(scope.row, 2)" v-if="scope.row.refundStatus===1">拒绝</span>
                 </template>
             </el-table-column>
         </el-table>

@@ -257,7 +257,7 @@ const rules = reactive({
     deadlineType: [{ required: true, message: '请选择生效类型', trigger: 'blur' }],
     deadlineDay: [{ required: true, message: '请输入生效天数', trigger: 'blur' }],
     deadlineTime: [{ required: true, message: '请选择生效时间', trigger: 'blur' }],
-    type: [{ required: true, message: '请选择适用商品', trigger: 'blur' }],
+    // type: [{ required: true, message: '请选择适用商品', trigger: 'blur' }],
     sortValue: [{ required: true, message: '请选择不可用分类', trigger: 'blur' }],
     productValue1: [{ required: true, message: '请选择不可用商品', trigger: 'blur' }],
     productValue2: [{ required: true, message: '请选择可用商品', trigger: 'blur' }],
