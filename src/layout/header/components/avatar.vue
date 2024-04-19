@@ -5,7 +5,7 @@
         <img src="../../../assets/touxiang.png" alt="avatar" />
       </div>
       <span class="username" :style="{ color: themeConfig.footColor }"
-        >{{userInfo}}</span
+        >{{userInfo.name?userInfo.name:userInfo}}</span
       >
       <!-- <span class="username" :style="{ color: themeConfig.footColor }"
         >{{userInfo.name}}</span
