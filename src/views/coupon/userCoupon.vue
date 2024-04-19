@@ -91,6 +91,10 @@
                     <span class="operation" style="cursor: pointer;"
                         v-if="scope.row.orderId && scope.row.userCouponStatus == 1"
                         @click="toOrder(scope.row.orderId, scope.row.userCouponStatus)">使用详情</span>
+                        <span class="operation" style="cursor: pointer;"
+                        v-if="scope.row.userCouponStatus === 0"
+                        @click="handle_del(scope.row)">删除</span>
+                        
                 </template>
             </el-table-column>
         </el-table>
@@ -105,8 +109,9 @@
 
 <script setup>
 import { onMounted, ref, } from "vue";
-import { userCouponList } from "../../api/modules";
+import { userCouponList,delUserCoupon } from "../../api/modules";
 import { useRoute, useRouter } from "vue-router";
+import { ElMessage, } from 'element-plus';
 const route = useRoute()
 const router = useRouter()
 const searchParams = {
@@ -155,6 +160,15 @@ const toOrder = (orderId, status) => {
         })
     } else {
         return
+    }
+}
+const handle_del = async (row) => {
+    const res = await delUserCoupon({id:row.id,userId:row.userId,adminId:localStorage.getItem('UserID')  })
+    if (res.code === 0) {
+        ElMessage.success('删除成功');
+        getUserCouponList()
+    } else {
+        ElMessage.error(res.msg);
     }
 }
 onMounted(() => {

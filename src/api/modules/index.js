@@ -324,6 +324,14 @@ export function userCouponList(query) {
     params: query,
   });
 }
+// 删除用户优惠券 id,userId,adminId  后台删券
+export function delUserCoupon(data) {
+  return service({
+    method: "POST",
+    url: "/user/coupon/del ",
+    data: JSON.stringify(data),
+  });
+}
 
 // 用户送优惠券
 export function userCouponAdd(data) {
