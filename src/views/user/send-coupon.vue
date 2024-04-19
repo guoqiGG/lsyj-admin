@@ -45,6 +45,7 @@ const couponSave = async () => {
                 userId: props.userInfo.id,
                 type: 1,
                 ...props.couponForm,
+                adminId:localStorage.getItem('UserID')
             });
             if (res.code == 0) {
                 close();

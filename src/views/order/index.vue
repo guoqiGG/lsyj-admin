@@ -189,9 +189,17 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="180" align="center">
         <template #default="scope">
-          <span class="operation" v-if="scope.row.orderStatus === 1001"
-            @click="hamdleBatchSend(scope.row.orderId, 'single')">发货</span>
-            <span class="operation" v-if="scope.row.payStatus === 1"
+          <!-- <span class="operation" v-if="scope.row.orderStatus === 1001"
+            @click="hamdleBatchSend(scope.row.orderId, 'single')">发货</span> -->
+
+          <el-popconfirm v-if="scope.row.orderStatus === 1001" confirm-button-text="确定" cancel-button-text="取消"
+            cancel-button-type="info" icon-color="#626AEF" title="确定要发货吗?"
+            @confirm="hamdleBatchSend(scope.row.orderId, 'single')" @cancel="cancelEvent">
+            <template #reference>
+              <span class="operation">发货</span>
+            </template>
+          </el-popconfirm>
+          <span class="operation" v-if="scope.row.payStatus === 1"
             @click="hamdleRefund(scope.row.orderId, 'single')">退款</span>
           <span class="operation" v-if="scope.row.orderStatus === 2001"
             @click="hamdleBatchReceive(scope.row.orderId, 'single')">收货</span>
@@ -329,7 +337,7 @@
           </el-table-column>
           <el-table-column prop="settleType" label="结算类型" align="center">
             <template #default="scope">
-              <span>{{ scope.row.settleType === 1 ? '邀请购买' :scope.row.settleType===2?'团长自购': '' }}</span>
+              <span>{{ scope.row.settleType === 1 ? '邀请购买' : scope.row.settleType === 2 ? '团长自购' : '' }}</span>
             </template>
           </el-table-column>
           <el-table-column prop="updateTime" label="更新时间" align="center" />
@@ -338,14 +346,15 @@
       </div>
 
 
-      <p style="color: #101010;font-size: 16px;font-weight: 600;"
-        v-if="detail.coupons && detail.coupons.length > 0">优惠券信息</p>
+      <p style="color: #101010;font-size: 16px;font-weight: 600;" v-if="detail.coupons && detail.coupons.length > 0">
+        优惠券信息
+      </p>
       <div class="product" style="margin-top: 20px;" v-if="detail.coupons && detail.coupons.length > 0">
         <el-table :data="detail.coupons" style="width: 100%"
           :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
           <el-table-column prop="name" label="优惠券名称" align="center" />
-          <el-table-column prop="amount" label="优惠券金额" align="center"/>
-          <el-table-column prop="createTime" label="创建时间" align="center"/>
+          <el-table-column prop="amount" label="优惠券金额" align="center" />
+          <el-table-column prop="createTime" label="创建时间" align="center" />
           <el-table-column prop="updateTime" label="更新时间" align="center" />
         </el-table>
       </div>
@@ -355,7 +364,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { prodList, orderList, orderDetail, orderBatchSend, orderBatchReceive, leaderList, exportOrder ,orderRefund} from "../../api/modules";
+import { prodList, orderList, orderDetail, orderBatchSend, orderBatchReceive, leaderList, exportOrder, orderRefund } from "../../api/modules";
 import dayjs from "dayjs";
 import {
   Download, Upload
@@ -420,7 +429,7 @@ const getOrderList = async () => {
     , ...pages.value
   })
   loading.value = false
-  console.log(res,'res============>')
+  console.log(res, 'res============>')
   orderListData.value = res.data.list
   total.value = res.data.total
 }
@@ -451,8 +460,8 @@ const handleSelectionChange = (val) => {
 }
 //退款 
 const hamdleRefund = async (orderNumber) => {
-  let adminId=localStorage.getItem('UserID')
-  const res = await orderRefund(orderNumber,adminId)
+  let adminId = localStorage.getItem('UserID')
+  const res = await orderRefund(orderNumber, adminId)
   if (res.code === 0) {
     ElMessage.success('退款 成功');
     getOrderList()
@@ -618,10 +627,10 @@ onMounted(() => {
 
 watch(searchForm.value, (newValue, oldValue) => {
   // console.log(newValue, oldValue)
-if(newValue.time&&newValue.time[0]){
-  searchForm.value.startDate = dayjs(newValue.time[0]).format('YYYY-MM-DD HH:mm:ss')
-  searchForm.value.endDate = dayjs(newValue.time[1]).format('YYYY-MM-DD HH:mm:ss')
-}
+  if (newValue.time && newValue.time[0]) {
+    searchForm.value.startDate = dayjs(newValue.time[0]).format('YYYY-MM-DD HH:mm:ss')
+    searchForm.value.endDate = dayjs(newValue.time[1]).format('YYYY-MM-DD HH:mm:ss')
+  }
 }
   , { deep: true })
 

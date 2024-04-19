@@ -54,11 +54,11 @@
             <el-table-column prop="userName" label="用户昵称"></el-table-column>
             <el-table-column prop="userMobile" label="手机号"></el-table-column>
             <el-table-column prop="couponName" label="优惠券名称"></el-table-column>
-            <el-table-column label="优惠券状态">
+            <!-- <el-table-column label="优惠券状态">
                 <template #default="scope">
                     {{ scope.row.couponStatus == "1" ? "上架" : "下架" }}
                 </template>
-            </el-table-column>
+</el-table-column> -->
             <el-table-column label="获得类型">
                 <template #default="scope">
                     {{
@@ -86,15 +86,21 @@
             </el-table-column>
             <el-table-column prop="sourceId" label="来源(下单赠送等)"></el-table-column>
             <el-table-column prop="orderId" label="使用后对应的订单号"></el-table-column>
+            <el-table-column prop="updateUser" label="删券人"></el-table-column>
+            <el-table-column prop="createUser" label="发券人"></el-table-column>
+
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" style="cursor: pointer;"
                         v-if="scope.row.orderId && scope.row.userCouponStatus == 1"
                         @click="toOrder(scope.row.orderId, scope.row.userCouponStatus)">使用详情</span>
-                        <span class="operation" style="cursor: pointer;"
-                        v-if="scope.row.userCouponStatus === 0"
-                        @click="handle_del(scope.row)">删除</span>
-                        
+                    <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info" v-if="scope.row.userCouponStatus === 0"
+                        icon-color="#626AEF" title="确定要删除吗?" @confirm="handle_del(scope.row)" @cancel="cancelEvent">
+                        <template #reference>
+                            <span class="operation">删除</span>
+                        </template>
+                    </el-popconfirm>
+
                 </template>
             </el-table-column>
         </el-table>
@@ -109,7 +115,7 @@
 
 <script setup>
 import { onMounted, ref, } from "vue";
-import { userCouponList,delUserCoupon } from "../../api/modules";
+import { userCouponList, delUserCoupon } from "../../api/modules";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage, } from 'element-plus';
 const route = useRoute()
@@ -163,7 +169,7 @@ const toOrder = (orderId, status) => {
     }
 }
 const handle_del = async (row) => {
-    const res = await delUserCoupon({id:row.id,userId:row.userId,adminId:localStorage.getItem('UserID')  })
+    const res = await delUserCoupon({ id: row.id, userId: row.userId, adminId: localStorage.getItem('UserID') })
     if (res.code === 0) {
         ElMessage.success('删除成功');
         getUserCouponList()
