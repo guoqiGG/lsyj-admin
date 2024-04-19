@@ -17,16 +17,16 @@
             <el-input v-model="searchForm.userMobile" placeholder="用户手机号" clearable />
           </el-form-item>
         </el-col>
-        <el-col :lg="6" :md="8" :sm="12">
+        <!-- <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="团长名称">
             <el-input v-model="searchForm.leaderName" placeholder="团长名称" clearable />
           </el-form-item>
-        </el-col>
-        <el-col :lg="6" :md="8" :sm="12">
+        </el-col> -->
+        <!-- <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="团长号码">
             <el-input v-model="searchForm.leaderMobile" placeholder="团长手机号" clearable />
           </el-form-item>
-        </el-col>
+        </el-col> -->
         <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="订单类型">
             <el-select v-model="searchForm.orderType" placeholder="请选择" clearable>

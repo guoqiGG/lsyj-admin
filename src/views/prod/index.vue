@@ -191,7 +191,7 @@
                     <el-table-column label="库存" align="center" width="150">
                         <template #default="scope">
                             <el-input-number controls-position="right"
-                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].stock" min="0" size="small" />
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].stock"  size="small" />
                         </template>
                     </el-table-column>
                     <el-table-column label="注水销量" align="center" width="150">
@@ -844,12 +844,9 @@ const switchChange = async (item) => {
         return false;
     }
 }
-// const copyLink=async(text)=>{
-// console.log(text,'text')
 
-// }
 const copyLink = async (copyValue) => {
-    let url='package-prod/pages/prod/prod?prodId='+copyValue.id
+    let url='/pages/package-prod/pages/prod/prod?prodId='+copyValue.id
     // 创建输入框
     let inputDom = document.createElement('input');
       // 给输入框value赋值
