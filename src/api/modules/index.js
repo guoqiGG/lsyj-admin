@@ -524,10 +524,10 @@ export function authorityList() {
   });
 }
 // 订单退款
-export function orderRefund(orderNumber) {
+export function orderRefund(orderNumber,adminId) {
   return service({
     method: "get",
-    url: `order/refund/order?orderNumber=`+orderNumber,
+    url: `order/refund/order?orderNumber=`+orderNumber+'&adminId='+adminId,
   });
 }
 

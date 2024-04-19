@@ -120,6 +120,7 @@ const submitForm = () => {
                 ruleName: form.value.ruleName,
                 aithorityIds: form.value.aithorityIds,
                 token: localStorage.getItem('token'),
+                adminId:localStorage.getItem('UserID')
             }
             const res  = await roleAdd(obj)
             if (res.code === 0) {

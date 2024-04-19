@@ -139,6 +139,7 @@ const submitForm = () => {
                 password: form.value.password,
                 roleId: form.value.roleId,
                 token:localStorage.getItem('token'),
+                adminId:localStorage.getItem('UserID')
             }
                 const res = await addAdminList(obj)
             if (res.code === 0) {

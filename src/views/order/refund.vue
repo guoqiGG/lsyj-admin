@@ -68,6 +68,7 @@
                 <el-form-item>
                     <el-upload style="margin: 0px 20px 0px 0px;" v-model:file-list="fileList" class="upload-demo"
                         :show-file-list="false" :action="BaseUrl + '/upload/order/refund/success'"
+                        :data="{adminId:adminId}"
                         :headers="{ Authorization: token }" :multiple="false" :on-success="handleSuccess"
                         :on-error="handleError">
                         <el-button :icon="Upload" type="primary">批量上传退款</el-button>
@@ -298,6 +299,7 @@ import {
 import { ElMessage, ElMessageBox } from 'element-plus';
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const loading = ref(false)
+const adminId=localStorage.getItem('UserID')
 const searchForm = ref({
     userName: null,//用户名称
     userMobile: null,
@@ -364,6 +366,7 @@ const submitBatchForm = async (e) => {
     let obj = {
         auditStatus: 1,//1:通过 2:拒绝
         ids,
+        adminId:localStorage.getItem('UserID')
     }
     if (e === 2) {
         obj.auditStatus = 2
@@ -433,6 +436,7 @@ const handleClick = async (item, type) => {
         const res = await refundAudit({
             id: item.id,
             auditStatus: 1,//1:通过 2:拒绝
+            adminId:localStorage.getItem('UserID')
         })
         console.log(res, 'res===')
         if (res.code === 0) {
@@ -451,6 +455,7 @@ const submitForm = () => {
                 remark: form.value.remark,
                 id: form.value.id,
                 auditStatus: 2,//1:通过 2:拒绝
+                adminId:localStorage.getItem('UserID')
             })
             if (res.code === 0) {
                 ElMessage.success('拒绝成功');
