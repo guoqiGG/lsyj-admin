@@ -12,7 +12,7 @@
                         <el-input v-model="searchForm.mobile" placeholder="用户手机" clearable />
                     </el-form-item>
                 </el-col>
-                <el-col :lg="6" :md="12" :sm="12">
+                <!-- <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="团长名称">
                         <el-input v-model="searchForm.leaderName" placeholder="团长名称" clearable />
                     </el-form-item>
@@ -21,8 +21,8 @@
                     <el-form-item label="团长手机">
                         <el-input v-model="searchForm.leaderMobile" placeholder="团长手机" clearable />
                     </el-form-item>
-                </el-col>
-                <!-- <el-col :lg="6" :md="12" :sm="12">
+                </el-col> -->
+                <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="所属团长">
                         <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%"
                             clearable>
@@ -30,7 +30,7 @@
                                 :value="item.id" />
                         </el-select>
                     </el-form-item>
-                </el-col> -->
+                </el-col>
                 <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="用户类型">
                         <el-select v-model="searchForm.type" placeholder="请选择用户类型" style="width: 90%" clearable>
