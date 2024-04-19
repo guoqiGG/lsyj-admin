@@ -44,7 +44,7 @@
             <el-table-column prop="amount" label="售价" align="center" />
             <el-table-column prop="status" label="商品状态" align="center">
                 <template #default="scope">
-                    <span class="operation" >{{scope.row.status===0?'下架':scope.row.status===1?'上架':''}}</span>
+                    <span class="operation">{{ scope.row.status === 0 ? '下架' : scope.row.status === 1 ? '上架' : '' }}</span>
                 </template>
             </el-table-column>
             <!-- <el-table-column prop="leaderName" label="可售团长名称" align="center" width="170" /> -->
@@ -54,8 +54,10 @@
             <el-table-column prop="endTime" label="结束时间" width="170" align="center" />
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
+                    <span class="operation" @click="copyLink(scope.row)">小程序商品链接</span>
                     <span class="operation" @click="editOrCreateDialog(scope)">编辑</span>
-                   <p> <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="switchChange(scope.row)"/></p>
+                    <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0"
+                        @change="switchChange(scope.row)" />
                     <!-- <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="deleteProdById(scope.row.id, 1)"
                         @cancel="cancelEvent">
@@ -69,7 +71,7 @@
         <div class="pagination">
             <el-pagination background layout="total, sizes, prev, pager, next, jumper"
                 v-model:page-size="pages.pageSize" v-model:current-page="pages.pageNo"
-                :page-sizes="[5,10, 20, 50, 100, 200, 500]" :total="total" @size-change="tableHandleSizeChange"
+                :page-sizes="[5, 10, 20, 50, 100, 200, 500]" :total="total" @size-change="tableHandleSizeChange"
                 @current-change="tableHandleChange" />
         </div>
     </el-card>
@@ -304,7 +306,7 @@ import '@wangeditor/editor/dist/css/style.css' // 引入 css
 // import { onBeforeUnmount, ref, shallowRef } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { onMounted, ref, reactive, nextTick, onBeforeUnmount, shallowRef } from "vue";
-import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList, exportGoods, leaderList, upload,goodsDisplay } from "@/api/modules";
+import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList, exportGoods, leaderList, upload, goodsDisplay } from "@/api/modules";
 import { ElMessage, ElInput } from "element-plus";
 import {
     CirclePlus
@@ -331,7 +333,7 @@ const editorConfig = {
             "tenant-id": "1",
             fieldName: "file",
             uploadImgShowBase64: true,
-            async customUpload(file, insertFn) { 
+            async customUpload(file, insertFn) {
                 console.log(file)
                 const reader = new FileReader()
                 reader.onloadend = function () {
@@ -355,7 +357,7 @@ onBeforeUnmount(() => {
 
 const handleCreated = (editor) => {
     editorRef.value = editor // 记录 editor 实例，重要！
-    console.log(editor,'editor========')
+    console.log(editor, 'editor========')
 }
 
 const searchParams = {
@@ -579,8 +581,8 @@ const editOrCreateDialog = async (e) => {
         prodForm.value.groupLeader = res.data.groupLeader//团长可见
 
         prodForm.value.adminGoodsSkuInputVOS = res.data.adminGoodsSkuInputVOS
-        prodForm.value.startTime= res.data.startTime
-        prodForm.value.endTime= res.data.endTime
+        prodForm.value.startTime = res.data.startTime
+        prodForm.value.endTime = res.data.endTime
         if (res.data.goodsCouponActivity) {
             goodsCouponActivity.value = res.data.goodsCouponActivity
             prodForm.value.goodsCoupon.couponId = res.data.goodsCouponActivity.couponId
@@ -605,7 +607,7 @@ const closeEditOrCreateDialog = () => {
 }
 
 const save = Debounce(async () => {
-    console.log(valueHtml.value,'valueHtml')
+    console.log(valueHtml.value, 'valueHtml')
     categoryFormRef.value.validate(async (valid) => {
         if (valid) {
             if (prodForm.value.goodsCoupon.couponId && !prodForm.value.goodsCoupon.couponNum) {
@@ -833,7 +835,7 @@ const exportExcel = async () => {
 
 // 商品上下架    goodsId display 0-下架 1-上架
 const switchChange = async (item) => {
-    const res = await goodsDisplay({ goodsId: item.id, display:item.status,token:localStorage.getItem('token'),adminId:localStorage.getItem('UserID') })
+    const res = await goodsDisplay({ goodsId: item.id, display: item.status, token: localStorage.getItem('token'), adminId: localStorage.getItem('UserID') })
     if (res.code === 0) {
         ElMessage.success('商品状态修改成功');
         getProdList()
@@ -842,6 +844,30 @@ const switchChange = async (item) => {
         return false;
     }
 }
+// const copyLink=async(text)=>{
+// console.log(text,'text')
+
+// }
+const copyLink = async (copyValue) => {
+    let url='package-prod/pages/prod/prod?prodId='+copyValue.id
+    // 创建输入框
+    let inputDom = document.createElement('input');
+      // 给输入框value赋值
+      inputDom.value = url;
+      // 把input框添加到body上
+      document.body.appendChild(inputDom);
+      // 选中输入框中的内容
+      inputDom.select();
+      // 复制文字到剪切板
+      const hasCopy = document.execCommand('Copy');
+      console.log(hasCopy,'hasCopy')
+      ElMessage({
+          type: hasCopy ? 'success' : 'error',
+          message: hasCopy ? '复制成功' : '复制失败'
+     });
+      // 删除创建的dom节点
+      document.body.removeChild(inputDom);
+};
 onMounted(() => {
     getProdCategoryList()
     getProdList()
