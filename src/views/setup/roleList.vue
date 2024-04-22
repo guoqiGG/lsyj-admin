@@ -84,7 +84,7 @@ const authorityListData = ref([])
 const getAuthorityList = async () => {
     const res = await authorityList()
     authorityListData.value = res.data
-    console.log(res, 'res==角色权限列表数据===', authorityListData.value)
+
 }
 
 // 新增弹框

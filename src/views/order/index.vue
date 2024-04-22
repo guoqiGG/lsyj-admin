@@ -199,10 +199,22 @@
               <span class="operation">发货</span>
             </template>
           </el-popconfirm>
-          <span class="operation" v-if="scope.row.payStatus === 1"
-            @click="hamdleRefund(scope.row.orderId, 'single')">退款</span>
-          <span class="operation" v-if="scope.row.orderStatus === 2001"
-            @click="hamdleBatchReceive(scope.row.orderId, 'single')">收货</span>
+
+            <el-popconfirm v-if="scope.row.payStatus === 1" confirm-button-text="确定" cancel-button-text="取消"
+            cancel-button-type="info" icon-color="#626AEF" title="确定要退款吗?"
+            @confirm="hamdleRefund(scope.row.orderId, 'single')" @cancel="cancelEvent">
+            <template #reference>
+              <span class="operation">退款</span>
+            </template>
+          </el-popconfirm>
+            <el-popconfirm v-if="scope.row.orderStatus === 2001" confirm-button-text="确定" cancel-button-text="取消"
+            cancel-button-type="info" icon-color="#626AEF" title="确定要收货吗?"
+            @confirm="hamdleBatchReceive(scope.row.orderId, 'single')" @cancel="cancelEvent">
+            <template #reference>
+              <span class="operation">收货</span>
+            </template>
+          </el-popconfirm>
+
           <span v-loading.fullscreen.lock="fullscreenLoading" class="operation"
             @click="handleDetail(scope.row.id)">查看详情</span>
         </template>
