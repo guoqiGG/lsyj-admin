@@ -1,7 +1,7 @@
 <template>
   <div class="con">
     <div class="top">
-      <div class="top-title">订单数量</div>
+      <div class="top-title">订单数量({{orderNumber}})</div>
       <el-date-picker @change="getHomeOrder" v-model="searchForm.date" type="daterange" start-placeholder="开始时间"
         end-placeholder="结束时间" format="YYYY-MM-DD" value-format="YYYY-MM-DD" default-time />
     </div>
@@ -17,15 +17,16 @@ import dayjs from 'dayjs'
 import { onMounted, ref, watch } from 'vue'
 import { homeOrder } from '../../../api/modules'
 const searchForm = ref({
-  date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 6 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')],
-  startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 6 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
-  endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
+  date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 7 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime() - 1 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')],
+  startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 7 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
+  endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 1 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
 })
+const orderNumber = ref(null)
 const date = ref([])
 const dataList = ref([])
 const getHomeOrder = async () => {
-  let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 6 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
-  let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
+  let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 7 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
+  let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 1 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
 
   try {
     const res = await homeOrder({
@@ -33,6 +34,7 @@ const getHomeOrder = async () => {
       endDate: searchForm.value.endDate ? searchForm.value.endDate : endDate,
     })
     let data = res.data.dayLeaderVOS
+    orderNumber.value=res.data.orderNumber
     data.forEach((e) => {
       e.date = e.date.split(' ')[0]
     })

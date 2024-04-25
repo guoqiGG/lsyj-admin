@@ -16,16 +16,16 @@ import dayjs from 'dayjs'
 import { onMounted, ref, watch } from 'vue'
 import { homeOrder } from '../../../api/modules'
 const searchForm = ref({
-  date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 6 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')],
-  startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 6 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
-  endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
+  date: [dayjs(new Date(new Date().toLocaleDateString()).getTime() - 7 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'), dayjs(new Date(new Date().toLocaleDateString()).getTime() - 1 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')],
+  startDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 7 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD'),
+  endDate: dayjs(new Date(new Date().toLocaleDateString()).getTime() - 1 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
 })
-const amount=ref([])
+const amount=ref()
 const date = ref([])
 const dataList = ref([])
 const getHomeOrder = async () => {
-  let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 6 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
-  let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime()).format('YYYY-MM-DD')
+  let startDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 7 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
+  let endDate = dayjs(new Date(new Date().toLocaleDateString()).getTime() - 1 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD')
   try {
     const res = await homeOrder({
       startDate: searchForm.value.startDate ? searchForm.value.startDate : startDate,

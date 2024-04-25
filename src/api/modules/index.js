@@ -120,6 +120,14 @@ export function liveList(query) {
   });
 }
 
+// 新增直播间
+export function createLive(query) {
+  return service({
+    method: "POST",
+    url: "huan/tuo/add",
+    data: JSON.stringify(query),
+  });
+}
 // 视频列表
 export function videoList(query) {
   return service({
