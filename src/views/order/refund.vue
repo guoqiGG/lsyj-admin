@@ -90,7 +90,10 @@
                 <template #default="scope">
                     <div style="display: flex;flex-direction: row;">
                         <el-image style="width: 60px;height:60px;border-radius:5px;" :src="scope.row.orderGoodsList[0].thumbail" alt=""/>
-                        <div style="margin-left: 20px;width:150px;">{{ scope.row.orderGoodsList[0].title }}</div>
+                        <div style="width:150px;display: flex;align-items: center;">
+                            <div style="margin-left: 10px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ scope.row.orderGoodsList[0].title }}</div>
+                            <div style="line-height: 25px;margin-left: 10px; margin-top: 10px;" v-if="scope.row.specificationName!=='默认'">{{scope.row.specificationName?scope.row.specificationName:''}}</div>
+                        </div>
                     </div>
                 </template>
             </el-table-column>
@@ -247,13 +250,17 @@
             <div class="product" style="margin-top: 20px;">
                 <el-table :data="detail.orderRefundAdminList" style="width: 100%"
                     :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
-                    <el-table-column prop="type" label="商品" align="center">
+                    <el-table-column prop="type" label="商品" align="center" width="200px">
                         <template #default="scope">
-                            <img v-for="item in scope.row.imgList" class="product_img"
-                                style="width: 40px;height: 40px;margin: 0px 5px;" :src="item" alt="">
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="goodsName" label="商品名称" align="center" />
+                        <div style="display: flex;flex-direction: row;align-items: center;">
+                         <img style="width: 40px;height: 40px;margin: 0px 10px 0 5px;" :src="detail.orderGoods[0].thumbail" alt="">
+                         <div style="width:140px;">
+                           <div style="white-space: nowrap;color:#101010; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" >{{scope.row.goodsName}}</div>
+                           <div style="white-space: nowrap;font-size: 10px;text-align: left;color: #696868;" v-if="detail.specificationName!=='默认'">{{detail.specificationName}}</div>
+                         </div> 
+                        </div>  
+                       </template>
+                     </el-table-column>
                     <el-table-column prop="applyRefundNum" label="申请退款数量" align="center" />
                     <el-table-column prop="refundAmount" label="申请金额" align="center" />
                     <el-table-column prop="realRefundAmount" label="同意退款金额" align="center" />

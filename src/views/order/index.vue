@@ -141,12 +141,15 @@
             <div class="left" style="width:130px;">
               <div class="goodsName" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{
       scope.row.goodsName }}</div>
-              <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']">{{ scope.row.orderTypeStr }}</div>
+                <div style="display: flex;flex-direction: row; align-items: center;">
+                  <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']">{{ scope.row.orderTypeStr }}</div>
+                  <div style="line-height: 25px;margin-left: 10px; margin-top: 10px;" v-if="scope.row.specificationName!==默认">{{scope.row.specificationName?scope.row.specificationName:''}}</div>
+                </div>
             </div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="单价(元)/数量" align="center" width="100">
+      <el-table-column label="单价(元)/数量" align="center">
         <template #default="scope">
           <div class="price">
             <div class="price-title">{{ scope.row.amount }}</div>
@@ -200,14 +203,14 @@
             </template>
           </el-popconfirm>
 
-            <el-popconfirm v-if="scope.row.payStatus === 1" confirm-button-text="确定" cancel-button-text="取消"
+          <el-popconfirm v-if="scope.row.payStatus === 1" confirm-button-text="确定" cancel-button-text="取消"
             cancel-button-type="info" icon-color="#626AEF" title="确定要退款吗?"
             @confirm="hamdleRefund(scope.row.orderId, 'single')" @cancel="cancelEvent">
             <template #reference>
               <span class="operation">退款</span>
             </template>
           </el-popconfirm>
-            <el-popconfirm v-if="scope.row.orderStatus === 2001" confirm-button-text="确定" cancel-button-text="取消"
+          <el-popconfirm v-if="scope.row.orderStatus === 2001" confirm-button-text="确定" cancel-button-text="取消"
             cancel-button-type="info" icon-color="#626AEF" title="确定要收货吗?"
             @confirm="hamdleBatchReceive(scope.row.orderId, 'single')" @cancel="cancelEvent">
             <template #reference>
@@ -323,9 +326,15 @@
       <div class="product" style="margin-top: 20px;" v-if="detail.orderGoods && detail.orderGoods.length > 0">
         <el-table :data="detail.orderGoods" style="width: 100%"
           :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
-          <el-table-column prop="type" label="商品" align="center">
+          <el-table-column prop="type" label="商品" align="center" width="200px">
             <template #default="scope">
-              <img style="width: 40px;height: 40px;margin: 0px 5px;" :src="scope.row.thumbail" alt="">
+             <div style="display: flex;flex-direction: row;align-items: center;">
+              <img style="width: 40px;height: 40px;margin: 0px 10px 0 5px;" :src="scope.row.thumbail" alt="">
+              <div style="width: 140px;">
+                <div style="white-space: nowrap;color:#101010; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" >{{scope.row.title}}</div>
+                <div style="white-space: nowrap;font-size: 10px;text-align: left;color: #696868;" v-if="detail.specificationName!=='默认'">{{detail.specificationName}}</div>
+              </div> 
+             </div>  
             </template>
           </el-table-column>
           <el-table-column prop="salePrice" label="单价" align="center" />
