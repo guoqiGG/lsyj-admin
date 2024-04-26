@@ -44,7 +44,8 @@
             <el-table-column prop="amount" label="售价" align="center" />
             <el-table-column prop="status" label="商品状态" align="center">
                 <template #default="scope">
-                    <span class="operation">{{ scope.row.status === 0 ? '下架' : scope.row.status === 1 ? '上架' : '' }}</span>
+                    <span class="operation">{{ scope.row.status === 0 ? '下架' : scope.row.status === 1 ? '上架' : ''
+                        }}</span>
                 </template>
             </el-table-column>
             <!-- <el-table-column prop="leaderName" label="可售团长名称" align="center" width="170" /> -->
@@ -191,7 +192,7 @@
                     <el-table-column label="库存" align="center" width="150">
                         <template #default="scope">
                             <el-input-number controls-position="right"
-                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].stock"  size="small" />
+                                v-model="prodForm.adminGoodsSkuInputVOS[scope.$index].stock" size="small" />
                         </template>
                     </el-table-column>
                     <el-table-column label="注水销量" align="center" width="150">
@@ -846,24 +847,24 @@ const switchChange = async (item) => {
 }
 
 const copyLink = async (copyValue) => {
-    let url='/pages/package-prod/pages/prod/prod?prodId='+copyValue.id
+    let url = '/pages/package-prod/pages/prod/prod?prodId=' + copyValue.id
     // 创建输入框
     let inputDom = document.createElement('input');
-      // 给输入框value赋值
-      inputDom.value = url;
-      // 把input框添加到body上
-      document.body.appendChild(inputDom);
-      // 选中输入框中的内容
-      inputDom.select();
-      // 复制文字到剪切板
-      const hasCopy = document.execCommand('Copy');
-      console.log(hasCopy,'hasCopy')
-      ElMessage({
-          type: hasCopy ? 'success' : 'error',
-          message: hasCopy ? '复制成功' : '复制失败'
-     });
-      // 删除创建的dom节点
-      document.body.removeChild(inputDom);
+    // 给输入框value赋值
+    inputDom.value = url;
+    // 把input框添加到body上
+    document.body.appendChild(inputDom);
+    // 选中输入框中的内容
+    inputDom.select();
+    // 复制文字到剪切板
+    const hasCopy = document.execCommand('Copy');
+    console.log(hasCopy, 'hasCopy')
+    ElMessage({
+        type: hasCopy ? 'success' : 'error',
+        message: hasCopy ? '复制成功' : '复制失败'
+    });
+    // 删除创建的dom节点
+    document.body.removeChild(inputDom);
 };
 onMounted(() => {
     getProdCategoryList()

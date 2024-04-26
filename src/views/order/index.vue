@@ -75,7 +75,6 @@
             </el-select>
           </el-form-item>
         </el-col>
-
         <el-col :lg="12" :md="12" :sm="24">
           <el-form-item label="时间 ">
             <el-date-picker v-model="searchForm.time" type="daterange" start-placeholder="开始时间" end-placeholder="结束时间"
@@ -113,8 +112,6 @@
     <el-button type="primary" :class="!isDisabled ? 'button-class' : 'button_false'" style="margin-bottom: 20px;"
       :disabled="isDisabled" @click="hamdleBatchReceive">批量收货</el-button>
     <el-button :icon="Download" style="margin-bottom: 20px" @click="exportExcel">导出</el-button>
-
-
     <el-table v-loading="loading" :data="orderListData" style="width: 100%" ref="multipleTableRef"
       :header-cell-style="{ background: '#f7f8fa', color: '#000' }" @selection-change="handleSelectionChange" border>
       <el-table-column type="selection" width="55" align="center" />
@@ -141,10 +138,13 @@
             <div class="left" style="width:130px;">
               <div class="goodsName" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{
       scope.row.goodsName }}</div>
-                <div style="display: flex;flex-direction: row; align-items: center;">
-                  <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']">{{ scope.row.orderTypeStr }}</div>
-                  <div style="line-height: 25px;margin-left: 10px; margin-top: 10px;" v-if="scope.row.specificationName!==默认">{{scope.row.specificationName?scope.row.specificationName:''}}</div>
+              <div style="display: flex;flex-direction: row; align-items: center;">
+                <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']">{{ scope.row.orderTypeStr }}</div>
+                <div style="line-height: 25px;margin-left: 10px; margin-top: 10px;"
+                  v-if="scope.row.specificationName !== 默认">{{ scope.row.specificationName ? scope.row.specificationName
+      : '' }}
                 </div>
+              </div>
             </div>
           </div>
         </template>
@@ -328,13 +328,16 @@
           :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
           <el-table-column prop="type" label="商品" align="center" width="200px">
             <template #default="scope">
-             <div style="display: flex;flex-direction: row;align-items: center;">
-              <img style="width: 40px;height: 40px;margin: 0px 10px 0 5px;" :src="scope.row.thumbail" alt="">
-              <div style="width: 140px;">
-                <div style="white-space: nowrap;color:#101010; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" >{{scope.row.title}}</div>
-                <div style="white-space: nowrap;font-size: 10px;text-align: left;color: #696868;" v-if="detail.specificationName!=='默认'">{{detail.specificationName}}</div>
-              </div> 
-             </div>  
+              <div style="display: flex;flex-direction: row;align-items: center;">
+                <img style="width: 40px;height: 40px;margin: 0px 10px 0 5px;" :src="scope.row.thumbail" alt="">
+                <div style="width: 140px;">
+                  <div
+                    style="white-space: nowrap;color:#101010; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    {{ scope.row.title }}</div>
+                  <div style="white-space: nowrap;font-size: 10px;text-align: left;color: #696868;"
+                    v-if="detail.specificationName !== '默认'">{{ detail.specificationName }}</div>
+                </div>
+              </div>
             </template>
           </el-table-column>
           <el-table-column prop="salePrice" label="单价" align="center" />

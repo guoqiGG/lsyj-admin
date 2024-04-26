@@ -137,7 +137,7 @@ const getEcharts = () => {
     yAxis: [
       {
         min: 0, // 最小值
-        max: 100000, //最大值
+        max: 50000, //最大值
         // splitNumber: 3, //划分3格
         type: 'value',
         axisLine: {

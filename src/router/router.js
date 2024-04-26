@@ -277,6 +277,16 @@ const routes = [
           name: "直播间列表",
         },
       },
+      // 欢拓直播间列表
+      {
+        path: "/huantuo",
+        name: "huantuo",
+        component: () => import("../views/live/huantuo.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "欢拓直播间列表",
+        },
+      },
     ],
   },
   // 视频

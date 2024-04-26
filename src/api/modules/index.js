@@ -119,6 +119,23 @@ export function liveList(query) {
     data: JSON.stringify(query),
   });
 }
+// 欢拓直播间列表
+export function huanTuoliveList(query) {
+  return service({
+    method: "POST",
+    url: "/huan/tuo/get/list",
+    data: JSON.stringify(query),
+  });
+}
+
+// 获取欢拓直播间 推流地址 和 obs地址
+export function huanTuoPushStreamingAndObsAddress(query) {
+  return service({
+    method: "POST",
+    url: "huan/tuo/pushAddr",
+    data: JSON.stringify(query),
+  });
+}
 
 // 新增直播间
 export function createLive(query) {
@@ -128,6 +145,25 @@ export function createLive(query) {
     data: JSON.stringify(query),
   });
 }
+
+// 直播间添加直播商品
+export function huanTuoAddLiveProd(query) {
+  return service({
+    method: "POST",
+    url: "huan/tuo/add/goods",
+    data: JSON.stringify(query),
+  });
+}
+
+// 上下架直播间商品
+export function editHuanTuoLiveProdStatus(query) {
+  return service({
+    method: "POST",
+    url: "huan/tuo/update/goods/status",
+    data: JSON.stringify(query),
+  });
+}
+
 // 视频列表
 export function videoList(query) {
   return service({
@@ -226,7 +262,7 @@ export function deleteProd(query) {
     data: JSON.stringify(query),
   });
 }
-// 商品上下架  
+// 商品上下架
 export function goodsDisplay(query) {
   return service({
     method: "POST",
@@ -536,17 +572,14 @@ export function authorityList() {
   return service({
     method: "POST",
     url: "admin/get/authority/list",
-    data:{},
+    data: {},
   });
 }
 // 订单退款
-export function orderRefund(orderNumber,adminId) {
+export function orderRefund(orderNumber, adminId) {
   return service({
     method: "get",
-    url: `order/refund/order?orderNumber=`+orderNumber+'&adminId='+adminId,
+    url:
+      `order/refund/order?orderNumber=` + orderNumber + "&adminId=" + adminId,
   });
 }
-
-
-
-

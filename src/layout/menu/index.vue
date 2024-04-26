@@ -172,6 +172,11 @@ const menuList2 = ref([
         title: "直播间列表",
         url: "/liveList",
         icon: "Menu",
+      },
+      {
+        title: "欢拓直播间列表",
+        url: "/huantuo",
+        icon: "Menu",
       }
     ],
   },
@@ -206,11 +211,11 @@ const menuList2 = ref([
   }
 ]);
 const routerList = JSON.parse(localStorage.getItem("routerList"))
-const menuList=ref([])
-if(routerList&&routerList.length>0){
-  menuList.value=[...routerList]
-}else{
-  menuList.value=[...menuList2.value]
+const menuList = ref([])
+if (routerList && routerList.length > 0) {
+  menuList.value = [...routerList]
+} else {
+  menuList.value = [...menuList2.value]
 }
 // localStorage.setItem("routerList", JSON.stringify(res.data));
 const handleOpen = (key, keyPath) => {
