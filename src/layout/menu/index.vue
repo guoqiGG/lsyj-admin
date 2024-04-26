@@ -177,6 +177,11 @@ const menuList2 = ref([
         title: "欢拓直播间列表",
         url: "/huantuo",
         icon: "Menu",
+      },
+      {
+        title: "欢拓观看时长列表",
+        url: "/huantuouserviewtime",
+        icon: "Menu",
       }
     ],
   },

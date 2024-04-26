@@ -62,7 +62,7 @@
         </el-col>
         <el-col :lg="6" :md="8" :sm="12">
           <el-form-item label="所属团长">
-            <el-select v-model="searchForm.pUid" filterable placeholder="请选择所属团长" style="width: 90%" clearable>
+            <el-select v-model="searchForm.parentUserId" filterable placeholder="请选择所属团长" style="width: 90%" clearable>
               <el-option v-for="item in pUidOptions" :key="item.puid" :label="item.leaderName" :value="item.puid" />
             </el-select>
           </el-form-item>
@@ -77,7 +77,7 @@
         </el-col>
         <el-col :lg="12" :md="12" :sm="24">
           <el-form-item label="时间 ">
-            <el-date-picker v-model="searchForm.time" type="daterange" start-placeholder="开始时间" end-placeholder="结束时间"
+            <el-date-picker v-model="searchForm.time" type="datetimerange" start-placeholder="开始时间" end-placeholder="结束时间"
               format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss" default-time />
           </el-form-item>
         </el-col>
@@ -131,7 +131,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="商品信息" width="250">
+      <el-table-column label="商品信息" width="300">
         <template #default="scope">
           <div class="goodsInfo">
             <el-image style="width: 60px;height:60px;border-radius:5px;" :src="scope.row.thumbail" lazy></el-image>
@@ -139,9 +139,9 @@
               <div class="goodsName" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{
       scope.row.goodsName }}</div>
               <div style="display: flex;flex-direction: row; align-items: center;">
-                <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']">{{ scope.row.orderTypeStr }}</div>
-                <div style="line-height: 25px;margin-left: 10px; margin-top: 10px;"
-                  v-if="scope.row.specificationName !== 默认">{{ scope.row.specificationName ? scope.row.specificationName
+                <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']" style="white-space: nowrap;">{{ scope.row.orderTypeStr }}</div>
+                <div style="line-height: 25px;margin-left: 10px; margin-top: 10px;white-space: nowrap;"
+                  v-if="scope.row.specificationName !== '默认'">{{ scope.row.specificationName ? scope.row.specificationName
       : '' }}
                 </div>
               </div>
@@ -408,7 +408,7 @@ const getLeaderList = async () => {
 }
 const searchParams = {
   orderNumber: null,
-  pUid: null,
+  parentUserId: null,
   userName: null,
   leaderName: null,
   leaderMobile: null,
@@ -437,7 +437,7 @@ const getOrderList = async () => {
   loading.value = true
   const res = await orderList({
     orderNumber: searchForm.value.orderNumber,
-    pUid: searchForm.value.pUid,
+    parentUserId: searchForm.value.parentUserId,
     userName: searchForm.value.userName,
     leaderName: searchForm.value.leaderName,
     leaderMobile: searchForm.value.leaderMobile,
@@ -605,7 +605,7 @@ const exportExcel = async () => {
   loading.value = true
   const res = await exportOrder({
     orderNumber: searchForm.value.orderNumber,
-    pUid: searchForm.value.pUid,
+    parentUserId: searchForm.value.parentUserId,
     userName: searchForm.value.userName,
     leaderName: searchForm.value.leaderName,
     leaderMobile: searchForm.value.leaderMobile,

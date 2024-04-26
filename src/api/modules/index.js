@@ -137,7 +137,7 @@ export function huanTuoPushStreamingAndObsAddress(query) {
   });
 }
 
-// 新增直播间
+// 新增欢拓直播间
 export function createLive(query) {
   return service({
     method: "POST",
@@ -146,7 +146,7 @@ export function createLive(query) {
   });
 }
 
-// 直播间添加直播商品
+// 欢拓直播间添加直播商品
 export function huanTuoAddLiveProd(query) {
   return service({
     method: "POST",
@@ -155,11 +155,20 @@ export function huanTuoAddLiveProd(query) {
   });
 }
 
-// 上下架直播间商品
+// 上下架欢拓直播间商品
 export function editHuanTuoLiveProdStatus(query) {
   return service({
     method: "POST",
     url: "huan/tuo/update/goods/status",
+    data: JSON.stringify(query),
+  });
+}
+
+// 欢拓用户观看时长列表
+export function huanTuoUserViewTimeList(query) {
+  return service({
+    method: "POST",
+    url: "/huan/tuo/user/viewing/time/list",
     data: JSON.stringify(query),
   });
 }

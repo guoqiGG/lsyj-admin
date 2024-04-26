@@ -287,6 +287,16 @@ const routes = [
           name: "欢拓直播间列表",
         },
       },
+      // 用户观看时长
+      {
+        path: "/huantuouserviewtime",
+        name: "huantuouserviewtime",
+        component: () => import("../views/live/huantuouserviewtime.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "欢拓观看时长列表",
+        },
+      },
     ],
   },
   // 视频
