@@ -82,7 +82,8 @@
             <!-- <el-table-column prop="createTime" label="创建时间" /> -->
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
-                    <span class="operation" @click="editOrCreateDialog(scope)" :icon="Edit">编辑</span>
+                    <span class="operation" @click="editOrCreateDialog(scope)">编辑</span>
+                    <span class="operation" @click="openGenerateHuantuoLiveLink(scope.row)">生成欢拓直播链接</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -96,16 +97,32 @@
     <!-- 修改用户信息 -->
     <edit-user-info ref="editUserInfoRef" :editOrCreateDialogVisible="editOrCreateDialogVisible" :userInfo="userInfo"
         :active="active" @closeDialog="closeDialog"></edit-user-info>
+    <!-- 单个用户生成欢拓直播地址 -->
+    <el-dialog v-model="generateHuantuoLiveLinkDialogVisible" title="单个用户生成欢拓直播地址" width="400px" @close="closeGenerateHuantuoLiveLinkDialog">
+        <el-form ref="liveLinkRef" :rules="liveLinkRules" :model="liveLinkForm" class="demo-form-inline"
+            label-width="100px" :label-position="right">
+            <el-form-item label="欢拓直播间" prop="couponId">
+                <el-select v-model="liveLinkForm.course_id" placeholder="请选择欢拓直播间" clearable filterable
+                    style="width: 200px;">
+                    <el-option v-for="item in liveListData" :label="item.course_name" :value="item.course_id" />
+                </el-select>
+            </el-form-item>
+
+            <el-form-item class="footer">
+                <el-button type="primary" @click="generateLiveLink">保存</el-button>
+                <el-button @click="closeGenerateHuantuoLiveLinkDialog">关闭</el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
 </template>
 <script setup>
 import EditUserInfo from './edit-user-info.vue'
-
-import { onMounted, ref, reactive } from "vue";
-import { userList, leaderList, exportUser } from "../../api/modules";
+import { onMounted, reactive, ref } from "vue";
+import { userList, leaderList, exportUser, huanTuoliveList, generateHuanTuoLiveSingleLink } from "../../api/modules";
 import {
     Download
 } from '@element-plus/icons-vue'
-
+import { ElMessage } from "element-plus";
 const options = ref()
 const getLeaderList = async () => {
     const res = await leaderList({
@@ -146,7 +163,12 @@ let userListData = ref([])
 const active = ref('1') // tab 1购物明细 2礼品卡明细 3合成卡明细 4优惠券明细
 const editUserInfoRef = ref(null)
 
-
+const generateHuantuoLiveLinkDialogVisible = ref(false)
+const liveListData = ref([])
+const liveLinkForm = ref({
+    course_id: null
+})
+const liveLinkRef = ref(null)
 const getUserList = async () => {
     loading.value = true
     const res = await userList({ ...searchForm.value, ...pages.value })
@@ -212,6 +234,49 @@ const exportExcel = async () => {
     }
 }
 
+const openGenerateHuantuoLiveLink = (scope) => {
+    userInfo.value = scope
+    generateHuantuoLiveLinkDialogVisible.value = true
+    getHuanTuoLiveList()
+}
+
+const closeGenerateHuantuoLiveLinkDialog = () => {
+    generateHuantuoLiveLinkDialogVisible.value = false
+    liveLinkForm.value.course_id=null
+    userInfo.value=null
+}
+
+const getHuanTuoLiveList = async () => {
+    const res = await huanTuoliveList({ pageNo: 1, pageSize: 20 })
+    liveListData.value = res.data
+}
+
+const liveLinkRules = reactive({
+    course_id: [{ required: true, message: "请选择直播间", trigger: "blur" }],
+})
+
+const generateLiveLink = async () => {
+    liveLinkRef.value.validate(async (valid) => {
+        if (valid) {
+            try {
+                const res = await generateHuanTuoLiveSingleLink({
+                    userId: userInfo.value.id,
+                    course_id: liveLinkForm.value.course_id
+                });
+
+                if (res.code == 0) {
+                    ElMessage.success('生成直播间地址成功');
+                    closeGenerateHuantuoLiveLinkDialog()
+                }
+            } catch (error) {
+                ElMessage.error('生成直播间地址失败');
+                return
+            }
+        } else {
+            return false;
+        }
+    });
+};
 
 onMounted(() => {
     getLeaderList()

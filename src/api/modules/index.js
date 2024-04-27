@@ -137,6 +137,23 @@ export function huanTuoPushStreamingAndObsAddress(query) {
   });
 }
 
+// 生成欢拓直播链接
+export function generateHuanTuoLiveLink(query) {
+  return service({
+    method: "POST",
+    url: "huan/tuo/user/status",
+    data: JSON.stringify(query),
+  });
+}
+
+//  根据用户id直播间id 生成用户直播地址
+export function generateHuanTuoLiveSingleLink(query) {
+  return service({
+    method: "POST",
+    url: "huan/tuo/user/courseId/group",
+    data: JSON.stringify(query),
+  });
+}
 // 新增欢拓直播间
 export function createLive(query) {
   return service({

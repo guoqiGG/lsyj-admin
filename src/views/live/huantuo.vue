@@ -1,6 +1,8 @@
 <template>
     <el-card>
         <el-button tag="div" :icon="CirclePlus" type="primary" @click="showEditOrCreateDialog()">创建直播间</el-button>
+        <el-button tag="div" @click="toHuanTuoAdmin()">欢拓后台地址</el-button>
+
         <el-table v-loading="loading" :data="liveListData" style="width: 100%;margin-top: 10px;" :border="parentBorder"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column type="expand">
@@ -23,7 +25,8 @@
                         <el-table-column prop="url" label="商品链接" align="center" />
                         <el-table-column label="商品状态" align="center">
                             <template #default="scope">
-                                <el-switch v-model="scope.row.putaway" active-value="1" inactive-value="0" style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+                                <el-switch v-model="scope.row.putaway" active-value="1" inactive-value="0"
+                                    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
                                     @change="editLiveProdStatus(props.row.course_id, scope)" />
                             </template>
                         </el-table-column>
@@ -88,11 +91,12 @@
                     {{ liveStatus[scope.row.liveStatus] }}
                 </template>
             </el-table-column>
-            <el-table-column fixed="right" label="操作" width="250" align="center">
+            <el-table-column fixed="right" label="操作" width="200" align="center">
                 <template #default="scope">
                     <span class="operation" @click="getAddress(scope.row.course_id, 'push')">推流地址</span>
                     <span class="operation" @click="getAddress(scope.row.course_id, 'obs')">obs地址</span>
                     <span class="operation" @click="showAddLiveProdDialog(scope.row.course_id)">添加直播商品</span>
+                    <span class="operation" @click="generateLiveLink(scope.row.course_id)">生成直播链接</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -193,7 +197,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed, reactive } from "vue";
-import { huanTuoliveList, createLive, huanTuoPushStreamingAndObsAddress, prodList, huanTuoAddLiveProd, editHuanTuoLiveProdStatus } from "@/api/modules";
+import { huanTuoliveList, createLive, huanTuoPushStreamingAndObsAddress, prodList, huanTuoAddLiveProd, editHuanTuoLiveProdStatus, generateHuanTuoLiveLink } from "@/api/modules";
 import { ElMessage } from "element-plus";
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const token = localStorage.getItem('token')
@@ -336,18 +340,18 @@ const editLiveProdStatus = async (course_id, scope) => {
     try {
         const res = await editHuanTuoLiveProdStatus({ ...params })
         if (res?.code === 0) {
-            if(params.putaway==0){
+            if (params.putaway == 0) {
                 ElMessage({
-                showClose: false,
-                message: '下架成功',
-                type: 'success',
-            })
-            }else{
+                    showClose: false,
+                    message: '下架成功',
+                    type: 'success',
+                })
+            } else {
                 ElMessage({
-                showClose: false,
-                message: '上架成功',
-                type: 'success',
-            })
+                    showClose: false,
+                    message: '上架成功',
+                    type: 'success',
+                })
             }
             getHuanTuoLiveList()
         }
@@ -531,11 +535,24 @@ const clearAddLiveProdForm = () => {
     }
 }
 
+// 生成直播链接
+const generateLiveLink = async (e) => {
+    ElMessage({
+        showClose: false,
+        message: '成功',
+        type: 'success',
+    })
+    const res = await generateHuanTuoLiveLink({ course_id: e })
+}
+const toHuanTuoAdmin = () => {
+    window.open('https://console2.talk-fun.com/#/login?pid=64417', '_blank');
+
+}
+
 onMounted(() => {
     getHuanTuoLiveList()
     getProdList()
 })
-
 
 </script>
 

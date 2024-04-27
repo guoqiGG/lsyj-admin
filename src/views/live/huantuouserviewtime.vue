@@ -43,6 +43,7 @@
             <el-table-column prop="userName" label="用户"  align="center" />
             <el-table-column prop="leaderName" label="所属团长"  align="center" />
             <el-table-column prop="puid" label="团长ID"  align="center" />
+            <el-table-column prop="courseName" label="直播间名称"  align="center" />
             <el-table-column prop="durationStr" label="观看时长"  align="center" />
             <el-table-column prop="createTime" label="创建时间"  align="center" />
         </el-table>

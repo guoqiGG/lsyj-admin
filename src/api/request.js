@@ -3,7 +3,7 @@ import { ElMessage } from "element-plus";
 import { tansParams, blobValidate } from "@/utils/ruoyi";
 
 const service = axios.create({
-  timeout: 50000,
+  timeout: 1000*60*60*12,
   baseURL: "/api",
 });
 // Request interceptors
