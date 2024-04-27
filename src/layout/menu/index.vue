@@ -200,7 +200,7 @@ const menuList2 = ref([
   {
     title: "系统设置",
     url: "/setup",
-    icon: "VideoCamera",
+    icon: "Tools",
     children: [
       {
         title: "管理员列表",
@@ -212,6 +212,18 @@ const menuList2 = ref([
         url: "/roleList",
         icon: "Menu",
       }
+    ],
+  },
+  {
+    title: "配置管理",
+    url: "/config",
+    icon: "Setting",
+    children: [
+      {
+        title: "配置列表",
+        url: "/configList",
+        icon: "Menu",
+      },
     ],
   }
 ]);

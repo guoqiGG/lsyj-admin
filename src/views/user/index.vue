@@ -101,7 +101,7 @@
     <el-dialog v-model="generateHuantuoLiveLinkDialogVisible" title="单个用户生成欢拓直播地址" width="400px" @close="closeGenerateHuantuoLiveLinkDialog">
         <el-form ref="liveLinkRef" :rules="liveLinkRules" :model="liveLinkForm" class="demo-form-inline"
             label-width="100px" :label-position="right">
-            <el-form-item label="欢拓直播间" prop="couponId">
+            <el-form-item label="欢拓直播间" prop="course_id">
                 <el-select v-model="liveLinkForm.course_id" placeholder="请选择欢拓直播间" clearable filterable
                     style="width: 200px;">
                     <el-option v-for="item in liveListData" :label="item.course_name" :value="item.course_id" />

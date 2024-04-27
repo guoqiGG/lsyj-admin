@@ -609,3 +609,22 @@ export function orderRefund(orderNumber, adminId) {
       `order/refund/order?orderNumber=` + orderNumber + "&adminId=" + adminId,
   });
 }
+
+// 配置列表
+export function configList(query) {
+  return service({
+    method: "get",
+    url: "/admin/get/setting",
+    params: query,
+  });
+}
+
+// 修改配置
+// 上下架欢拓直播间商品
+export function updateConfig(query) {
+  return service({
+    method: "POST",
+    url: "admin/update/setting",
+    data: JSON.stringify(query),
+  });
+}

@@ -9,13 +9,9 @@
             <el-table-column prop="createTime" label="创建时间" align="center" />
             <el-table-column prop="isDeleted" label="状态" align="center" >
                 <template #default="scope">
-                        <span class="operation"> {{ scope.row.isDeleted === 0 ? '正常' : '禁用' }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column fixed="right" label="操作" width="180" align="center">
-                <template #default="scope">
-                        <el-switch v-model="scope.row.isDeleted" :active-value="0" :inactive-value="1" @change="switchChange(scope.row)"/>
-                </template>
+                    <el-switch v-model="scope.row.isDeleted" :active-value="0" :inactive-value="1"  active-text="正常"
+                    inactive-text="禁用" inline-prompt @change="switchChange(scope.row)"/>
+            </template>
             </el-table-column>
         </el-table>
         <div class="pagination">
