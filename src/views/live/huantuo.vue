@@ -172,12 +172,11 @@
                 </el-upload>
             </el-form-item>
             <el-form-item label="现价" prop="price">
-                <el-input-number controls-position="right" :precision="2" min="0.01" v-model="addLiveProdForm.price"
-                    placeholder="现价" clearable />
+                <el-input-number controls-position="right" v-model="addLiveProdForm.price" placeholder="现价" clearable />
             </el-form-item>
             <el-form-item label="原价" prop="originalPrice">
-                <el-input-number controls-position="right" :precision="2" min="0.01"
-                    v-model="addLiveProdForm.originalPrice" placeholder="原价" clearable />
+                <el-input-number controls-position="right" v-model="addLiveProdForm.originalPrice" placeholder="原价"
+                    clearable />
             </el-form-item>
             <el-form-item label="商品链接" prop="url">
                 <el-input v-model="addLiveProdForm.url" placeholder="商品链接" clearable />
@@ -197,7 +196,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed, reactive } from "vue";
-import { huanTuoliveList, createLive, huanTuoPushStreamingAndObsAddress, prodList, huanTuoAddLiveProd, editHuanTuoLiveProdStatus, generateHuanTuoLiveLink } from "@/api/modules";
+import { huanTuoliveList, createLive, huanTuoPushStreamingAndObsAddress, prodList, huanTuoAddLiveProd, editHuanTuoLiveProdStatus, generateHuanTuoLiveLink, prodInfoById } from "@/api/modules";
 import { ElMessage } from "element-plus";
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const token = localStorage.getItem('token')
@@ -475,14 +474,20 @@ const getProdList = async () => {
     prodListData.value = res.data.list
 }
 
-const liveProdChange = (e) => {
+const liveProdChange = async (e) => {
     console.log(e)
+    let prodId = ''
     prodListData.value.forEach(element => {
         if (element.name === e) {
             addLiveProdForm.value.img = element.thumbail
             addLiveProdForm.value.url = "http://h5.hnspsd.com/#/pages/package-prod/pages/prod/prod?prodId=" + element.id
+            prodId = element.id
         }
     })
+    const res = await prodInfoById({ goodsId: prodId })
+    console.log(res)
+    addLiveProdForm.value.originalPrice = res.data.adminGoodsSkuInputVOS[0].factoryPrice
+    addLiveProdForm.value.price = res.data.adminGoodsSkuInputVOS[0].price
 
 }
 
