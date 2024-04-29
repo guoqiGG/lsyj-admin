@@ -57,6 +57,12 @@
                 <template #default="scope">
                     <span class="operation" @click="copyLink(scope.row)">小程序商品链接</span>
                     <span class="operation" @click="editOrCreateDialog(scope)">编辑</span>
+                    <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
+                        icon-color="#626AEF" title="确定要删除吗?" @confirm="handleDel(scope)" @cancel="cancelEvent">
+                        <template #reference>
+                            <span class="operation">删除</span>
+                        </template>
+                    </el-popconfirm>
                     <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0"
                         @change="switchChange(scope.row)" />
                     <!-- <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
@@ -307,7 +313,7 @@ import '@wangeditor/editor/dist/css/style.css' // 引入 css
 // import { onBeforeUnmount, ref, shallowRef } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { onMounted, ref, reactive, nextTick, onBeforeUnmount, shallowRef } from "vue";
-import { prodList, prodCategoryList, deleteProd, prodAdd, prodInfoById, couponList, exportGoods, leaderList, upload, goodsDisplay } from "@/api/modules";
+import { prodList, prodCategoryList, updateProd, deleteProdById, prodAdd, prodInfoById, couponList, exportGoods, leaderList, upload, goodsDisplay } from "@/api/modules";
 import { ElMessage, ElInput } from "element-plus";
 import {
     CirclePlus
@@ -508,14 +514,6 @@ const resetForm = () => {
     getProdList()
 }
 
-// const deleteProdById = async (id, isDeleted) => {
-//     const res = await deleteProd({ goodsId: id, isDeleted })
-//     console.log(res)
-//     if (res.code === 0) {
-//         getProdList()
-//     }
-// }
-
 const uploadRef = ref(null)
 
 
@@ -702,7 +700,7 @@ const save = Debounce(async () => {
                     }
                 }
 
-                const res = await deleteProd({ ...params })
+                const res = await updateProd({ ...params })
                 if (res?.code == 0) {
 
                     closeEditOrCreateDialog()
@@ -866,6 +864,15 @@ const copyLink = async (copyValue) => {
     // 删除创建的dom节点
     document.body.removeChild(inputDom);
 };
+
+const handleDel = async (scope) => {
+    const res = await deleteProdById({ id: scope.row.id})
+    if (res?.code === 0) {
+        ElMessage.success('删除成功')
+        getProdList()
+    }
+}
+
 onMounted(() => {
     getProdCategoryList()
     getProdList()

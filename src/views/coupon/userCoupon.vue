@@ -66,7 +66,7 @@
                 ? "下单"
                 : scope.row.type == 1
                     ? "后台补发"
-                    : "系统延迟发放"
+                    :scope.row.type ==2? "系统延迟发放":'直播领取'
         }}
                 </template>
             </el-table-column>

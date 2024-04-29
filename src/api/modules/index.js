@@ -280,8 +280,8 @@ export function prodInfoById(query) {
   });
 }
 
-// 商品删除与修改
-export function deleteProd(query) {
+// 商品修改
+export function updateProd(query) {
   return service({
     method: "POST",
     url: "/goods/modify",
@@ -297,6 +297,14 @@ export function goodsDisplay(query) {
   });
 }
 
+// 商品删除
+export function deleteProdById(query) {
+  return service({
+    method: "POST",
+    url: "/goods/update/status",
+    data: JSON.stringify(query),
+  });
+}
 // 优惠券列表
 export function couponList(query) {
   return service({

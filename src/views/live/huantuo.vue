@@ -1,8 +1,11 @@
 <template>
     <el-card>
-        <el-button tag="div" :icon="CirclePlus" type="primary" @click="showEditOrCreateDialog()">创建直播间</el-button>
+        <el-divider content-position="left"><span style="font-size: 16px;color:#ea3b26;">须知:</span></el-divider>
+        <div style="font-size: 12px;color:#ea3b26;">1.创建直播间完，请立即创建商品 </div>
+        <div style="margin-top: 5px; font-size: 12px;color:#ea3b26;">2.请在当天开播前 两个半小时 创建完成直播间</div>
+        <div style="margin-top: 20px;"></div>
+        <el-button  tag="div" :icon="CirclePlus" type="primary" @click="showEditOrCreateDialog()">创建直播间</el-button>
         <el-button tag="div" @click="toHuanTuoAdmin()">欢拓后台地址</el-button>
-
         <el-table v-loading="loading" :data="liveListData" style="width: 100%;margin-top: 10px;" :border="parentBorder"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column type="expand">
@@ -153,7 +156,13 @@
     <el-dialog v-model="addLiveProdDialogVisible" title="添加直播商品" width="800px" @close="closeAddLiveProdDialog">
         <el-form ref="addLiveProdFormRef" :rules="liveProdRules" :model="addLiveProdForm" class="demo-form-inline"
             label-width="100px" :label-position="right">
-
+            <el-form-item label="商品类型" prop="putaway">
+                <el-radio-group v-model="addLiveProdForm.type" @change="prodTypeChange">
+                    <el-radio :label="0" border>普通商品</el-radio>
+                    <el-radio :label="1" border>优惠券</el-radio>
+                    <el-radio :label="2" border>礼品卡</el-radio>
+                </el-radio-group>
+            </el-form-item>
             <el-form-item label="直播商品" prop="name">
                 <el-select v-model="addLiveProdForm.name" filterable remote reserve-keyword placeholder="请输入商品名称"
                     remote-show-suffix :remote-method="getProdListByName" clearable @change="liveProdChange">
@@ -196,7 +205,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed, reactive } from "vue";
-import { huanTuoliveList, createLive, huanTuoPushStreamingAndObsAddress, prodList, huanTuoAddLiveProd, editHuanTuoLiveProdStatus, generateHuanTuoLiveLink, prodInfoById } from "@/api/modules";
+import { huanTuoliveList, createLive, huanTuoPushStreamingAndObsAddress, prodList,couponList,giftList, huanTuoAddLiveProd, editHuanTuoLiveProdStatus, generateHuanTuoLiveLink, prodInfoById } from "@/api/modules";
 import { ElMessage } from "element-plus";
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const token = localStorage.getItem('token')
@@ -393,9 +402,11 @@ const addLiveProdDialogVisible = ref(false)
 const showAddLiveProdDialog = (courseId) => {
     addLiveProdDialogVisible.value = true
     addLiveProdForm.value.courseId = courseId
+    getProdList()
 }
 const addLiveProdFormRef = ref(null)
 const addLiveProdForm = ref({
+    type: 0, // 0普通商品 1 优惠券 2 礼品卡
     courseId: null,// 直播间ID
     name: null, // 商品名称
     img: null, //图片
@@ -464,35 +475,74 @@ const beforeUpload = (file) => {
     return isLt2M && isOKType;
 }
 const prodListData = ref([])
+// 普通商品
 const getProdListByName = async (query) => {
     const res = await prodList({ name: query, pageNo: 1, pageSize: 100000000 })
     prodListData.value = res.data.list
 }
 
 const getProdList = async () => {
-    const res = await prodList({ pageNo: 1, pageSize: 10 })
+    const res = await prodList({ pageNo: 1, pageSize: 5 })
+    prodListData.value = res.data.list
+}
+
+// 优惠券
+const getCouponListByName = async (query) => {
+    const res = await couponList({ name: query, pageNo: 1, pageSize: 100000000 })
+    prodListData.value = res.data.list
+}
+
+const getCouponList = async () => {
+    const res = await couponList({ pageNo: 1, pageSize: 10 })
+    prodListData.value = res.data.list
+}
+// 礼品卡
+const getGiftListByName = async (query) => {
+    const res = await giftList({ name: query, pageNo: 1, pageSize: 100000000 })
+    prodListData.value = res.data.list
+}
+
+const getGiftList = async () => {
+    const res = await giftList({ pageNo: 1, pageSize: 10 })
     prodListData.value = res.data.list
 }
 
 const liveProdChange = async (e) => {
     console.log(e)
-    let prodId = ''
-    prodListData.value.forEach(element => {
-        if (element.name === e) {
-            addLiveProdForm.value.img = element.thumbail
-            addLiveProdForm.value.url = "http://h5.hnspsd.com/#/pages/package-prod/pages/prod/prod?prodId=" + element.id
-            prodId = element.id
-        }
-    })
-    const res = await prodInfoById({ goodsId: prodId })
-    console.log(res)
-    addLiveProdForm.value.originalPrice = res.data.adminGoodsSkuInputVOS[0].factoryPrice
-    addLiveProdForm.value.price = res.data.adminGoodsSkuInputVOS[0].price
+    if (addLiveProdForm.value.type === 0) {
+        let prodId = ''
+        prodListData.value.forEach(element => {
+            if (element.name === e) {
+                addLiveProdForm.value.img = element.thumbail
+                addLiveProdForm.value.url = "http://h5.hnspsd.com/#/pages/package-prod/pages/prod/prod?prodId=" + element.id
+                prodId = element.id
+            }
+        })
+        const res = await prodInfoById({ goodsId: prodId })
+        console.log(res)
+        addLiveProdForm.value.originalPrice = res.data.adminGoodsSkuInputVOS[0].factoryPrice
+        addLiveProdForm.value.price = res.data.adminGoodsSkuInputVOS[0].price
+    }
+    if (addLiveProdForm.value.type === 1) {
+        prodListData.value.forEach(element => {
+            if (element.name === e) {
+                addLiveProdForm.value.url = "http://h5.hnspsd.com/#/pages/package-user/pages/get-coupons/get-coupons?id=" + element.id
+            }
+        })
+     }
+    if (addLiveProdForm.value.type === 2) {
+        prodListData.value.forEach(element => {
+            if (element.name === e) {
+                addLiveProdForm.value.url = "http://h5.hnspsd.com/#/pages/package-user/pages/exchange-area/exchange-area?id=" + element.id
+            }
+        })
+     }
 
 }
 
 const saveAddLiveProd = () => {
     addLiveProdFormRef.value.validate(async (valid) => {
+      if(valid){
         try {
             let params = {
                 courseId: addLiveProdForm.value.courseId,
@@ -518,6 +568,9 @@ const saveAddLiveProd = () => {
         } catch (error) {
 
         }
+      }else{
+        return false
+      }
     })
 }
 
@@ -526,9 +579,31 @@ const closeAddLiveProdDialog = () => {
     clearAddLiveProdForm()
 }
 
+const prodTypeChange = (e) => {
+    console.log(e)
+    prodListData.value=[]
+    addLiveProdForm.value.name = null
+    addLiveProdForm.value.img = null
+    addLiveProdForm.value.price = 0.00
+    addLiveProdForm.value.originalPrice = 0.00
+    addLiveProdForm.value.tab = 2
+    addLiveProdForm.value.url = null
+    addLiveProdForm.value.putaway = 0
+    if (addLiveProdForm.value.type === 0) {
+        getProdList()
+    }
+    if (addLiveProdForm.value.type === 1) {
+        getCouponList()
+    }
+    if (addLiveProdForm.value.type === 2) {
+        getGiftList()
+     }
+}
+
 const clearAddLiveProdForm = () => {
     addLiveProdForm.value = {
         courseId: null,
+        type:0,
         name: null,
         img: null,
         price: 0.00,
@@ -556,7 +631,6 @@ const toHuanTuoAdmin = () => {
 
 onMounted(() => {
     getHuanTuoLiveList()
-    getProdList()
 })
 
 </script>
