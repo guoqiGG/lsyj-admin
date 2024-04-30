@@ -4,7 +4,7 @@
         <div style="font-size: 12px;color:#ea3b26;">1.创建直播间完，请立即创建商品 </div>
         <div style="margin-top: 5px; font-size: 12px;color:#ea3b26;">2.请在当天开播前 两个半小时 创建完成直播间</div>
         <div style="margin-top: 20px;"></div>
-        <el-button  tag="div" :icon="CirclePlus" type="primary" @click="showEditOrCreateDialog()">创建直播间</el-button>
+        <el-button tag="div" :icon="CirclePlus" type="primary" @click="showEditOrCreateDialog()">创建直播间</el-button>
         <el-button tag="div" @click="toHuanTuoAdmin()">欢拓后台地址</el-button>
         <el-table v-loading="loading" :data="liveListData" style="width: 100%;margin-top: 10px;" :border="parentBorder"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
@@ -205,7 +205,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed, reactive } from "vue";
-import { huanTuoliveList, createLive, huanTuoPushStreamingAndObsAddress, prodList,couponList,giftList, huanTuoAddLiveProd, editHuanTuoLiveProdStatus, generateHuanTuoLiveLink, prodInfoById } from "@/api/modules";
+import { huanTuoliveList, createLive, huanTuoPushStreamingAndObsAddress, prodList, couponList, giftList, huanTuoAddLiveProd, editHuanTuoLiveProdStatus, generateHuanTuoLiveLink, prodInfoById } from "@/api/modules";
 import { ElMessage } from "element-plus";
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const token = localStorage.getItem('token')
@@ -514,7 +514,7 @@ const liveProdChange = async (e) => {
         prodListData.value.forEach(element => {
             if (element.name === e) {
                 addLiveProdForm.value.img = element.thumbail
-                addLiveProdForm.value.url = "http://h5.hnspsd.com/#/pages/package-prod/pages/prod/prod?prodId=" + element.id
+                addLiveProdForm.value.url = "https://h5.hnliyue.cn/#/pages/package-prod/pages/prod/prod?prodId=" + element.id
                 prodId = element.id
             }
         })
@@ -526,51 +526,51 @@ const liveProdChange = async (e) => {
     if (addLiveProdForm.value.type === 1) {
         prodListData.value.forEach(element => {
             if (element.name === e) {
-                addLiveProdForm.value.url = "http://h5.hnspsd.com/#/pages/package-user/pages/get-coupons/get-coupons?id=" + element.id
+                addLiveProdForm.value.url = "https://h5.hnliyue.cn/#/pages/package-user/pages/get-coupons/get-coupons?id=" + element.id
             }
         })
-     }
+    }
     if (addLiveProdForm.value.type === 2) {
         prodListData.value.forEach(element => {
             if (element.name === e) {
-                addLiveProdForm.value.url = "http://h5.hnspsd.com/#/pages/package-user/pages/exchange-area/exchange-area?id=" + element.id
+                addLiveProdForm.value.url = "https://h5.hnliyue.cn/#/pages/package-user/pages/exchange-area/exchange-area?id=" + element.id
             }
         })
-     }
+    }
 
 }
 
 const saveAddLiveProd = () => {
     addLiveProdFormRef.value.validate(async (valid) => {
-      if(valid){
-        try {
-            let params = {
-                courseId: addLiveProdForm.value.courseId,
-                name: addLiveProdForm.value.name,
-                img: addLiveProdForm.value.img,
-                price: addLiveProdForm.value.price,
-                originalPrice: addLiveProdForm.value.originalPrice,
-                tab: addLiveProdForm.value.tab,
-                url: addLiveProdForm.value.url,
-                putaway: addLiveProdForm.value.putaway,
-                pay: addLiveProdForm.value.pay
-            }
-            const res = await huanTuoAddLiveProd({ ...params })
-            if (res?.code === 0) {
-                ElMessage({
-                    showClose: false,
-                    message: '添加直播商品成功',
-                    type: 'success',
-                })
-                closeAddLiveProdDialog()
-                getHuanTuoLiveList()
-            }
-        } catch (error) {
+        if (valid) {
+            try {
+                let params = {
+                    courseId: addLiveProdForm.value.courseId,
+                    name: addLiveProdForm.value.name,
+                    img: addLiveProdForm.value.img,
+                    price: addLiveProdForm.value.price,
+                    originalPrice: addLiveProdForm.value.originalPrice,
+                    tab: addLiveProdForm.value.tab,
+                    url: addLiveProdForm.value.url,
+                    putaway: addLiveProdForm.value.putaway,
+                    pay: addLiveProdForm.value.pay
+                }
+                const res = await huanTuoAddLiveProd({ ...params })
+                if (res?.code === 0) {
+                    ElMessage({
+                        showClose: false,
+                        message: '添加直播商品成功',
+                        type: 'success',
+                    })
+                    closeAddLiveProdDialog()
+                    getHuanTuoLiveList()
+                }
+            } catch (error) {
 
+            }
+        } else {
+            return false
         }
-      }else{
-        return false
-      }
     })
 }
 
@@ -581,7 +581,7 @@ const closeAddLiveProdDialog = () => {
 
 const prodTypeChange = (e) => {
     console.log(e)
-    prodListData.value=[]
+    prodListData.value = []
     addLiveProdForm.value.name = null
     addLiveProdForm.value.img = null
     addLiveProdForm.value.price = 0.00
@@ -597,13 +597,13 @@ const prodTypeChange = (e) => {
     }
     if (addLiveProdForm.value.type === 2) {
         getGiftList()
-     }
+    }
 }
 
 const clearAddLiveProdForm = () => {
     addLiveProdForm.value = {
         courseId: null,
-        type:0,
+        type: 0,
         name: null,
         img: null,
         price: 0.00,

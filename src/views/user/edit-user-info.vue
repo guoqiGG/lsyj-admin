@@ -8,6 +8,7 @@
                 <div>用户手机：{{ userInfo.mobile }}</div>
                 <div>注册时间：{{ userInfo.regTime }}</div>
                 <div>会员等级：{{ userInfo.levelName }}</div>
+                <div>青春豆数：{{ userInfo.score }}</div>
             </div>
 
             <div class="infos">
@@ -17,6 +18,7 @@
             <div class="infos" style="display: flex;  align-items: center">
                 <el-button type="primary" @click="openCouponDialog">送优惠券</el-button>
                 <el-button style="margin-left: 10px" type="primary" @click="openGiftDialog">送礼品券</el-button>
+                <el-button style="margin-left: 10px" type="primary" @click="openScoreDialog">送青春豆</el-button>
             </div>
         </div>
         <el-divider class="divider" content-position="left">其他信息</el-divider>
@@ -29,10 +31,13 @@
         @closeGiftDialog="closeGiftDialog"></send-gift>
     <send-coupon ref="couponFormRef" :userInfo="userInfo" :couponDialogVisible="couponDialogVisible"
         :couponForm="couponForm" @closeCouponDialog="closeCouponDialog"></send-coupon>
+    <send-score ref="scoreFormRef" :userInfo="userInfo" :scoreDialogVisible="scoreDialogVisible" :scoreForm="scoreForm"
+        @closeScoreDialog="closeScoreDialog" @editUserScoreNum="editUserScoreNum"></send-score>
 </template>
 <script setup>
 import SendGift from './send-gift.vue'
 import SendCoupon from './send-coupon.vue'
+import SendScore from './send-score.vue'
 import { ref, defineExpose, defineEmits } from 'vue'
 import { useRouter } from 'vue-router';
 const router = useRouter()
@@ -72,8 +77,22 @@ const openCouponDialog = () => {
 const couponForm = ref({ couponId: '', num: '' })
 const closeCouponDialog = () => {
     couponForm.value.num = ''
-    couponForm.value.giftId = ''
     couponDialogVisible.value = false
+}
+
+const scoreDialogVisible = ref(false)
+const scoreFormRef = ref()
+const openScoreDialog = () => {
+    scoreDialogVisible.value = true
+}
+const scoreForm = ref({ num: '' })
+const closeScoreDialog = () => {
+    scoreForm.value.num = ''
+    scoreDialogVisible.value = false
+}
+// 送豆成功后 虚拟修改用户的豆数量
+const editUserScoreNum = () => {
+    props.userInfo.score = props.userInfo.score + scoreForm.value.num
 }
 
 const toUserOrder = (userId) => {

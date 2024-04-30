@@ -78,6 +78,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="levelName" label="用户等级" align="center" />
+            <el-table-column prop="score" label="青春豆" align="center" />
             <el-table-column prop="regTime" label="注册时间" width="200" align="center" />
             <!-- <el-table-column prop="createTime" label="创建时间" /> -->
             <el-table-column fixed="right" label="操作" width="180" align="center">
@@ -197,6 +198,7 @@ const editOrCreateDialog = (scope) => {
     userInfo.value.name = scope.row.name
     userInfo.value.avatar = scope.row.avatar
     userInfo.value.mobile = scope.row.mobile
+    userInfo.value.score = scope.row.score
     userInfo.value.leaderName = scope.row.leaderName
     userInfo.value.leaderMobile = scope.row.leaderMobile
     userInfo.value.levelName = scope.row.levelName
@@ -277,6 +279,7 @@ const generateLiveLink = async () => {
         }
     });
 };
+
 
 onMounted(() => {
     getLeaderList()

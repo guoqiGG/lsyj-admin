@@ -429,6 +429,15 @@ export function userGiftAdd(data) {
   });
 }
 
+// 用户送青春豆
+export function userScoreAdd(data) {
+  return service({
+    method: "POST",
+    url: "pub/user/integral/add",
+    data: JSON.stringify(data),
+  });
+}
+
 // 退款列表
 export function refundList(query) {
   return service({
