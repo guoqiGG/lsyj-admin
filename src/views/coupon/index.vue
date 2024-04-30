@@ -25,7 +25,7 @@
     <el-card style="margin-top: 10px;">
         <el-button type="primary" :icon="CirclePlus" class="add" @click="add()">新增</el-button>
         <el-table v-loading="loading" :data="couponListData" style="width: 100%" class="add_dialog"
-        :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="优惠券名" align="center" />
             <el-table-column prop="status" label="状态" align="center">
                 <template #default="scope">
@@ -45,6 +45,7 @@
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="handleEditor(scope.row)">修改</span>
+                    <span class="operation" @click="copyLinkHuantuo(scope.row)">欢拓优惠券链接</span>
                     <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="handleDel(scope.row)" @cancel="cancelEvent">
                         <template #reference>
@@ -115,9 +116,8 @@
             <!-- 指定商品可用 -->
             <el-form-item label="可用商品" prop="productValue2" v-if="couponForm.type && couponForm.type?.includes(3)">
                 <el-select v-model="couponForm.productValue2" multiple value-key="id" placeholder="请选择可用商品"
-                   style="width: 240px">
-                    <el-option v-for="item in prodData" :label="item.name" :key="item.id"
-                        :value="item"></el-option>
+                    style="width: 240px">
+                    <el-option v-for="item in prodData" :label="item.name" :key="item.id" :value="item"></el-option>
                 </el-select>
             </el-form-item>
             <!-- 满多少可用 -->
@@ -125,7 +125,8 @@
                 <el-input type="number" v-model.number="couponForm.fullAmount" placeholder="请输入满足金额" clearable />
             </el-form-item>
             <!-- 不可用商品展示 -->
-            <div style="margin-left: 25px;border-bottom: 2px dashed #E6E6E6" v-if="couponForm.productValue1&&couponForm.productValue1.length>0">
+            <div style="margin-left: 25px;border-bottom: 2px dashed #E6E6E6"
+                v-if="couponForm.productValue1 && couponForm.productValue1.length > 0">
                 <p style="margin: 5px 0px;">不可用商品</p>
                 <div style="display: flex;flex-wrap: wrap;">
                     <div class="m-4" style="width: 80px;margin: 0px 10px 10px 0px;text-align: center"
@@ -138,7 +139,7 @@
                 </div>
             </div>
             <!-- 可用商品展示 -->
-            <div style="margin-left: 25px;" v-if="couponForm.productValue2&&couponForm.productValue2.length>0">
+            <div style="margin-left: 25px;" v-if="couponForm.productValue2 && couponForm.productValue2.length > 0">
                 <p style="margin: 5px 0px;">可用商品</p>
                 <div style="display: flex;flex-wrap: wrap;">
                     <div class="m-4" style="width: 80px;margin: 0px 10px 10px 0px;text-align: center"
@@ -169,7 +170,7 @@ import {
 import { ElMessage } from 'element-plus';
 const searchParams = {
     name: null,
-    puid:null,
+    puid: null,
     status: null,//优惠券状态  1上架 2下架
 }
 const loading = ref(false)
@@ -216,11 +217,11 @@ const getProdList = async () => {
         pageNo: 1,
         pageSize: 10000,
     })
-    let aa= res.data.list
+    let aa = res.data.list
     aa.forEach(e => {
-        e.label=e.name
+        e.label = e.name
     });
-    prodData.value =aa
+    prodData.value = aa
 }
 
 
@@ -232,7 +233,7 @@ const couponForm = ref({
     id: null,
     name: null,
     amount: null,//优惠金额
-    fullAmount:null,//满足金额
+    fullAmount: null,//满足金额
     status: 1,//1上架 2下架
     deadlineType: 1,//1领取后 2固定时间
     deadlineDay: null,//为1时 领取后几天生效
@@ -334,25 +335,25 @@ const submitForm = () => {
             }
             //  4满多少可用
             if (couponForm.value.type?.includes(4)) {
-                    let obj = {
-                        type: 4,
-                        conditionValue:couponForm.value.fullAmount,
-                    }
-                   couponConstraintList.push(obj)
-               
+                let obj = {
+                    type: 4,
+                    conditionValue: couponForm.value.fullAmount,
+                }
+                couponConstraintList.push(obj)
+
             }
-   
-            couponConstraintList.id=couponForm.value.couponId
-            console.log(couponConstraintList,'couponConstraintList')
+
+            couponConstraintList.id = couponForm.value.couponId
+            console.log(couponConstraintList, 'couponConstraintList')
             // 传递参数
             let params = {
                 coupon: coupon,
-                couponConstraintList:[...couponConstraintList] 
+                couponConstraintList: [...couponConstraintList]
             }
-            console.log(params,'params')
+            console.log(params, 'params')
             // 修改
             if (couponForm.value.couponId) {
-                params.couponConstraintList.id=couponForm.value.couponId
+                params.couponConstraintList.id = couponForm.value.couponId
                 res.value = await updateCouponList(JSON.stringify(params))
             } else {
                 //新增
@@ -397,15 +398,15 @@ const handleEditor = (item) => {
             num1 += 1
         }
         if (item.type === 2) {
-            couponForm.value.productValue1.push({ id: Number(item.conditionValue), name: item.goodsName,  label: item.goodsName,thumbail: item.thumbail })
+            couponForm.value.productValue1.push({ id: Number(item.conditionValue), name: item.goodsName, label: item.goodsName, thumbail: item.thumbail })
             num2 += 1
         }
         if (item.type === 3) {
-            couponForm.value.productValue2.push({ id: Number(item.conditionValue), name: item.goodsName,label: item.goodsName, thumbail: item.thumbail })
+            couponForm.value.productValue2.push({ id: Number(item.conditionValue), name: item.goodsName, label: item.goodsName, thumbail: item.thumbail })
             num3 += 1
         }
         if (item.type === 4) {
-            couponForm.value.fullAmount=item.conditionValue
+            couponForm.value.fullAmount = item.conditionValue
             num4 += 1
         }
     })
@@ -421,7 +422,7 @@ const handleEditor = (item) => {
     if (num4 > 0) {
         couponForm.value.type.push(4)
     }
-    console.log(couponForm,'couponForm')
+    console.log(couponForm, 'couponForm')
     dialogVisible.value = true
 }
 // 删除
@@ -435,6 +436,24 @@ const handleDel = async (item) => {
         return false;
     }
 }
+
+const copyLinkHuantuo = async (copyValue) => {
+    let url = 'https://h5.hnliyue.cn/#/pages/package-user/pages/get-coupons/get-coupons?id=' + copyValue.id
+    // 创建输入框
+    let inputDom = document.createElement('input');
+    inputDom.value = url;
+    document.body.appendChild(inputDom);
+    inputDom.select();
+    const hasCopy = document.execCommand('Copy');
+    console.log(hasCopy, 'hasCopy')
+    ElMessage({
+        type: hasCopy ? 'success' : 'error',
+        message: hasCopy ? '复制成功' : '复制失败'
+    });
+    // 删除创建的dom节点
+    document.body.removeChild(inputDom);
+}
+
 onMounted(() => {
     getCouponList()
     getProdCategoryList()
@@ -454,6 +473,7 @@ onMounted(() => {
 .operation {
     color: #4060c7;
     margin: 0px 5px;
+    cursor: pointer;
 }
 
 .footer {

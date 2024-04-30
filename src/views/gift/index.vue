@@ -31,6 +31,7 @@
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="copyLink(scope.row)">领取礼品卡链接</span>
+                    <span class="operation" @click="copyLinkHuantuo(scope.row)">欢拓礼品卡链接</span>
                     <span class="operation" @click="editor(scope)">修改</span>
                     <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="handleDel(scope.row)" @cancel="cancelEvent">
@@ -233,6 +234,22 @@ const handleDel = async (item) => {
 }
 const copyLink = async (copyValue) => {
     let url='/pages/package-user/pages/exchange-area/exchange-area?id='+copyValue.id  
+    // 创建输入框
+    let inputDom = document.createElement('input');
+      inputDom.value = url;
+      document.body.appendChild(inputDom);
+      inputDom.select();
+      const hasCopy = document.execCommand('Copy');
+      console.log(hasCopy,'hasCopy')
+      ElMessage({
+          type: hasCopy ? 'success' : 'error',
+          message: hasCopy ? '复制成功' : '复制失败'
+     });
+      // 删除创建的dom节点
+      document.body.removeChild(inputDom);
+}
+const copyLinkHuantuo = async (copyValue) => {
+    let url='https://h5.hnliyue.cn/#/pages/package-user/pages/exchange-area/exchange-area?id='+copyValue.id  
     // 创建输入框
     let inputDom = document.createElement('input');
       inputDom.value = url;
