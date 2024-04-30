@@ -47,9 +47,14 @@ const props = defineProps({
     active: { type: String }
 });
 const emit = defineEmits(['closeDialog'])
-
+const isChange = ref(false)
 const close = () => {
-    emit('closeDialog')
+    if (isChange.value) {
+        emit('closeDialog', 1)
+    } else {
+        emit('closeDialog')
+    }
+    isChange.value = false
 }
 
 
@@ -93,6 +98,7 @@ const closeScoreDialog = () => {
 // 送豆成功后 虚拟修改用户的豆数量
 const editUserScoreNum = () => {
     props.userInfo.score = props.userInfo.score + scoreForm.value.num
+    isChange.value = true
 }
 
 const toUserOrder = (userId) => {

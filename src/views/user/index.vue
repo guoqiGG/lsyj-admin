@@ -99,7 +99,8 @@
     <edit-user-info ref="editUserInfoRef" :editOrCreateDialogVisible="editOrCreateDialogVisible" :userInfo="userInfo"
         :active="active" @closeDialog="closeDialog"></edit-user-info>
     <!-- 单个用户生成欢拓直播地址 -->
-    <el-dialog v-model="generateHuantuoLiveLinkDialogVisible" title="单个用户生成欢拓直播地址" width="400px" @close="closeGenerateHuantuoLiveLinkDialog">
+    <el-dialog v-model="generateHuantuoLiveLinkDialogVisible" title="单个用户生成欢拓直播地址" width="400px"
+        @close="closeGenerateHuantuoLiveLinkDialog">
         <el-form ref="liveLinkRef" :rules="liveLinkRules" :model="liveLinkForm" class="demo-form-inline"
             label-width="100px" :label-position="right">
             <el-form-item label="欢拓直播间" prop="course_id">
@@ -163,7 +164,6 @@ const editOrCreateDialogVisible = ref(false)
 let userListData = ref([])
 const active = ref('1') // tab 1购物明细 2礼品卡明细 3合成卡明细 4优惠券明细
 const editUserInfoRef = ref(null)
-
 const generateHuantuoLiveLinkDialogVisible = ref(false)
 const liveListData = ref([])
 const liveLinkForm = ref({
@@ -205,8 +205,11 @@ const editOrCreateDialog = (scope) => {
     userInfo.value.regTime = scope.row.regTime
 }
 
-const closeDialog = () => {
+const closeDialog = (params = 0) => {
     editOrCreateDialogVisible.value = false
+    if (params == 1) {
+        getUserList()
+    }
 }
 
 const exportExcel = async () => {
@@ -244,8 +247,8 @@ const openGenerateHuantuoLiveLink = (scope) => {
 
 const closeGenerateHuantuoLiveLinkDialog = () => {
     generateHuantuoLiveLinkDialogVisible.value = false
-    liveLinkForm.value.course_id=null
-    userInfo.value=null
+    liveLinkForm.value.course_id = null
+    userInfo.value = null
 }
 
 const getHuanTuoLiveList = async () => {
