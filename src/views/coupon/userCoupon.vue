@@ -28,6 +28,8 @@
                             <el-option label="下单送的优惠券" value="0" />
                             <el-option label="系统补发的优惠券" value="1" />
                             <el-option label="系统延迟发放的优惠券" value="2" />
+                            <el-option label="直播领取" value="3" />
+                            <el-option label="兑换获得" value="4" />
                         </el-select>
                     </el-form-item>
                 </el-col>
@@ -66,7 +68,7 @@
                 ? "下单"
                 : scope.row.type == 1
                     ? "后台补发"
-                    :scope.row.type ==2? "系统延迟发放":'直播领取'
+                    :scope.row.type ==2? "系统延迟发放": scope.row.type ==3?'直播领取':'兑换获得'
         }}
                 </template>
             </el-table-column>
