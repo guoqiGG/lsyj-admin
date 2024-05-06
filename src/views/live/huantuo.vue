@@ -477,8 +477,18 @@ const beforeUpload = (file) => {
 const prodListData = ref([])
 // 普通商品
 const getProdListByName = async (query) => {
-    const res = await prodList({ name: query, pageNo: 1, pageSize: 100000000 })
-    prodListData.value = res.data.list
+    if (addLiveProdForm.value.type == 0) {
+        const res = await prodList({ name: query, pageNo: 1, pageSize: 100000000 })
+        prodListData.value = res.data.list
+    }
+    if (addLiveProdForm.value.type == 1) {
+        const res = await couponList({ name: query, pageNo: 1, pageSize: 100000000 })
+        prodListData.value = res.data.list
+    }
+    if (addLiveProdForm.value.type == 2) {
+        const res = await giftList({ name: query, pageNo: 1, pageSize: 100000000 })
+        prodListData.value = res.data.list
+    }
 }
 
 const getProdList = async () => {
@@ -487,21 +497,11 @@ const getProdList = async () => {
 }
 
 // 优惠券
-const getCouponListByName = async (query) => {
-    const res = await couponList({ name: query, pageNo: 1, pageSize: 100000000 })
-    prodListData.value = res.data.list
-}
-
 const getCouponList = async () => {
     const res = await couponList({ pageNo: 1, pageSize: 10 })
     prodListData.value = res.data.list
 }
 // 礼品卡
-const getGiftListByName = async (query) => {
-    const res = await giftList({ name: query, pageNo: 1, pageSize: 100000000 })
-    prodListData.value = res.data.list
-}
-
 const getGiftList = async () => {
     const res = await giftList({ pageNo: 1, pageSize: 10 })
     prodListData.value = res.data.list

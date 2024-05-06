@@ -111,6 +111,31 @@ export function userLevelList(query) {
   });
 }
 
+// 兑换规则列表
+export function exchangeList(query) {
+  return service({
+    method: "POST",
+    url: "/pub/exchange/list",
+    data: JSON.stringify(query),
+  });
+}
+
+// 新增兑换规则
+export function addExchange(query) {
+  return service({
+    method: "POST",
+    url: "/pub/exchange/add",
+    data: JSON.stringify(query),
+  });
+}
+// 编辑、删除兑换规则
+export function editExchange(query) {
+  return service({
+    method: "POST",
+    url: "/pub/exchange/update",
+    data: JSON.stringify(query),
+  });
+}
 // 直播间列表
 export function liveList(query) {
   return service({

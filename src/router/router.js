@@ -258,6 +258,27 @@ const routes = [
       },
     ],
   },
+  // 兑换管理
+  {
+    path: "/exchange",
+    name: "exchange",
+    component: Layout,
+    meta: {
+      name: "兑换管理",
+    },
+    children: [
+      // 兑换列表
+      {
+        path: "/exchangeList",
+        name: "exchangeList",
+        component: () => import("../views/exchange/index.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "兑换列表",
+        },
+      },
+    ],
+  },
   // 直播
   {
     path: "/live",
@@ -368,10 +389,9 @@ const routes = [
           requiresAuth: true,
           name: "配置列表",
         },
-      }
+      },
     ],
   },
-  
 ];
 
 const router = createRouter({

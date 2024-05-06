@@ -164,6 +164,18 @@ const menuList2 = ref([
     ],
   },
   {
+    title: "兑换管理",
+    url: "/exchange",
+    icon: "Ticket",
+    children: [
+      {
+        title: "兑换列表",
+        url: "/exchangeList",
+        icon: "Menu",
+      },
+    ],
+  },
+  {
     title: "直播管理",
     url: "/live",
     icon: "VideoCameraFilled",
