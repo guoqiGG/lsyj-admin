@@ -59,6 +59,13 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
+                <el-col :lg="12" :md="12" :sm="24">
+                    <el-form-item label="时间 ">
+                        <el-date-picker v-model="searchForm.time" type="datetimerange" start-placeholder="开始时间"
+                            end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"
+                            default-time />
+                    </el-form-item>
+                </el-col>
                 <el-form-item>
                     <el-button type="primary" @click="getRefundList">查询</el-button>
                     <el-button @click="resetForm()">重置</el-button>
@@ -68,9 +75,8 @@
                 <el-form-item>
                     <el-upload style="margin: 0px 20px 0px 0px;" v-model:file-list="fileList" class="upload-demo"
                         :show-file-list="false" :action="BaseUrl + '/upload/order/refund/success'"
-                        :data="{adminId:adminId}"
-                        :headers="{ Authorization: token }" :multiple="false" :on-success="handleSuccess"
-                        :on-error="handleError">
+                        :data="{ adminId: adminId }" :headers="{ Authorization: token }" :multiple="false"
+                        :on-success="handleSuccess" :on-error="handleError">
                         <el-button :icon="Upload" type="primary">批量上传退款</el-button>
                     </el-upload>
                     <el-button :icon="Download" @click="handleDownload()">下载批量退款模板</el-button>
@@ -89,10 +95,15 @@
             <el-table-column label="商品信息" width="250">
                 <template #default="scope">
                     <div style="display: flex;flex-direction: row;">
-                        <el-image style="width: 60px;height:60px;border-radius:5px;" :src="scope.row.orderGoodsList[0].thumbail" alt=""/>
+                        <el-image style="width: 60px;height:60px;border-radius:5px;"
+                            :src="scope.row.orderGoodsList[0].thumbail" alt="" />
                         <div style="width:150px;display: flex;align-items: center;">
-                            <div style="margin-left: 10px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ scope.row.orderGoodsList[0].title }}</div>
-                            <div style="line-height: 25px;margin-left: 10px; margin-top: 10px;" v-if="scope.row.specificationName!=='默认'">{{scope.row.specificationName?scope.row.specificationName:''}}</div>
+                            <div
+                                style="margin-left: 10px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                {{ scope.row.orderGoodsList[0].title }}</div>
+                            <div style="line-height: 25px;margin-left: 10px; margin-top: 10px;"
+                                v-if="scope.row.specificationName !== '默认'">
+                                {{ scope.row.specificationName ? scope.row.specificationName : '' }}</div>
                         </div>
                     </div>
                 </template>
@@ -137,8 +148,10 @@
                 <template #default="scope">
                     <span v-loading.fullscreen.lock="fullscreenLoading" class="operation"
                         @click="handleDetail(scope.row)">退款详情</span>
-                    <span class="operation" @click="handleClick(scope.row, 1)" v-if="scope.row.refundStatus===1">通过</span>
-                    <span class="operation" @click="handleClick(scope.row, 2)" v-if="scope.row.refundStatus===1">拒绝</span>
+                    <span class="operation" @click="handleClick(scope.row, 1)"
+                        v-if="scope.row.refundStatus === 1">通过</span>
+                    <span class="operation" @click="handleClick(scope.row, 2)"
+                        v-if="scope.row.refundStatus === 1">拒绝</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -252,15 +265,19 @@
                     :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
                     <el-table-column prop="type" label="商品" align="center" width="200px">
                         <template #default="scope">
-                        <div style="display: flex;flex-direction: row;align-items: center;">
-                         <img style="width: 40px;height: 40px;margin: 0px 10px 0 5px;" :src="detail.orderGoods[0].thumbail" alt="">
-                         <div style="width:140px;">
-                           <div style="white-space: nowrap;color:#101010; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" >{{scope.row.goodsName}}</div>
-                           <div style="white-space: nowrap;font-size: 10px;text-align: left;color: #696868;" v-if="detail.specificationName!=='默认'">{{detail.specificationName}}</div>
-                         </div> 
-                        </div>  
-                       </template>
-                     </el-table-column>
+                            <div style="display: flex;flex-direction: row;align-items: center;">
+                                <img style="width: 40px;height: 40px;margin: 0px 10px 0 5px;"
+                                    :src="detail.orderGoods[0].thumbail" alt="">
+                                <div style="width:140px;">
+                                    <div
+                                        style="white-space: nowrap;color:#101010; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                        {{ scope.row.goodsName }}</div>
+                                    <div style="white-space: nowrap;font-size: 10px;text-align: left;color: #696868;"
+                                        v-if="detail.specificationName !== '默认'">{{ detail.specificationName }}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="applyRefundNum" label="申请退款数量" align="center" />
                     <el-table-column prop="refundAmount" label="申请金额" align="center" />
                     <el-table-column prop="realRefundAmount" label="同意退款金额" align="center" />
@@ -298,15 +315,16 @@
     </el-dialog>
 </template>
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, watch } from "vue";
 import { prodList, refundList, refundAudit, orderDetail, batchRefund, exportRefundOrder } from "../../api/modules";
 import {
     Download, Upload
 } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus';
+import dayjs from "dayjs";
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const loading = ref(false)
-const adminId=localStorage.getItem('UserID')
+const adminId = localStorage.getItem('UserID')
 const searchForm = ref({
     userName: null,//用户名称
     userMobile: null,
@@ -316,7 +334,10 @@ const searchForm = ref({
     refundStatus: null,//退款状态
     orderNumber: null,//订单号
     orderType: null,//订单类型
-    goodsId: null
+    goodsId: null,
+    time: null,
+    startDateLong: null,
+    endDateLong: null,
 })
 const pages = ref({
     pageNo: 1,
@@ -327,7 +348,20 @@ let refundData = ref([])
 // 列表数据
 const getRefundList = async () => {
     loading.value = true
-    const res = await refundList({ ...searchForm.value, ...pages.value })
+    const res = await refundList({
+        userName: searchForm.value.userName,
+        userMobile: searchForm.value.userMobile,
+        leaderName: searchForm.value.leaderName,
+        leaderMobile: searchForm.value.leaderMobile,
+        goodsName: searchForm.value.goodsName,
+        refundStatus: searchForm.value.refundStatus,
+        orderNumber: searchForm.value.orderNumber,
+        orderType: searchForm.value.orderType,
+        goodsId: searchForm.value.goodsId,
+        startDateLong: searchForm.value.startDateLong ? new Date(searchForm.value.startDateLong).getTime() : null,
+        endDateLong: searchForm.value.endDateLong ? new Date(searchForm.value.endDateLong).getTime() : null,
+        ...pages.value
+    })
     loading.value = false
     refundData.value = res.data.list
     total.value = res.data.total
@@ -373,7 +407,7 @@ const submitBatchForm = async (e) => {
     let obj = {
         auditStatus: 1,//1:通过 2:拒绝
         ids,
-        adminId:localStorage.getItem('UserID')
+        adminId: localStorage.getItem('UserID')
     }
     if (e === 2) {
         obj.auditStatus = 2
@@ -443,7 +477,7 @@ const handleClick = async (item, type) => {
         const res = await refundAudit({
             id: item.id,
             auditStatus: 1,//1:通过 2:拒绝
-            adminId:localStorage.getItem('UserID')
+            adminId: localStorage.getItem('UserID')
         })
         console.log(res, 'res===')
         if (res.code === 0) {
@@ -462,7 +496,7 @@ const submitForm = () => {
                 remark: form.value.remark,
                 id: form.value.id,
                 auditStatus: 2,//1:通过 2:拒绝
-                adminId:localStorage.getItem('UserID')
+                adminId: localStorage.getItem('UserID')
             })
             if (res.code === 0) {
                 ElMessage.success('拒绝成功');
@@ -501,7 +535,9 @@ const exportExcel = async () => {
         refundStatus: searchForm.value.refundStatus,//退款状态
         orderNumber: searchForm.value.orderNumber,//订单号
         orderType: searchForm.value.orderType,//订单类型
-        goodsId: searchForm.value.goodsId
+        goodsId: searchForm.value.goodsId,
+        startDateLong: searchForm.value.startDateLong ? new Date(searchForm.value.startDateLong).getTime() : null,
+        endDateLong: searchForm.value.endDateLong ? new Date(searchForm.value.endDateLong).getTime() : null,
     })
     loading.value = false
     var blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
@@ -524,6 +560,14 @@ onMounted(() => {
     getRefundList()
     getProdList()
 })
+
+watch(searchForm.value, (newValue, oldValue) => {
+    // console.log(newValue, oldValue)
+    if (newValue.time && newValue.time[0]) {
+        searchForm.value.startDateLong = dayjs(newValue.time[0]).format('YYYY-MM-DD HH:mm:ss')
+        searchForm.value.endDateLong = dayjs(newValue.time[1]).format('YYYY-MM-DD HH:mm:ss')
+    }
+}, { deep: true })
 
 
 </script>
@@ -655,7 +699,8 @@ onMounted(() => {
         .blod {
             font-weight: 600;
         }
-        .left{
+
+        .left {
             flex: 1;
         }
     }
