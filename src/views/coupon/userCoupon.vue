@@ -68,7 +68,7 @@
                 ? "下单"
                 : scope.row.type == 1
                     ? "后台补发"
-                    :scope.row.type ==2? "系统延迟发放": scope.row.type ==3?'直播领取':'兑换获得'
+                    : scope.row.type == 2 ? "系统延迟发放" : scope.row.type == 3 ? '直播领取' : '兑换获得'
         }}
                 </template>
             </el-table-column>
@@ -96,8 +96,9 @@
                     <span class="operation" style="cursor: pointer;"
                         v-if="scope.row.orderId && scope.row.userCouponStatus == 1"
                         @click="toOrder(scope.row.orderId, scope.row.userCouponStatus)">使用详情</span>
-                    <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info" v-if="scope.row.userCouponStatus === 0"
-                        icon-color="#626AEF" title="确定要删除吗?" @confirm="handle_del(scope.row)" @cancel="cancelEvent">
+                    <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
+                        v-if="scope.row.userCouponStatus === 0" icon-color="#626AEF" title="确定要删除吗?"
+                        @confirm="handle_del(scope.row)" @cancel="cancelEvent">
                         <template #reference>
                             <span class="operation">删除</span>
                         </template>
@@ -163,7 +164,7 @@ const toOrder = (orderId, status) => {
         router.push({
             path: '/orderList',
             query: {
-                orderId: 'qc240314592980001'
+                orderId: orderId
             }
         })
     } else {

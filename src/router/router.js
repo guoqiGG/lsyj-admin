@@ -151,14 +151,24 @@ const routes = [
           name: "用户列表",
         },
       },
-      // 用户等级列表
+      // 分组列表
       {
-        path: "/userLevelList",
-        name: "userLevelList",
-        component: () => import("../views/user/level.vue"),
+        path: "/groupList",
+        name: "groupList",
+        component: () => import("../views/user/group.vue"),
         meta: {
           requiresAuth: true,
-          name: "等级列表",
+          name: "分组列表",
+        },
+      },
+      // 用户分组列表
+      {
+        path: "/userGroupList",
+        name: "userGroupList",
+        component: () => import("../views/user/userGroup.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "用户分组",
         },
       },
     ],
@@ -275,6 +285,16 @@ const routes = [
         meta: {
           requiresAuth: true,
           name: "兑换列表",
+        },
+      },
+      // 兑换记录
+      {
+        path: "/exchangeRecord",
+        name: "exchangeRecord",
+        component: () => import("../views/exchange/record.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "兑换记录",
         },
       },
     ],

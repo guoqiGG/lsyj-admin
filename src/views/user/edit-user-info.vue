@@ -26,6 +26,7 @@
         <el-button type="primary" @click="toUserGift(userInfo.id)">礼品卡明细</el-button>
         <el-button type="primary" @click="toUserCompositeGift(userInfo.id)">合成卡明细</el-button>
         <el-button type="primary" @click="toUserCoupon(userInfo.id)">优惠券明细</el-button>
+        <el-button type="primary" @click="toUserExchange(userInfo.id)">兑换(青春豆)明细</el-button>
     </el-dialog>
     <send-gift ref="giftFormRef" :userInfo="userInfo" :giftDialogVisible="giftDialogVisible" :giftForm="giftForm"
         @closeGiftDialog="closeGiftDialog"></send-gift>
@@ -128,6 +129,14 @@ const toUserCompositeGift = (userId) => {
 const toUserCoupon = (userId) => {
     router.push({
         path: '/userCouponList',
+        query: {
+            userId: userId
+        }
+    })
+}
+const toUserExchange = (userId) => {
+    router.push({
+        path: '/exchangeRecord',
         query: {
             userId: userId
         }

@@ -111,6 +111,66 @@ export function userLevelList(query) {
   });
 }
 
+// 分组列表
+export function groupList(query) {
+  return service({
+    method: "get",
+    url: "/group/list",
+    params: query,
+  });
+}
+// 新增分组
+export function addGroup(query) {
+  return service({
+    method: "POST",
+    url: "/group/add",
+    data: JSON.stringify(query),
+  });
+}
+
+// 编辑分组 、删除分组
+export function editGroup(query) {
+  return service({
+    method: "POST",
+    url: "/group/update",
+    data: JSON.stringify(query),
+  });
+}
+
+// 分组送优惠券
+export function groupSendCoupon(query) {
+  return service({
+    method: "POST",
+    url: "/group/add/user/coupon",
+    data: JSON.stringify(query),
+  });
+}
+
+// 用户分组列表
+export function userGroupList(query) {
+  return service({
+    method: "get",
+    url: "/group/user/list",
+    params: query,
+  });
+}
+// 用户分组添加
+export function addUserGroup(query) {
+  return service({
+    method: "POST",
+    url: "/group/user/add",
+    data: JSON.stringify(query),
+  });
+}
+
+// 用户分组编辑/删除
+export function editUserGroup(query) {
+  return service({
+    method: "POST",
+    url: "/group/user/update",
+    data: JSON.stringify(query),
+  });
+}
 // 兑换规则列表
 export function exchangeList(query) {
   return service({
@@ -136,6 +196,15 @@ export function editExchange(query) {
     data: JSON.stringify(query),
   });
 }
+// 用户兑换记录
+export function exchangeRecordList(query) {
+  return service({
+    method: "get",
+    url: "/user/exchange/get/list",
+    params: query,
+  });
+}
+
 // 直播间列表
 export function liveList(query) {
   return service({

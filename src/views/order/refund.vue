@@ -150,7 +150,7 @@
         </div>
     </el-card>
     <!-- 详情弹框 -->
-    <el-dialog v-model="dialogVisible" title="订单详情" width="900px">
+    <el-dialog v-model="dialogVisible" title="订单详情" width="1200px">
         <div class="detail_dialog">
             <div class="orderNumber">
                 <p>订单编号：<span class="num">{{ detail.payTransId }}</span></p>
@@ -201,7 +201,7 @@
                     </p>
                     <p :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'color' : ''">待收货</p>
                     <p :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'color' : ''">{{
-            detail.statusFinishedTime || '暂无时间信息' }}</p>
+            detail.statusDeliveringTime || '暂无时间信息' }}</p>
                 </div>
                 <p class="line"
                     :class="(detail.orderStatus >= 2002 || detail.orderStatus >= 3001) && detail.orderStatus < 8000 ? 'bg_color' : ''">
@@ -655,7 +655,9 @@ onMounted(() => {
         .blod {
             font-weight: 600;
         }
-
+        .left{
+            flex: 1;
+        }
     }
 
     .product {

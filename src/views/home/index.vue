@@ -12,7 +12,7 @@
         <div class="num-item-box">
           <div class="wait-payment-num order-num-item">
             <div class="item-box">
-              <div class="words">商品数量</div>
+              <div class="words">退款总金额</div>
               <div class="number"><span class="text">{{ dataList.goodsNumber || 0 }}</span></div>
             </div>
             <div class="item-img">

@@ -109,7 +109,6 @@
                     <el-option v-for="item in liveListData" :label="item.course_name" :value="item.course_id" />
                 </el-select>
             </el-form-item>
-
             <el-form-item class="footer">
                 <el-button type="primary" @click="generateLiveLink">保存</el-button>
                 <el-button @click="closeGenerateHuantuoLiveLinkDialog">关闭</el-button>

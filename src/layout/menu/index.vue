@@ -105,8 +105,13 @@ const menuList2 = ref([
         icon: "Menu",
       },
       {
-        title: "等级列表",
-        url: "/userLevelList",
+        title: "分组列表",
+        url: "/groupList",
+        icon: "Menu",
+      },
+      {
+        title: "用户分组",
+        url: "/userGroupList",
         icon: "Menu",
       }
     ],
@@ -171,6 +176,11 @@ const menuList2 = ref([
       {
         title: "兑换列表",
         url: "/exchangeList",
+        icon: "Menu",
+      },
+      {
+        title: "兑换记录",
+        url: "/exchangeRecord",
         icon: "Menu",
       },
     ],

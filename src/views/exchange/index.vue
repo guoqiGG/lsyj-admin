@@ -11,6 +11,13 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
+                <el-col :lg="12" :md="12" :sm="24">
+                    <el-form-item label="时间 ">
+                        <el-date-picker v-model="searchForm.time" type="datetimerange" start-placeholder="开始时间"
+                            end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"
+                            default-time />
+                    </el-form-item>
+                </el-col>
                 <el-form-item>
                     <el-button type="primary" @click="getExchangeList">查询</el-button>
                     <el-button @click="resetForm()">重置</el-button>
@@ -42,7 +49,7 @@
                 </template>
             </el-table-column>
             <el-table-column align="center" prop="value" label="需多少豆" />
-            <el-table-column align="center" prop="num" label="兑换数量" />
+            <el-table-column align="center" prop="quantity" label="兑换数量" />
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="openDialog('edit', scope)" :icon="Edit">编辑</span>
@@ -120,7 +127,7 @@ import {
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const token = localStorage.getItem('token')
 const searchParams = {
-    type: null
+    type: null,
 }
 const isCreate = ref(true)
 const loading = ref(false)
@@ -390,6 +397,7 @@ const deleteExchange = async (scope) => {
 onMounted(() => {
     getExchangeList()
 })
+
 
 </script>
 <style scoped>

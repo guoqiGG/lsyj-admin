@@ -77,8 +77,8 @@
         </el-col>
         <el-col :lg="12" :md="12" :sm="24">
           <el-form-item label="时间 ">
-            <el-date-picker v-model="searchForm.time" type="datetimerange" start-placeholder="开始时间" end-placeholder="结束时间"
-              format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss" default-time />
+            <el-date-picker v-model="searchForm.time" type="datetimerange" start-placeholder="开始时间"
+              end-placeholder="结束时间" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss" default-time />
           </el-form-item>
         </el-col>
         <el-form-item>
@@ -139,9 +139,11 @@
               <div class="goodsName" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{
       scope.row.goodsName }}</div>
               <div style="display: flex;flex-direction: row; align-items: center;">
-                <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']" style="white-space: nowrap;">{{ scope.row.orderTypeStr }}</div>
+                <div :class="['info', scope.row.orderTypeStr == '自提' ? 'blue' : '']" style="white-space: nowrap;">{{
+      scope.row.orderTypeStr }}</div>
                 <div style="line-height: 25px;margin-left: 10px; margin-top: 10px;white-space: nowrap;"
-                  v-if="scope.row.specificationName !== '默认'">{{ scope.row.specificationName ? scope.row.specificationName
+                  v-if="scope.row.specificationName !== '默认'">{{ scope.row.specificationName ?
+      scope.row.specificationName
       : '' }}
                 </div>
               </div>
@@ -230,7 +232,7 @@
     </div>
   </el-card>
   <!-- 详情弹框 -->
-  <el-dialog v-model="dialogVisible" title="订单详情" width="900px">
+  <el-dialog v-model="dialogVisible" title="订单详情" width="1200px">
     <div class="detail_dialog">
       <div class="orderNumber">
         <p>订单编号：<span class="num">{{ detail.orderNumber }}</span></p>
@@ -275,7 +277,7 @@
           </p>
           <p :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'color' : ''">待收货</p>
           <p :class="detail.orderStatus >= 2001 && detail.orderStatus < 8000 ? 'color' : ''">{{
-      detail.statusFinishedTime || '暂无时间信息' }}</p>
+      detail.statusDeliveringTime || '暂无时间信息' }}</p>
         </div>
         <p class="line"
           :class="(detail.orderStatus >= 2002 || detail.orderStatus >= 3001) && detail.orderStatus < 8000 ? 'bg_color' : ''">
@@ -393,11 +395,11 @@ import dayjs from "dayjs";
 import {
   Download, Upload
 } from '@element-plus/icons-vue'
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import { useRoute } from "vue-router";
 const route = useRoute()
-
 const BaseUrl = import.meta.env.VITE_API_BASE_URL
+const token = localStorage.getItem('token')
 const pUidOptions = ref()
 const getLeaderList = async () => {
   const res = await leaderList({

@@ -25,10 +25,10 @@
     </el-card>
     <el-card style="margin-top: 10px;">
         <el-button type="primary" :icon="CirclePlus" class="add" @click="add()">新增</el-button>
-        <el-button  :icon="Download" class="add" >导出</el-button>
+        <el-button :icon="Download" class="add">导出</el-button>
 
         <el-table :data="compositeData" :span-method="objectSpanMethod" border v-loading="loading" style="width: 100%"
-        :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column align="center" prop="parentName" label="合成卡名称" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="parentNumber" label="需礼品卡数" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="name" label="礼品卡名称" show-overflow-tooltip></el-table-column>
@@ -82,7 +82,7 @@
 import { onMounted, ref, reactive } from "vue";
 import { compositeCardList, compositeCardAdd, compositeCardUpdate, giftList } from "../../api/modules";
 import {
-    CirclePlus,Download
+    CirclePlus, Download
 } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus';
 const loading = ref(false)
@@ -161,7 +161,7 @@ const objectSpanMethod = ({ row, column, rowIndex, columnIndex }) => {
     if (columnIndex === 0) {
         const rowSpan = rowSpanArr.value[rowIndex];
         return [rowSpan, 1];
-        
+
     }
     if (columnIndex === 1) {
         const rowSpan = rowSpanArr.value[rowIndex];
@@ -295,11 +295,9 @@ onMounted(() => {
 }
 
 
-.add_dialog{
-       :deep(.el-form-item__label) {
-    width: 95px !important;
-} 
+.add_dialog {
+    :deep(.el-form-item__label) {
+        width: 95px !important;
+    }
 }
-
-
 </style>
