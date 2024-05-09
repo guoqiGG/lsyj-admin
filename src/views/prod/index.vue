@@ -261,7 +261,7 @@
                 <div style="border: 1px solid #ccc;background-color: plum">
                     <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig"
                         :mode="'default'" />
-                    <Editor style="height: 600px; overflow-y: hidden;" v-model="valueHtml" :defaultConfig="editorConfig"
+                    <Editor style="height: 600px; overflow-y: hidden;width:100%;" v-model="valueHtml" :defaultConfig="editorConfig"
                         :mode="'default'" @onCreated="handleCreated" />
                 </div>
                 <!-- <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面,长度不超过100个字符" clearable /> -->
@@ -331,7 +331,7 @@ const toolbarConfig = {
     excludeKeys: ["insertLink", "viewImageLink", "insertVideo", "emotion", "fullScreen", "codeBlock", "todo"] //排除不需要的菜单
 }
 const editorConfig = {
-    placeholder: '请输入内容...',
+    placeholder: '请输入内容(非必填)...',
     MENU_CONF: {
         uploadImage: {
             headers: { Authorization: token },
