@@ -109,8 +109,14 @@
                     <el-option v-for="item in liveListData" :label="item.course_name" :value="item.course_id" />
                 </el-select>
             </el-form-item>
+            <el-form-item label="链接类型" prop="type">
+                <el-select v-model="liveLinkForm.type" placeholder="直播链接类型" style="width: 200px;" clearable>
+                    <el-option label="h5" value="0" />
+                    <el-option label="小程序" value="1" />
+                </el-select>
+            </el-form-item>
             <el-form-item class="footer">
-                <el-button type="primary" @click="generateLiveLink">保存</el-button>
+                <el-button type="primary" @click="generateLiveLink">生成</el-button>
                 <el-button @click="closeGenerateHuantuoLiveLinkDialog">关闭</el-button>
             </el-form-item>
         </el-form>
@@ -166,7 +172,8 @@ const editUserInfoRef = ref(null)
 const generateHuantuoLiveLinkDialogVisible = ref(false)
 const liveListData = ref([])
 const liveLinkForm = ref({
-    course_id: null
+    course_id: null,
+    type: null
 })
 const liveLinkRef = ref(null)
 const getUserList = async () => {
@@ -247,6 +254,7 @@ const openGenerateHuantuoLiveLink = (scope) => {
 const closeGenerateHuantuoLiveLinkDialog = () => {
     generateHuantuoLiveLinkDialogVisible.value = false
     liveLinkForm.value.course_id = null
+    liveLinkForm.value.type = null
     userInfo.value = null
 }
 
@@ -257,6 +265,7 @@ const getHuanTuoLiveList = async () => {
 
 const liveLinkRules = reactive({
     course_id: [{ required: true, message: "请选择直播间", trigger: "blur" }],
+    type: [{ required: true, message: "选择生成直播链接类型", trigger: "blur" }],
 })
 
 const generateLiveLink = async () => {
@@ -265,7 +274,8 @@ const generateLiveLink = async () => {
             try {
                 const res = await generateHuanTuoLiveSingleLink({
                     userId: userInfo.value.id,
-                    course_id: liveLinkForm.value.course_id
+                    course_id: liveLinkForm.value.course_id,
+                    type: Number(liveLinkForm.value.type)
                 });
 
                 if (res.code == 0) {

@@ -99,7 +99,8 @@
                     <span class="operation" @click="getAddress(scope.row.course_id, 'push')">推流地址</span>
                     <span class="operation" @click="getAddress(scope.row.course_id, 'obs')">obs地址</span>
                     <span class="operation" @click="showAddLiveProdDialog(scope.row.course_id)">添加直播商品</span>
-                    <span class="operation" @click="generateLiveLink(scope.row.course_id)">生成直播链接</span>
+                    <span class="operation" @click="generateLiveLink(scope.row.course_id, 0)">生成h5直播链接</span>
+                    <span class="operation" @click="generateLiveLink(scope.row.course_id, 1)">生成小程序直播链接</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -616,13 +617,13 @@ const clearAddLiveProdForm = () => {
 }
 
 // 生成直播链接
-const generateLiveLink = async (e) => {
+const generateLiveLink = async (e, type) => {
     ElMessage({
         showClose: false,
         message: '成功',
         type: 'success',
     })
-    const res = await generateHuanTuoLiveLink({ course_id: e })
+    const res = await generateHuanTuoLiveLink({ course_id: e, type: type })
 }
 const toHuanTuoAdmin = () => {
     window.open('https://console2.talk-fun.com/#/login?pid=64417', '_blank');

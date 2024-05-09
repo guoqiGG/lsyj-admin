@@ -728,6 +728,8 @@ const clearEditForm = () => {
             couponId: '', couponNum: 0, rule: 0
         }
     }
+    valueHtml.value = ''
+
 }
 
 const couponListData = ref([])
