@@ -599,7 +599,7 @@ const getProdListByName = async (query) => {
 }
 
 const getProdList = async () => {
-  const res = await prodList({ pageNo: 1, pageSize: 10 })
+  const res = await prodList({ pageNo: 1, pageSize: 15 })
   prodListData.value = res.data.list
 }
 

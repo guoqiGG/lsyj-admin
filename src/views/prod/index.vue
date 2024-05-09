@@ -107,15 +107,6 @@
                     </el-icon>
                 </el-upload>
             </el-form-item>
-            <el-form-item label="商品简介" prop="description">
-                <div style="border: 1px solid #ccc;background-color: plum">
-                    <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig"
-                        :mode="'default'" />
-                    <Editor style="height: 200px; overflow-y: hidden;" v-model="valueHtml" :defaultConfig="editorConfig"
-                        :mode="'default'" @onCreated="handleCreated" />
-                </div>
-                <!-- <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面,长度不超过100个字符" clearable /> -->
-            </el-form-item>
             <el-form-item label="开始时间" prop="startTime">
                 <el-date-picker v-model="prodForm.startTime" type="datetime" format="YYYY-MM-DD HH:mm:ss"
                     value-format="YYYY-MM-DD HH:mm:ss" placeholder="开始时间" />
@@ -155,8 +146,6 @@
                         :value="item.puid" />
                 </el-select>
             </el-form-item>
-
-
             <!-- 规格 -->
             <el-form-item label="规格">
                 <div style="display: block;width:100%;">
@@ -267,6 +256,15 @@
                         <el-radio border :label="1">按月发放</el-radio>
                     </el-radio-group>
                 </el-form-item>
+            </el-form-item>
+            <el-form-item label="商品简介" prop="description">
+                <div style="border: 1px solid #ccc;background-color: plum">
+                    <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig"
+                        :mode="'default'" />
+                    <Editor style="height: 600px; overflow-y: hidden;" v-model="valueHtml" :defaultConfig="editorConfig"
+                        :mode="'default'" @onCreated="handleCreated" />
+                </div>
+                <!-- <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面,长度不超过100个字符" clearable /> -->
             </el-form-item>
             <el-form-item class="footer">
                 <el-button type="primary" @click="save">保存</el-button>
