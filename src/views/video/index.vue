@@ -1,6 +1,6 @@
 <template>
     <el-card>
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline" label-width="100px">
             <el-row>
                 <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="视频标题">
@@ -68,7 +68,7 @@
     </el-card>
     <el-dialog v-model="editOrCreateDialogVisible" :title="isCreate ? '新增视频' : '编辑视频'" width="600px"
         :close="clearEditForm">
-        <el-form ref="videoFormRef" :rules="rules" :model="videoForm" class="demo-form-inline" lable-width="100px">
+        <el-form ref="videoFormRef" :rules="rules" :model="videoForm" class="demo-form-inline" label-width="100px">
             <el-form-item label="视频标题" prop="total">
                 <el-input v-model="videoForm.total" placeholder="视频标题" clearable />
             </el-form-item>

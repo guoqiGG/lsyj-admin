@@ -26,7 +26,7 @@
     </el-card>
     <!-- 新增 -->
     <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑角色' : '新增角色'" width="600px" :close="clearEditForm">
-        <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" lable-width="100px">
+        <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" label-width="100px">
             <el-form-item label="角色名称" prop="ruleName">
                 <el-input v-model="form.ruleName" placeholder="请输入角色名称" clearable />
             </el-form-item>

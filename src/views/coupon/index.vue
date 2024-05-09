@@ -1,6 +1,6 @@
 <template>
     <el-card>
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline" label-width="100px">
             <el-row>
                 <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="优惠券名">
@@ -64,7 +64,7 @@
     </el-card>
     <!-- 新增 -->
     <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑优惠券' : '新增优惠券'" width="600px">
-        <el-form ref="formRef" :model="couponForm" :rules="rules" class="add_dialog" lable-width="100px">
+        <el-form ref="formRef" :model="couponForm" :rules="rules" class="add_dialog" label-width="100px">
             <el-form-item label="优惠券名称" prop="name">
                 <el-input v-model="couponForm.name" placeholder="优惠券名称" clearable />
             </el-form-item>

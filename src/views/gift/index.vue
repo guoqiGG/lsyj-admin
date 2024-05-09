@@ -1,6 +1,6 @@
 <template>
     <el-card>
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline" label-width="100px">
             <el-row>
                 <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="礼品卡名">
@@ -51,7 +51,7 @@
     </el-card>
     <!-- 新增 -->
     <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑礼品卡' : '新增礼品卡'" width="600px" :close="clearEditForm" >
-        <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" lable-width="100px">
+        <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" label-width="100px">
             <el-form-item label="礼品卡名" prop="name">
                 <el-input v-model="form.name" placeholder="礼品卡名" clearable />
             </el-form-item>

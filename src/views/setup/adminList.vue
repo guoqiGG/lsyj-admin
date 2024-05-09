@@ -24,7 +24,7 @@
     <!-- 新增 -->
     <!-- roleId  name  account  password -->
     <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑管理员' : '新增管理员'" width="600px" :close="clearEditForm">
-        <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" lable-width="100px">
+        <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" label-width="100px">
             <el-form-item label="名字" prop="name">
                 <el-input v-model="form.name" placeholder="名字" clearable />
             </el-form-item>

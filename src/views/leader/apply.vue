@@ -1,8 +1,6 @@
 <template>
-
     <el-card>
-
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline" label-width="100px">
             <el-row>
                 <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长姓名">
@@ -57,16 +55,17 @@
     <el-card style="margin-top: 10px;">
         <el-table v-loading="loading" :data="applyLeaderListData" style="width: 100%"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
-            <el-table-column prop="leaderName" label="团长姓名"  align="center" width="100"/>
-            <el-table-column prop="leaderMobile" label="团长手机" align="center" width="120"/>
-            <el-table-column prop="remark" label="门店名称"  width="200"/>
-            <el-table-column prop="address" label="门店地址"  width="300"/>
-            <el-table-column prop="userName" label="用户姓名"  width="200"/>
-            <el-table-column prop="userMobile" label="用户手机" align="center" width="120"/>
+            <el-table-column prop="leaderName" label="团长姓名" align="center" width="100" />
+            <el-table-column prop="leaderMobile" label="团长手机" align="center" width="120" />
+            <el-table-column prop="remark" label="门店名称" width="200" />
+            <el-table-column prop="address" label="门店地址" width="300" />
+            <el-table-column prop="userName" label="用户姓名" width="200" />
+            <el-table-column prop="userMobile" label="用户手机" align="center" width="120" />
 
             <el-table-column label="类型" align="center" width="200">
-                <template #default="scope" >
-                    <div :class="['info', scope.row.address ? 'blue' : '']" style="margin:0 auto;">{{ scope.row.address ? '有店' : '无店' }}</div>
+                <template #default="scope">
+                    <div :class="['info', scope.row.address ? 'blue' : '']" style="margin:0 auto;">{{ scope.row.address
+            ? '有店' : '无店' }}</div>
                 </template>
             </el-table-column>
 

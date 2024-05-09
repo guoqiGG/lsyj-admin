@@ -1,6 +1,6 @@
 <template>
     <el-card>
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline" label-width="100px">
             <el-row>
                 <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="合成卡名">
@@ -57,7 +57,7 @@
     </el-card>
     <!-- 新增 -->
     <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑合成卡' : '新增合成卡'" width="600px">
-        <el-form ref="formRef" :model="form" :rules="rules" class="add_dialog" lable-width="100px">
+        <el-form ref="formRef" :model="form" :rules="rules" class="add_dialog" label-width="100px">
             <el-form-item label="合成卡名" prop="name">
                 <el-input v-model="form.name" placeholder="合成卡名" clearable />
             </el-form-item>

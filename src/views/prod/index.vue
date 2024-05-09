@@ -1,6 +1,6 @@
 <template>
     <el-card>
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline" label-width="100px">
             <el-row>
                 <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="商品名称">
@@ -108,13 +108,13 @@
                 </el-upload>
             </el-form-item>
             <el-form-item label="商品简介" prop="description">
-                <!-- <div style="border: 1px solid #ccc;background-color: plum">
+                <div style="border: 1px solid #ccc;background-color: plum">
                     <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig"
                         :mode="'default'" />
                     <Editor style="height: 200px; overflow-y: hidden;" v-model="valueHtml" :defaultConfig="editorConfig"
                         :mode="'default'" @onCreated="handleCreated" />
-                </div> -->
-                <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面,长度不超过100个字符" clearable />
+                </div>
+                <!-- <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面,长度不超过100个字符" clearable /> -->
             </el-form-item>
             <el-form-item label="开始时间" prop="startTime">
                 <el-date-picker v-model="prodForm.startTime" type="datetime" format="YYYY-MM-DD HH:mm:ss"
@@ -314,7 +314,7 @@ import '@wangeditor/editor/dist/css/style.css' // 引入 css
 // import { onBeforeUnmount, ref, shallowRef } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { onMounted, ref, reactive, nextTick, onBeforeUnmount, shallowRef } from "vue";
-import { prodList, prodCategoryList, updateProd, deleteProdById, prodAdd, prodInfoById, couponList, exportGoods, leaderList, upload, goodsDisplay } from "@/api/modules";
+import { prodList, prodCategoryList, updateProd, deleteProdById, prodAdd, prodInfoById, couponList, exportGoods, leaderList, uploadImageByBase64, goodsDisplay } from "@/api/modules";
 import { ElMessage, ElInput } from "element-plus";
 import {
     CirclePlus
@@ -336,20 +336,14 @@ const editorConfig = {
     placeholder: '请输入内容...',
     MENU_CONF: {
         uploadImage: {
-            server: BaseUrl + '/upload/oss',
             headers: { Authorization: token },
-            "tenant-id": "1",
-            fieldName: "file",
             uploadImgShowBase64: true,
-            async customUpload(file, insertFn) {
-                console.log(file)
-                const reader = new FileReader()
-                reader.onloadend = function () {
-                    const binaryData = reader.result;
-                    const formData = new FormData();
-                    formData.append('image', file);
-                    const res = upload({ file: formData })
-                }
+            customUpload(file, insertFn) {
+                const reader = new FileReader();
+                reader.onload = async function (event) {
+                    const res = await uploadImageByBase64({ base64: event.target.result })
+                    insertFn(res.data.url, file.name, res.data.url)
+                };
                 reader.readAsDataURL(file);
             }
         },
@@ -571,6 +565,7 @@ const editOrCreateDialog = async (e) => {
         prodForm.value.thumbail = res.data.thumbail
         prodForm.value.goodsType = res.data.goodsType
         prodForm.value.description = res.data.description
+        valueHtml.value = res.data.description
         prodForm.value.sort = res.data.sort
         prodForm.value.deliveryMode = res.data.deliveryMode
         prodForm.value.adminSort = res.data.adminSort
@@ -608,6 +603,7 @@ const closeEditOrCreateDialog = () => {
 
 const save = Debounce(async () => {
     console.log(valueHtml.value, 'valueHtml')
+    prodForm.value.description = valueHtml.value
     categoryFormRef.value.validate(async (valid) => {
         if (valid) {
             if (prodForm.value.goodsCoupon.couponId && !prodForm.value.goodsCoupon.couponNum) {
@@ -887,7 +883,7 @@ const copyLinkHuantuo = async (copyValue) => {
 };
 
 const handleDel = async (scope) => {
-    const res = await deleteProdById({ id: scope.row.id})
+    const res = await deleteProdById({ id: scope.row.id })
     if (res?.code === 0) {
         ElMessage.success('删除成功')
         getProdList()

@@ -92,6 +92,11 @@ const menuList2 = ref([
         url: "/withdrawList",
         icon: "Menu",
       },
+      {
+        title: "佣金明细",
+        url: "/commissionDetails",
+        icon: "Menu",
+      },
     ],
   },
   {

@@ -2,7 +2,7 @@
 
     <el-card>
 
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline" label-width="100px">
             <el-row>
                 <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长姓名">
@@ -73,7 +73,7 @@
     </el-card>
 
     <el-dialog v-model="leaderWithdrawApprovalDialogVisible" title="团长提现审批" width="600px" @close="clearEditForm">
-        <el-form ref="leaderFormRef" :model="leaderForm" class="demo-form-inline" lable-width="100px" :rules="rules">
+        <el-form ref="leaderFormRef" :model="leaderForm" class="demo-form-inline" label-width="100px" :rules="rules">
             <div class="applyInfo">
                 <div class="leaderInfo">
                     <div>团长：小王</div>

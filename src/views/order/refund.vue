@@ -1,6 +1,6 @@
 <template>
     <el-card>
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline" label-width="100px">
             <el-row>
                 <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="用户名称">
@@ -66,10 +66,12 @@
                             default-time />
                     </el-form-item>
                 </el-col>
-                <el-form-item>
-                    <el-button type="primary" @click="getRefundList">查询</el-button>
-                    <el-button @click="resetForm()">重置</el-button>
-                </el-form-item>
+                <el-col :lg="6" :md="8" :sm="12">
+                    <el-form-item>
+                        <el-button type="primary" @click="getRefundList">查询</el-button>
+                        <el-button @click="resetForm()">重置</el-button>
+                    </el-form-item>
+                </el-col>
             </el-row>
             <el-row>
                 <el-form-item>
@@ -289,7 +291,7 @@
     </el-dialog>
     <!-- 拒绝退款弹框 -->
     <el-dialog v-model="dialogAuditing" title="审核" width="500px" :close="clearEditForm">
-        <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" lable-width="100px">
+        <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" label-width="100px">
             <el-form-item label="拒绝原因" prop="remark">
                 <el-input v-model="form.remark" placeholder="拒绝原因" clearable />
             </el-form-item>

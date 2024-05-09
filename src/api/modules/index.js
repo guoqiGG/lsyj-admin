@@ -93,6 +93,14 @@ export function leaderWithdrawApproval(query) {
     data: JSON.stringify(query),
   });
 }
+// 佣金明细列表
+export function commissionDetailsList(query) {
+  return service({
+    method: "POST",
+    url: "user/leader/order/list",
+    data: JSON.stringify(query),
+  });
+}
 // 用户列表
 export function userList(query) {
   return service({
@@ -316,6 +324,15 @@ export function upload(query) {
   return service({
     method: "POST",
     url: "/upload/oss",
+    data: JSON.stringify(query),
+  });
+}
+
+// 图片base64上传
+export function uploadImageByBase64(query) {
+  return service({
+    method: "POST",
+    url: "/upload/base64",
     data: JSON.stringify(query),
   });
 }

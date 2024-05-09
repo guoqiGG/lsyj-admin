@@ -3,46 +3,20 @@
     <div class="order-all-num white-basic">
       <el-col :span="24">
         <div class="top">
-          <div class="top-title">某段时间内商品销量</div>
+          <div class="top-title">某段时间内商品销量
+            <span style="cursor:pointer;background-color: #409EFF;color:#fff;font-size:12px;height:30px;">(1.最近只能查昨天的数据
+              2.订单有配送金额也算是0元订单)</span>
+
+          </div>
           <el-date-picker style="margin-left: 20px;" @change="getHomeOrderTimeData" v-model="searchForm.date"
             type="date" placeholder="日期" format="YYYY-MM-DD" />
         </div>
       </el-col>
       <div class="row-bg" style="margin-top: 10px;">
-        <div class="num-item-box">
-          <div class="wait-payment-num order-num-item">
-            <div class="item-box">
-              <div class="words">退款总金额</div>
-              <div class="number"><span class="text">{{ dataList.goodsNumber || 0 }}</span></div>
-            </div>
-            <div class="item-img">
-              <img src="~@/assets/wait-payment-num.png">
-            </div>
-          </div>
-        </div>
 
-        <div class="num-item-box">
-          <div class="wait-receiving-goods-num order-num-item">
-            <div class="item-box">
-              <div class="words">商品总金额</div>
-              <div class="number"><span class="text">{{ dataList.goodsTotalAmount || 0 }}</span></div>
-            </div>
-            <div class="item-img">
-              <img src="~@/assets/wait-receiving-goods-num.png">
-            </div>
-          </div>
-        </div>
-        <div class="num-item-box">
-          <div class="wait-delivery-num order-num-item">
-            <div class="item-box">
-              <div class="words">优惠过后的商品金额</div>
-              <div class="number"><span class="text">{{ dataList.goodsPreferentialAmount || 0 }}</span></div>
-            </div>
-            <div class="item-img">
-              <img src="~@/assets/wait-delivery-num.png">
-            </div>
-          </div>
-        </div>
+
+
+
         <div class="num-item-box">
           <div class="wait-evaluate-num order-num-item">
             <div class="item-box">
@@ -62,6 +36,39 @@
             </div>
             <div class="item-img">
               <img src="~@/assets/wait-after-sales-num.png">
+            </div>
+          </div>
+        </div>
+        <div class="num-item-box">
+          <div class="wait-payment-num order-num-item">
+            <div class="item-box">
+              <div class="words">退款总金额</div>
+              <div class="number"><span class="text">{{ dataList.refundAmount || 0 }}</span></div>
+            </div>
+            <div class="item-img">
+              <img src="~@/assets/wait-payment-num.png">
+            </div>
+          </div>
+        </div>
+        <div class="num-item-box">
+          <div class="wait-delivery-num order-num-item">
+            <div class="item-box">
+              <div class="words">退款订单数</div>
+              <div class="number"><span class="text">{{ dataList.refundNumber || 0 }}</span></div>
+            </div>
+            <div class="item-img">
+              <img src="~@/assets/wait-delivery-num.png">
+            </div>
+          </div>
+        </div>
+        <div class="num-item-box">
+          <div class="wait-receiving-goods-num order-num-item">
+            <div class="item-box">
+              <div class="words">0元订单数</div>
+              <div class="number"><span class="text">{{ dataList.zeroOrderNumber || 0 }}</span></div>
+            </div>
+            <div class="item-img">
+              <img src="~@/assets/wait-receiving-goods-num.png">
             </div>
           </div>
         </div>
@@ -114,7 +121,7 @@ const DeleteItem = (index) => {
 }
 const getHomeOrderTimeData = async () => {
   const res = await homeOrderTime({
-    date: searchForm.value.date
+    date: dayjs(new Date(searchForm.value.date)).format('YYYY-MM-DD')
   })
   dataList.value = res.data
   dataList.value = {
@@ -174,6 +181,7 @@ onMounted(() => {
   .row-bg {
     width: 100%;
     display: flex;
+
     .num-item-box {
       position: relative;
       flex: 1;
@@ -194,6 +202,7 @@ onMounted(() => {
     background-color: #fff;
     box-sizing: border-box;
     border-radius: 4px;
+
     .item-box {
       position: absolute;
       z-index: 1;

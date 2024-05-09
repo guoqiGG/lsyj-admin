@@ -1,6 +1,6 @@
 <template>
     <el-card>
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline" lable-width="100px">
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline" label-width="100px">
             <el-row>
                 <el-col :lg="6" :md="12" :sm="12">
                     <el-form-item label="分类名称">
@@ -50,7 +50,7 @@
     <el-dialog v-model="editOrCreateDialogVisible" :title="isCreate ? '新增商品分类' : '编辑商品分类'" width="600px"
         @close="clearEditForm">
         <el-form ref="categoryFormRef" :rules="rules" :model="categoryForm" class="demo-form-inline"
-            lable-width="100px">
+            label-width="100px">
             <el-form-item label="标题" prop="name">
                 <el-input v-model="categoryForm.name" placeholder="标题" clearable />
             </el-form-item>

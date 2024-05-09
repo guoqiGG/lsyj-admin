@@ -130,6 +130,16 @@ const routes = [
           name: "提现列表",
         },
       },
+      //佣金明细
+      {
+        path: "/commissionDetails",
+        name: "commissionDetails",
+        component: () => import("../views/leader/commissionDetails.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "佣金明细",
+        },
+      },
     ],
   },
   // 用户
