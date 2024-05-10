@@ -161,6 +161,16 @@ const routes = [
           name: "用户列表",
         },
       },
+      // 等级列表
+      {
+        path: "/levelList",
+        name: "levelList",
+        component: () => import("../views/user/level.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "分组列表",
+        },
+      },
       // 分组列表
       {
         path: "/groupList",

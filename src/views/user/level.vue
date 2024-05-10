@@ -1,11 +1,12 @@
 <template>
     <el-card>
-        <el-table v-loading="loading" :data="userLevelListData" style="width: 100%" :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+        <el-table v-loading="loading" :data="userLevelListData" style="width: 100%"
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="levelName" label="等级" />
             <el-table-column prop="levelAmount" label="所需金额" align="center" />
             <el-table-column label="等级边框" align="center" width="150">
                 <template #default="scope">
-                    <el-image  :src="scope.row.url" />
+                    <el-image :src="scope.row.url" />
                 </template>
             </el-table-column>
             <el-table-column prop="updateTime" label="更新时间" width="300" align="center" />
@@ -53,10 +54,11 @@ onMounted(() => {
 </style>
 
 <style scoped>
-.pagination{
+.pagination {
     margin-top: 20px;
 }
-.operation{
+
+.operation {
     color: #4060c7;
     margin: 0px 5px;
     cursor: pointer;

@@ -110,6 +110,11 @@ const menuList2 = ref([
         icon: "Menu",
       },
       {
+        title: "等级列表",
+        url: "/levelList",
+        icon: "Menu",
+      },
+      {
         title: "分组列表",
         url: "/groupList",
         icon: "Menu",

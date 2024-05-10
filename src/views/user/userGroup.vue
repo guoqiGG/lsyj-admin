@@ -4,11 +4,15 @@
             <el-row>
                 <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长">
-                        <el-select v-model="searchForm.pUid" filterable placeholder="团长" clearable
-                            style="width: 250px;">
+                        <el-select v-model="searchForm.pUid" filterable placeholder="团长" clearable>
                             <el-option v-for="item in leaderListData" :key="item.id" :label="item.leaderName"
                                 :value="item.puid" />
                         </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :lg="6" :md="8" :sm="12">
+                    <el-form-item label="用户手机">
+                        <el-input v-model="searchForm.userMobile" placeholder="用户手机" clearable />
                     </el-form-item>
                 </el-col>
                 <el-col :lg="6" :md="8" :sm="12">
@@ -32,7 +36,7 @@
         </el-form>
     </el-card>
     <el-card style="margin-top: 10px;">
-        <el-button tag="div" :icon="CirclePlus" type="primary" @click="openDialog('add')">新增分组</el-button>
+        <el-button tag="div" :icon="CirclePlus" type="primary" @click="openDialog('add')">新增分组用户</el-button>
         <el-table v-loading="loading" :data="userGroupListData" style="width: 100%;margin-top: 10px;"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="id" label="ID" align="center" />
@@ -65,8 +69,8 @@
         <el-form ref="groupFormRef" :rules="rules" :model="groupForm" class="demo-form-inline" label-width="100px"
             :label-position="right">
             <el-form-item label="用户" prop="userId">
-                <el-select v-model="groupForm.userId" filterable remote reserve-keyword placeholder="请输入用户昵称搜索"
-                    remote-show-suffix :remote-method="getUserListByName" clearable style="width: 250px;"
+                <el-select v-model="groupForm.userId" filterable remote reserve-keyword placeholder="请输入用户手机号搜索"
+                    remote-show-suffix :remote-method="getUserListByMobile" clearable style="width: 250px;"
                     @change="userIdChange" :disabled="isCreate == false">
                     <el-option v-for="item in userListData" :key="item.id" :label="item.name + '-' + item.mobile"
                         :value="item.id" />
@@ -95,6 +99,7 @@ const BaseUrl = import.meta.env.VITE_API_BASE_URL
 const token = localStorage.getItem('token')
 const searchParams = {
     pUid: null,
+    userMobile: null
 }
 const searchForm = ref({ ...searchParams })
 const pages = ref({
@@ -133,8 +138,8 @@ const getUserList = async () => {
     userListData.value = res.data.list
 }
 
-const getUserListByName = async (query) => {
-    const res = await userList({ name: query, pageNo: 1, pageSize: 1000 })
+const getUserListByMobile = async (query) => {
+    const res = await userList({ mobile: query, pageNo: 1, pageSize: 1000 })
     userListData.value = res.data.list
 }
 const getUserListById = async (id) => {
