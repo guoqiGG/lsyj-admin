@@ -251,6 +251,11 @@ const menuList2 = ref([
         url: "/configList",
         icon: "Menu",
       },
+      {
+        title: "轮播图",
+        url: "/carousel",
+        icon: "Menu",
+      },
     ],
   }
 ]);

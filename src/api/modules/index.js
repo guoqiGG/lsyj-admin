@@ -756,3 +756,30 @@ export function updateConfig(query) {
     data: JSON.stringify(query),
   });
 }
+
+// 轮播图列表
+export function carouselList(query) {
+  return service({
+    method: "get",
+    url: "/swiper/list",
+    params: query,
+  });
+}
+
+// 添加轮播图
+export function carouselAdd(query) {
+  return service({
+    method: "POST",
+    url: "/swiper/add",
+    data: JSON.stringify(query),
+  });
+}
+
+// 编辑、删除轮播图
+export function carouselUpdate(query) {
+  return service({
+    method: "POST",
+    url: "/swiper/update",
+    data: JSON.stringify(query),
+  });
+}

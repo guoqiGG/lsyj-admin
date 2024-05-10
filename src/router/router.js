@@ -420,6 +420,16 @@ const routes = [
           name: "配置列表",
         },
       },
+      // 轮播图
+      {
+        path: "/carousel",
+        name: "carousel",
+        component: () => import("../views/config/carousel.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "轮播图",
+        },
+      },
     ],
   },
 ];
