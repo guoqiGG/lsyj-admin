@@ -261,8 +261,8 @@
                 <div style="border: 1px solid #ccc;background-color: plum">
                     <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig"
                         :mode="'default'" />
-                    <Editor style="height: 600px; overflow-y: hidden;width:100%;" v-model="valueHtml" :defaultConfig="editorConfig"
-                        :mode="'default'" @onCreated="handleCreated" />
+                    <Editor style="height: 600px; overflow-y: hidden;width:100%;" v-model="valueHtml"
+                        :defaultConfig="editorConfig" :mode="'default'" @onCreated="handleCreated" />
                 </div>
                 <!-- <el-input v-model="prodForm.description" placeholder="商品卖点展示在商品详情标题下面,长度不超过100个字符" clearable /> -->
             </el-form-item>
@@ -862,7 +862,7 @@ const copyLink = async (copyValue) => {
     document.body.removeChild(inputDom);
 };
 const copyLinkHuantuo = async (copyValue) => {
-    let url = 'https://h5.hnliyue.cn/#/pages/package-prod/pages/prod/prod?prodId=' + copyValue.id
+    let url = 'https://h5.hnliyue.cn/#/pages/package-prod/pages/prod/prod?prodId=' + copyValue.id + '&ht=1'
     // 创建输入框
     let inputDom = document.createElement('input');
     // 给输入框value赋值
