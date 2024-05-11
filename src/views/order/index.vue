@@ -327,10 +327,10 @@
           <p class="blod">付款信息</p>
           <p>实付金额:<span class="num">{{ detail.payCallback }}</span></p>
           <p>付款方式:<span class="num">
-            <span v-if="detail.payway == 10">小程序</span>
-            <span v-if="detail.payway == 50">网页</span>
-            <span v-if="!detail.payway">兑换</span>
-          </span></p>
+              <span v-if="detail.payway == 10">小程序</span>
+              <span v-if="detail.payway == 50">网页</span>
+              <span v-if="!detail.payway">兑换</span>
+            </span></p>
           <p>付款时间:<span class="num">{{ detail.statusPayedTime }}</span></p>
 
         </div>
@@ -640,7 +640,8 @@ const exportExcel = async () => {
     startDate: searchForm.value.startDate,
     endDate: searchForm.value.endDate,
     userId: searchForm.value.userId,
-    goodsId: searchForm.value.goodsId
+    goodsId: searchForm.value.goodsId,
+    payway: searchForm.value.payway
   })
 
   loading.value = false
