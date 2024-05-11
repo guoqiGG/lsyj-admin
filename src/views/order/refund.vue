@@ -251,7 +251,11 @@
                 <div class="left">
                     <p class="blod">付款信息</p>
                     <p>实付金额:<span class="num">{{ detail.payCallback }}</span></p>
-                    <p>付款方式:<span class="num">微信支付</span></p>
+                    <p>付款方式:<span class="num">
+                            <span v-if="detail.payway == 10">小程序</span>
+                            <span v-if="detail.payway == 50">网页</span>
+                            <span v-if="!detail.payway">兑换</span>
+                        </span></p>
                     <p>付款时间:<span class="num">{{ detail.statusPayedTime }}</span></p>
 
                 </div>
@@ -272,9 +276,9 @@
                                     :src="detail.orderGoods[0].thumbail" alt="">
                                 <div style="width:140px;">
                                     <div
-                                        style="white-space: nowrap;color:#101010; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                        style="white-space: nowrap;color:#101010;overflow: hidden;text-overflow: ellipsis;text-align: left;">
                                         {{ scope.row.goodsName }}</div>
-                                    <div style="white-space: nowrap;font-size: 10px;text-align: left;color: #696868;"
+                                    <div style="white-space: nowrap;font-size: 10px;text-align: left;color: #696868;text-align: left;"
                                         v-if="detail.specificationName !== '默认'">{{ detail.specificationName }}</div>
                                 </div>
                             </div>

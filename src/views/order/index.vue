@@ -75,6 +75,14 @@
             </el-select>
           </el-form-item>
         </el-col>
+        <el-col :lg="6" :md="8" :sm="12">
+          <el-form-item label="支付方式">
+            <el-select v-model="searchForm.payway" placeholder="请选择支付方式" clearable>
+              <el-option label="小程序支付" value="10" />
+              <el-option label="网页支付" value="50" />
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col :lg="12" :md="12" :sm="24">
           <el-form-item label="时间 ">
             <el-date-picker v-model="searchForm.time" type="datetimerange" start-placeholder="开始时间"
@@ -176,7 +184,14 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="orderStatus" label="订单状态" align="center" width="120">
+      <el-table-column label="支付方式" align="center">
+        <template #default="scope">
+          <div v-if="scope.row.payway == 10">小程序</div>
+          <div v-if="scope.row.payway == 50">网页</div>
+          <div v-if="!scope.row.payway">兑换</div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="orderStatus" label="订单状态" align="center">
         <template #default="scope">
           <div> {{ scope.row.orderStatus === 1000 ? '待付款' : scope.row.orderStatus === 1001 ? '已支付' :
       scope.row.orderStatus === 2001 ? '待收货' : scope.row.orderStatus === 2002 ? '后台确认收货' : scope.row.orderStatus
@@ -192,7 +207,7 @@
         ? '退款成功' : scope.row.orderStatus === 5 ? '后台手动退款成功' : '' }}</div>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="180" align="center">
+      <el-table-column fixed="right" label="操作" width="170" align="center">
         <template #default="scope">
           <!-- <span class="operation" v-if="scope.row.orderStatus === 1001"
             @click="hamdleBatchSend(scope.row.orderId, 'single')">发货</span> -->
@@ -311,7 +326,11 @@
         <div class="left">
           <p class="blod">付款信息</p>
           <p>实付金额:<span class="num">{{ detail.payCallback }}</span></p>
-          <p>付款方式:<span class="num">微信支付</span></p>
+          <p>付款方式:<span class="num">
+            <span v-if="detail.payway == 10">小程序</span>
+            <span v-if="detail.payway == 50">网页</span>
+            <span v-if="!detail.payway">兑换</span>
+          </span></p>
           <p>付款时间:<span class="num">{{ detail.statusPayedTime }}</span></p>
 
         </div>
@@ -334,9 +353,9 @@
                 <img style="width: 40px;height: 40px;margin: 0px 10px 0 5px;" :src="scope.row.thumbail" alt="">
                 <div style="width: 140px;">
                   <div
-                    style="white-space: nowrap;color:#101010; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                    style="color:#101010; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: left;">
                     {{ scope.row.title }}</div>
-                  <div style="white-space: nowrap;font-size: 10px;text-align: left;color: #696868;"
+                  <div style="white-space: nowrap;font-size: 10px;text-align: left;color: #696868;text-align: left;"
                     v-if="detail.specificationName !== '默认'">{{ detail.specificationName }}</div>
                 </div>
               </div>
@@ -423,7 +442,8 @@ const searchParams = {
   endDate: null,
   time: null,
   userId: null,
-  goodsId: null
+  goodsId: null,
+  payway: null, // 支付方式 10 小程序 50 h5
 }
 
 const loading = ref(false)
@@ -451,7 +471,8 @@ const getOrderList = async () => {
     startDate: searchForm.value.startDate,
     endDate: searchForm.value.endDate,
     userId: searchForm.value.userId,
-    goodsId: searchForm.value.goodsId
+    goodsId: searchForm.value.goodsId,
+    payway: searchForm.value.payway
     , ...pages.value
   })
   loading.value = false
