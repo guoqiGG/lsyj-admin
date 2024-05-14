@@ -1,5 +1,5 @@
 <template>
-    <el-dialog v-model="userTransferDialogVisible" title="送青春豆" width="500px" @close="close">
+    <el-dialog v-model="userTransferDialogVisible" title="转移用户" width="500px" @close="close">
         <el-form ref="userTransferFormRef" :rules="userTransferRules" :model="userTransferForm" class="demo-form-inline"
             label-width="100px" :label-position="right">
             <el-form-item label="手机号" prop="mobile">
