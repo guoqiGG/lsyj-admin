@@ -1,7 +1,6 @@
 //src/api/user/index.js
 
 import service from "../request.js";
-import qs from "qs";
 
 // 登录
 export function LoginInfo(query) {
@@ -55,7 +54,7 @@ export function leaderList(query) {
 export function updateLeaderInfo(query) {
   return service({
     method: "POST",
-    url: "user/leader/update",
+    url: "/user/leader/update",
     data: JSON.stringify(query),
   });
 }
@@ -63,7 +62,7 @@ export function updateLeaderInfo(query) {
 export function applyleaderList(query) {
   return service({
     method: "get",
-    url: "user/leader/process/get/list",
+    url: "/user/leader/process/get/list",
     params: query,
   });
 }
@@ -81,7 +80,7 @@ export function auditApplyleader(query) {
 export function leaderWithdrawList(query) {
   return service({
     method: "get",
-    url: "user/leader/get/wallet/list",
+    url: "/user/leader/get/wallet/list",
     params: query,
   });
 }
@@ -89,7 +88,7 @@ export function leaderWithdrawList(query) {
 export function leaderWithdrawApproval(query) {
   return service({
     method: "POST",
-    url: "user/leader/examine/wallet",
+    url: "/user/leader/examine/wallet",
     data: JSON.stringify(query),
   });
 }
@@ -97,7 +96,57 @@ export function leaderWithdrawApproval(query) {
 export function commissionDetailsList(query) {
   return service({
     method: "POST",
-    url: "user/leader/order/list",
+    url: "/user/leader/order/list",
+    data: JSON.stringify(query),
+  });
+}
+
+//  团长分组列表
+export function leaderGroupList(query) {
+  return service({
+    method: "get",
+    url: "/leaderGroup/page",
+    params: query,
+  });
+}
+// 新增团长分组
+export function addLeaderGroup(query) {
+  return service({
+    method: "POST",
+    url: "/leaderGroup/add",
+    data: JSON.stringify(query),
+  });
+}
+// 编辑团长分组
+export function updateLeaderGroup(query) {
+  return service({
+    method: "POST",
+    url: "/leaderGroup/update",
+    data: JSON.stringify(query),
+  });
+}
+
+// 团长用户分组列表
+export function leaderUserGroupList(query) {
+  return service({
+    method: "get",
+    url: "/userLeaderGroup/page",
+    params: query,
+  });
+}
+// 给团长添加分组
+export function addLeaderUserGroup(query) {
+  return service({
+    method: "POST",
+    url: "/userLeaderGroup/add",
+    data: JSON.stringify(query),
+  });
+}
+// 编辑删除给团长添加分组
+export function updateLeaderUserGroup(query) {
+  return service({
+    method: "POST",
+    url: "/userLeaderGroup/update",
     data: JSON.stringify(query),
   });
 }
@@ -114,7 +163,7 @@ export function userList(query) {
 export function userLevelList(query) {
   return service({
     method: "get",
-    url: "level/get/list",
+    url: "/level/get/list",
     params: query,
   });
 }
@@ -781,5 +830,14 @@ export function carouselUpdate(query) {
     method: "POST",
     url: "/swiper/update",
     data: JSON.stringify(query),
+  });
+}
+
+// 用户转移(把用户没有用完的优惠券\礼品卡转移到另一个手机号上) params id mobile
+export function userTransfer(query) {
+  return service({
+    method: "get",
+    url: "/user/delete",
+    params: query,
   });
 }

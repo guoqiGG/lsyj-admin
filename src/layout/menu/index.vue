@@ -97,6 +97,16 @@ const menuList2 = ref([
         url: "/commissionDetails",
         icon: "Menu",
       },
+      {
+        title: "分组列表",
+        url: "/leaderGroup",
+        icon: "Menu",
+      },
+      {
+        title: "团长分组",
+        url: "/leaderUserGroup",
+        icon: "Menu",
+      },
     ],
   },
   {

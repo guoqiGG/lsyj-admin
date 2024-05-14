@@ -36,3 +36,11 @@ export function getDateTime(type) {
     return currentdate;
   }
 }
+
+/**
+ * 手机号正则校验
+ */
+export function checkPhoneNumber(phoneNumber) {
+  var regexp = /^[1][0-9]{10}$/;
+  return regexp.test(phoneNumber);
+}

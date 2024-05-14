@@ -7,18 +7,23 @@
                 <div>用户昵称：{{ userInfo.name }}</div>
                 <div>用户手机：{{ userInfo.mobile }}</div>
                 <div>注册时间：{{ userInfo.regTime }}</div>
+            </div>
+            <div class="infos">
                 <div>会员等级：{{ userInfo.levelName }}</div>
                 <div>青春豆数：{{ userInfo.score }}</div>
             </div>
-
             <div class="infos">
                 <div>团长姓名：{{ userInfo.leaderName || "null" }}</div>
                 <div>团长手机：{{ userInfo.leaderMobile || "null" }}</div>
             </div>
+
+        </div>
+        <div>
             <div class="infos" style="display: flex;  align-items: center">
                 <el-button type="primary" @click="openCouponDialog">送优惠券</el-button>
                 <el-button style="margin-left: 10px" type="primary" @click="openGiftDialog">送礼品券</el-button>
                 <el-button style="margin-left: 10px" type="primary" @click="openScoreDialog">送青春豆</el-button>
+                <el-button style="margin-left: 10px" type="primary" @click="openUserTransferDialog">转移用户</el-button>
             </div>
         </div>
         <el-divider class="divider" content-position="left">其他信息</el-divider>
@@ -34,11 +39,14 @@
         :couponForm="couponForm" @closeCouponDialog="closeCouponDialog"></send-coupon>
     <send-score ref="scoreFormRef" :userInfo="userInfo" :scoreDialogVisible="scoreDialogVisible" :scoreForm="scoreForm"
         @closeScoreDialog="closeScoreDialog" @editUserScoreNum="editUserScoreNum"></send-score>
+    <user-transfer ref="userTransferFormRef" :id="userInfo.id" :userTransferDialogVisible="userTransferDialogVisible"
+        :userTransferForm="userTransferForm" @closeUserTransferDialog="closeUserTransferDialog"></user-transfer>
 </template>
 <script setup>
 import SendGift from './send-gift.vue'
 import SendCoupon from './send-coupon.vue'
 import SendScore from './send-score.vue'
+import UserTransfer from './userTransfer.vue'
 import { ref, defineExpose, defineEmits } from 'vue'
 import { useRouter } from 'vue-router';
 const router = useRouter()
@@ -96,6 +104,19 @@ const closeScoreDialog = () => {
     scoreForm.value.num = ''
     scoreDialogVisible.value = false
 }
+
+const userTransferDialogVisible = ref(false)
+const userTransferFormRef = ref()
+const openUserTransferDialog = () => {
+    userTransferDialogVisible.value = true
+}
+const userTransferForm = ref({ mobile: null })
+const closeUserTransferDialog = () => {
+    userTransferForm.value.mobile = null
+    userTransferDialogVisible.value = false
+}
+
+
 // 送豆成功后 虚拟修改用户的豆数量
 const editUserScoreNum = () => {
     props.userInfo.score = props.userInfo.score + scoreForm.value.num

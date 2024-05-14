@@ -123,13 +123,12 @@ const getHomeOrderTimeData = async () => {
   const res = await homeOrderTime({
     date: dayjs(new Date(searchForm.value.date)).format('YYYY-MM-DD')
   })
-  dataList.value = res.data
   dataList.value = {
-    goodsNumber: res.data?.goodsNumber ? res.data?.goodsNumber : 0,
-    goodsPreferentialAmount: res.data?.goodsPreferentialAmount ? res.data?.goodsPreferentialAmount : 0,
-    goodsTotalAmount: res.data?.goodsTotalAmount ? res.data?.goodsTotalAmount : 0,
     orderAmount: res.data?.orderAmount ? res.data?.orderAmount : 0,
     orderNumber: res.data?.orderNumber ? res.data?.orderNumber : 0,
+    refundAmount: res.data?.refundAmount ? res.data?.refundAmount : 0,
+    refundNumber: res.data?.refundNumber ? res.data?.refundNumber : 0,
+    zeroOrderNumber: res.data?.zeroOrderNumber ? res.data?.zeroOrderNumber : 0,
   }
 }
 const initData = () => {

@@ -140,6 +140,26 @@ const routes = [
           name: "佣金明细",
         },
       },
+      //分组列表
+      {
+        path: "/leaderGroup",
+        name: "leaderGroup",
+        component: () => import("../views/leader/group.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "分组列表",
+        },
+      },
+      //团长用户分组
+      {
+        path: "/leaderUserGroup",
+        name: "leaderUserGroup",
+        component: () => import("../views/leader/userGroup.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "团长分组",
+        },
+      },
     ],
   },
   // 用户
