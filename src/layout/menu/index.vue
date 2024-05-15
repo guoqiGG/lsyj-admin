@@ -203,6 +203,11 @@ const menuList2 = ref([
         url: "/exchangeRecord",
         icon: "Menu",
       },
+      {
+        title: "转账列表",
+        url: "/transferList",
+        icon: "Menu",
+      },
     ],
   },
   {

@@ -24,6 +24,8 @@
                 <el-button style="margin-left: 10px" type="primary" @click="openGiftDialog">送礼品券</el-button>
                 <el-button style="margin-left: 10px" type="primary" @click="openScoreDialog">送青春豆</el-button>
                 <el-button style="margin-left: 10px" type="primary" @click="openUserTransferDialog">转移用户</el-button>
+                <el-button style="margin-left: 10px" type="primary"
+                    @click="openReissueRedEnvelopeDialog">补发红包</el-button>
             </div>
         </div>
         <el-divider class="divider" content-position="left">其他信息</el-divider>
@@ -32,6 +34,7 @@
         <el-button type="primary" @click="toUserCompositeGift(userInfo.id)">合成卡明细</el-button>
         <el-button type="primary" @click="toUserCoupon(userInfo.id)">优惠券明细</el-button>
         <el-button type="primary" @click="toUserExchange(userInfo.id)">兑换(青春豆)明细</el-button>
+        <el-button type="primary" @click="toUserRedEnvelope(userInfo.id)">红包明细</el-button>
     </el-dialog>
     <send-gift ref="giftFormRef" :userInfo="userInfo" :giftDialogVisible="giftDialogVisible" :giftForm="giftForm"
         @closeGiftDialog="closeGiftDialog"></send-gift>
@@ -41,13 +44,19 @@
         @closeScoreDialog="closeScoreDialog" @editUserScoreNum="editUserScoreNum"></send-score>
     <user-transfer ref="userTransferFormRef" :id="userInfo.id" :userTransferDialogVisible="userTransferDialogVisible"
         :userTransferForm="userTransferForm" @closeUserTransferDialog="closeUserTransferDialog"></user-transfer>
+
+    <ReissueRedEnvelope ref="reissueRedEnvelopeFormRef" :id="userInfo.id"
+        :reissueRedEnvelopeVisible="reissueRedEnvelopeVisible" :reissueRedEnvelopeForm="reissueRedEnvelopeForm"
+        @closeReissueRedEnvelopeDialog="closeReissueRedEnvelopeDialog">
+    </ReissueRedEnvelope>
 </template>
 <script setup>
 import SendGift from './send-gift.vue'
 import SendCoupon from './send-coupon.vue'
 import SendScore from './send-score.vue'
 import UserTransfer from './userTransfer.vue'
-import { ref, defineExpose, defineEmits } from 'vue'
+import ReissueRedEnvelope from './reissueRedEnvelope.vue'
+import { ref, defineEmits } from 'vue'
 import { useRouter } from 'vue-router';
 const router = useRouter()
 const props = defineProps({
@@ -116,6 +125,17 @@ const closeUserTransferDialog = () => {
     userTransferDialogVisible.value = false
 }
 
+const reissueRedEnvelopeVisible = ref(false)
+const reissueRedEnvelopeFormRef = ref()
+const openReissueRedEnvelopeDialog = () => {
+    reissueRedEnvelopeVisible.value = true
+}
+
+const reissueRedEnvelopeForm = ref({ price: null })
+const closeReissueRedEnvelopeDialog = () => {
+    reissueRedEnvelopeForm.value.price = null
+    reissueRedEnvelopeVisible.value = false
+}
 
 // 送豆成功后 虚拟修改用户的豆数量
 const editUserScoreNum = () => {
@@ -158,6 +178,14 @@ const toUserCoupon = (userId) => {
 const toUserExchange = (userId) => {
     router.push({
         path: '/exchangeRecord',
+        query: {
+            userId: userId
+        }
+    })
+}
+const toUserRedEnvelope = (userId) => {
+    router.push({
+        path: '/transferList',
         query: {
             userId: userId
         }

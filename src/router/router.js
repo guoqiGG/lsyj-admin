@@ -337,6 +337,16 @@ const routes = [
           name: "兑换记录",
         },
       },
+      // 转账列表(红包发放记录)
+      {
+        path: "/transferList",
+        name: "transferList",
+        component: () => import("../views/exchange/transferList.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "转账列表",
+        },
+      },
     ],
   },
   // 直播

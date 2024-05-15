@@ -56,7 +56,8 @@
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="copyLink(scope.row)">小程序商品链接</span>
-                    <span class="operation" @click="copyLinkHuantuo(scope.row)">欢拓商品链接</span>
+                    <span class="operation" @click="copyLinkHuantuoMiniProgram(scope.row)">欢拓小程序链接</span>
+                    <span class="operation" @click="copyLinkHuantuoH5(scope.row)">欢拓h5链接</span>
                     <span class="operation" @click="editOrCreateDialog(scope)">编辑</span>
                     <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="handleDel(scope)" @cancel="cancelEvent">
@@ -861,8 +862,32 @@ const copyLink = async (copyValue) => {
     // 删除创建的dom节点
     document.body.removeChild(inputDom);
 };
-const copyLinkHuantuo = async (copyValue) => {
+
+// 欢拓h5商品链接
+const copyLinkHuantuoH5 = async (copyValue) => {
     let url = 'https://h5.hnliyue.cn/#/pages/package-prod/pages/prod/prod?prodId=' + copyValue.id + '&ht=1'
+    // 创建输入框
+    let inputDom = document.createElement('input');
+    // 给输入框value赋值
+    inputDom.value = url;
+    // 把input框添加到body上
+    document.body.appendChild(inputDom);
+    // 选中输入框中的内容
+    inputDom.select();
+    // 复制文字到剪切板
+    const hasCopy = document.execCommand('Copy');
+    console.log(hasCopy, 'hasCopy')
+    ElMessage({
+        type: hasCopy ? 'success' : 'error',
+        message: hasCopy ? '复制成功' : '复制失败'
+    });
+    // 删除创建的dom节点
+    document.body.removeChild(inputDom);
+};
+
+// 欢拓小程序商品链接
+const copyLinkHuantuoMiniProgram = async (copyValue) => {
+    let url = '[wx]/pages/package-prod/pages/prod/prod?prodId=' + copyValue.id
     // 创建输入框
     let inputDom = document.createElement('input');
     // 给输入框value赋值

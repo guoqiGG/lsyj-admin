@@ -43,7 +43,6 @@
             </el-row>
         </el-form>
     </el-card>
-
     <el-card style="margin-top: 10px;">
         <el-table v-loading="loading" :data="exchangeRecordListData" style="width: 100%;margin-top:10px;"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">

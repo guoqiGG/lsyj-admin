@@ -841,3 +841,30 @@ export function userTransfer(query) {
     params: query,
   });
 }
+
+// 转账记录(兑换商品-红包发放记录)
+export function transferList(query) {
+  return service({
+    method: "get",
+    url: "/send/list",
+    params: query,
+  });
+}
+
+// 查询转账最新状态
+export function transferNewStatusById(query) {
+  return service({
+    method: "get",
+    url: "/send/getNewById",
+    params: query,
+  });
+}
+
+// 补发红包
+export function reissueRedEnvelope(query) {
+  return service({
+    method: "POST",
+    url: "/send/admin",
+    data: JSON.stringify(query),
+  });
+}
