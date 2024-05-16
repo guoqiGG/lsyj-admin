@@ -12,6 +12,11 @@
                     </el-form-item>
                 </el-col>
                 <el-col :lg="6" :md="8" :sm="12">
+                    <el-form-item label="用户手机">
+                        <el-input v-model="searchForm.phone" placeholder="用户手机" clearable />
+                    </el-form-item>
+                </el-col>
+                <el-col :lg="6" :md="8" :sm="12">
                     <el-form-item label="团长">
                         <el-select v-model="searchForm.pUid" filterable placeholder="请选择团长" style="width: 90%"
                             clearable>
@@ -28,11 +33,6 @@
                             <el-option v-for="item in videoListData" :key="item.id" :label="item.total"
                                 :value="item.id" />
                         </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :lg="6" :md="8" :sm="12">
-                    <el-form-item label="用户手机">
-                        <el-input v-model="searchForm.phone" placeholder="用户手机" clearable />
                     </el-form-item>
                 </el-col>
                 <el-col :lg="12" :md="12" :sm="24">
@@ -87,7 +87,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { videoComment, deleteVideoComment, leaderList, videoList ,userList } from "@/api/modules";
+import { videoComment, deleteVideoComment, leaderList, videoList, userList } from "@/api/modules";
 import { ElMessage } from "element-plus";
 import dayjs from "dayjs"
 
