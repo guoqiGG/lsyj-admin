@@ -241,6 +241,11 @@ const menuList2 = ref([
         title: "视频列表",
         url: "/videoList",
         icon: "Menu",
+      },
+      {
+        title: "评论列表",
+        url: "/commentList",
+        icon: "Menu",
       }
     ],
   },

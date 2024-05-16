@@ -390,7 +390,7 @@ const routes = [
       },
     ],
   },
-  // 视频
+  // 视频列表
   {
     path: "/video",
     name: "video",
@@ -399,7 +399,7 @@ const routes = [
       name: "视频管理",
     },
     children: [
-      // 直播间列表
+      // 视频列表
       {
         path: "/videoList",
         name: "videoList",
@@ -407,6 +407,16 @@ const routes = [
         meta: {
           requiresAuth: true,
           name: "视频列表",
+        },
+      },
+      // 评论列表
+      {
+        path: "/commentList",
+        name: "commentList",
+        component: () => import("../views/video/comment.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "评论列表",
         },
       },
     ],

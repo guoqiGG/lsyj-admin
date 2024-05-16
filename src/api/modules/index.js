@@ -868,3 +868,21 @@ export function reissueRedEnvelope(query) {
     data: JSON.stringify(query),
   });
 }
+
+// 视频评论列表
+export function videoComment(query) {
+  return service({
+    method: "get",
+    url: "/videoComment/page",
+    params: query,
+  });
+}
+
+// 删除用户视频评论
+export function deleteVideoComment(query) {
+  return service({
+    method: "POST",
+    url: "/videoComment/del",
+    data: JSON.stringify(query),
+  });
+}

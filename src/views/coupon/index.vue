@@ -45,7 +45,9 @@
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="handleEditor(scope.row)">修改</span>
-                    <span class="operation" @click="copyLinkHuantuo(scope.row)">欢拓优惠券链接</span>
+                    <span class="operation" @click="copyLink(scope.row)">小程序链接</span>
+                    <span class="operation" @click="copyLinkHuantuoH5(scope.row)">欢拓H5链接</span>
+                    <span class="operation" @click="copyLinkHuantuoMiNi(scope.row)">欢拓小程序链接</span>
                     <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="handleDel(scope.row)" @cancel="cancelEvent">
                         <template #reference>
@@ -437,8 +439,40 @@ const handleDel = async (item) => {
     }
 }
 
-const copyLinkHuantuo = async (copyValue) => {
-    let url = 'https://h5.hnliyue.cn/#/pages/package-user/pages/get-coupons/get-coupons?id=' + copyValue.id
+const copyLink = async (copyValue) => {
+    let url = '/pages/package-user/pages/get-coupons/get-coupons?id=' + copyValue.id
+    // 创建输入框
+    let inputDom = document.createElement('input');
+    inputDom.value = url;
+    document.body.appendChild(inputDom);
+    inputDom.select();
+    const hasCopy = document.execCommand('Copy');
+    console.log(hasCopy, 'hasCopy')
+    ElMessage({
+        type: hasCopy ? 'success' : 'error',
+        message: hasCopy ? '复制成功' : '复制失败'
+    });
+    // 删除创建的dom节点
+    document.body.removeChild(inputDom);
+}
+const copyLinkHuantuoH5 = async (copyValue) => {
+    let url = 'https://h5.hnliyue.cn/#/pages/package-user/pages/get-coupons/get-coupons?id=' + copyValue.id + '&ht=1'
+    // 创建输入框
+    let inputDom = document.createElement('input');
+    inputDom.value = url;
+    document.body.appendChild(inputDom);
+    inputDom.select();
+    const hasCopy = document.execCommand('Copy');
+    console.log(hasCopy, 'hasCopy')
+    ElMessage({
+        type: hasCopy ? 'success' : 'error',
+        message: hasCopy ? '复制成功' : '复制失败'
+    });
+    // 删除创建的dom节点
+    document.body.removeChild(inputDom);
+}
+const copyLinkHuantuoMiNi = async (copyValue) => {
+    let url = '[wx]/pages/package-user/pages/get-coupons/get-coupons?id=' + copyValue.id
     // 创建输入框
     let inputDom = document.createElement('input');
     inputDom.value = url;

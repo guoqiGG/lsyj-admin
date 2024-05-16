@@ -92,7 +92,10 @@ let exchangeRecordListData = ref([])
 const couponOrGiftListData = ref([])
 const getExchangeRecordList = async () => {
     loading.value = true
-    const res = await exchangeRecordList({ userId: searchForm.value.userId, type: searchForm.value.type, typeId: searchForm.value.typeId, pUid: searchForm.value.pUid, beginTime: searchForm.value.beginTime ? new Date(searchForm.value.beginTime).getTime() : null, endTime: searchForm.value.endTime ? new Date(searchForm.value.endTime).getTime() : null, ...pages.value })
+    const res = await exchangeRecordList({
+        userId: searchForm.value.userId, type: searchForm.value.type, typeId: searchForm.value.typeId, pUid: searchForm.value.pUid,
+        beginTime: searchForm.value.beginTime ? new Date(searchForm.value.beginTime).getTime() : null, endTime: searchForm.value.endTime ? new Date(searchForm.value.endTime).getTime() : null, ...pages.value
+    })
     loading.value = false
     exchangeRecordListData.value = res.data.list
     total.value = res.data.total
@@ -150,7 +153,6 @@ onMounted(() => {
 })
 
 watch(searchForm.value, (newValue, oldValue) => {
-    // console.log(newValue, oldValue)
     if (newValue.time && newValue.time[0]) {
         searchForm.value.beginTime = dayjs(newValue.time[0]).format('YYYY-MM-DD HH:mm:ss')
         searchForm.value.endTime = dayjs(newValue.time[1]).format('YYYY-MM-DD HH:mm:ss')

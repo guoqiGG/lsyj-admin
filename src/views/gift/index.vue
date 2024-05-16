@@ -17,7 +17,7 @@
     <el-card style="margin-top: 10px;">
         <el-button type="primary" :icon="CirclePlus" class="add" @click="add()">新增</el-button>
         <el-table v-loading="loading" :data="giftListData" style="width: 100%"
-        :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
+            :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="name" label="礼品卡名" align="center" />
             <el-table-column prop="number" label="限制数量" align="center" />
             <el-table-column prop="total" label="礼品卡总数" align="center" />
@@ -30,8 +30,9 @@
             <el-table-column prop="endDate" label="结束时间" align="center" />
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
-                    <span class="operation" @click="copyLink(scope.row)">领取礼品卡链接</span>
-                    <span class="operation" @click="copyLinkHuantuo(scope.row)">欢拓礼品卡链接</span>
+                    <span class="operation" @click="copyLink(scope.row)">小程序链接</span>
+                    <span class="operation" @click="copyLinkHuantuoH5(scope.row)">欢拓h5链接</span>
+                    <span class="operation" @click="copyLinkHuantuoMiNi(scope.row)">欢拓小程序链接</span>
                     <span class="operation" @click="editor(scope)">修改</span>
                     <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="handleDel(scope.row)" @cancel="cancelEvent">
@@ -50,7 +51,7 @@
         </div>
     </el-card>
     <!-- 新增 -->
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑礼品卡' : '新增礼品卡'" width="600px" :close="clearEditForm" >
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑礼品卡' : '新增礼品卡'" width="600px" :close="clearEditForm">
         <el-form ref="formRef" :rules="rules" :model="form" class="demo-form-inline" label-width="100px">
             <el-form-item label="礼品卡名" prop="name">
                 <el-input v-model="form.name" placeholder="礼品卡名" clearable />
@@ -62,10 +63,10 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="限制数量" prop="number">
-                <el-input-number   controls-position="right"  v-model="form.number" placeholder="限制数量" clearable />
+                <el-input-number controls-position="right" v-model="form.number" placeholder="限制数量" clearable />
             </el-form-item>
             <el-form-item label="卡总数量" prop="total">
-                <el-input-number    controls-position="right" v-model="form.total" placeholder="卡总数量" clearable />
+                <el-input-number controls-position="right" v-model="form.total" placeholder="卡总数量" clearable />
             </el-form-item>
             <el-form-item label="使用时间" prop="time">
                 <el-date-picker @change="timeChange" v-model="form.time" type="datetimerange" start-placeholder="开始时间"
@@ -74,7 +75,7 @@
             </el-form-item>
             <el-form-item class="footer">
                 <el-button type="primary" @click="submitForm(formRef)">保存</el-button>
-                <el-button @click="dialogVisible=false">关闭</el-button>
+                <el-button @click="dialogVisible = false">关闭</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -132,11 +133,11 @@ const form = ref({
     type: null,
     time: [],
     startDate: null,
-    endDate:null
+    endDate: null
 })
 
 var validateTotal = (rule, value, callback) => {
-    if (form.value.total&&form.value.number>form.value.total) {
+    if (form.value.total && form.value.number > form.value.total) {
         callback(new Error('礼品卡总数小于限制数量'))
     } else {
         callback()
@@ -153,9 +154,9 @@ var validateTime = (rule, value, callback) => {
 const rules = reactive({
     name: [{ required: true, message: '请输入礼品卡名', trigger: 'blur' }],
     number: [{ required: true, message: '请输入限制数量', trigger: 'blur' }],
-    total: 
-    [{ required: true, message: '请输入礼品卡总数', trigger: 'blur' },
-    { validator: validateTotal, trigger: 'blur' }],
+    total:
+        [{ required: true, message: '请输入礼品卡总数', trigger: 'blur' },
+        { validator: validateTotal, trigger: 'blur' }],
     type: [{ required: true, message: '请选择卡券类型', trigger: 'blur' }],
     time: [{ required: true, message: '时间不能为空', trigger: 'blur' },
     { validator: validateTime, trigger: 'blur' }],
@@ -233,36 +234,52 @@ const handleDel = async (item) => {
     }
 }
 const copyLink = async (copyValue) => {
-    let url='/pages/package-user/pages/exchange-area/exchange-area?id='+copyValue.id  
+    let url = '/pages/package-user/pages/exchange-area/exchange-area?id=' + copyValue.id
     // 创建输入框
     let inputDom = document.createElement('input');
-      inputDom.value = url;
-      document.body.appendChild(inputDom);
-      inputDom.select();
-      const hasCopy = document.execCommand('Copy');
-      console.log(hasCopy,'hasCopy')
-      ElMessage({
-          type: hasCopy ? 'success' : 'error',
-          message: hasCopy ? '复制成功' : '复制失败'
-     });
-      // 删除创建的dom节点
-      document.body.removeChild(inputDom);
+    inputDom.value = url;
+    document.body.appendChild(inputDom);
+    inputDom.select();
+    const hasCopy = document.execCommand('Copy');
+    console.log(hasCopy, 'hasCopy')
+    ElMessage({
+        type: hasCopy ? 'success' : 'error',
+        message: hasCopy ? '复制成功' : '复制失败'
+    });
+    // 删除创建的dom节点
+    document.body.removeChild(inputDom);
 }
-const copyLinkHuantuo = async (copyValue) => {
-    let url='https://h5.hnliyue.cn/#/pages/package-user/pages/exchange-area/exchange-area?id='+copyValue.id  
+const copyLinkHuantuoH5 = async (copyValue) => {
+    let url = 'https://h5.hnliyue.cn/#/pages/package-user/pages/exchange-area/exchange-area?id=' + copyValue.id + '&ht=1'
     // 创建输入框
     let inputDom = document.createElement('input');
-      inputDom.value = url;
-      document.body.appendChild(inputDom);
-      inputDom.select();
-      const hasCopy = document.execCommand('Copy');
-      console.log(hasCopy,'hasCopy')
-      ElMessage({
-          type: hasCopy ? 'success' : 'error',
-          message: hasCopy ? '复制成功' : '复制失败'
-     });
-      // 删除创建的dom节点
-      document.body.removeChild(inputDom);
+    inputDom.value = url;
+    document.body.appendChild(inputDom);
+    inputDom.select();
+    const hasCopy = document.execCommand('Copy');
+    console.log(hasCopy, 'hasCopy')
+    ElMessage({
+        type: hasCopy ? 'success' : 'error',
+        message: hasCopy ? '复制成功' : '复制失败'
+    });
+    // 删除创建的dom节点
+    document.body.removeChild(inputDom);
+}
+const copyLinkHuantuoMiNi = async (copyValue) => {
+    let url = '[wx]/pages/package-user/pages/exchange-area/exchange-area?id=' + copyValue.id
+    // 创建输入框
+    let inputDom = document.createElement('input');
+    inputDom.value = url;
+    document.body.appendChild(inputDom);
+    inputDom.select();
+    const hasCopy = document.execCommand('Copy');
+    console.log(hasCopy, 'hasCopy')
+    ElMessage({
+        type: hasCopy ? 'success' : 'error',
+        message: hasCopy ? '复制成功' : '复制失败'
+    });
+    // 删除创建的dom节点
+    document.body.removeChild(inputDom);
 }
 
 onMounted(() => {
