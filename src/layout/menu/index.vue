@@ -6,7 +6,7 @@
   }">
     <div class="logo" v-if="!store.getters.isCollapse">
       <img src="../../assets/logo.png" alt="" style="margin-right: 5px" />
-      氢春态管理后台
+      上品时代管理后台
     </div>
     <div class="logo" v-else>
       <img src="../../assets/logo.png" alt="" />
