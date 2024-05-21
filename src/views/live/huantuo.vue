@@ -515,7 +515,7 @@ const liveProdChange = async (e) => {
         prodListData.value.forEach(element => {
             if (element.name === e) {
                 addLiveProdForm.value.img = element.thumbail
-                addLiveProdForm.value.url = "https://h5.hnliyue.cn/#/pages/package-prod/pages/prod/prod?prodId=" + element.id
+                addLiveProdForm.value.url = "https://spsdh5.hnliyue.cn/#/pages/package-prod/pages/prod/prod?prodId=" + element.id
                 prodId = element.id
             }
         })
@@ -527,14 +527,14 @@ const liveProdChange = async (e) => {
     if (addLiveProdForm.value.type === 1) {
         prodListData.value.forEach(element => {
             if (element.name === e) {
-                addLiveProdForm.value.url = "https://h5.hnliyue.cn/#/pages/package-user/pages/get-coupons/get-coupons?id=" + element.id
+                addLiveProdForm.value.url = "https://spsdh5.hnliyue.cn/#/pages/package-user/pages/get-coupons/get-coupons?id=" + element.id
             }
         })
     }
     if (addLiveProdForm.value.type === 2) {
         prodListData.value.forEach(element => {
             if (element.name === e) {
-                addLiveProdForm.value.url = "https://h5.hnliyue.cn/#/pages/package-user/pages/exchange-area/exchange-area?id=" + element.id
+                addLiveProdForm.value.url = "https://spsdh5.hnliyue.cn/#/pages/package-user/pages/exchange-area/exchange-area?id=" + element.id
             }
         })
     }

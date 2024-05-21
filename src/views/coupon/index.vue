@@ -46,7 +46,7 @@
                 <template #default="scope">
                     <span class="operation" @click="handleEditor(scope.row)">修改</span>
                     <span class="operation" @click="copyLink(scope.row)">小程序链接</span>
-                    <span class="operation" @click="copyLinkHuantuoH5(scope.row)">欢拓H5链接</span>
+                    <span class="operation" @click="copyLinkHuantuoH5(scope.row)">H5链接</span>
                     <span class="operation" @click="copyLinkHuantuoMiNi(scope.row)">欢拓小程序链接</span>
                     <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="handleDel(scope.row)" @cancel="cancelEvent">
@@ -456,7 +456,7 @@ const copyLink = async (copyValue) => {
     document.body.removeChild(inputDom);
 }
 const copyLinkHuantuoH5 = async (copyValue) => {
-    let url = 'https://h5.hnliyue.cn/#/pages/package-user/pages/get-coupons/get-coupons?id=' + copyValue.id + '&ht=1'
+    let url = 'https://spsdh5.hnliyue.cn/#/pages/package-user/pages/get-coupons/get-coupons?id=' + copyValue.id + '&ht=1'
     // 创建输入框
     let inputDom = document.createElement('input');
     inputDom.value = url;
