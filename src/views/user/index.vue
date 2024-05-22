@@ -84,7 +84,7 @@
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
                     <span class="operation" @click="editOrCreateDialog(scope)">编辑</span>
-                    <span class="operation" @click="openGenerateHuantuoLiveLink(scope.row)">生成欢拓直播链接</span>
+                    <!-- <span class="operation" @click="openGenerateHuantuoLiveLink(scope.row)">生成欢拓直播链接</span> -->
                 </template>
             </el-table-column>
         </el-table>

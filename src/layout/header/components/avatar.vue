@@ -2,7 +2,7 @@
   <el-dropdown placement="bottom">
     <div class="flx-center">
       <div class="avatar">
-        <img src="../../../assets/touxiang.png" alt="avatar" />
+        <img src="../../../assets/touxiang.jpg" alt="avatar" />
       </div>
       <span class="username" :style="{ color: themeConfig.footColor }"
         >{{userInfo.name?userInfo.name:userInfo}}</span

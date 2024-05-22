@@ -53,8 +53,7 @@
             <el-table-column label="发布者" align="center">
                 <template #default="scope">
                     <div v-if="scope.row.userId == -1" style="display: flex;flex-direction: row;align-items: center;">
-                        <el-image style="width: 50px; height: 50px;border-radius: 50%;"
-                            src="https://qingchuntai2.oss-cn-beijing.aliyuncs.com/2024/05/16/378429e6-45af-4784-b2ab-2795521b8b42touxiang.png" />
+                        <el-image style="width: 50px; height: 50px;border-radius: 50%;" src="https://qingchuntai2.oss-cn-beijing.aliyuncs.com/2024/05/22/4c66249f-9e9f-4db4-ad10-772ad605c855spsd-admin-logo.jpg" />
                         <span style="margin-left: 10px;">管理员</span>
                     </div>
                     <div v-else style="display: flex;flex-direction: row;align-items: center;">

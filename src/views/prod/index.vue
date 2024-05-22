@@ -55,9 +55,9 @@
             <el-table-column prop="endTime" label="结束时间" width="170" align="center" />
             <el-table-column fixed="right" label="操作" width="180" align="center">
                 <template #default="scope">
-                    <span class="operation" @click="copyLink(scope.row)">小程序商品链接</span>
-                    <span class="operation" @click="copyLinkHuantuoMiniProgram(scope.row)">欢拓小程序链接</span>
-                    <span class="operation" @click="copyLinkHuantuoH5(scope.row)">h5链接</span>
+                    <span class="operation" @click="copyLink(scope.row)">小程序链接</span>
+                    <!-- <span class="operation" @click="copyLinkHuantuoMiniProgram(scope.row)">欢拓小程序链接</span> -->
+                    <span class="operation" @click="copyLinkHuantuoH5(scope.row)">H5链接</span>
                     <span class="operation" @click="editOrCreateDialog(scope)">编辑</span>
                     <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" cancel-button-type="info"
                         icon-color="#626AEF" title="确定要删除吗?" @confirm="handleDel(scope)" @cancel="cancelEvent">
