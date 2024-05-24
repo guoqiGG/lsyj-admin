@@ -368,16 +368,26 @@ const routes = [
           name: "直播间列表",
         },
       },
-      // 欢拓直播间列表
+      // 抖音直播间列表
       {
-        path: "/huantuo",
-        name: "huantuo",
-        component: () => import("../views/live/huantuo.vue"),
+        path: "/douyin",
+        name: "douyin",
+        component: () => import("../views/live/douyin.vue"),
         meta: {
           requiresAuth: true,
-          name: "欢拓直播间列表",
+          name: "抖音",
         },
       },
+      // 欢拓直播间列表
+      // {
+      //   path: "/huantuo",
+      //   name: "huantuo",
+      //   component: () => import("../views/live/huantuo.vue"),
+      //   meta: {
+      //     requiresAuth: true,
+      //     name: "欢拓直播间列表",
+      //   },
+      // },
       // 用户观看时长
       {
         path: "/huantuouserviewtime",

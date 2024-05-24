@@ -270,6 +270,24 @@ export function liveList(query) {
     data: JSON.stringify(query),
   });
 }
+// 抖音直播间列表
+export function douYinLiveList(query) {
+  return service({
+    method: "get",
+    url: "/pub/user/admin/get/douyin/coure",
+    params: query,
+  });
+}
+
+// 抖音 修改横竖屏
+export function horizontalAndVerticalScreens(query) {
+  return service({
+    method: "get",
+    url: "pub/user/update/douyin/coure",
+    params: query,
+  });
+}
+
 // 欢拓直播间列表
 export function huanTuoliveList(query) {
   return service({

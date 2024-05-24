@@ -221,10 +221,15 @@ const menuList2 = ref([
         icon: "Menu",
       },
       {
-        title: "欢拓直播间列表",
-        url: "/huantuo",
+        title: "抖音",
+        url: "/douyin",
         icon: "Menu",
       },
+      // {
+      //   title: "欢拓直播间列表",
+      //   url: "/huantuo",
+      //   icon: "Menu",
+      // },
       {
         title: "欢拓观看时长列表",
         url: "/huantuouserviewtime",
