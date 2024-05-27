@@ -36,6 +36,7 @@
             <el-table-column fixed="right" label="操作" width="120" align="center">
                 <template #default="scope">
                     <span class="operation" @click="openUpdateUserInfoDialog(scope)">修改团长信息</span>
+                    <span class="operation" @click="openReplaceLeaderDialog(scope)">更换团长</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -71,14 +72,36 @@
             </el-form-item>
         </el-form>
     </el-dialog>
+
+    <el-dialog v-model="replaceLeaderDialogVisible" title="更换团长" width="600px" @close="clearReplaceLeaderForm">
+        <el-form ref="replaceLeaderFormRef" :model="replaceLeaderForm" class="demo-form-inline" label-width="100px"
+            :rules="replaceLeaderFormRules">
+            <el-form-item prop="originalId" label="原团长">
+                <el-select v-model="replaceLeaderForm.originalId" filterable clearable @change="change" disabled>
+                    <el-option v-for="item in allLeaderListData" :key="item.puid" :label="item.leaderName"
+                        :value="item.puid" />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="新团长" prop="newId">
+                <el-select v-model="replaceLeaderForm.newId" filterable placeholder="请选择团长" clearable @change="change">
+                    <el-option v-for="item in allLeaderListData" :key="item.puid" :label="item.leaderName"
+                        :value="item.puid" />
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="replaceLeaderSave">保存</el-button>
+                <el-button @click="closeReplaceLeaderDialog">关闭</el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
 </template>
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { leaderList, updateLeaderInfo, exportLeader } from "../../api/modules";
+import { onMounted, ref, reactive } from "vue";
+import { leaderList, updateLeaderInfo, exportLeader, replaceLeader } from "../../api/modules";
 import {
     Download
 } from '@element-plus/icons-vue'
-import dayjs from "dayjs";
+import { ElMessage } from "element-plus";
 const searchParams = {
     leaderName: '',
     leaderMobile: ''
@@ -127,6 +150,7 @@ const closEditLeaderDialog = () => {
     editLeaderDialogVisible.value = false
     clearEditForm()
 }
+
 const openUpdateUserInfoDialog = (scope) => {
     editLeaderDialogVisible.value = true
     leaderForm.value.id = scope.row.puid
@@ -157,7 +181,6 @@ const clearEditForm = () => {
         commissionRate: ''
     }
 }
-
 const exportExcel = async () => {
     loading.value = true
     const res = await exportLeader({})
@@ -178,6 +201,53 @@ const exportExcel = async () => {
     }
 }
 
+const replaceLeaderFormRef = ref(null)
+const replaceLeaderForm = ref({
+    originalId: null,
+    newId: null
+})
+const allLeaderListData = ref([])
+
+const getAllLeaderList = async () => {
+    const res = await leaderList({ pageNo: 1, pageSize: 1000000 })
+    allLeaderListData.value = res.data.list
+}
+const replaceLeaderDialogVisible = ref(false)
+const replaceLeaderFormRules = reactive({
+    originalId: [{ required: true, message: '请选择原团长', trigger: 'blur' }],
+    newId: [{ required: true, message: '请选择新团长', trigger: 'blur' }],
+})
+
+const openReplaceLeaderDialog = (scope) => {
+    replaceLeaderDialogVisible.value = true
+    replaceLeaderForm.value.originalId = scope.row.puid
+    getAllLeaderList()
+}
+
+const replaceLeaderSave = () => {
+    replaceLeaderFormRef.value.validate(async (valid) => {
+        if (valid) {
+            const res = await replaceLeader({ ...replaceLeaderForm.value })
+            if (res?.code == 0) {
+                ElMessage.success('更换团长成功')
+                closeReplaceLeaderDialog()
+                getLeaderList()
+            }
+        } else {
+            return false
+        }
+    })
+}
+
+const closeReplaceLeaderDialog = () => {
+    replaceLeaderDialogVisible.value = false
+    clearReplaceLeaderForm()
+}
+
+const clearReplaceLeaderForm = () => {
+    replaceLeaderForm.value.originalId = null
+    replaceLeaderForm.value.newId = null
+}
 
 onMounted(() => {
     getLeaderList()

@@ -26,6 +26,8 @@
                 <el-button style="margin-left: 10px" type="primary" @click="openUserTransferDialog">转移用户</el-button>
                 <el-button style="margin-left: 10px" type="primary"
                     @click="openReissueRedEnvelopeDialog">补发红包</el-button>
+                <el-button style="margin-left: 10px" type="primary"
+                    @click="openModifyGroupLeaderDialog">修改团长</el-button>
             </div>
         </div>
         <el-divider class="divider" content-position="left">其他信息</el-divider>
@@ -49,6 +51,11 @@
         :reissueRedEnvelopeVisible="reissueRedEnvelopeVisible" :reissueRedEnvelopeForm="reissueRedEnvelopeForm"
         @closeReissueRedEnvelopeDialog="closeReissueRedEnvelopeDialog">
     </ReissueRedEnvelope>
+
+    <ModifyGroupLeader ref="modifyGroupLeaderFormRef" @editUserLeaderInfo="editUserLeaderInfo" :id="userInfo.id"
+        :modifyGroupLeaderVisible="modifyGroupLeaderVisible" :modifyGroupLeaderForm="modifyGroupLeaderForm"
+        @closeModifyGroupLeaderDialog="closeModifyGroupLeaderDialog">
+    </ModifyGroupLeader>
 </template>
 <script setup>
 import SendGift from './send-gift.vue'
@@ -56,6 +63,7 @@ import SendCoupon from './send-coupon.vue'
 import SendScore from './send-score.vue'
 import UserTransfer from './userTransfer.vue'
 import ReissueRedEnvelope from './reissueRedEnvelope.vue'
+import ModifyGroupLeader from './modifyGroupLeader.vue'
 import { ref, defineEmits } from 'vue'
 import { useRouter } from 'vue-router';
 const router = useRouter()
@@ -137,9 +145,29 @@ const closeReissueRedEnvelopeDialog = () => {
     reissueRedEnvelopeVisible.value = false
 }
 
+const modifyGroupLeaderVisible = ref(false)
+const modifyGroupLeaderFormRef = ref()
+const openModifyGroupLeaderDialog = () => {
+    modifyGroupLeaderVisible.value = true
+    modifyGroupLeaderFormRef.value.getLeaderList()
+}
+
+const modifyGroupLeaderForm = ref({ parentUserId: null })
+const closeModifyGroupLeaderDialog = () => {
+    modifyGroupLeaderForm.value.parentUserId = null
+    modifyGroupLeaderVisible.value = false
+}
+
 // 送豆成功后 虚拟修改用户的豆数量
 const editUserScoreNum = () => {
     props.userInfo.score = props.userInfo.score + scoreForm.value.num
+    isChange.value = true
+}
+
+// 用户修改成功团长后 虚拟修改用户的团长信息
+const editUserLeaderInfo = (leaderInfo) => {
+    props.userInfo.leaderName = leaderInfo.leaderName
+    props.userInfo.leaderMobile = leaderInfo.leaderMobile
     isChange.value = true
 }
 

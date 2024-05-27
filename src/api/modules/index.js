@@ -58,6 +58,16 @@ export function updateLeaderInfo(query) {
     data: JSON.stringify(query),
   });
 }
+
+// 更换团长
+export function replaceLeader(query) {
+  return service({
+    method: "POST",
+    url: "/user/leader/update/leader/all",
+    data: JSON.stringify(query),
+  });
+}
+
 // 团长审核列表
 export function applyleaderList(query) {
   return service({
@@ -883,6 +893,14 @@ export function reissueRedEnvelope(query) {
   return service({
     method: "POST",
     url: "/send/admin",
+    data: JSON.stringify(query),
+  });
+}
+// 修改团长
+export function modifyGroupLeader(query) {
+  return service({
+    method: "POST",
+    url: "/user/leader/update/leader",
     data: JSON.stringify(query),
   });
 }
