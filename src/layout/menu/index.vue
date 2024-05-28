@@ -215,11 +215,11 @@ const menuList2 = ref([
     url: "/live",
     icon: "VideoCameraFilled",
     children: [
-      {
-        title: "直播间列表",
-        url: "/liveList",
-        icon: "Menu",
-      },
+      // {
+      //   title: "直播间列表",
+      //   url: "/liveList",
+      //   icon: "Menu",
+      // },
       {
         title: "抖音",
         url: "/douyin",
@@ -231,7 +231,7 @@ const menuList2 = ref([
       //   icon: "Menu",
       // },
       {
-        title: "欢拓观看时长列表",
+        title: "观看时长",
         url: "/huantuouserviewtime",
         icon: "Menu",
       }

@@ -359,15 +359,15 @@ const routes = [
     },
     children: [
       // 直播间列表
-      {
-        path: "/liveList",
-        name: "liveList",
-        component: () => import("../views/live/index.vue"),
-        meta: {
-          requiresAuth: true,
-          name: "直播间列表",
-        },
-      },
+      // {
+      //   path: "/liveList",
+      //   name: "liveList",
+      //   component: () => import("../views/live/index.vue"),
+      //   meta: {
+      //     requiresAuth: true,
+      //     name: "直播间列表",
+      //   },
+      // },
       // 抖音直播间列表
       {
         path: "/douyin",
@@ -395,7 +395,7 @@ const routes = [
         component: () => import("../views/live/huantuouserviewtime.vue"),
         meta: {
           requiresAuth: true,
-          name: "欢拓观看时长列表",
+          name: "观看时长",
         },
       },
     ],
