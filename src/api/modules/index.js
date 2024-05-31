@@ -283,9 +283,9 @@ export function liveList(query) {
 // 抖音直播间列表
 export function douYinLiveList(query) {
   return service({
-    method: "get",
+    method: "POST",
     url: "/pub/user/admin/get/douyin/coure",
-    params: query,
+    data: JSON.stringify(query),
   });
 }
 
@@ -919,6 +919,15 @@ export function deleteVideoComment(query) {
   return service({
     method: "POST",
     url: "/videoComment/del",
+    data: JSON.stringify(query),
+  });
+}
+
+// 用户领取优惠券记录
+export function userReceiveCouponRecord(query) {
+  return service({
+    method: "POST",
+    url: "/user/coupon/check/list",
     data: JSON.stringify(query),
   });
 }

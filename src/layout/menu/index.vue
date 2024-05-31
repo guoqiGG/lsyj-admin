@@ -6,7 +6,7 @@
   }">
     <div class="logo" v-if="!store.getters.isCollapse">
       <img src="../../assets/logo.png" alt="" style="margin-right: 5px" />
-      上品时代管理后台
+      邻舍云集管理后台
     </div>
     <div class="logo" v-else>
       <img src="../../assets/logo.png" alt="" />
@@ -150,7 +150,12 @@ const menuList2 = ref([
         title: "用户优惠券列表",
         url: "/userCouponList",
         icon: "Menu",
-      }
+      },
+      {
+        title: "用户领取记录",
+        url: "/userReceiveCouponRecord",
+        icon: "Menu",
+      },
     ],
   },
   {

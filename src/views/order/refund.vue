@@ -33,7 +33,7 @@
                             <el-option label="申请中" value="1" />
                             <el-option label="已退款" value="2" />
                             <el-option label="已拒绝" value="3" />
-                            <el-option label="后台手动退款成功" value="4" />
+                            <!-- <el-option label="后台手动退款成功" value="4" /> -->
                         </el-select>
                     </el-form-item>
                 </el-col>

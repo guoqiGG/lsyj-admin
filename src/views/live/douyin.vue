@@ -1,5 +1,11 @@
 <template>
     <el-card>
+        <el-divider content-position="left"><span style="font-size: 16px;color:#ea3b26;">须知:</span></el-divider>
+        <div style="font-size: 12px;color:#ea3b26;">1.今天的直播明天下午7点才显示所消耗流量 </div>
+        <div style="margin-top: 5px; font-size: 12px;color:#ea3b26;">2.昨天的直播今天下午7点才显示所消耗流量</div>
+    </el-card>
+    <el-card style="margin-top: 10px;">
+        <div style="font-size: 18px;" v-if="countLiveTraffic">本月总消耗:{{ countLiveTraffic }}(GB) </div>
         <el-table v-loading="loading" :data="liveListData" style="width: 100%;margin-top: 10px;"
             :header-cell-style="{ background: '#f7f8fa', color: '#000' }">
             <el-table-column prop="coureId" label="ID" width="100" align="center" />
@@ -29,6 +35,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="url" label="地址" align="center" />
+            <el-table-column prop="liveTraffic" label="消耗流量(GB)" align="center" />
         </el-table>
         <div class="pagination">
             <el-pagination background layout="total, sizes, prev, pager, next, jumper"
@@ -51,12 +58,14 @@ const pages = ref({
     total: 0
 })
 let liveListData = ref([])
+const countLiveTraffic = ref(null)
 const getDouYinLiveList = async () => {
     loading.value = true
     const res = await douYinLiveList({ ...pages.value })
     loading.value = false
     liveListData.value = res.data.list
     pages.value.total = res.data.total
+    countLiveTraffic.value = res.data.countLiveTraffic
 }
 const tableHandleSizeChange = (e) => {
     pages.value.pageSize = e

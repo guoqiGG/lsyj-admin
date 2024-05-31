@@ -242,6 +242,16 @@ const routes = [
           name: "用户优惠券列表",
         },
       },
+      // 用户领取优惠券记录
+      {
+        path: "/userReceiveCouponRecord",
+        name: "userReceiveCouponRecord",
+        component: () => import("../views/coupon/userReceiveCouponRecord.vue"),
+        meta: {
+          requiresAuth: true,
+          name: "用户领取记录",
+        },
+      },
     ],
   },
   // 礼品卡列表

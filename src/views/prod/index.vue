@@ -99,7 +99,7 @@
             </el-form-item>
             <el-form-item label="商品图片" prop="thumbail">
                 <el-upload ref="uploadRef" accept="image/*" v-model:file-list="fileList" class="image-uploader"
-                    :show-file-list="false" :action="BaseUrl + '/upload/oss'" :headers="{ Authorization: token }"
+                    :show-file-list="false" :action="'https://spsd.hnliyue.cn/youth' + '/upload/oss'" :headers="{ Authorization: token }"
                     :on-success="handleSuccess" :on-error="handleError" :before-upload="beforeUpload">
                     <el-image class="avatar" v-if="prodForm.thumbail" controls="controls"
                         :src="prodForm.thumbail"></el-image>

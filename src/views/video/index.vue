@@ -119,7 +119,7 @@
             </el-form-item>
             <el-form-item label="图片" prop="url">
                 <el-upload ref="uploadRef" accept="image/*" v-model:file-list="fileList" class="image-uploader"
-                    :show-file-list="false" :action="BaseUrl + '/upload/oss'" :headers="{ Authorization: token }"
+                    :show-file-list="false" :action="'https://spsd.hnliyue.cn/youth' + '/upload/oss'" :headers="{ Authorization: token }"
                     :on-success="handleSuccess1" :on-error="handleError1" :before-upload="beforeUpload1">
                     <el-image class="avatar" v-if="videoForm.cover" controls="controls"
                         :src="videoForm.cover"></el-image>
@@ -130,7 +130,7 @@
             </el-form-item>
             <el-form-item label="视频" prop="video">
                 <el-upload accept="video/*" v-model:file-list="fileList" class="video-uploader" :show-file-list="false"
-                    :action="BaseUrl + '/upload/oss'" :headers="{ Authorization: token }" :on-success="handleSuccess"
+                    :action="'https://spsd.hnliyue.cn/youth' + '/upload/oss'" :headers="{ Authorization: token }" :on-success="handleSuccess"
                     :on-error="handleError" :before-upload="beforeUpload">
                     <video class="avatar" v-if="videoForm.video" controls="controls" :src="videoForm.video"></video>
                     <el-icon v-else class="video-uploader-icon">

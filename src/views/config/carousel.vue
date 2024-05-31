@@ -52,7 +52,7 @@
             </el-form-item>
             <el-form-item label="图片" prop="url">
                 <el-upload :accept="carouselForm.type == 0 ? 'image/*' : 'video/*'" v-model:file-list="fileList"
-                    class="image-uploader" :show-file-list="false" :action="BaseUrl + '/upload/oss'"
+                    class="image-uploader" :show-file-list="false" :action="'https://spsd.hnliyue.cn/youth' + '/upload/oss'"
                     :headers="{ Authorization: token }" :on-success="handleSuccess" :on-error="handleError"
                     :before-upload="beforeUpload">
                     <div v-if="carouselForm.url">

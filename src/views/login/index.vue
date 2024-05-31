@@ -2,7 +2,7 @@
   <div class="login-container flx-center">
     <div class="login-box">
       <div class="login-left">
-        <div class="title">上品时代</div>
+        <div class="title">邻舍云集</div>
         <div class="sub">社区团购 生活驿站</div>
         <img src="../../assets/login.png" alt="" />
       </div>
